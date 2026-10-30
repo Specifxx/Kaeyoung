@@ -1,5 +1,5 @@
-// K Young's one config file: name, host, regions, product categories and the
-// sister sites. Store lists live in src/content/stores.ts.
+// K Young's one config file: name, host, regions and product categories.
+// Store lists live in src/content/stores.ts.
 
 export const SITE = {
   key: "ky",
@@ -101,20 +101,3 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const CAT_BY_KEY = Object.fromEntries(CATEGORIES.map((c) => [c.key, c])) as Record<CatKey, Category>;
-
-/** The rest of Compare Empire, linked from every footer (family-links rule:
- *  descriptive anchors, plain followed links, footer only). K Young carries
- *  no Compare branding (owner, 2026-10-30), so the list is headed "Sister sites". */
-export const SISTER_SITES: { name: string; url: string; anchor: string }[] = [
-  { name: "RiftCompare", url: "https://riftcompare.com", anchor: "Riftbound card prices" },
-  { name: "OP Compare", url: "https://opcompare.app", anchor: "One Piece card prices" },
-  { name: "DexCompare", url: "https://dexcompare.app", anchor: "Pokémon sealed prices" },
-  { name: "MTG Compare", url: "https://mtgcompare.app", anchor: "Magic: The Gathering sealed prices" },
-  { name: "Gundam Compare", url: "https://gundamcompare.com", anchor: "Gundam card prices" },
-  { name: "Lorcana Compare", url: "https://lorcanacompare.com", anchor: "Lorcana card prices" },
-  { name: "YGO Compare", url: "https://ygocompare.com", anchor: "Yu-Gi-Oh! card prices" },
-  { name: "WargameCompare", url: "https://wargamecompare.com", anchor: "Miniature wargame prices" },
-  { name: "FigureCompare", url: "https://figurecompare.com", anchor: "Anime figure prices" },
-  { name: "CamCompare", url: "https://www.camcompare.app", anchor: "Camera and lens prices" },
-  { name: "Compare Empire", url: "https://compareempire.com", anchor: "Australian tech prices" },
-];

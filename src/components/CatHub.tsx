@@ -3,6 +3,7 @@ import { CAT_BY_KEY, type CatKey } from "@/site";
 import { productsOfCat, storeCount } from "@/lib/data";
 import { TileGrid } from "./ProductTile";
 import { PageHead, Pager } from "./Section";
+import { CatIcon } from "./Art";
 
 export const PER_PAGE = 48;
 
@@ -25,6 +26,7 @@ export function CatHub({ cat, page }: { cat: CatKey; page: number }) {
     <div className="mx-auto max-w-6xl px-4">
       <PageHead
         eyebrow="Shop by step"
+        art={<CatIcon cat={cat} size={150} />}
         title={`${c.plural.replace(/^./, (x) => x.toUpperCase())} prices${page > 1 ? `, page ${page}` : ""}`}
         sub={
           <p>

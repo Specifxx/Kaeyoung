@@ -21,6 +21,9 @@ export interface Store {
   /** Sells more than K-beauty: only products of known Korean brands get a
    *  barcode lookup (the 880 barcode still decides). */
   mixed?: boolean;
+  /** The brand's own store (official prices): compared like any store, and
+   *  counted apart in the "brand stores vs K-beauty shops" post. */
+  official?: boolean;
   /** Pays us a commission (shown as "Paid link"): the query parameter and the
    *  env var holding our code, set once the store's program accepts us. */
   affiliate?: { param: string; envVar: string };
@@ -74,26 +77,26 @@ export const STORES: Store[] = [
   { id: "yeppo", name: "Yeppo&Soonsoo", region: "EU", base: "https://yeppo.fi", platform: "shopify" },
   // 2026-10-30 rounds 3-4 (project files next-niche/skincare-store-probe-round3*, round4-partial*): brands' own
   // US shops (official prices) and web-searched K-beauty shops with readable 880 barcodes.
-  { id: "anua", name: "Anua US", region: "US", base: "https://anua.us", platform: "shopify" },
-  { id: "axisy", name: "AXIS-Y", region: "US", base: "https://axis-y.com", platform: "shopify" },
-  { id: "beautyofjoseon", name: "Beauty of Joseon", region: "US", base: "https://beautyofjoseon.com", platform: "shopify" },
-  { id: "celimax", name: "celimax US", region: "US", base: "https://celimax.us", platform: "shopify" },
-  { id: "cosrx", name: "COSRX Official", region: "US", base: "https://cosrx.com", platform: "shopify" },
-  { id: "fwee", name: "fwee US", region: "US", base: "https://fwee.us", platform: "shopify" },
-  { id: "heimish", name: "heimish US", region: "US", base: "https://heimish.us", platform: "shopify" },
-  { id: "jumiso", name: "Jumiso USA", region: "US", base: "https://jumiso.us", platform: "shopify" },
-  { id: "klairs", name: "Dear, Klairs", region: "US", base: "https://klairs.com", platform: "shopify" },
+  { id: "anua", name: "Anua US", region: "US", base: "https://anua.us", platform: "shopify", official: true },
+  { id: "axisy", name: "AXIS-Y", region: "US", base: "https://axis-y.com", platform: "shopify", official: true },
+  { id: "beautyofjoseon", name: "Beauty of Joseon", region: "US", base: "https://beautyofjoseon.com", platform: "shopify", official: true },
+  { id: "celimax", name: "celimax US", region: "US", base: "https://celimax.us", platform: "shopify", official: true },
+  { id: "cosrx", name: "COSRX Official", region: "US", base: "https://cosrx.com", platform: "shopify", official: true },
+  { id: "fwee", name: "fwee US", region: "US", base: "https://fwee.us", platform: "shopify", official: true },
+  { id: "heimish", name: "heimish US", region: "US", base: "https://heimish.us", platform: "shopify", official: true },
+  { id: "jumiso", name: "Jumiso USA", region: "US", base: "https://jumiso.us", platform: "shopify", official: true },
+  { id: "klairs", name: "Dear, Klairs", region: "US", base: "https://klairs.com", platform: "shopify", official: true },
   { id: "koreanbeauty", name: "Korean Beauty Canada", region: "CA", base: "https://koreanbeauty.ca", platform: "shopify" },
   { id: "koreanskincareuk", name: "Korean Skincare UK", region: "UK", base: "https://koreanskincare.co.uk", platform: "shopify", mixed: true },
-  { id: "manyo", name: "manyo US", region: "US", base: "https://manyo.us", platform: "shopify" },
-  { id: "mixsoon", name: "mixsoon", region: "US", base: "https://mixsoon.us", platform: "shopify" },
-  { id: "neogenlab", name: "NEOGENLAB US", region: "US", base: "https://neogenlab.us", platform: "shopify" },
-  { id: "rovectin", name: "Rovectin", region: "US", base: "https://rovectin.com", platform: "shopify" },
-  { id: "skin1004", name: "SKIN1004", region: "US", base: "https://skin1004.com", platform: "shopify" },
-  { id: "tirtir", name: "TIRTIR Official", region: "US", base: "https://tirtir.us", platform: "shopify" },
-  { id: "tocobo", name: "TOCOBO US", region: "US", base: "https://tocobo.us", platform: "shopify" },
-  { id: "tonymoly", name: "TONYMOLY USA", region: "US", base: "https://tonymoly.us", platform: "shopify" },
-  { id: "torriden", name: "Torriden", region: "US", base: "https://torriden.us", platform: "shopify" },
+  { id: "manyo", name: "manyo US", region: "US", base: "https://manyo.us", platform: "shopify", official: true },
+  { id: "mixsoon", name: "mixsoon", region: "US", base: "https://mixsoon.us", platform: "shopify", official: true },
+  { id: "neogenlab", name: "NEOGENLAB US", region: "US", base: "https://neogenlab.us", platform: "shopify", official: true },
+  { id: "rovectin", name: "Rovectin", region: "US", base: "https://rovectin.com", platform: "shopify", official: true },
+  { id: "skin1004", name: "SKIN1004", region: "US", base: "https://skin1004.com", platform: "shopify", official: true },
+  { id: "tirtir", name: "TIRTIR Official", region: "US", base: "https://tirtir.us", platform: "shopify", official: true },
+  { id: "tocobo", name: "TOCOBO US", region: "US", base: "https://tocobo.us", platform: "shopify", official: true },
+  { id: "tonymoly", name: "TONYMOLY USA", region: "US", base: "https://tonymoly.us", platform: "shopify", official: true },
+  { id: "torriden", name: "Torriden", region: "US", base: "https://torriden.us", platform: "shopify", official: true },
   { id: "aurak", name: "AuraK K Beauty", region: "UK", base: "https://aurak.co.uk", platform: "shopify" },
   { id: "beyondrx", name: "beyondRx", region: "CA", base: "https://beyondrx.ca", platform: "shopify", mixed: true },
   { id: "cosmadic", name: "Cosmadic", region: "EU", base: "https://cosmadic.de", platform: "shopify" },
@@ -117,7 +120,7 @@ export const STORES: Store[] = [
   { id: "sk1ntro", name: "Sk1ntro", region: "CA", base: "https://sk1ntro.com", platform: "shopify", mixed: true },
   { id: "skinorea", name: "SKINOREA", region: "EU", base: "https://skinorea.com", platform: "shopify" },
   { id: "skinshop", name: "SkinShop", region: "EU", base: "https://skinshop.ie", platform: "shopify", mixed: true },
-  { id: "usinnisfree", name: "innisfree US", region: "US", base: "https://us.innisfree.com", platform: "shopify" },
+  { id: "usinnisfree", name: "innisfree US", region: "US", base: "https://us.innisfree.com", platform: "shopify", official: true },
 ];
 
 export const STORE_BY_ID: Record<string, Store> = Object.fromEntries(STORES.map((s) => [s.id, s]));

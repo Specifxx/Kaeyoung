@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { CATEGORIES, SISTER_SITES, SITE } from "@/site";
+import { CATEGORIES, SITE } from "@/site";
+import { POSTS } from "@/content/blog";
 import { LogoMark } from "./Logo";
 
 export function Footer({ updated }: { updated?: string | null }) {
   return (
-    <footer className="mt-16 border-t border-line bg-card pt-12 text-sm">
+    <footer className="wash mt-16 border-t border-line pt-12 text-sm">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 pb-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
@@ -37,6 +38,7 @@ export function Footer({ updated }: { updated?: string | null }) {
             <li><Link prefetch={false} href="/deals" className="text-soft hover:text-ink">K-beauty deals today</Link></li>
             <li><Link prefetch={false} href="/brands" className="text-soft hover:text-ink">Korean skincare brands</Link></li>
             <li><Link prefetch={false} href="/guides" className="text-soft hover:text-ink">Price guides</Link></li>
+            <li><Link prefetch={false} href="/blog" className="text-soft hover:text-ink">Blog</Link></li>
             <li><Link prefetch={false} href="/stores" className="text-soft hover:text-ink">Where to buy K-beauty online</Link></li>
             <li><Link prefetch={false} href="/about" className="text-soft hover:text-ink">About &amp; how matching works</Link></li>
             <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">Affiliate disclosure</Link></li>
@@ -45,15 +47,20 @@ export function Footer({ updated }: { updated?: string | null }) {
           </ul>
         </div>
         <div>
-          <h2 className="eyebrow mb-3">Sister sites</h2>
+          <h2 className="eyebrow mb-3">Read</h2>
           <ul className="space-y-1.5">
-            {SISTER_SITES.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} className="text-soft hover:text-ink">
-                  {s.anchor} · {s.name}
-                </a>
+            {POSTS.map((p) => (
+              <li key={p.slug}>
+                <Link prefetch={false} href={`/blog/${p.slug}`} className="text-soft hover:text-ink">
+                  {p.short}
+                </Link>
               </li>
             ))}
+            <li>
+              <Link prefetch={false} href="/blog" className="font-medium text-accent-deep hover:underline">
+                All posts →
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

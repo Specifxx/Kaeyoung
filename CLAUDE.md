@@ -64,11 +64,21 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
 
 ## Design
 
-Professional and calm (owner, 2026-10-30: "make the website very professional"): warm off-white, white cards with
-hairline borders, near-black buttons, one berry accent (`--accent`), green only for savings, Fraunces headings and
-Inter text, no emoji decoration. A DexCompare-style side panel from `lg` up (`SideNav`, `src/lib/nav.ts`), the same
-groups in the phone menu. Product photos are the stores' own, hotlinked. Icons and the share image come from
-`scripts/og/render.mjs`; look at them before committing.
+Pretty, colourful and light (owner, 2026-10-30: "more colorful and pretty … like Korean sites", light by default; it
+first asked for "very professional"): blush-white page, white cards with soft pink hairlines, rose (`--accent`) for
+prices and buttons, a pastel set (`--peach`, `--lavender`, `--mint`, `--butter`, `--sky`) for step tiles and washes,
+green only for savings, Fraunces headings and Inter text, no emoji decoration. Flat SVG drawings of generic bottles,
+jars and tubes (`src/components/Art.tsx`), never a brand's own packaging. Light theme unless the visitor picks night.
+A DexCompare-style side panel flush to the left edge from `lg` up (`SideNav`, `src/lib/nav.ts`), the same groups in
+the phone menu. **No sister-site or family links** (owner, 2026-10-30: "this is just Korean beauty"). Product photos
+are the stores' own, hotlinked. Icons and the share image come from `scripts/og/render.mjs`; look at them before
+committing.
+
+## Blog
+
+`src/content/blog.ts` lists the posts; `src/app/blog/[slug]/page.tsx` writes each one around live blocks drawn from
+the day's prices at build, so every number is a real store price. A post answers one question the data answers; it
+never repeats a step hub or a price guide.
 
 ## The site watches itself
 
