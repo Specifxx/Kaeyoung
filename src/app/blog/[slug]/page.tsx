@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { REGIONS, type CatKey, type RegionCode } from "@/site";
 import { STORE_BY_ID } from "@/content/stores";
-import { POSTS, POST_BY_SLUG } from "@/content/blog";
+import { ALL_POSTS, POST_BY_SLUG, type Post, type Section } from "@/content/blog";
 import { bestIn, dealsIn, getBrands, getMeta, getProducts, orderableIn, popularIn, productsOfCat, storeName } from "@/lib/data";
 import { money, niceDate, pct } from "@/lib/format";
 import { storeUrl } from "@/lib/affiliate";
@@ -14,7 +14,7 @@ import { CatIcon } from "@/components/Art";
 import type { Product } from "@/lib/types";
 
 export const dynamicParams = false;
-export const generateStaticParams = () => POSTS.map((p) => ({ slug: p.slug }));
+export const generateStaticParams = () => ALL_POSTS.map((p) => ({ slug: p.slug }));
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = POST_BY_SLUG[params.slug];
@@ -33,6 +33,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const meta = getMeta();
   const asOf = meta ? niceDate(meta.updatedAt) : null;
   const Body = BODIES[p.slug];
+  const sections = p.sections;
   return (
     <article className="mx-auto max-w-4xl px-4">
       <PageHead
@@ -41,7 +42,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         sub={<p>{p.description}</p>}
         art={<CatIcon cat={p.art} size={150} />}
       />
-      <div className="prose-ky">{Body ? <Body asOf={asOf} /> : null}</div>
+      <div className="prose-ky">{Body ? <Body asOf={asOf} /> : sections ? <Advice post={p} sections={sections} /> : null}</div>
       <aside className="mt-12 rounded-2xl bg-subtle p-5 text-sm text-soft">
         Prices are each store&apos;s own, in its own currency{asOf ? `, as of ${asOf}` : ""}, before shipping. They change daily: the store&apos;s page is always right. Change your country at the top of the page to see its stores. Some links earn us a commission; it never changes the order.{" "}
         <Link prefetch={false} href="/blog" className="font-medium text-accent-deep hover:underline">
@@ -365,6 +366,71 @@ function AvoidFakes() {
         <span className="mt-2 block">
           Want the lowest price from a store you can trust? Search for your product at the top of the page, or start from <A href="/deals">today&apos;s deals</A>.
         </span>
+      </P>
+    </>
+  );
+}
+
+// ---- Advice posts (src/content/blog-advice.ts) ----------------------------
+
+/** "[text](/path)" in a paragraph becomes a link; everything else is text. */
+function Linked({ text }: { text: string }) {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        return m ? (
+          <A key={i} href={m[2]}>
+            {m[1]}
+          </A>
+        ) : (
+          part
+        );
+      })}
+    </>
+  );
+}
+
+function picked(sec: Section): Product[] {
+  if (!sec.picks) return [];
+  const re = new RegExp(sec.picks.match, "i");
+  return (sec.picks.cat ? productsOfCat(sec.picks.cat) : getProducts()).filter((f) => re.test(f.name));
+}
+
+function Advice({ sections }: { post: Post; sections: Section[] }) {
+  return (
+    <>
+      {sections.map((sec, i) => {
+        const list = picked(sec);
+        return (
+          <section key={i}>
+            {sec.h && <H2>{sec.h}</H2>}
+            {sec.p.map((t, j) => (
+              <P key={j}>
+                <Linked text={t} />
+              </P>
+            ))}
+            {sec.picks && (
+              <PerRegion
+                render={(r) => {
+                  const rows = popularIn(r, sec.picks!.limit ?? 10, list);
+                  if (!rows.length) return <Empty region={r} />;
+                  return (
+                    <div className="mb-6">
+                      <h3 className="mb-2 text-sm font-semibold text-soft">{sec.picks!.title.replace("{region}", REGIONS.find((x) => x.code === r)!.phrase)}</h3>
+                      <PriceList region={r} products={rows} />
+                    </div>
+                  );
+                }}
+              />
+            )}
+          </section>
+        );
+      })}
+      <P>
+        Picks are the products the most stores in your country stock, shown cheapest first, so the table changes as stores restock and reprice. Nothing here is medical advice: patch test new products, and see a dermatologist for skin problems that
+        don&apos;t settle. <A href="/blog">More from the blog</A>.
       </P>
     </>
   );

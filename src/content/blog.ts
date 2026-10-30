@@ -4,6 +4,7 @@
 // editing. Never repeat a category hub or a price guide as a post: a post asks
 // one question the data answers (playbook: never a /rarity-style list).
 import type { CatKey } from "@/site";
+import { ADVICE_POSTS } from "./blog-advice";
 
 export interface Post {
   slug: string;
@@ -15,6 +16,27 @@ export interface Post {
   date: string;
   /** the drawing on its card and header */
   art: CatKey;
+  /** An advice post written as data: prose sections, each optionally followed
+   *  by a live price table of the products its `picks` select (per region,
+   *  most-stocked first, shown cheapest first). Posts without it have their
+   *  own body in src/app/blog/[slug]/page.tsx. */
+  sections?: Section[];
+}
+
+export interface Picks {
+  /** table heading, "{region}" becomes "in Australia" etc. */
+  title: string;
+  /** a regular expression over the product name (case-insensitive) */
+  match: string;
+  cat?: CatKey;
+  limit?: number;
+}
+
+export interface Section {
+  h?: string;
+  /** paragraphs; [text](/path) becomes a link */
+  p: string[];
+  picks?: Picks;
 }
 
 export const POSTS: Post[] = [
@@ -71,4 +93,7 @@ export const POSTS: Post[] = [
   },
 ];
 
-export const POST_BY_SLUG = Object.fromEntries(POSTS.map((p) => [p.slug, p])) as Record<string, Post>;
+/** Every post, the advice posts after the launch posts. */
+export const ALL_POSTS: Post[] = [...POSTS, ...ADVICE_POSTS];
+
+export const POST_BY_SLUG = Object.fromEntries(ALL_POSTS.map((p) => [p.slug, p])) as Record<string, Post>;

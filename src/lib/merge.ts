@@ -3,7 +3,7 @@
 // Pure, so tests/merge.test.ts can pin every rule.
 import { REGIONS, SITE, type CatKey, type RegionCode } from "@/site";
 import { STORE_BY_ID } from "@/content/stores";
-import { pickName, readTitle, tidyName } from "./title";
+import { listingAmounts, pickName, readTitle, sizesConflict, tidyName, type Amount } from "./title";
 import { brandName, brandSlug, canonicalKey, listingBrand } from "./brand";
 import { slugify } from "./slug";
 import type { Listing, Offer, Product } from "./types";
@@ -63,9 +63,47 @@ export function sortOffers(offers: Offer[]): Offer[] {
  * both stay.
  */
 export function saneOffers(offers: Offer[]): Offer[] {
+  if (offers.length === 2) {
+    // Two prices more than three times apart cannot both be the same pack
+    // (a single sheet and the box of ten under one barcode, a mini and the
+    // full size). Neither can be told right, and a wrong price is worse than
+    // a missing one, so neither is shown in that region.
+    const [lo, hi] = offers.map((o) => o.p).sort((a, b) => a - b);
+    return hi > lo * 3 ? [] : offers;
+  }
   if (offers.length < 3) return offers;
   const med = median(offers.map((o) => o.p));
   return offers.filter((o) => o.p >= med * 0.4 && o.p <= med * 2.5);
+}
+
+/**
+ * Listings under one barcode whose titles name different packs (a 50 ml and a
+ * 100 ml, one sheet and ten) are not all the same product: a store misfiled
+ * one. The size most stores name wins and the others are dropped; when two
+ * sizes are named by as many stores each, nobody can tell which is right and
+ * the barcode is left out. Listings whose title names no size stay.
+ */
+export function sameSize<T extends { l: Listing }>(rows: T[]): T[] {
+  let kept = rows.map((r) => ({ r, as: listingAmounts(r.l.title) }));
+  for (const dim of ["amount", "count"] as const) {
+    const clusters: { a: Amount; stores: Set<string> }[] = [];
+    for (const { r, as } of kept) {
+      const a = as.find((x) => x.dim === dim);
+      if (!a) continue;
+      const c = clusters.find((x) => !sizesConflict(x.a, a));
+      if (c) c.stores.add(r.l.store);
+      else clusters.push({ a, stores: new Set([r.l.store]) });
+    }
+    if (clusters.length < 2) continue;
+    clusters.sort((a, b) => b.stores.size - a.stores.size);
+    if (clusters[0].stores.size === clusters[1].stores.size) return [];
+    const win = clusters[0].a;
+    kept = kept.filter(({ as }) => {
+      const a = as.find((x) => x.dim === dim);
+      return !a || !sizesConflict(win, a);
+    });
+  }
+  return kept.map((x) => x.r);
 }
 
 export interface MergeState {
@@ -88,11 +126,20 @@ export function mergeListings(listings: Listing[], state: MergeState, today: str
     list.push(l);
     byEan.set(l.ean, list);
   }
+  // One spelling per brand across the whole catalogue ("9WISHES" on every
+  // product, not "9wishes" on some): the brand list's, else most listings'.
+  const spellings = new Map<string, string[]>();
+  for (const l of listings) {
+    const b = listingBrand(l.vendor, l.title, STORE_BY_ID[l.store]?.name ?? l.store);
+    const k = b ? canonicalKey(b) : "";
+    if (k) spellings.set(k, [...(spellings.get(k) ?? []), b!]);
+  }
+  const spelling = new Map([...spellings].map(([k, v]) => [k, brandName(k, v)]));
   const usedSlugs = new Set(Object.values(state.slugs));
   const out: Product[] = [];
   for (const [ean, all] of byEan) {
     const read = all.map((l) => ({ l, info: readTitle(l.title, l.kind) }));
-    const kept = read.filter((r) => !("refused" in r.info));
+    const kept = sameSize(read.filter((r) => !("refused" in r.info)));
     if (!kept.length) continue;
 
     const offers: Partial<Record<RegionCode, Offer[]>> = {};
@@ -118,9 +165,10 @@ export function mergeListings(listings: Listing[], state: MergeState, today: str
       .map((r) => listingBrand(r.l.vendor, r.l.title, STORE_BY_ID[r.l.store]?.name ?? r.l.store))
       .filter((b): b is string => !!b);
     const key = mode(brands.map(canonicalKey).filter(Boolean));
-    const brand = key ? brandName(key, brands.filter((b) => canonicalKey(b) === key)) : "";
+    const brand = key ? spelling.get(key) ?? brandName(key, brands.filter((b) => canonicalKey(b) === key)) : "";
     const cat = (mode(kept.map((r) => ("refused" in r.info ? "other" : r.info.cat)).filter((c) => c !== "other")) ?? "other") as CatKey;
-    const size = mode(kept.flatMap((r) => ("refused" in r.info || !r.info.size ? [] : [r.info.size])));
+    // "1 pcs" says nothing a shopper needs: not shown as a size.
+    const size = mode(kept.flatMap((r) => ("refused" in r.info || !r.info.size || r.info.size === "1 pcs" ? [] : [r.info.size])));
     let name = pickName(kept.map((r) => tidyName(r.l.title, brand)));
     if (size && !name.toLowerCase().replace(/\s/g, "").includes(size.toLowerCase().replace(/\s/g, ""))) name = `${name} ${size}`;
 

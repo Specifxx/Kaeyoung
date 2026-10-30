@@ -1,7 +1,7 @@
 // Every rule in src/lib/title.ts has a store-style title here.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { categoryOf, cleanName, pickName, readTitle, sizeOf, tidyName } from "@/lib/title";
+import { amountOf, categoryOf, cleanName, listingAmounts, pickName, readTitle, sizeOf, sizesConflict, tidyName } from "@/lib/title";
 
 const refused = (t: string) => {
   const r = readTitle(t);
@@ -71,4 +71,34 @@ test("names: store noise out, brand first, once", () => {
   assert.equal(tidyName("Advanced Snail 96 Mucin Power Essence 100ml by COSRX", "COSRX"), "COSRX Advanced Snail 96 Mucin Power Essence 100ml");
   assert.equal(tidyName("BEAUTY OF JOSEON RELIEF SUN RICE PROBIOTICS 50ML", "Beauty of Joseon"), "Beauty of Joseon Relief Sun Rice Probiotics 50ml");
   assert.equal(pickName(["COSRX Snail Essence", "COSRX Advanced Snail 96 Mucin Power Essence", "COSRX Advanced Snail 96 Mucin Power Essence"]), "COSRX Advanced Snail 96 Mucin Power Essence");
+});
+
+test("the variant's own trailing size wins over the product title's first", () => {
+  assert.equal(sizeOf("Round Lab Dokdo Toner 200ml / 500ml (500ml)"), "500ml");
+  assert.equal(sizeOf("A'PIEU Juicy Pang Perfume Hand Cream 30ml (Basil)"), "30ml");
+});
+
+test("listing sizes: one per dimension, none when the title names two packs", () => {
+  assert.deepEqual(listingAmounts("107 Beauty Micro Drizzle Hydro Toner (5.24oz / 155ml)").map((a) => [a.dim, Math.round(a.n)]), [["amount", 155]]);
+  assert.deepEqual(listingAmounts("Anua Heartleaf 77% Soothing Sheet Mask 25ml (10 Sheets)").map((a) => [a.dim, a.n]), [["amount", 25], ["count", 10]]);
+  assert.deepEqual(listingAmounts("Round Lab Dokdo Toner 200ml / 500ml"), []);
+  assert.deepEqual(listingAmounts("Round Lab Dokdo Toner 200ml / 500ml (500ml)").map((a) => a.n), [500]);
+  assert.equal(sizesConflict(amountOf("50ml"), amountOf("100ml")), true);
+  assert.equal(sizesConflict(amountOf("1.69 fl oz"), amountOf("50ml")), false);
+  assert.equal(sizesConflict(amountOf("1 pcs"), amountOf("10 sheets")), true);
+  assert.equal(sizesConflict(amountOf("50ml"), amountOf("10 sheets")), false, "different dimensions are not compared");
+});
+
+test("store flags and shade counts are not part of a product's name", () => {
+  assert.equal(cleanName("AGE20'S NEW* Signature Essence Cover Pact (11 Colors) (13C Porcelain) 14g"), "AGE20'S Signature Essence Cover Pact (13C Porcelain) 14g");
+  assert.equal(cleanName("Kaja CLEARANCE* Juicy Glass Lip Oil - 04 Grape Glowtini 4ml"), "Kaja Juicy Glass Lip Oil - 04 Grape Glowtini 4ml");
+  assert.equal(cleanName("TIRTIR mini* Mask Fit Red Cushion (40 colors) (51N Fudge) 4.5g"), "TIRTIR Mini Mask Fit Red Cushion (51N Fudge) 4.5g");
+  assert.equal(cleanName("3CE Blur Water Tint 0.16 oz 5 Colors (Laydown)"), "3CE Blur Water Tint 0.16 oz (Laydown)");
+  assert.equal(cleanName("beplain Chamomile PH-Balanced Toner (190ml) 1 pcs"), "beplain Chamomile PH-Balanced Toner (190ml)");
+  assert.equal(cleanName("Haruharu Wonder Black Rice Hyaluronic Toner Fragrance Free 30 ml."), "Haruharu Wonder Black Rice Hyaluronic Toner Fragrance Free 30 ml");
+  assert.equal(cleanName("Mediheal Teatree Mask (10 sheets)"), "Mediheal Teatree Mask (10 sheets)", "a real pack count stays");
+});
+
+test("promotions written into a title are not part of the name", () => {
+  assert.equal(cleanName("Tocobo $1 Deal *renew* Bio Watery Sun Cream SPF50 40ml"), "Tocobo Bio Watery Sun Cream SPF50 40ml");
 });
