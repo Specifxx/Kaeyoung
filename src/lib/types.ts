@@ -47,7 +47,7 @@ export interface Meta {
   updatedAt: string;
   products: number;
   stores: Record<string, StoreRun>;
-  ebay?: { at: string; day: string; calls: number; budget: number; listings: number; skipped?: string };
+  ebay?: { at: string; day: string; calls: number; budget: number; listings: number; skipped?: string; /** eBay's (Pacific) quota day and the calls spent on it so far */ qday?: string; qcalls?: number };
 }
 
 /** The importer's raw reading of one store listing (one variant). */

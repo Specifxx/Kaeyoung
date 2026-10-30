@@ -304,3 +304,17 @@ into the respective emails". The footer already showed compareempire@gmail.com (
 link. `/contact` (static, in the sitemap) gives the address with subject-filled mailto links (wrong price or product,
 stores, missing products, review removals, press), and the footer links it. Still no message form, and ratings still
 email nobody.
+
+## eBay keyset live: home page, popular and new first — 2026-10-30
+
+The owner's new eBay keyset (5,000 Browse calls a day) is split 2,500 to K Young and 2,500 to CamCompare, with
+front-page, popular and recent products first. `planEbay` (`src/lib/ebay.ts`) ranks each (product, region) pair:
+tier 0 is what the home page shows in that region (popular, savings and new arrivals, 8 each), refreshed daily;
+tier 1 is the top 300 of /popular per region and anything first seen in the last 30 days (not the launch-day
+catalogue, which was all first seen on one day), every three days; tier 2 is the rest, weekly. Due pairs go first by
+tier; budget left over goes to pairs not yet due, oldest check first, so no call of the day is wasted.
+
+The 2,500 is per eBay quota day (midnight Pacific, `ebayQuotaDay`), recorded in `meta.ebay.qday`/`qcalls`, so a
+manual run on the same day spends only what is left. `import.yml` takes `stores: false` for an eBay-only run on the
+committed products (minutes, not hours), used to put eBay rows up right after the keys are set. The app's one
+Marketplace Account Deletion endpoint is K Young's `/api/ebay/marketplace-deletion`.
