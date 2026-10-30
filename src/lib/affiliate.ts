@@ -7,10 +7,10 @@
 import { REGION_BY_CODE, SITE, type RegionCode } from "@/site";
 import { STORE_BY_ID } from "@/content/stores";
 
-/** EPN campaign: the WargameCompare/FigureCompare one until K Young has its
- *  own (EBAY_AFFILIATE_CAMPAIGN overrides); the customid tag (`ky-…`) tells
- *  the sites apart in the reports either way. */
-export const EBAY_CAMPAIGN_ID = process.env.EBAY_AFFILIATE_CAMPAIGN || "5339155911";
+/** One EPN campaign for every site in the family, hard-coded (owner,
+ *  2026-10-30); no variable overrides it. The customid tag (`ky-…`) tells the
+ *  sites apart in the reports. */
+export const EBAY_CAMPAIGN_ID = "5339155912";
 
 /** Amazon Associates: each marketplace is its own program and tag. The
  *  family's US (riftcompare-20) and Australian (compareempire-22) tags are the
