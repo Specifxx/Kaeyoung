@@ -96,8 +96,12 @@ test("no banner ads (owner, 2026-10-30): paid links live in the price table only
   assert.ok(!fs.existsSync("src/components/EbayStrip.tsx"));
   for (const f of walk("src").filter((f) => f.endsWith(".tsx"))) assert.doesNotMatch(fs.readFileSync(f, "utf8"), /EbayStrip|EbayNavBox|AdSlot|adsbygoogle/, f);
   const table = fs.readFileSync("src/components/PriceTable.tsx", "utf8");
-  assert.ok(table.indexOf('source: "ebay"') < table.indexOf("offers.map"), "the eBay row comes before the stores");
-  for (const row of table.match(/<Row[\s\S]*?\/>/g)!.filter((r) => /source: (?:"ebay"|"amazon"|p\.key)/.test(r))) assert.match(row, /\bpaid\b/, "every marketplace row is a labelled paid link");
+  const at = (x: string) => table.indexOf(x);
+  assert.ok(at('source: "ebay"') < at('source: "amazon"') && at('source: "amazon"') < at("offers.map"), "eBay first, Amazon second, then the stores");
+  for (const row of table.match(/pinned\.push\([\s\S]*?\}\);?\n/g)!) assert.match(row, /paid: true/, "every marketplace row is a labelled paid link");
+  // The quick view draws the same rows (from /q/<slug>), never its own order.
+  assert.match(fs.readFileSync("src/app/q/[slug]/route.ts", "utf8"), /priceRows\(/);
+  assert.match(fs.readFileSync("src/components/QuickView.tsx", "utf8"), /<PriceRows /);
 });
 
 test("no Compare branding on K Young (owner, 2026-10-30)", () => {

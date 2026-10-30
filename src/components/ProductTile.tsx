@@ -12,7 +12,16 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
   const cls = (code: RegionCode) => (region ? "" : `rp rp-${code}`);
   const short = f.brand && f.name.startsWith(f.brand) ? f.name.slice(f.brand.length).trim() : f.name;
   return (
-    <Link prefetch={false} href={`/product/${f.slug}`} className="card tile-hover group flex flex-col overflow-hidden">
+    <Link
+      prefetch={false}
+      href={`/product/${f.slug}`}
+      // A plain click opens the quick view (QuickView.tsx); the link itself stays for crawlers and new tabs.
+      data-qv={f.slug}
+      data-qv-name={f.name}
+      data-qv-brand={f.brand || undefined}
+      data-qv-img={f.img || undefined}
+      className="card tile-hover group flex flex-col overflow-hidden"
+    >
       <div className="relative aspect-square bg-gradient-to-b from-white to-subtle">
         <ProductImage src={f.img} alt={f.name} label={f.brand || "K-beauty"} className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]" />
         {regions.map((r) => {

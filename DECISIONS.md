@@ -108,3 +108,14 @@ korean-skincare.fr (korean-skincare.nl), asiangroceronline.com.au (umall.com.au)
 (cosmeticsonline.net.au). Also left out: shops that charge a region's currency but ship from elsewhere
 (piyonna.com from Singapore, mediheal.com from Korea, silverglass.co from New Zealand in US dollars), and
 bellaviacanada.ca (15 codes, a UK shop).
+
+## 2026-10-30: quick view, and a page that appears at once
+
+Owner: "leverage the quick view popup like we have on RiftCompare … bring the users to the page first then load the
+prices … make the lag seem less". A plain click on a product tile now opens a quick view right away, using what the
+tile already shows (photo, brand, name). Every store's price then loads from `/q/<slug>`, a static JSON (about 6 KB)
+written at build by a `force-static` route. Opening one reads a file from the CDN, never a function. The file is
+fetched ahead when a mouse rests on a tile. Its rows come from `priceRows()`, the same rows the product page draws:
+eBay first, Amazon second, then the stores by price. The tile is still a real link, so crawlers, new tabs and
+modified clicks reach the product page, whose server HTML keeps every price for Google. Clicking through to a
+product page shows its skeleton (`loading.tsx`) at once while the static page loads.
