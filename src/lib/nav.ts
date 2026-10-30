@@ -6,14 +6,14 @@
 // No data import here: the client menus import isActive from this file.
 import { CATEGORIES, type CatKey } from "@/site";
 
-export type NavItem = { href: string; label: string; count?: number };
+export type NavItem = { href: string; label: string; count?: number; cat?: CatKey };
 export type NavGroup = { title: string; links: NavItem[] };
 
 export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: string; name: string }[] = []): NavGroup[] {
   return [
     {
       title: "Shop by step",
-      links: CATEGORIES.filter((c) => counts[c.key] > 0).map((c) => ({ href: `/${c.key}`, label: c.name, count: counts[c.key] })),
+      links: CATEGORIES.filter((c) => counts[c.key] > 0).map((c) => ({ href: `/${c.key}`, label: c.name, count: counts[c.key], cat: c.key })),
     },
     {
       title: "Save",
@@ -21,6 +21,7 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
         { href: "/deals", label: "Deals today" },
         { href: "/new", label: "New arrivals" },
         { href: "/guides", label: "Price guides" },
+        { href: "/blog", label: "Blog" },
       ],
     },
     {

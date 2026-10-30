@@ -23,15 +23,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf9f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#121114" },
+    { color: "#fff8fa" },
   ],
 };
 
 // Runs before paint: the visitor's saved region (else one guessed from their
 // time zone) and theme, so the right prices show with no flash and no cookie.
 const zones = JSON.stringify(ACTIVE_REGIONS.map((r) => [r.code, r.zones]));
-const BOOT = `(function(){var d=document.documentElement;try{var r=localStorage.getItem("ky-region");if(!r){var z=Intl.DateTimeFormat().resolvedOptions().timeZone||"",b="US",l=0;${zones}.forEach(function(e){e[1].forEach(function(p){if(z.indexOf(p)===0&&p.length>l){b=e[0];l=p.length}})});r=b}d.dataset.region=r;var t=localStorage.getItem("ky-theme");d.dataset.theme=t||(matchMedia("(prefers-color-scheme: dark)").matches?"night":"day")}catch(e){d.dataset.region="US"}})();`;
+const BOOT = `(function(){var d=document.documentElement;try{var r=localStorage.getItem("ky-region");if(!r){var z=Intl.DateTimeFormat().resolvedOptions().timeZone||"",b="US",l=0;${zones}.forEach(function(e){e[1].forEach(function(p){if(z.indexOf(p)===0&&p.length>l){b=e[0];l=p.length}})});r=b}d.dataset.region=r;var t=localStorage.getItem("ky-theme");d.dataset.theme=t||"day"}catch(e){d.dataset.region="US"}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const meta = getMeta();
@@ -51,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Header groups={groups} />
-        <div className="mx-auto flex max-w-[1440px]">
+        <div className="flex">
           <SideNav groups={groups} />
           <main id="main" className="min-w-0 flex-1 pb-6">
             {children}

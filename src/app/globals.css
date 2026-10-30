@@ -2,41 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-/* K Young's look (owner, 2026-10-30: "very professional", a calm beauty
-   retailer rather than a deal site): warm off-white, white cards with hairline
-   borders, near-black type, one berry accent for prices and buttons, green
-   only for savings. Fraunces for headings, Inter for everything else. */
+/* K Young's look (owner, 2026-10-30: "more colourful and pretty", like Korean
+   beauty sites, light by default): blush-white page, white cards with soft
+   pink hairlines, rose for prices and buttons, and a pastel set (peach,
+   lavender, mint, butter, sky) for tiles and illustrations. Green only for
+   savings. Fraunces for headings, Inter for everything else. */
 :root {
-  --bg: 250 249 247;
+  --bg: 255 250 251;
   --card: 255 255 255;
-  --ink: 28 27 31;
-  --soft: 104 100 110;
-  --line: 232 228 224;
-  --accent: 160 44 86;
-  --accent-deep: 132 30 68;
-  --accent-pale: 251 238 243;
-  --subtle: 245 242 239;
+  --ink: 45 31 46;
+  --soft: 120 102 118;
+  --line: 243 225 232;
+  --accent: 222 72 126;
+  --accent-deep: 178 40 92;
+  --accent-pale: 255 236 243;
+  --subtle: 253 243 247;
   --save: 22 125 80;
-  --save-pale: 230 244 236;
-  --ad: 248 246 241;
-  --buy: 28 27 31;
+  --save-pale: 228 245 236;
+  --ad: 255 248 250;
+  --buy: 222 72 126;
+  --peach: 255 228 214;
+  --lavender: 236 230 255;
+  --mint: 220 245 235;
+  --butter: 255 245 205;
+  --sky: 222 238 255;
   color-scheme: light;
 }
 
 [data-theme="night"] {
-  --bg: 18 17 20;
-  --card: 27 26 30;
-  --ink: 240 238 242;
-  --soft: 165 160 172;
-  --line: 50 47 54;
-  --accent: 240 120 160;
-  --accent-deep: 248 150 182;
-  --accent-pale: 60 28 42;
-  --subtle: 36 34 40;
+  --bg: 24 18 26;
+  --card: 34 27 37;
+  --ink: 246 238 244;
+  --soft: 178 162 176;
+  --line: 60 47 62;
+  --accent: 245 122 168;
+  --accent-deep: 250 156 192;
+  --accent-pale: 66 32 50;
+  --subtle: 44 35 47;
   --save: 84 206 146;
   --save-pale: 22 48 36;
-  --ad: 34 33 30;
-  --buy: 240 238 242;
+  --ad: 40 32 42;
+  --buy: 245 122 168;
+  --peach: 70 44 40;
+  --lavender: 50 44 74;
+  --mint: 30 58 50;
+  --butter: 66 58 34;
+  --sky: 34 48 70;
   color-scheme: dark;
 }
 
@@ -74,13 +85,16 @@ html:not([data-region]) .rn-US { display: none; }
 
 @layer components {
   .card {
-    @apply rounded-xl border border-line bg-card;
+    @apply rounded-2xl border border-line bg-card;
   }
   .btn-pop {
     @apply inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition hover:opacity-90 active:opacity-100;
   }
   .btn-buy {
-    @apply bg-buy text-bg;
+    @apply bg-buy text-white shadow-[0_4px_14px_-6px_rgb(var(--accent)/0.7)];
+  }
+  [data-theme="night"] .btn-buy {
+    @apply text-bg;
   }
   /* The two pinned marketplace rows (owner, 2026-10-30): same row shape as a
      store, but each wears its marketplace's own button colour so it is seen first. */
@@ -102,11 +116,25 @@ html:not([data-region]) .rn-US { display: none; }
     @apply font-display font-medium tracking-tight;
   }
   .tile-hover {
-    @apply transition hover:border-soft/40 hover:shadow-[0_6px_24px_-12px_rgb(0_0_0/0.18)];
+    @apply transition hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-[0_10px_30px_-14px_rgb(var(--accent)/0.45)];
   }
   .eyebrow {
     @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-soft;
   }
+  /* The pastel wash behind the hero, page heads and the side panel. */
+  .wash {
+    background:
+      radial-gradient(60% 80% at 0% 0%, rgb(var(--peach)) 0%, transparent 60%),
+      radial-gradient(50% 70% at 100% 10%, rgb(var(--lavender)) 0%, transparent 60%),
+      radial-gradient(60% 80% at 60% 100%, rgb(var(--accent-pale)) 0%, transparent 65%),
+      rgb(var(--bg));
+  }
+  .tint-peach { background: rgb(var(--peach)); }
+  .tint-lavender { background: rgb(var(--lavender)); }
+  .tint-mint { background: rgb(var(--mint)); }
+  .tint-butter { background: rgb(var(--butter)); }
+  .tint-sky { background: rgb(var(--sky)); }
+  .tint-rose { background: rgb(var(--accent-pale)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

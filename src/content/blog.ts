@@ -1,0 +1,74 @@
+// The blog (owner, 2026-10-30: "we need a couple of blog posts"). Each post is
+// prose around live blocks drawn from the day's prices at build, so every
+// number in a post is a real store price and the posts stay current without
+// editing. Never repeat a category hub or a price guide as a post: a post asks
+// one question the data answers (playbook: never a /rarity-style list).
+import type { CatKey } from "@/site";
+
+export interface Post {
+  slug: string;
+  title: string;
+  /** footer link text */
+  short: string;
+  description: string;
+  /** first published, YYYY-MM-DD */
+  date: string;
+  /** the drawing on its card and header */
+  art: CatKey;
+}
+
+export const POSTS: Post[] = [
+  {
+    slug: "brand-stores-vs-kbeauty-shops",
+    title: "Are K-beauty brands' own stores cheaper than K-beauty shops?",
+    short: "Brand stores vs K-beauty shops",
+    description:
+      "COSRX, Anua, SKIN1004, Torriden and other brands run their own online stores. We compared their prices with every specialist shop selling the same barcode.",
+    date: "2026-10-30",
+    art: "serums",
+  },
+  {
+    slug: "korean-skincare-routine-priced",
+    title: "A five-step Korean skincare routine, priced at the cheapest stores",
+    short: "A routine, priced",
+    description:
+      "Cleanser, toner, serum, moisturiser and sunscreen: the best-stocked product in each step, at the cheapest store in your country today, and what the whole routine costs.",
+    date: "2026-10-30",
+    art: "moisturisers",
+  },
+  {
+    slug: "korean-sunscreen-where-cheapest",
+    title: "Korean sunscreen: where the favourites are cheapest",
+    short: "Korean sunscreen prices",
+    description:
+      "The Korean sunscreens the most stores stock, with the cheapest store and the gap to the dearest one, in your country's own currency.",
+    date: "2026-10-30",
+    art: "sunscreen",
+  },
+  {
+    slug: "same-product-different-price",
+    title: "Same product, very different price: today's biggest K-beauty price gaps",
+    short: "Today's biggest price gaps",
+    description: "The same barcode, the same size, at very different prices. The biggest gaps between K-beauty stores right now.",
+    date: "2026-10-30",
+    art: "masks",
+  },
+  {
+    slug: "cosrx-beauty-of-joseon-anua-prices",
+    title: "COSRX, Beauty of Joseon and Anua: where each bestseller is cheapest",
+    short: "COSRX, Beauty of Joseon, Anua",
+    description: "Three of the most-searched Korean skincare brands, product by product: the cheapest store for each in your country today.",
+    date: "2026-10-30",
+    art: "toners",
+  },
+  {
+    slug: "avoid-fake-kbeauty",
+    title: "How to avoid fake K-beauty when you shop online",
+    short: "Avoiding fake K-beauty",
+    description: "Counterfeit Korean skincare is common on open marketplaces. What to check before you buy, and why K Young only lists specialist stores.",
+    date: "2026-10-30",
+    art: "eye-care",
+  },
+];
+
+export const POST_BY_SLUG = Object.fromEntries(POSTS.map((p) => [p.slug, p])) as Record<string, Post>;

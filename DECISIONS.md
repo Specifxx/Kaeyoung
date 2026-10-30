@@ -85,3 +85,14 @@ specialists and pharmacies in every region. A shop passes with a region currency
 880 barcodes in the probe sample; shops whose K-beauty is under 60% of their catalogue are `mixed`. Same stock on
 two domains is added once (yepposoonsoo.de is yeppo.fi; koreanskincare.nl is korean-skincare.nl). Round 4 was cut
 short at 103 of 298 candidates to free runners for the first import; the rest are probed next.
+
+## 2026-10-30: a prettier, standalone K Young, with a blog
+
+* **Look** (owner: "make this site look a lot better … more colorful and pretty … light themed"): pastel palette,
+  drawn product illustrations in the hero, step tiles and post cards, a rose-to-peach logo, washes behind page
+  heads; light unless the visitor chooses night (the OS setting no longer decides).
+* **Side panel** flush to the window's left edge (owner: "there's a big gap"), the page no longer centred in 1440px.
+* **No sister sites** (owner: "this is just Korean beauty"): the footer's family list is gone and a test keeps it out.
+  This is the one exception to the family-links rule.
+* **Blog**: six posts written around live price blocks (brand stores vs shops, a priced routine, sunscreen, the
+  biggest gaps, three bestseller brands, avoiding fakes). Stores gain `official` for the brands' own shops.

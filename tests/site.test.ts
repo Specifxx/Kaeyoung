@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { SISTER_SITES, SITE, regionForZone } from "@/site";
+import { SITE, regionForZone } from "@/site";
 import { STORES } from "@/content/stores";
 import { amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, partnerUrl, PARTNERS, storeUrl, subId } from "@/lib/affiliate";
 import { judgeFreshness, judgeStores } from "../scripts/ops-monitor";
@@ -56,11 +56,9 @@ test("stores: unique ids and hosts, every region covered", () => {
   for (const r of ["US", "UK", "CA", "AU", "NZ", "EU"]) assert.ok(STORES.filter((s) => s.region === r).length >= 2, r);
 });
 
-test("the family footer lists every sister site once", () => {
-  const urls = SISTER_SITES.map((s) => s.url);
-  assert.equal(new Set(urls).size, urls.length);
-  for (const u of ["https://riftcompare.com", "https://opcompare.app", "https://figurecompare.com", "https://wargamecompare.com"]) assert.ok(urls.includes(u), u);
-  assert.ok(!urls.some((u) => u.includes("kaeyoung")));
+test("K Young stands alone: no sister-site links (owner, 2026-10-30)", () => {
+  const src = ["src/site.ts", "src/components/Footer.tsx"].map((f) => fs.readFileSync(f, "utf8")).join("\n");
+  for (const s of ["riftcompare", "dexcompare", "figurecompare", "wargamecompare", "Sister sites"]) assert.ok(!src.toLowerCase().includes(s.toLowerCase()), s);
 });
 
 test("search: every word must match; a barcode finds its product", () => {

@@ -13,7 +13,7 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
   const short = f.brand && f.name.startsWith(f.brand) ? f.name.slice(f.brand.length).trim() : f.name;
   return (
     <Link prefetch={false} href={`/product/${f.slug}`} className="card tile-hover group flex flex-col overflow-hidden">
-      <div className="relative aspect-square bg-white">
+      <div className="relative aspect-square bg-gradient-to-b from-white to-subtle">
         <ProductImage src={f.img} alt={f.name} label={f.brand || "K-beauty"} className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]" />
         {regions.map((r) => {
           const s = spreadIn(f, r.code);
@@ -34,7 +34,7 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
               <p key={r.code} className={cls(r.code)}>
                 {b ? (
                   <>
-                    <span className="text-[15px] font-semibold tabular-nums text-ink">{money(b.offer.p, r.code)}</span>
+                    <span className="text-[15px] font-semibold tabular-nums text-accent-deep">{money(b.offer.p, r.code)}</span>
                     <span className="ml-1.5 text-xs text-soft">
                       {b.stores} store{b.stores === 1 ? "" : "s"}
                     </span>

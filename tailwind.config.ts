@@ -20,6 +20,11 @@ export default {
         save: { DEFAULT: v("save"), pale: v("save-pale") },
         ad: v("ad"),
         buy: v("buy"),
+        peach: v("peach"),
+        lavender: v("lavender"),
+        mint: v("mint"),
+        butter: v("butter"),
+        sky: v("sky"),
       },
       fontFamily: {
         sans: ['"Inter Variable"', "system-ui", "Segoe UI", "Arial", "sans-serif"],

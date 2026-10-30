@@ -23,7 +23,7 @@ async function png(size) {
   return buf;
 }
 const apple = await browser.newPage({ viewport: { width: 180, height: 180 } });
-await apple.setContent(`<html><body style="margin:0;background:#1c1b1f">${svg.replace("<svg ", '<svg width="180" height="180" ')}</body></html>`);
+await apple.setContent(`<html><body style="margin:0;background:#fff">${svg.replace("<svg ", '<svg width="180" height="180" ')}</body></html>`);
 await apple.screenshot({ path: path.join(app, "apple-icon.png") });
 
 // favicon.ico: one 32x32 PNG inside an ICO container.
@@ -43,11 +43,11 @@ writeFileSync(path.join(app, "favicon.ico"), Buffer.concat([head, p32]));
 const og = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 await og.setContent(`<!doctype html><html><head><style>
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Inter:wght@400;500;600&display=block");
-body{margin:0;width:1200px;height:630px;background:#faf9f7;font-family:Inter,sans-serif;color:#1c1b1f;display:flex;flex-direction:column;justify-content:center;padding:0 96px;box-sizing:border-box}
+body{margin:0;width:1200px;height:630px;background:radial-gradient(60% 80% at 0% 0%,#ffe4d6 0%,transparent 60%),radial-gradient(50% 70% at 100% 10%,#ece6ff 0%,transparent 60%),radial-gradient(60% 80% at 60% 100%,#ffecf3 0%,transparent 65%),#fffafb;font-family:Inter,sans-serif;color:#2d1f2e;display:flex;flex-direction:column;justify-content:center;padding:0 96px;box-sizing:border-box}
 .brand{display:flex;align-items:center;gap:20px;margin-bottom:56px}.brand span{font-family:Fraunces,serif;font-size:44px;font-weight:500}
-h1{font-family:Fraunces,serif;font-weight:500;font-size:104px;line-height:1;margin:0;letter-spacing:-2px}h1 i{color:#a02c56}
-p{font-size:30px;color:#68646e;margin:36px 0 0;max-width:900px;line-height:1.35}
-.rule{position:absolute;left:96px;right:96px;bottom:64px;border-top:1px solid #e8e4e0;padding-top:20px;font-size:20px;color:#68646e;letter-spacing:3px;text-transform:uppercase}
+h1{font-family:Fraunces,serif;font-weight:500;font-size:104px;line-height:1;margin:0;letter-spacing:-2px}h1 i{color:#de487e}
+p{font-size:30px;color:#786676;margin:36px 0 0;max-width:900px;line-height:1.35}
+.rule{position:absolute;left:96px;right:96px;bottom:64px;border-top:1px solid #f3e1e8;padding-top:20px;font-size:20px;color:#786676;letter-spacing:3px;text-transform:uppercase}
 </style></head><body>
 <div class="brand">${svg.replace("<svg ", '<svg width="72" height="72" ')}<span>K Young</span></div>
 <h1>Stay young. <i>Pay less.</i></h1>
