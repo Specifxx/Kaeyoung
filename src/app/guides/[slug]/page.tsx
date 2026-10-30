@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CAT_BY_KEY, REGIONS, REGION_BY_CODE, type RegionCode } from "@/site";
+import { CAT_BY_KEY, REGIONS, REGION_BY_CODE, SITE, type RegionCode } from "@/site";
 import { STORES } from "@/content/stores";
-import { activeStores, bestIn, dealsIn, getMeta, popularIn, productsOfCat, spreadIn, storeName } from "@/lib/data";
+import { activeStores, bestIn, dealsIn, getMeta, getProduct, getProducts, popularIn, productsOfCat, spreadIn, storeName } from "@/lib/data";
+import { shareRows } from "@/lib/og/share-rows";
 import { GUIDES, GUIDE_BY_SLUG, countryName } from "@/lib/guides";
 import { money, niceDate, pct } from "@/lib/format";
 import { storeUrl } from "@/lib/affiliate";
@@ -17,7 +18,13 @@ export const generateStaticParams = () => GUIDES.map((g) => ({ slug: g.slug }));
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const g = GUIDE_BY_SLUG[params.slug];
   if (!g) return {};
-  return { title: g.title, description: g.description, alternates: { canonical: `/guides/${g.slug}` } };
+  return {
+    title: g.title,
+    description: g.description,
+    alternates: { canonical: `/guides/${g.slug}` },
+    // The card itself is the sibling opengraph-image.tsx.
+    openGraph: { siteName: SITE.name, type: "article", title: g.title, description: g.description, url: `/guides/${g.slug}` },
+  };
 }
 
 export default function GuidePage({ params }: { params: { slug: string } }) {
@@ -61,6 +68,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
   const counts = activeStores();
   const stores = STORES.filter((s) => s.region === g.region).sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0));
   const deals = dealsIn(g.region, 15);
+  const gaps = shareRows(g.region, getProducts(), 5, g.region === "NZ" ? 2 : 3).flatMap((x) => getProduct(x.slug) ?? []);
   return (
     <div className="mx-auto max-w-5xl px-4">
       <PageHead
@@ -81,6 +89,13 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           ))}
         </ul>
       </section>
+      {gaps.length > 0 && (
+        <section className="mb-10">
+          <h2 className="h-display mb-3 text-xl">Same product, different price</h2>
+          <p className="mb-3 text-sm text-soft">Well-known products where one store charges much less than another for the same barcode and size. These are the rows on this guide&apos;s share card.</p>
+          <PriceList region={g.region} products={gaps} />
+        </section>
+      )}
       <section className="mb-10">
         <h2 className="h-display mb-3 text-xl">The best-known products, cheapest first</h2>
         <PriceList region={g.region} products={popularIn(g.region, 30)} />

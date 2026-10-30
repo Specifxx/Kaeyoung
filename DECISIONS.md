@@ -190,3 +190,24 @@ some pop-ups that appear."
   popularity, first-seen date and the brand's Hangul name; ~320 KB gzipped) and `/search-images.json` (photo paths,
   ~180 KB, loaded after it). Category and brand pages keep their server-rendered list for crawlers and first
   visits; the client list replaces it only once a control is touched. `/search` is noindex as before.
+
+## 2026-10-30: Price guides get their own share cards (for the Reddit launch)
+
+The owner asked for K Young's Reddit launch posts to link a page with "a nice and appropriate thumbnail". Every page
+shared the one brand card, so a post about Australian prices showed a slogan, not the insight.
+
+* **Each price guide draws its own card** (`src/app/guides/[slug]/opengraph-image.tsx`, `src/lib/og/`): the
+  region's best-known products where the same barcode and size costs clearly more at one store than another, the
+  cheapest store and price, the dearest price and the saving. Category guides use US prices. The region guide
+  shows the same rows at the top ("Same product, different price"), so the click lands on what the thumbnail
+  promised.
+* **Prerendered at the day's build** (`generateStaticParams` + `dynamicParams = false`), never a function, like the
+  pages (`tests/share-card.test.ts`). Fonts are bundled WOFF files (Fraunces, Inter; OFL licences beside them),
+  never fetched at build.
+* **Rows a reader can trust** (`shareRows`): 3+ stores in stock (2 in New Zealand), a gap between 15% and 60%
+  (over 60% is more often a flash sale or a listing worth a second look, and Reddit keeps a thumbnail forever),
+  one product per brand, the products stocked by the most stores anywhere first. The card names only the
+  cheapest store, never the dearest one (r/AusSkincare forbids negative mentions of businesses by name, and it
+  is fairer anyway).
+* **Text only**: no product photos (the stores' own, not ours to put on a card) and no brand packaging.
+  `npx tsx scripts/og/guide-cards.mts <dir> [slug…]` draws them to PNGs for a look before a post goes out.
