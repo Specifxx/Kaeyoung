@@ -1,15 +1,15 @@
 // Shopper ratings and reviews (owner, 2026-10-30: "users should be able to rate
 // the products … stars … and reviews"). The pure, client-safe half: limits,
-// what a review may say, the spam rules and the summary maths. No database and
-// no node:crypto here (that is lib/reviews-db.ts, used only by the two
-// /api/reviews routes), so the form, the pages and tests/reviews.test.ts all
+// what a review may say, the spam rules and the summary maths. No storage and
+// no node:crypto here (that is lib/reviews-store.ts, used only by the two
+// /api/reviews routes and the export), so the form, the pages and tests/reviews.test.ts all
 // import this file.
 //
 // How a review travels (DECISIONS.md "Ratings and reviews"): the form POSTs to
-// /api/reviews → one row in a small Neon table → the daily import exports the
-// published ones to data/public/reviews.json → the day's build draws them into
-// the static product page (server HTML, Review + AggregateRating JSON-LD).
-// Pages never read the database.
+// /api/reviews → one entry in a private GitHub repo's reviews.json → the daily
+// import exports the published ones to data/public/reviews.json → the day's
+// build draws them into the static product page (server HTML, Review +
+// AggregateRating JSON-LD). Pages never read the store.
 
 export const SKIN_TYPES = [
   { key: "dry", label: "Dry" },
@@ -86,7 +86,7 @@ export interface ReviewsFile {
   exportedAt: string;
   /** reviews waiting for the owner (a count only) */
   held: number;
-  /** set when the export could not read the database (the file then keeps the last good products) */
+  /** set when the export could not read the store (the file then keeps the last good products) */
   error?: string;
   products: Record<string, ProductReviews>;
 }

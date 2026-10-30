@@ -3,6 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { reviewFlags, summarize, validateReview, SCHEMA_MIN_RATINGS, PAGE_REVIEWS_MAX } from "@/lib/reviews";
 import { adminKeyOk, sameSite } from "@/lib/reviews-http";
+import { addReview, decide, loadStore, setStatus, type Store } from "@/lib/reviews-store";
 import { buildFile } from "../scripts/reviews-export";
 import { judgeReviews } from "../scripts/ops-monitor";
 import { applyFilters, imageUrl, norm, packImage, searchRows, NO_FILTERS, type IndexRow } from "@/lib/browse";
@@ -81,6 +82,83 @@ test("ops monitor: reviews off is a setup step; held reviews warn once a day", (
   assert.equal(judgeReviews({ ...file, held: 0 }, true, at(9)).status, "ok");
   assert.equal(judgeReviews({ ...file, error: "timeout" }, true, at(12)).status, "warn");
   assert.equal(judgeReviews({ ...file, exportedAt: "2026-10-27T06:30:00Z" }, true, at(12)).status, "warn");
+  assert.match(judgeReviews(file, true, at(12), { error: "HTTP 401" }).detail, /can't be read/);
+  assert.match(judgeReviews(file, true, at(12), { tokenExpires: "2026-11-05 00:00:00 UTC" }).detail, /expires in 5 day/);
+  assert.equal(judgeReviews(file, true, at(12), { tokenExpires: "2027-10-30 00:00:00 UTC" }).status, "ok");
+});
+
+const clean = (over: Partial<Parameters<typeof decide>[1]> = {}) => ({ ean: EAN, stars: 5 as const, title: null, body: null, name: null, skin: null, ...over });
+
+test("store rules: one rating per product per visitor, daily caps, copied text is held", () => {
+  const now = new Date("2026-10-30T12:00:00Z");
+  const store: Store = { reviews: [] };
+  const a = decide(store, clean(), "ip1", now);
+  assert.ok(a.ok && a.row.id === 1 && a.row.status === "published");
+  if (a.ok) store.reviews.push(a.row);
+  assert.equal((decide(store, clean(), "ip1", now) as { code: number }).code, 409);
+  assert.ok(decide(store, clean(), "ip2", now).ok, "another visitor may rate it");
+  const body = "Lovely light texture, no sticky finish at all.";
+  store.reviews.push({ ...store.reviews[0], id: 7, ean: "8800000000017", ip: "ip3", body });
+  const c = decide(store, clean({ body }), "ip4", now);
+  assert.ok(c.ok && c.row.status === "held" && c.row.flags.includes("copied text") && c.row.id === 8);
+  const busy: Store = { reviews: Array.from({ length: 8 }, (_, i) => ({ ...store.reviews[0], id: i + 1, ean: `88000000000${String(i).padStart(2, "0")}`, at: "2026-10-30T08:00:00" })) };
+  assert.equal((decide(busy, clean(), "ip1", now) as { code: number }).code, 429);
+  busy.reviews.forEach((r) => (r.at = "2026-10-28T08:00:00"));
+  assert.ok(decide(busy, clean(), "ip1", now).ok, "yesterday's reviews don't count against today");
+});
+
+// A tiny GitHub contents API: one file, sha-checked writes, and one forced race.
+function fakeGitHub(opts: { race?: boolean } = {}) {
+  let file: { sha: string; text: string } | null = null;
+  let n = 0;
+  let race = opts.race ?? false;
+  const calls: string[] = [];
+  const f = (async (url: string, init?: RequestInit) => {
+    const u = String(url);
+    calls.push(`${init?.method ?? "GET"} ${u.replace("https://api.github.com/repos/", "")}`);
+    assert.match(String((init?.headers as Record<string, string>).Authorization), /^Bearer test-token$/);
+    const headers = { "github-authentication-token-expiration": "2027-10-30 00:00:00 UTC" };
+    if (u.endsWith("/contents/reviews.json") && init?.method === "PUT") {
+      const b = JSON.parse(String(init.body)) as { sha?: string; content: string; message: string };
+      assert.doesNotMatch(b.message, /ip|@/, "commit messages carry no review content");
+      if (race) {
+        race = false;
+        file = { sha: `s${++n}`, text: JSON.stringify({ reviews: [{ id: 1, at: "2026-10-30T11:00:00", ean: "8800000000017", stars: 4, title: null, body: null, name: null, skin: null, ip: "other", status: "published", flags: "" }] }) };
+      }
+      if ((file?.sha ?? undefined) !== b.sha) return new Response("{}", { status: 409 });
+      file = { sha: `s${++n}`, text: Buffer.from(b.content, "base64").toString("utf8") };
+      return new Response("{}", { status: 200 });
+    }
+    if (u.endsWith("/contents/reviews.json")) {
+      if (!file) return new Response("{}", { status: 404, headers });
+      return Response.json({ sha: file.sha, encoding: "base64", content: Buffer.from(file.text).toString("base64") }, { headers });
+    }
+    if (u.endsWith("/kaeyoung-reviews")) return Response.json({ private: true });
+    return new Response("{}", { status: 404 });
+  }) as unknown as typeof fetch;
+  return { f, calls, file: () => file };
+}
+
+test("the GitHub store: first review creates the file, a write race re-reads, moderation flips status", async () => {
+  process.env.REVIEWS_GITHUB_TOKEN = "test-token";
+  process.env.REVIEWS_SALT = "salt";
+  delete process.env.REVIEWS_REPO;
+  try {
+    const gh = fakeGitHub({ race: true });
+    const r = await addReview(clean({ body: "Use code GLOW20 for 20% off at our store please" }), "1.2.3.4", gh.f);
+    assert.deepEqual(r, { ok: true, status: "held" });
+    const { store, tokenExpires } = await loadStore(gh.f);
+    assert.equal(tokenExpires, "2027-10-30 00:00:00 UTC");
+    assert.deepEqual(store.reviews.map((x) => [x.id, x.status]), [[1, "published"], [2, "held"]], "the racing write is kept, ours appended after it");
+    assert.doesNotMatch(gh.file()!.text, /1\.2\.3\.4/, "the IP itself is never stored");
+    assert.equal(await setStatus(2, "published", gh.f), true);
+    assert.equal(await setStatus(99, "hidden", gh.f), false);
+    assert.equal((await loadStore(gh.f)).store.reviews[1].status, "published");
+    assert.ok(gh.calls.every((c) => c.includes("Specifxx/kaeyoung-reviews")));
+  } finally {
+    delete process.env.REVIEWS_GITHUB_TOKEN;
+    delete process.env.REVIEWS_SALT;
+  }
 });
 
 test("the review form only takes posts from our own pages; the admin key is long and exact", () => {

@@ -1,6 +1,6 @@
 // Shoppers' ratings (data/public/reviews.json, written by the daily reviews
 // export) and the popularity ranking built on them. Read at BUILD time only,
-// like lib/data.ts: a visit never reads the reviews database.
+// like lib/data.ts: a visit never reads the reviews store.
 import fs from "node:fs";
 import path from "node:path";
 import type { RegionCode } from "@/site";
@@ -23,10 +23,10 @@ export function getReviewsFile(): ReviewsFile {
 
 export const reviewsOf = (f: Pick<Product, "ean">): ProductReviews | undefined => getReviewsFile().products[f.ean];
 
-/** The form shows only when the build can reach a reviews database (Vercel's
- *  DATABASE_URL from the Neon integration): before that the page says nothing
- *  about writing a review rather than offering a form that cannot save. */
-export const reviewsOpen = () => Boolean((process.env.REVIEWS_DATABASE_URL || process.env.DATABASE_URL || "").trim());
+/** The form shows only when the build has the reviews store's token
+ *  (REVIEWS_GITHUB_TOKEN in Vercel): before that the page says nothing about
+ *  writing a review rather than offering a form that cannot save. */
+export const reviewsOpen = () => Boolean((process.env.REVIEWS_GITHUB_TOKEN || "").trim());
 
 /**
  * Popularity, until click data exists: how many stores stock it in stock (the

@@ -4,7 +4,7 @@
 // call is refused. Actions: list, publish <id>, hide <id>. A change shows on
 // the site at the next daily release.
 import { SITE } from "@/site";
-import { adminList, reviewsConfigured, setStatus } from "@/lib/reviews-db";
+import { adminList, reviewsConfigured, setStatus } from "@/lib/reviews-store";
 import { adminKeyOk, sameSite } from "@/lib/reviews-http";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     return json({ ok: false, error: "bad request" }, 400);
   }
   if (!adminKeyOk(body.key, process.env.REVIEWS_ADMIN_KEY)) return json({ ok: false, error: "wrong key" }, 401);
-  if (!reviewsConfigured()) return json({ ok: false, error: "the reviews database is not set" }, 503);
+  if (!reviewsConfigured()) return json({ ok: false, error: "the reviews store is not set" }, 503);
   try {
     if (body.action === "list") return json({ ok: true, rows: await adminList() });
     const id = Number(body.id);

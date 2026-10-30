@@ -252,3 +252,25 @@ them to be addressed.
 * **Disclosure in plain words.** `/disclosure` is "How we make money": which rows can pay, that no store in the
   comparison pays us today (computed from `STORES`), and what commission never does. Product pages and /about say
   how fresh prices are and where to report a wrong one.
+
+## 2026-10-30: reviews move from Neon to a private GitHub repo
+
+**Owner:** "for the reviews we want to remove the dependency on neon … just store it in the github securely."
+
+* **Where:** one file, `reviews.json`, in the private repo `Specifxx/kaeyoung-reviews` (`REVIEWS_REPO` overrides).
+  `POST /api/reviews` reads it through the GitHub contents API, applies the same limits and word rules, appends the
+  review and writes it back with the blob sha; a write race (409/422) re-reads and retries up to four times. The
+  moderation route flips a review's status the same way. Commit messages carry only the id and status.
+* **Why a private repo, not this one or a data branch:** Kaeyoung is public, so a branch here would publish held spam
+  and the hashed IPs before anyone moderated them; that was the reason GitHub was ruled out in "ratings and reviews".
+  A private repo removes that objection and the database with it. Encrypting rows into the public repo was the other
+  option: more code, and a leaked key would expose every past review.
+* **The token** (`REVIEWS_GITHUB_TOKEN`) is a fine-grained token with Contents read/write on that one repo only, set in
+  Vercel (the form) and as a GitHub secret (the import's export and the ops monitor). It is read only by
+  `lib/reviews-store.ts`; `lib/ratings.ts` only asks whether it exists at build to show the form. The ops monitor
+  reads the store once per run and warns 14 days before the token expires (GitHub's expiry header).
+* **One file, not a file per review:** every check (one rating per product per visitor, 8 a day each, 400 a day in
+  all, copied text) needs the whole list, and one file is one read. At ~400 bytes a review it stays under 1 MB until
+  ~2,500 reviews; past that the store reads the blob API (up to 100 MB). Revisit at ~20,000 reviews.
+* **Migration:** none needed. `data/public/reviews.json` never existed on `main`, so `REVIEWS_DATABASE_URL` was never
+  set and no Neon review was ever exported; the Neon driver and `REVIEWS_DATABASE_URL`/`DATABASE_URL` are gone.
