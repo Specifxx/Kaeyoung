@@ -6,6 +6,7 @@
 //   /search-images.json  the products' photo paths, in the same order
 // Client-safe: no node imports.
 import type { RegionCode } from "@/site";
+import { SEARCH_SYNONYMS } from "@/content/brands-ko";
 
 export type IndexRow = [
   slug: string,
@@ -60,14 +61,12 @@ export function norm(s: string) {
     .trim();
 }
 
-/** Words a shopper types that mean a word our product names use. */
+/** Words a shopper types that mean a word our product names use: the
+ *  Korean and ingredient pairs (content/brands-ko.ts) and a few of our own. */
 export const SYNONYMS: Record<string, string[]> = {
-  sunscreen: ["sun"],
+  ...SEARCH_SYNONYMS,
   spf: ["sun"],
-  suncream: ["sun"],
-  moisturizer: ["cream"],
-  moisturiser: ["cream"],
-  cica: ["centella"],
+  moisturiser: [...(SEARCH_SYNONYMS.moisturiser ?? []), "cream"],
   cleanser: ["cleans"],
   facewash: ["cleans"],
   sheet: ["mask"],

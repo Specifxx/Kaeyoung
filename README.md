@@ -17,7 +17,7 @@ GitHub Actions, daily 06:11 UTC (import.yml)
   → commit to main with "[deploy]" in the subject → one Vercel build a day → IndexNow ping
 ```
 
-* **No database, no functions for visitors, no accounts.** Every page is prerendered at the daily build from the
+* **No accounts; no database or function behind any page.** The one exception is the rating form (`POST /api/reviews`, a small Neon table), exported daily to `data/public/reviews.json`. Every page is prerendered at the daily build from the
   committed JSON; search is a static `/search-index.json`. The visitor's region is picked in the browser.
 * **Deploys are gated** (`scripts/vercel-ignore-build.sh`): production builds only for `[deploy]` in the subject.
 * **Barcodes**: `fill-barcodes.yml` (16 runners) does big barcode fills after stores are added; the daily import
@@ -28,7 +28,7 @@ GitHub Actions, daily 06:11 UTC (import.yml)
 
 ## Pages
 
-Home, `/product/<slug>` (every store's price per region, pinned eBay/Amazon/retailer rows, price history, FAQ,
+Home, `/popular`, `/product/<slug>` (with ratings and reviews) (every store's price per region, pinned eBay/Amazon/retailer rows, price history, FAQ,
 Product + FAQ JSON-LD, phone buy bar), `/<category>` (cleansers, toners, serums, moisturisers, sunscreen, masks,
 eye-care, lip-care, makeup, body-hair, other; paged), `/brands`, `/brands/<slug>`, `/guides` and
 `/guides/<slug>` (live-data price guides per category and per country), `/deals`, `/new`, `/stores`, `/search`,

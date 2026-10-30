@@ -139,3 +139,15 @@ test("photos pack small and come back at the width asked for", () => {
   assert.equal(imageUrl(packImage("https://shop.example/a.jpg"), 120), "https://shop.example/a.jpg");
   assert.equal(imageUrl("", 120), null);
 });
+
+test("Korean words find English names; a brand's Hangul name finds the brand", () => {
+  const rows = [
+    row("a", "Relief Sun Rice + Probiotics SPF50 50ml", "sunscreen", "Beauty of Joseon", 1800, 0, 0, 12, "2026-10-01"),
+    row("b", "Heartleaf 77% Soothing Toner 250ml", "toners", "Anua", 1900, 0, 0, 3, "2026-10-01"),
+  ];
+  rows[0][11] = "조선미녀";
+  rows[1][11] = "아누아";
+  assert.deepEqual(searchRows(rows, "조선미녀").map((r) => r[0]), ["a"]);
+  assert.deepEqual(searchRows(rows, "선크림").map((r) => r[0]), ["a"]);
+  assert.deepEqual(searchRows(rows, "어성초 토너").map((r) => r[0]), ["b"]);
+});

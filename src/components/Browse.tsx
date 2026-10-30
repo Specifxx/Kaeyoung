@@ -149,7 +149,7 @@ function RowTile({ r, img }: { r: IndexRow; img: string | null }) {
   const p = r[4][region];
   const short = r[5] && r[1].startsWith(r[5]) ? r[1].slice(r[5].length).trim() : r[1];
   return (
-    <a href={`/product/${r[0]}`} className="card tile-hover group flex flex-col overflow-hidden">
+    <a href={`/product/${r[0]}`} data-qv={r[0]} data-qv-name={r[1]} data-qv-brand={r[5] || undefined} data-qv-img={img || undefined} className="card tile-hover group flex flex-col overflow-hidden">
       <div className="relative aspect-square bg-gradient-to-b from-white to-subtle">
         {img ? (
           <img src={img} alt={r[1]} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-contain p-4 text-transparent transition-transform duration-300 group-hover:scale-[1.03]" />
