@@ -8,7 +8,7 @@
 import { SITE } from "@/site";
 import { isKoreanEan } from "@/lib/ean";
 import { MIN_FILL_SECONDS, validateReview } from "@/lib/reviews";
-import { addReview, reviewsConfigured } from "@/lib/reviews-db";
+import { addReview, reviewsConfigured } from "@/lib/reviews-store";
 import { clientIp, sameSite, verifyTurnstile } from "@/lib/reviews-http";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });

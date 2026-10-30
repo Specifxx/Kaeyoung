@@ -28,14 +28,17 @@ test("every dynamic route is fully prerendered (dynamicParams = false)", () => {
 test("no middleware, no database client, no unstable_cache", () => {
   assert.equal(fs.existsSync("src/middleware.ts"), false);
   for (const f of src) assert.doesNotMatch(read(f), /@prisma\/client|unstable_cache/, f);
-  // The one database (DECISIONS.md "Ratings and reviews"): the reviews table,
-  // reached only from lib/reviews-db.ts.
-  assert.deepEqual(src.filter((f) => /@neondatabase/.test(read(f))), ["src/lib/reviews-db.ts"]);
+  // No database at all (DECISIONS.md "Reviews move from Neon to a private GitHub
+  // repo"): reviews live in a private repo, reached only from lib/reviews-store.ts.
+  for (const f of src) assert.doesNotMatch(read(f), /@neondatabase|from "pg"|postgres:\/\//, f);
+  assert.doesNotMatch(read("package.json"), /@neondatabase|"pg"/);
 });
 
-test("only the two review routes and the export script reach the reviews database", () => {
-  const users = [...src, ...walk("scripts").filter((f) => f.endsWith(".ts"))].filter((f) => /reviews-db"|reviews-db'/.test(read(f)));
-  assert.deepEqual(users.sort(), ["scripts/reviews-export.ts", "src/app/api/reviews/admin/route.ts", "src/app/api/reviews/route.ts"]);
+test("only the two review routes, the export and the monitor reach the reviews store; the token stays there", () => {
+  const users = [...src, ...walk("scripts").filter((f) => f.endsWith(".ts"))].filter((f) => /reviews-store"|reviews-store'/.test(read(f)));
+  assert.deepEqual(users.sort(), ["scripts/ops-monitor.ts", "scripts/reviews-export.ts", "src/app/api/reviews/admin/route.ts", "src/app/api/reviews/route.ts"]);
+  // ratings.ts only asks whether the token exists at build (to show the form); nothing else names it.
+  assert.deepEqual(src.filter((f) => /REVIEWS_GITHUB_TOKEN/.test(read(f))).sort(), ["src/lib/ratings.ts", "src/lib/reviews-store.ts"]);
   for (const f of ["src/app/api/reviews/route.ts", "src/app/api/reviews/admin/route.ts"]) {
     assert.doesNotMatch(read(f), /export (async )?function GET/, `${f}: POST only, nothing a crawler or a page load can run`);
   }

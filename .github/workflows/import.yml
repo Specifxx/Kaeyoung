@@ -45,7 +45,8 @@ jobs:
         run: npx tsx scripts/ebay-import.ts
       - name: Reviews (published ratings → data/public/reviews.json)
         env:
-          REVIEWS_DATABASE_URL: ${{ secrets.REVIEWS_DATABASE_URL }}
+          REVIEWS_GITHUB_TOKEN: ${{ secrets.REVIEWS_GITHUB_TOKEN }}
+          REVIEWS_REPO: ${{ vars.REVIEWS_REPO }}
         run: npx tsx scripts/reviews-export.ts
       - name: Commit data (this commit is the daily release)
         run: |

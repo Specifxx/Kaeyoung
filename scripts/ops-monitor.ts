@@ -7,6 +7,7 @@ import path from "node:path";
 import { STORES } from "@/content/stores";
 import type { Meta } from "@/lib/types";
 import type { ReviewsFile } from "@/lib/reviews";
+import { loadStore, reviewsConfigured } from "@/lib/reviews-store";
 
 type Status = "ok" | "warn" | "fail";
 type Result = { name: string; status: Status; detail: string };
@@ -42,13 +43,26 @@ export function judgeStores(meta: Meta, total: number): Omit<Result, "name"> {
   return { status: bad.length > total / 3 ? "fail" : "warn", detail };
 }
 
-/** The daily reviews export (scripts/reviews-export.ts). Held reviews raise a
- *  warning once a day only (the 09:50 UTC run), so the owner gets one daily
- *  count, never a mail per review. */
-export function judgeReviews(file: ReviewsFile | null, configured: boolean, now = Date.now()): Omit<Result, "name"> {
-  if (!configured) return { status: "warn", detail: "REVIEWS_DATABASE_URL not set in GitHub secrets: ratings and reviews are off" };
+/** The daily reviews export (scripts/reviews-export.ts) and the private store
+ *  it reads, probed live (one GitHub API read). Held reviews raise a warning
+ *  once a day only (the 09:50 UTC run), so the owner gets one daily count,
+ *  never a mail per review. The store's token expiring is warned 14 days ahead:
+ *  without it the form can't save. */
+export function judgeReviews(
+  file: ReviewsFile | null,
+  configured: boolean,
+  now = Date.now(),
+  probe: { error?: string; tokenExpires?: string } = {},
+): Omit<Result, "name"> {
+  if (!configured) return { status: "warn", detail: "REVIEWS_GITHUB_TOKEN not set in GitHub secrets: ratings and reviews are off" };
+  if (probe.error) return { status: "warn", detail: `the private reviews store can't be read: ${probe.error}` };
+  if (probe.tokenExpires) {
+    const days = (Date.parse(probe.tokenExpires.replace(" UTC", "Z").replace(" ", "T")) - now) / 86_400_000;
+    if (Number.isFinite(days) && days < 14)
+      return { status: "warn", detail: `the reviews token expires in ${Math.max(0, Math.floor(days))} day(s): make a new one and update REVIEWS_GITHUB_TOKEN in Vercel and GitHub` };
+  }
   if (!file) return { status: "warn", detail: "no reviews export yet (data/public/reviews.json missing)" };
-  if (file.error) return { status: "warn", detail: `the last reviews export could not read the database: ${file.error}` };
+  if (file.error) return { status: "warn", detail: `the last reviews export could not read the store: ${file.error}` };
   const h = (now - Date.parse(file.exportedAt)) / 3_600_000;
   if (h > 54) return { status: "warn", detail: `reviews last exported ${h.toFixed(0)}h ago: check the Import prices workflow` };
   const rated = Object.keys(file.products).length;
@@ -95,9 +109,17 @@ async function main() {
     check("Data size", () =>
       size < 12e6 ? { status: "ok", detail: `${(size / 1e6).toFixed(1)} MB` } : { status: "warn", detail: `products.json is ${(size / 1e6).toFixed(1)} MB: builds slow down; raise minStoresPerRegion or trim` },
     ),
-    check("Ratings and reviews", () => {
+    check("Ratings and reviews", async () => {
       const f = path.join(DATA, "reviews.json");
-      return judgeReviews(fs.existsSync(f) ? (JSON.parse(fs.readFileSync(f, "utf8")) as ReviewsFile) : null, Boolean(process.env.REVIEWS_DATABASE_URL));
+      const probe: { error?: string; tokenExpires?: string } = {};
+      if (reviewsConfigured()) {
+        try {
+          probe.tokenExpires = (await loadStore()).tokenExpires;
+        } catch (e) {
+          probe.error = (e as Error).message.slice(0, 160);
+        }
+      }
+      return judgeReviews(fs.existsSync(f) ? (JSON.parse(fs.readFileSync(f, "utf8")) as ReviewsFile) : null, reviewsConfigured(), Date.now(), probe);
     }),
     check("Delivery quotes", () => {
       const f = path.join(DATA, "shipping.json");

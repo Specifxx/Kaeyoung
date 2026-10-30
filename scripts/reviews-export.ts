@@ -1,13 +1,13 @@
 // The daily reviews export (import.yml, before the data commit): every
-// published rating in the reviews table → data/public/reviews.json, which the
+// published rating in the private reviews store → data/public/reviews.json, which the
 // day's build draws into the static product pages. Only products the site
-// lists are written. No database configured: the file is left as it is.
-// Database unreachable: the last good products stay and `error` is set, so the
+// lists are written. No store configured: the file is left as it is.
+// Store unreachable: the last good products stay and `error` is set, so the
 // pages keep their reviews and ops-monitor warns; the import never fails on it.
 import fs from "node:fs";
 import path from "node:path";
 import { summarize, type ReviewsFile } from "@/lib/reviews";
-import { publishedReviews, reviewsConfigured, type ExportRow } from "@/lib/reviews-db";
+import { publishedReviews, reviewsConfigured, type ExportRow } from "@/lib/reviews-store";
 
 const DATA = path.join(process.cwd(), "data/public");
 const FILE = path.join(DATA, "reviews.json");
@@ -27,7 +27,7 @@ export function buildFile(rows: ExportRow[], held: number, eans: Set<string>, no
 
 async function main() {
   if (!reviewsConfigured()) {
-    console.log("Reviews database not set (REVIEWS_DATABASE_URL): export skipped.");
+    console.log("Reviews store not set (REVIEWS_GITHUB_TOKEN): export skipped.");
     return;
   }
   const eans = new Set(
@@ -35,7 +35,8 @@ async function main() {
   );
   let out: ReviewsFile;
   try {
-    const { rows, held } = await publishedReviews();
+    const { rows, held, tokenExpires } = await publishedReviews();
+    if (tokenExpires) console.log(`Reviews token expires ${tokenExpires}.`);
     out = buildFile(rows, held, eans);
     console.log(`Reviews: ${rows.length} published ratings on ${Object.keys(out.products).length} products; ${held} waiting for the owner.`);
   } catch (e) {
