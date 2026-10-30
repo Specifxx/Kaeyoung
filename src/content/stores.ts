@@ -120,6 +120,8 @@ export const STORES: Store[] = [
   { id: "sk1ntro", name: "Sk1ntro", region: "CA", base: "https://sk1ntro.com", platform: "shopify", mixed: true },
   { id: "skinorea", name: "SKINOREA", region: "EU", base: "https://skinorea.com", platform: "shopify" },
   { id: "skinshop", name: "SkinShop", region: "EU", base: "https://skinshop.ie", platform: "shopify", mixed: true },
+  { id: "yepposoonsoo", name: "Yeppo Soonsoo", region: "EU", base: "https://yepposoonsoo.de", platform: "shopify", mixed: true },
+  { id: "koreanskincare-nl", name: "Korean Skincare NL", region: "EU", base: "https://koreanskincare.nl", platform: "shopify", mixed: true },
   { id: "usinnisfree", name: "innisfree US", region: "US", base: "https://us.innisfree.com", platform: "shopify", official: true },
 ];
 
