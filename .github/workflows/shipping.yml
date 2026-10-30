@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["claude/**"]
-    paths: ["scripts/shipping.ts", "src/lib/shipping.ts", ".github/workflows/shipping.yml"]
+    paths: ["scripts/shipping.ts", "src/lib/shipping.ts"]
 
 concurrency:
   group: delivery-quotes
@@ -50,7 +50,8 @@ jobs:
 
   commit:
     needs: quote
-    if: always()
+    # Shards that failed still hand in what they quoted; a cancelled run commits nothing.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
