@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { ebayPick, planEbay, type EbayItem } from "@/lib/ebay";
+import { ebayPick, ebayQuotaDay, planEbay, type EbayItem, type EbayPrio } from "@/lib/ebay";
 import { dayNumber, priceOn, recordHistory } from "@/lib/history";
 import type { Offer, Product } from "@/lib/types";
 
@@ -29,6 +29,24 @@ test("eBay plan: never-checked first, within budget", () => {
   const plan = planEbay([P("a", { US: offers, AU: offers }), P("b", { US: offers })], { "a:US": "2026-10-27" }, ["US", "AU"], 2);
   assert.deepEqual(plan.map((p) => `${p.f.ean}:${p.region}`), ["a:AU", "b:US"]);
   assert.equal(planEbay([P("a", { US: offers })], {}, ["US"], 0).length, 0, "no cap set, no calls");
+});
+
+test("eBay plan: home page first, then popular/new, then the rest; refreshed by tier", () => {
+  const products = [P("rest", { US: offers }), P("home", { US: offers }), P("pop", { US: offers })];
+  const tiers: Record<string, EbayPrio["tier"]> = { home: 0, pop: 1, rest: 2 };
+  const prio = (f: Product): EbayPrio => ({ tier: tiers[f.ean], score: 1 });
+  const ids = (p: { f: Product; region: string }[]) => p.map((x) => `${x.f.ean}:${x.region}`);
+  assert.deepEqual(ids(planEbay(products, {}, ["US"], 2, prio, "2026-10-31")), ["home:US", "pop:US"]);
+  // The home-page product is due again after a day; the others are not yet due,
+  // so spare budget goes to them oldest check first.
+  const checked = { "home:US": "2026-10-30", "pop:US": "2026-10-30", "rest:US": "2026-10-29" };
+  assert.deepEqual(ids(planEbay(products, checked, ["US"], 3, prio, "2026-10-31")), ["home:US", "rest:US", "pop:US"]);
+  assert.deepEqual(ids(planEbay(products, checked, ["US"], 1, prio, "2026-10-31")), ["home:US"]);
+});
+
+test("eBay quota day is the Pacific date", () => {
+  assert.equal(ebayQuotaDay(new Date("2026-10-31T06:30:00Z")), "2026-10-30");
+  assert.equal(ebayQuotaDay(new Date("2026-10-31T07:30:00Z")), "2026-10-31");
 });
 
 test("history records only changes and reads back by day", () => {

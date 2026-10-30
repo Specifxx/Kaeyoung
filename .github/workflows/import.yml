@@ -13,6 +13,10 @@ on:
         description: "Spend eBay calls this run"
         type: boolean
         default: true
+      stores:
+        description: "Re-read every store first (off = an eBay-only run on today's products, minutes not hours)"
+        type: boolean
+        default: true
 
 concurrency:
   group: import-prices
@@ -35,6 +39,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Stores
+        if: github.event_name != 'workflow_dispatch' || inputs.stores
         run: npx tsx scripts/import.ts
       - name: eBay
         if: github.event_name != 'workflow_dispatch' || inputs.ebay
