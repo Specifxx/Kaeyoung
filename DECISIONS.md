@@ -35,7 +35,7 @@ ads … a side panel like Dex Compare."
   above the stores, labelled, `rel="sponsored"`, never counted as a store or the best price.
 * **eBay**: pinned row per region (search, or the cheapest believable listing by GTIN once the eBay pass runs).
   Counterfeit K-beauty ships mostly from China and Hong Kong, so those sellers are skipped. EPN campaign
-  5339155911 (WargameCompare/FigureCompare's) until K Young has its own; the `ky-` customid separates it. K Young and
+  5339155912, the one campaign every family site uses (hard-coded, owner 2026-10-30); the `ky-` customid separates it. K Young and
   CamCompare share the owner's third Browse keyset (pending eBay approval, owner 2026-10-30), 2,500 calls a day
   each: `EBAY_DAILY_CAP` defaults to 2,500 and can only lower it; the pass is a no-op until the keys exist.
 * **Amazon**: US `riftcompare-20` and AU `compareempire-22` (the family's accounts; a US tag earns nothing on
@@ -67,3 +67,13 @@ barcode (Mirai Skin, RoseRoseShop, Olive Kollection, Korean Beauty Australia, Le
   button colours (eBay blue, Amazon yellow) with a "Shown first" chip, so they are seen first; otherwise they are
   drawn exactly like a store row (same card, border and type). The beauty retailers follow, then the stores in
   price order. Still labelled "Paid link", never counted as a store, never the cheapest.
+
+## One eBay campaign for every Compare site, hard-coded — 2026-10-30
+
+**Decided (owner).** Every Compare site now sends eBay clicks to ONE EPN campaign, 5339155912 (RiftCompare's,
+already set up), hard-coded in the code: no variable overrides it any more, so a forgotten secret or Vercel
+value can't split the sites again. The sites are told apart by the `customid` prefix alone, which comes first
+in every tag; this site's is `ky-<region>`. 
+Replaced: 5339155911 (WargameCompare, FigureCompare, Compare Empire, K Young), 5339231473 (Lorcana),
+5339231474 (Gundam), 5339234013 (YGO). Old secrets/variables (`EBAY_AFFILIATE_CAMPAIGN`,
+`NEXT_PUBLIC_EBAY_CAMPAIGN_ID`, `EBAY_CAMPAIGN_ID`) are no longer read and can be deleted.
