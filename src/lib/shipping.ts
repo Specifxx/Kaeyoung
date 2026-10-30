@@ -65,6 +65,12 @@ export function destinationFor(region: RegionCode, base: string) {
 export function deliveryFor(s: StoreShipping | undefined, total: number): number | null {
   if (!s) return null;
   if (s.fee === 0) return 0;
+  if (s.freeFrom != null && s.paidAt >= s.freeFrom) {
+    // We saw a bigger basket charged than one that went free (weight-based
+    // rates, or a discount moving the total): between the two, we don't know.
+    if (total < s.freeFrom) return s.fee;
+    return total > s.paidAt ? 0 : null;
+  }
   if (s.freeFrom != null && total >= s.freeFrom) return 0;
   if (total <= s.paidAt || s.freeFrom == null) return s.fee;
   return null;

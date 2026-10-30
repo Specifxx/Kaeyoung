@@ -162,6 +162,9 @@ export async function quote(store: Store): Promise<StoreShipping & { calls: numb
   let total = await setQty(cart, lines[0], 1);
   const first = await cheapestRate(cart, q);
   const base = { at: today, to: dest.city, rate: first.name };
+  // A small order quoted over 40 units is a heavy item or a zone the store
+  // doesn't really serve, not what a shopper would pay: leave the store out.
+  if (first.cents > 4000) throw new Error(`implausible small-order fee ${first.cents} (${first.name})`);
   if (first.cents === 0) return { ...base, fee: 0, freeFrom: total, paidAt: 0, maxTested: total, calls: cart.calls };
 
   // Grow the basket (about doubling) until delivery is free or we reach the

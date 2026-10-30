@@ -17,6 +17,10 @@ test("delivery: charged below what we saw charged, free from what we saw free, u
   assert.equal(deliveryFor({ ...q, fee: 0 }, 100), 0, "always free");
   assert.equal(deliveryFor({ ...q, freeFrom: null, paidAt: 25000 }, 30000), 995, "never seen free: the fee");
   assert.equal(deliveryFor(undefined, 100), null);
+  const odd = { ...q, freeFrom: 3000, paidAt: 3099 };
+  assert.equal(deliveryFor(odd, 2900), 995);
+  assert.equal(deliveryFor(odd, 3050), null, "charged above a basket that went free: unknown between them");
+  assert.equal(deliveryFor(odd, 3200), 0);
 });
 
 test("delivery notes say where to and only what we saw", () => {
