@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
-import { bestIn, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfCat, regionsOf, spreadIn, storeCount, storeName } from "@/lib/data";
+import { bestIn, brandKo, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
 import { isIndexable } from "@/lib/index-tiers";
@@ -51,7 +51,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const history = getHistory()[f.ean] ?? {};
   const today = dayNumber(new Date().toISOString().slice(0, 10));
   const hasBrandPage = !!f.b && brandPages().has(f.b);
-  const sameBrand = f.b ? getProducts().filter((x) => x.b === f.b && x.ean !== f.ean) : [];
+  const sameBrand = f.b ? productsOfBrand(f.b).filter((x) => x.ean !== f.ean) : [];
+  const variants = variantsOf(f).sort((a, b) => variantLabel(a).localeCompare(variantLabel(b), undefined, { numeric: true }));
+  const labels = variantLabels([f, ...variants]);
+  const ko = brandKo(f.brand);
   const siblings = (sameBrand.length >= 4 ? sameBrand : productsOfCat(f.cat).filter((x) => x.ean !== f.ean))
     .sort((a, b) => storeCount(b) - storeCount(a))
     .slice(0, 8);
@@ -110,9 +113,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             (hasBrandPage ? (
               <Link prefetch={false} href={`/brands/${f.b}`} className="eyebrow hover:text-ink">
                 {f.brand}
+                {ko && <span lang="ko" className="ml-1.5 normal-case tracking-normal text-soft">{ko}</span>}
               </Link>
             ) : (
-              <p className="eyebrow">{f.brand}</p>
+              <p className="eyebrow">
+                {f.brand}
+                {ko && <span lang="ko" className="ml-1.5 normal-case tracking-normal text-soft">{ko}</span>}
+              </p>
             ))}
           <h1 className="h-display mt-1.5 text-3xl leading-tight sm:text-[2.4rem]">{f.name}</h1>
           <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
@@ -120,6 +127,24 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             {f.size && <span className="chip bg-subtle text-ink">{f.size}</span>}
             <span className="chip bg-subtle text-soft">Barcode {f.ean}</span>
           </div>
+
+          {variants.length > 0 && (
+            <div className="mt-4">
+              <p className="eyebrow mb-1.5">Other sizes and shades</p>
+              <ul className="flex max-h-40 flex-wrap gap-1.5 overflow-y-auto text-xs">
+                <li>
+                  <span aria-current="page" className="chip border border-ink bg-card font-semibold text-ink">{labels.get(f.ean)}</span>
+                </li>
+                {variants.slice(0, 60).map((v) => (
+                  <li key={v.ean}>
+                    <Link prefetch={false} href={`/product/${v.slug}`} className="chip border border-line bg-card text-ink hover:border-soft">
+                      {labels.get(v.ean)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {regions.length > 1 && (
             <div className="mt-5">

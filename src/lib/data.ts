@@ -6,6 +6,8 @@ import path from "node:path";
 import { CATEGORIES, REGIONS, type CatKey, type RegionCode } from "@/site";
 import { STORE_BY_ID } from "@/content/stores";
 import { lowestOrderable } from "./history";
+import { canonicalKey } from "./brand";
+import { BRAND_KO } from "@/content/brands-ko";
 import type { EbayData, History, Meta, Offer, Product } from "./types";
 
 // KY_DATA_DIR points local development and tests at a fixture; production
@@ -22,18 +24,80 @@ function load<T>(file: string, fallback: T): T {
   return v;
 }
 
+/** Built once per build process and reused by every page: with tens of
+ *  thousands of products, a per-page scan of the catalogue (or of the brand
+ *  list) makes the daily build quadratic. */
+function once<T>(key: string, build: () => T): T {
+  if (!memo.has(key)) memo.set(key, build());
+  return memo.get(key) as T;
+}
+
 export const getProducts = (): Product[] =>
-  load<{ products: Product[] }>("products.json", { products: [] }).products.filter((f) => f.offers && Object.values(f.offers).some((o) => o?.length));
+  once("products", () => load<{ products: Product[] }>("products.json", { products: [] }).products.filter((f) => f.offers && Object.values(f.offers).some((o) => o?.length)));
 export const getMeta = (): Meta | null => load<Meta | null>("meta.json", null);
 export const getHistory = (): History => load<History>("history.json", {});
 export const getEbay = (): EbayData => load<EbayData>("ebay.json", {});
 
 export function getProduct(slug: string): Product | undefined {
-  return getProducts().find((f) => f.slug === slug);
+  return once("bySlug", () => new Map(getProducts().map((f) => [f.slug, f]))).get(slug);
 }
 
+/** A fresh array each call: callers sort it. */
 export function productsOfCat(cat: CatKey): Product[] {
-  return getProducts().filter((f) => f.cat === cat);
+  return [...(once("byCat", () => {
+    const m = new Map<CatKey, Product[]>();
+    for (const f of getProducts()) m.set(f.cat, [...(m.get(f.cat) ?? []), f]);
+    return m;
+  }).get(cat) ?? [])];
+}
+
+export function productsOfBrand(b: string): Product[] {
+  return [...(once("byBrand", () => {
+    const m = new Map<string, Product[]>();
+    for (const f of getProducts()) if (f.b) m.set(f.b, [...(m.get(f.b) ?? []), f]);
+    return m;
+  }).get(b) ?? [])];
+}
+
+/**
+ * The same product in other sizes and shades: same brand, same name once the
+ * size, the shade in brackets and a shade number are taken out ("TIRTIR Mask
+ * Fit Red Cushion 18g (21N Ivory)" and "… (23N Sand)"). Each has its own
+ * barcode and page; this only links them. A mini or a refill names itself and
+ * stays apart.
+ */
+export function familyKey(f: Product): string {
+  let n = f.name.toLowerCase();
+  if (f.brand) n = n.replace(f.brand.toLowerCase(), " ");
+  return `${f.b}|${n
+    .replace(/\([^()]*\)/g, " ")
+    .replace(/\d+(?:[.,]\d+)?\s?(?:ml|g|fl\.?\s?oz|oz|sheets?|pcs|pads?|patches|ea)\b/g, " ")
+    .replace(/#\s?[\w-]+/g, " ")
+    .replace(/\bno\.?\s?\d+\w*/g, " ")
+    .replace(/\s[-–]\s*\d+\w*(?:\s[\w']+){0,3}$/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()}`;
+}
+
+export function variantsOf(f: Product): Product[] {
+  if (!f.b) return [];
+  const fam = once("families", () => {
+    const m = new Map<string, Product[]>();
+    for (const x of getProducts()) {
+      if (!x.b) continue;
+      const k = familyKey(x);
+      m.set(k, [...(m.get(k) ?? []), x]);
+    }
+    return m;
+  });
+  return (fam.get(familyKey(f)) ?? []).filter((x) => x.ean !== f.ean);
+}
+
+/** What tells a variant apart on its chip: the shade or pack in brackets, else its size. */
+export function variantLabel(f: Product): string {
+  const inBrackets = [...f.name.matchAll(/\(([^()]*)\)/g)].map((m) => m[1].trim()).filter((x) => x && !/^\d+(?:[.,]\d+)?\s?(?:ml|g|oz|fl oz)$/i.test(x));
+  const shade = inBrackets.join(" · ") || f.name.match(/(?:#\s?[\w-]+|\bNo\.?\s?\d+\w*)/i)?.[0] || "";
+  return [shade, f.size].filter(Boolean).join(" · ") || f.name;
 }
 
 /** Regions where this product has at least one offer, in REGIONS order. */
@@ -145,6 +209,10 @@ export const BRAND_PAGE_MIN = 3;
 
 /** Every brand with a page, most products first. */
 export function getBrands(): BrandInfo[] {
+  return once("brands", buildBrands);
+}
+
+function buildBrands(): BrandInfo[] {
   const by = new Map<string, BrandInfo>();
   for (const f of getProducts()) {
     if (!f.b) continue;
@@ -156,10 +224,22 @@ export function getBrands(): BrandInfo[] {
 }
 
 export function getBrand(slug: string): BrandInfo | undefined {
-  return getBrands().find((b) => b.slug === slug);
+  return once("brandBySlug", () => new Map(getBrands().map((b) => [b.slug, b]))).get(slug);
 }
 
 /** Brands with a page, by slug: product pages link only to these. */
 export function brandPages(): Set<string> {
-  return new Set(getBrands().map((b) => b.slug));
+  return once("brandPages", () => new Set(getBrands().map((b) => b.slug)));
+}
+
+/** The brand's own Korean name, when we have it checked (src/content/brands-ko.ts). */
+export const brandKo = (brand: string): string | null => (brand ? BRAND_KO[canonicalKey(brand)] ?? null : null);
+
+/** Chip labels for a family: two variants that read the same (an old and a new
+ *  packaging, both 150 ml) are told apart by the end of their barcode. */
+export function variantLabels(list: Product[]): Map<string, string> {
+  const base = new Map(list.map((f) => [f.ean, variantLabel(f)]));
+  const seen = new Map<string, number>();
+  for (const l of base.values()) seen.set(l, (seen.get(l) ?? 0) + 1);
+  return new Map(list.map((f) => [f.ean, seen.get(base.get(f.ean)!)! > 1 ? `${base.get(f.ean)} · …${f.ean.slice(-4)}` : base.get(f.ean)!]));
 }

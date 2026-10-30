@@ -70,3 +70,40 @@ test("mirrors (one stock under two names) count once", () => {
   assert.deepEqual(mirrors, { b: "a" });
   assert.ok(!listings.some((l) => l.store === "b"));
 });
+
+test("two prices more than 3x apart in a region: neither is shown there", () => {
+  const two = (a: number, b: number) => saneOffers([a, b].map((p, i) => ({ s: `s${i}`, p, st: "in" as const, u: "" })));
+  assert.equal(two(399, 3299).length, 0, "Abib: one sheet at 3.99 against the box of ten at 32.99");
+  assert.equal(two(1999, 2999).length, 2);
+});
+
+test("listings naming a different pack under one barcode: the size most stores name wins", () => {
+  const out = mergeListings(
+    [L("a", "US", 2199), L("b", "US", 2299), L("c", "US", 1200, { title: "COSRX Advanced Snail 96 Mucin Power Essence 50ml" })],
+    fresh(),
+    "2026-10-30",
+  );
+  assert.deepEqual(out[0].offers.US!.map((o) => o.s), ["a", "b"]);
+});
+
+test("one store says one sheet, the other a box of ten: the barcode is left out", () => {
+  const mask = (store: string, cents: number, title: string) => L(store, "CA", cents, { title, kind: "Mask" });
+  const out = mergeListings([mask("a", 399, "Abib Mild Acidic pH Sheet Mask Aqua Fit (1 pcs)"), mask("b", 1299, "Abib Mild Acidic pH Sheet Mask Aqua Fit (10 Sheets)")], fresh(), "2026-10-30");
+  assert.equal(out.length, 0);
+});
+
+test("one brand spelling across the catalogue", () => {
+  const nine = ean("880000000001");
+  const out = mergeListings(
+    [
+      L("a", "US", 2199, { vendor: "9WISHES" }),
+      L("b", "US", 2299, { vendor: "9WISHES" }),
+      L("a", "US", 1500, { vendor: "9wishes", ean: nine, title: "9wishes Hydra Skin Ampule Serum 25ml" }),
+      L("b", "US", 1600, { vendor: "9wishes", ean: nine, title: "9wishes Hydra Skin Ampule Serum 25ml" }),
+      L("c", "US", 1600, { vendor: "9WISHES", ean: nine, title: "9wishes Hydra Skin Ampule Serum 25ml" }),
+    ],
+    fresh(),
+    "2026-10-30",
+  );
+  assert.deepEqual([...new Set(out.map((p) => p.brand))], ["9WISHES"]);
+});

@@ -119,3 +119,31 @@ fetched ahead when a mouse rests on a tile. Its rows come from `priceRows()`, th
 eBay first, Amazon second, then the stores by price. The tile is still a real link, so crawlers, new tabs and
 modified clicks reach the product page, whose server HTML keeps every price for Google. Clicking through to a
 product page shows its skeleton (`loading.tsx`) at once while the static page loads.
+## Precision, families, Korean names and advice posts — 2026-10-30
+
+**Owner:** "this website is a bit more delicate … the Korean language … many small differences in specification
+between products … thousands and thousands of these products … maximum effort … reduced cost in Vercel … a lot of
+these blog posts offering opinions, advice, and ideas … this site would mainly be dominated by females."
+Strategy doc: https://claude.ai/artifact/Fn5uYBzekUHBXdZrrmpRyu
+
+* **A barcode is trusted only when its listings agree on the pack** (`sameSize` in `merge.ts`). The first import
+  had 76 region rows with two stores more than 3x apart, mostly one sheet mask filed under the box of ten's
+  barcode. Sizes are compared in two dimensions, amount (ml, g and oz as one, within 10%) and count (sheets,
+  pads, pcs); the size most stores name wins, a tie drops the barcode. A title naming two packs counts as
+  unknown unless the variant's own trailing brackets say which. And with exactly two stores in a region more
+  than 3x apart, neither price is shown there: one is wrong and we can't tell which.
+* **One brand spelling across the catalogue**, decided from every listing before products are built.
+* **Names lose shop flags** ("NEW*", "CLEARANCE*"), shade counts ("(11 Colors)") and "1 pcs"; "mini*" becomes "Mini".
+* **Families, not merged pages.** Every size and shade keeps its own barcode and page; `variantsOf`/`familyKey`
+  (same brand, same name without size, bracketed shade or shade number) only links them with chips. A mini or a
+  refill names itself and stays apart. Two variants that read the same are told apart by their barcode's end.
+* **Korean only where checked.** Store titles carry no Hangul, so Korean appears as the brand's own Korean name
+  (`src/content/brands-ko.ts`, ~100 brands, about 78% of products) and as search words (`SEARCH_SYNONYMS`).
+  Never machine-translated or transliterated by guess.
+* **Build cost.** Catalogue indexes (by slug, category, brand, family) are built once per build (`once` in
+  `data.ts`), not scanned per page. 9,423 pages build in about 3 minutes locally; each product page is ~150 KB
+  raw (~21 KB gzipped, half of it the inline RSC payload). Watch the deploy's output size as stores grow.
+* **Advice posts** (`src/content/blog-advice.ts`) are data: prose sections plus live per-region tables picked by
+  a name pattern. Opinions rest on what a product's name says it contains, how widely it is stocked and its
+  price; no medical claims (`tests/blog.test.ts`), skin-condition posts say patch test and see a dermatologist,
+  written as the K Young team.

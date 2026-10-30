@@ -59,17 +59,74 @@ export function categoryOf(title: string, kind = ""): CatKey {
 
 const SIZE = /(\d+(?:[.,]\d+)?)\s?(ml|g|gr|fl\.?\s?oz|oz|ea|sheets?|pcs|pads?|patches)\b/gi;
 
-/** The pack size a title states ("150ml", "30g", "10 sheets"), the first one when it names several. */
+function sizeLabel(m: RegExpMatchArray): string | null {
+  const n = m[1].replace(",", ".");
+  const u = m[2].toLowerCase().replace(/\s/g, "").replace("gr", "g").replace("fl.oz", "fl oz").replace("floz", "fl oz");
+  if (Number(n) <= 0) return null;
+  if (u === "ml" || u === "g" || u === "oz" || u === "fl oz") return `${n}${u === "fl oz" ? " fl oz" : u === "oz" ? " oz" : u}`;
+  if (u === "ea" || u === "pcs") return `${n} pcs`;
+  return `${n} ${u.replace(/s?$/, "s")}`;
+}
+
+/** The pack size a title states ("150ml", "30g", "10 sheets"): the one in the
+ *  variant's own trailing brackets when there is one ("Toner 150ml/300ml
+ *  (300ml)" is the 300 ml), else the first. */
 export function sizeOf(title: string): string | null {
-  for (const m of title.matchAll(SIZE)) {
-    const n = m[1].replace(",", ".");
-    const u = m[2].toLowerCase().replace(/\s/g, "").replace("gr", "g").replace("fl.oz", "fl oz").replace("floz", "fl oz");
-    if (Number(n) <= 0) continue;
-    if (u === "ml" || u === "g" || u === "oz" || u === "fl oz") return `${n}${u === "fl oz" ? " fl oz" : u === "oz" ? " oz" : u}`;
-    if (u === "ea" || u === "pcs") return `${n} pcs`;
-    return `${n} ${u.replace(/s?$/, "s")}`;
-  }
+  const tail = title.match(/\(([^()]*)\)\s*$/);
+  if (tail) for (const m of tail[1].matchAll(SIZE)) { const s = sizeLabel(m); if (s) return s; }
+  for (const m of title.matchAll(SIZE)) { const s = sizeLabel(m); if (s) return s; }
   return null;
+}
+
+/** A size as a number in one of two dimensions, for comparing listings:
+ *  amount (ml, g and oz are treated as one, 1 ml ≈ 1 g) or count (sheets, pads, pcs). */
+export interface Amount {
+  dim: "amount" | "count";
+  n: number;
+}
+
+export function amountOf(size: string | null): Amount | null {
+  if (!size) return null;
+  const m = size.match(/^([\d.]+)\s?(.*)$/);
+  if (!m) return null;
+  const n = Number(m[1]);
+  if (!(n > 0)) return null;
+  const u = m[2];
+  if (u === "ml" || u === "g") return { dim: "amount", n };
+  if (u === "oz" || u === "fl oz") return { dim: "amount", n: n * 29.57 };
+  return { dim: "count", n };
+}
+
+/** Two sizes that cannot be the same pack (a 50 ml against a 100 ml, a single
+ *  sheet against a box of ten). Within 10% is the same pack written two ways
+ *  ("5.24 oz" and "155ml"); different dimensions are not compared. */
+export function sizesConflict(a: Amount | null, b: Amount | null): boolean {
+  if (!a || !b || a.dim !== b.dim) return false;
+  return Math.abs(a.n - b.n) / Math.max(a.n, b.n) > 0.1;
+}
+
+/**
+ * The sizes a listing can be trusted to be, at most one per dimension ("25ml
+ * (10 sheets)" is both an amount and a count). The variant's own trailing
+ * brackets decide a dimension they name; otherwise a title naming two
+ * different packs ("Toner 150ml / 300ml") says nothing about which this is.
+ */
+export function listingAmounts(title: string): Amount[] {
+  const read = (t: string) => [...t.matchAll(SIZE)].map((m) => amountOf(sizeLabel(m))).filter((a): a is Amount => !!a);
+  const tail = title.match(/\(([^()]*)\)\s*$/);
+  const fromTail = tail ? read(tail[1]) : [];
+  const all = read(title);
+  const out: Amount[] = [];
+  for (const dim of ["amount", "count"] as const) {
+    const t = fromTail.find((a) => a.dim === dim);
+    if (t) {
+      out.push(t);
+      continue;
+    }
+    const xs = all.filter((a) => a.dim === dim);
+    if (xs.length && !xs.some((a) => sizesConflict(a, xs[0]))) out.push(xs[0]);
+  }
+  return out;
 }
 
 // Store noise stripped before a title becomes a product name.
@@ -79,6 +136,14 @@ const NOISE = [
   /\((?:new|renewal|renewed|restock|in\s*stock|sale|hot|best\s*seller|bestseller|us\s*version|korean\s*version|ship[^)]*|new\s*packaging|old\s*packaging|upgrade[d]?|limited[^)]*)\)/gi,
   /\b(?:new\s*arrival|best\s*seller|bestseller|hot\s*item|on\s*sale|sale|restock(?:ed)?|in\s*stock|authentic|official|100%\s*genuine|genuine)\b\s*[:\-–!]?/gi,
   /\s[-–|]\s*(?:k-?beauty|korean\s*(?:skin\s*care|skincare|beauty|cosmetics?))\s*$/i,
+  // Shop flags written as a starred word: "NEW*", "CLEARANCE*", "HOT*" ("mini*" is kept, as "Mini").
+  /\b(?:new|clearance|sale|hot|best|restock|limited|special|deal|outlet)\*/gi,
+  // Promotions written into the title: "$1 Deal", "*renew*".
+  /\$\d+(?:\.\d+)?\s*deal\b|\*\s*[a-z][a-z ]{1,15}\s*\*/gi,
+  // How many shades the listing has, not which one this is: "(11 Colors)", "5 Colors", "(40 shades)".
+  /\(\s*\d+\s*(?:colou?rs?|shades?|types?|options?|scents?)\s*\)|\b\d+\s*(?:colou?rs|shades|types|options|scents)\b/gi,
+  // A single unit says nothing: "1 pcs", "(1 pc)", "1ea".
+  /\(\s*1\s*(?:pcs?|ea)\s*\)|\b1\s*(?:pcs?|ea)\b/gi,
   /\s{2,}/g,
 ];
 
@@ -87,10 +152,12 @@ export function cleanName(title: string): string {
   let t = title;
   for (const re of NOISE) t = t.replace(re, " ");
   t = t
+    .replace(/\bmini\*\s*/gi, "Mini ")
     .replace(/\(\s*\)/g, " ")
     .replace(/\s+([,:;)])/g, "$1")
     .replace(/([(])\s+/g, "$1")
-    .replace(/^[\s\-–:|,*]+|[\s\-–:|,*]+$/g, "")
+    .replace(/^[\s\-–:|,*.]+|[\s\-–:|,*]+$/g, "")
+    .replace(/(\b(?:ml|g|oz|sheets?|pads?|pcs))\.$/i, "$1")
     .replace(/\s{2,}/g, " ")
     .trim();
   // Shouting stores: "COSRX ADVANCED SNAIL 96 MUCIN" → title case.
