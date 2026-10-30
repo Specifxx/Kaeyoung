@@ -1,7 +1,7 @@
 name: Ops monitor
 # Every three hours, from GitHub (so it works when the site or the deploy is
 # what broke): live site, search index, data freshness, store imports, data
-# size and eBay. Fails (and GitHub emails the owner) only when something needs a look.
+# size, eBay and the reviews export. Fails (and GitHub emails the owner) only when something needs a look.
 on:
   schedule:
     - cron: "50 */3 * * *"
@@ -23,4 +23,5 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
           EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
           EBAY_DAILY_CAP: ${{ vars.EBAY_DAILY_CAP }}
+          REVIEWS_DATABASE_URL: ${{ secrets.REVIEWS_DATABASE_URL }}
         run: npx tsx scripts/ops-monitor.ts

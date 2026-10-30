@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES, REGIONS, SITE } from "@/site";
-import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn, popularIn } from "@/lib/data";
+import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn } from "@/lib/data";
+import { popularNow } from "@/lib/ratings";
 import { ago } from "@/lib/format";
 import { SearchBox } from "@/components/SearchBox";
 import { RegionPicker } from "@/components/RegionPicker";
@@ -70,12 +71,12 @@ export default function Home() {
 
         {REGIONS.map((r) => {
           const deals = dealsIn(r.code, 8).map((d) => d.f);
-          const pop = popularIn(r.code, 8);
+          const pop = popularNow(r.code, 8);
           const fresh = newestIn(r.code, 8);
           return (
             <div key={r.code} className={`rp rp-${r.code}`}>
               {pop.length > 0 && (
-                <Section title={`Most-stocked ${r.phrase}`} sub="The products the most stores carry: the K-beauty staples." href="/guides" more="Price guides">
+                <Section title={`Popular ${r.phrase}`} sub="The K-beauty staples: stocked by the most stores and rated by shoppers." href="/popular" more="All popular">
                   <TileGrid products={pop} region={r.code} />
                 </Section>
               )}

@@ -4,6 +4,8 @@ import { bestIn, spreadIn } from "@/lib/data";
 import { money, pct } from "@/lib/format";
 import type { Product } from "@/lib/types";
 import { ProductImage } from "./ProductImage";
+import { Stars } from "./reviews/Stars";
+import { reviewsOf } from "@/lib/ratings";
 
 /** A product card. With `region` it shows that region's price only (lists
  *  already split by region); without, every region's, switched by CSS. */
@@ -11,6 +13,7 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
   const regions = region ? REGIONS.filter((r) => r.code === region) : REGIONS;
   const cls = (code: RegionCode) => (region ? "" : `rp rp-${code}`);
   const short = f.brand && f.name.startsWith(f.brand) ? f.name.slice(f.brand.length).trim() : f.name;
+  const rated = reviewsOf(f);
   return (
     <Link
       prefetch={false}
@@ -36,6 +39,11 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
       <div className="flex flex-1 flex-col gap-1 border-t border-line p-3">
         {f.brand && <p className="eyebrow truncate">{f.brand}</p>}
         <h3 className="line-clamp-2 text-[13.5px] font-medium leading-snug text-ink">{short}</h3>
+        {rated && rated.n > 0 && (
+          <p className="flex items-center gap-1 text-xs text-soft">
+            <Stars value={rated.avg} size={12} /> {rated.n}
+          </p>
+        )}
         <div className="mt-auto pt-1 text-sm">
           {regions.map((r) => {
             const b = bestIn(f, r.code);

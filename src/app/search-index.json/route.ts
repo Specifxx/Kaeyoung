@@ -1,22 +1,12 @@
-// The search box's index: one static JSON file per release (built at build
-// time, served by the CDN), so search never runs a function.
-import { REGIONS } from "@/site";
-import { getProducts } from "@/lib/data";
-import { lowestOrderable } from "@/lib/history";
-import type { IndexRow } from "@/components/SearchBox";
+// The browser's product index (lib/browse.ts): one static JSON file per
+// release (built at build time, served by the CDN), so search suggestions,
+// the search page and the filter bars never run a function.
+import { indexRows } from "@/lib/search-index";
 
 export const dynamic = "force-static";
 
 export function GET() {
-  const rows: IndexRow[] = getProducts().map((f) => {
-    const prices: IndexRow[4] = {};
-    for (const r of REGIONS) {
-      const low = lowestOrderable(f.offers[r.code]);
-      if (low) prices[r.code] = low.p;
-    }
-    return [f.slug, f.name, f.cat, f.ean, prices];
-  });
-  return new Response(JSON.stringify(rows), {
+  return new Response(JSON.stringify(indexRows()), {
     headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=3600, s-maxage=86400" },
   });
 }

@@ -26,6 +26,7 @@
   --mint: 220 245 235;
   --butter: 255 245 205;
   --sky: 222 238 255;
+  --star: 232 150 38;
   color-scheme: light;
 }
 
@@ -48,6 +49,7 @@
   --mint: 30 58 50;
   --butter: 66 58 34;
   --sky: 34 48 70;
+  --star: 247 186 84;
   color-scheme: dark;
 }
 
