@@ -67,3 +67,12 @@ barcode (Mirai Skin, RoseRoseShop, Olive Kollection, Korean Beauty Australia, Le
   button colours (eBay blue, Amazon yellow) with a "Shown first" chip, so they are seen first; otherwise they are
   drawn exactly like a store row (same card, border and type). The beauty retailers follow, then the stores in
   price order. Still labelled "Paid link", never counted as a store, never the cheapest.
+
+## 2026-10-30: 90 stores (owner: "we need more stores … over 150")
+
+Rounds 3 and 4 of the store probe added 45 shops with readable Korean barcodes: 20 brands' own US shops (COSRX,
+Beauty of Joseon, Anua, SKIN1004, TIRTIR, Torriden, Klairs, innisfree…, their official prices) and web-searched
+specialists and pharmacies in every region. A shop passes with a region currency, 15+ K-beauty products and 10+
+880 barcodes in the probe sample; shops whose K-beauty is under 60% of their catalogue are `mixed`. Same stock on
+two domains is added once (yepposoonsoo.de is yeppo.fi; koreanskincare.nl is korean-skincare.nl). Round 4 was cut
+short at 103 of 298 candidates to free runners for the first import; the rest are probed next.
