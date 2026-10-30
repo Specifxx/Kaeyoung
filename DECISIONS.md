@@ -96,3 +96,15 @@ short at 103 of 298 candidates to free runners for the first import; the rest ar
   This is the one exception to the family-links rule.
 * **Blog**: six posts written around live price blocks (brand stores vs shops, a priced routine, sunscreen, the
   biggest gaps, three bestseller brands, avoiding fakes). Stores gain `official` for the brands' own shops.
+
+## 2026-10-30: 138 stores (probe round 4b)
+
+The other 195 round-4 candidates were probed: 48 shops passed the same rule (region currency, 15+ K-beauty
+products, 10+ 880 barcodes; `mixed` under 60% K-beauty) and were added, with MISSHA, LANEIGE, Sulwhasoo and haruharu
+US as official brand shops. Australia goes from 7 to 17 stores and New Zealand from 4 to 5. Left out as the same stock as a listed
+shop or another candidate: hikoco.com (hikoco.co.nz), kiyoko.com (kiyokobeauty.com), sukoshi.com (sukoshimart.com),
+moidaus.com (bloomingkoco.com), skincupid.us (skincupid.co.uk), yepposoonsoo.com (yeppo.fi), koreanskincare.com and
+korean-skincare.fr (korean-skincare.nl), asiangroceronline.com.au (umall.com.au), cosmeticsonline.co.nz
+(cosmeticsonline.net.au). Also left out: shops that charge a region's currency but ship from elsewhere
+(piyonna.com from Singapore, mediheal.com from Korea, silverglass.co from New Zealand in US dollars), and
+bellaviacanada.ca (15 codes, a UK shop).
