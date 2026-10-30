@@ -45,3 +45,23 @@ export function adminKeyOk(given: unknown, expected: string | undefined): boolea
   const b = Buffer.from(expected);
   return a.length === b.length && timingSafeEqual(a, b);
 }
+
+/** Per-visitor limits kept only in this function instance's memory: nothing
+ *  about a visitor is ever stored, because the review store is public. Best
+ *  effort (a cold start forgets), which is why the site-wide daily cap, the
+ *  honeypot, the fill time, Turnstile and moderation stay in front of it. */
+const seen = new Map<string, { day: string; n: number; eans: Set<string> }>();
+export function visitorLimit(ip: string, ean: string, perDay: number, now = new Date()): "ok" | "same" | "busy" {
+  const day = now.toISOString().slice(0, 10);
+  let v = seen.get(ip);
+  if (!v || v.day !== day) {
+    if (seen.size > 5000) seen.clear();
+    v = { day, n: 0, eans: new Set() };
+    seen.set(ip, v);
+  }
+  if (v.eans.has(ean)) return "same";
+  if (v.n >= perDay) return "busy";
+  v.n++;
+  v.eans.add(ean);
+  return "ok";
+}

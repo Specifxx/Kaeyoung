@@ -4,7 +4,8 @@
     "deploymentEnabled": {
       "claude/*": false,
       "claude/**": false,
-      "ccr-*": false
+      "ccr-*": false,
+      "reviews": false
     }
   },
   "ignoreCommand": "bash scripts/vercel-ignore-build.sh"

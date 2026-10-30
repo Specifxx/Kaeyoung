@@ -17,7 +17,7 @@ GitHub Actions, daily 06:11 UTC (import.yml)
   → commit to main with "[deploy]" in the subject → one Vercel build a day → IndexNow ping
 ```
 
-* **No accounts; no database or function behind any page.** The one exception is the rating form (`POST /api/reviews`, saved to a private GitHub repo, `Specifxx/kaeyoung-reviews`), exported daily to `data/public/reviews.json`. Every page is prerendered at the daily build from the
+* **No accounts; no database or function behind any page.** The one exception is the rating form (`POST /api/reviews`, saved to `reviews.json` on this repo's public `reviews` branch), exported daily to `data/public/reviews.json`. Every page is prerendered at the daily build from the
   committed JSON; search is a static `/search-index.json`. The visitor's region is picked in the browser.
 * **Deploys are gated** (`scripts/vercel-ignore-build.sh`): production builds only for `[deploy]` in the subject.
 * **Barcodes**: `fill-barcodes.yml` (16 runners) does big barcode fills after stores are added; the daily import

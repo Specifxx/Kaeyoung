@@ -29,7 +29,7 @@ test("no middleware, no database client, no unstable_cache", () => {
   assert.equal(fs.existsSync("src/middleware.ts"), false);
   for (const f of src) assert.doesNotMatch(read(f), /@prisma\/client|unstable_cache/, f);
   // No database at all (DECISIONS.md "Reviews move from Neon to a private GitHub
-  // repo"): reviews live in a private repo, reached only from lib/reviews-store.ts.
+  // repo", then "…public repo's reviews branch"): reached only from lib/reviews-store.ts.
   for (const f of src) assert.doesNotMatch(read(f), /@neondatabase|from "pg"|postgres:\/\//, f);
   assert.doesNotMatch(read("package.json"), /@neondatabase|"pg"/);
 });

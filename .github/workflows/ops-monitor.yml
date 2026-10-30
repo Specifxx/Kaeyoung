@@ -23,6 +23,6 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
           EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
           EBAY_DAILY_CAP: ${{ vars.EBAY_DAILY_CAP }}
-          REVIEWS_GITHUB_TOKEN: ${{ secrets.REVIEWS_GITHUB_TOKEN }}
-          REVIEWS_REPO: ${{ vars.REVIEWS_REPO }}
+          # The reviews branch of this public repo, read with the job's own token (no secret).
+          REVIEWS_GITHUB_TOKEN: ${{ github.token }}
         run: npx tsx scripts/ops-monitor.ts
