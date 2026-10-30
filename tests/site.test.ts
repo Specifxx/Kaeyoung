@@ -63,9 +63,9 @@ test("K Young stands alone: no sister-site links (owner, 2026-10-30)", () => {
 
 test("search: every word must match; a barcode finds its product", () => {
   const rows: IndexRow[] = [
-    ["a", "COSRX Advanced Snail 96 Mucin Power Essence 100ml", "serums", "8809416470000", {}],
-    ["b", "Anua Heartleaf 77% Soothing Toner 250ml", "toners", "8809640730010", {}],
-    ["c", "COSRX Advanced Snail 92 All in One Cream 100g", "moisturisers", "8809416470017", {}],
+    ["a", "COSRX Advanced Snail 96 Mucin Power Essence 100ml", "serums", "8809416470000", {}, "COSRX", "cosrx", 0, 0, 5, "2026-10-01"],
+    ["b", "Anua Heartleaf 77% Soothing Toner 250ml", "toners", "8809640730010", {}, "Anua", "anua", 0, 0, 5, "2026-10-01"],
+    ["c", "COSRX Advanced Snail 92 All in One Cream 100g", "moisturisers", "8809416470017", {}, "COSRX", "cosrx", 0, 0, 5, "2026-10-01"],
   ];
   assert.deepEqual(searchRows(rows, "snail").map((r) => r[0]).sort(), ["a", "c"]);
   assert.deepEqual(searchRows(rows, "cosrx cream").map((r) => r[0]), ["c"]);

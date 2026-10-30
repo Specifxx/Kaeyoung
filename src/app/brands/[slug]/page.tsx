@@ -5,6 +5,7 @@ import { CATEGORIES } from "@/site";
 import { brandKo, getBrand, getBrands, storeCount } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
 import { PageHead } from "@/components/Section";
+import { Browse } from "@/components/Browse";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -39,6 +40,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         title={`${b.name} prices`}
         sub={`${brandKo(b.name) ? `${b.name} (${brandKo(b.name)} in Korean): ` : ""}${list.length} ${b.name} products compared across K-beauty stores, matched by barcode, size by size. Most widely stocked first; prices show for your region.`}
       />
+      <Browse brand={b.slug}>
       {cats.map((c) => {
         const inCat = list.filter((f) => f.cat === c.key);
         return (
@@ -50,6 +52,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
           </section>
         );
       })}
+      </Browse>
     </div>
   );
 }

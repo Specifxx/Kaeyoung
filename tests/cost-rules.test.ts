@@ -11,7 +11,7 @@ const src = walk("src").filter((f) => /\.(ts|tsx)$/.test(f));
 const read = (f: string) => fs.readFileSync(f, "utf8");
 
 test("no page reads the request (cookies, headers, searchParams) or opts out of static", () => {
-  for (const f of src.filter((f) => f.startsWith("src/app") && !f.includes("api/ebay/marketplace-deletion"))) {
+  for (const f of src.filter((f) => f.startsWith("src/app") && !f.includes("api/ebay/marketplace-deletion") && !f.includes("src/app/api/reviews/"))) {
     const s = read(f);
     assert.doesNotMatch(s, /from "next\/headers"|unstable_noStore|force-dynamic|cache: "no-store"/, f);
     assert.doesNotMatch(s, /export const revalidate/, `${f}: pages are static until the next release, no ISR timers`);
@@ -27,7 +27,18 @@ test("every dynamic route is fully prerendered (dynamicParams = false)", () => {
 
 test("no middleware, no database client, no unstable_cache", () => {
   assert.equal(fs.existsSync("src/middleware.ts"), false);
-  for (const f of src) assert.doesNotMatch(read(f), /@prisma\/client|unstable_cache|@neondatabase/, f);
+  for (const f of src) assert.doesNotMatch(read(f), /@prisma\/client|unstable_cache/, f);
+  // The one database (DECISIONS.md "Ratings and reviews"): the reviews table,
+  // reached only from lib/reviews-db.ts.
+  assert.deepEqual(src.filter((f) => /@neondatabase/.test(read(f))), ["src/lib/reviews-db.ts"]);
+});
+
+test("only the two review routes and the export script reach the reviews database", () => {
+  const users = [...src, ...walk("scripts").filter((f) => f.endsWith(".ts"))].filter((f) => /reviews-db"|reviews-db'/.test(read(f)));
+  assert.deepEqual(users.sort(), ["scripts/reviews-export.ts", "src/app/api/reviews/admin/route.ts", "src/app/api/reviews/route.ts"]);
+  for (const f of ["src/app/api/reviews/route.ts", "src/app/api/reviews/admin/route.ts"]) {
+    assert.doesNotMatch(read(f), /export (async )?function GET/, `${f}: POST only, nothing a crawler or a page load can run`);
+  }
 });
 
 test("every next/link has prefetch={false} (prefetch renders pages nobody opened)", () => {
@@ -38,11 +49,11 @@ test("every next/link has prefetch={false} (prefetch renders pages nobody opened
   }
 });
 
-test("image optimisation stays off; only one function exists", () => {
+test("image optimisation stays off; only eBay's hook and the review form are functions", () => {
   assert.match(read("next.config.js"), /unoptimized: true/);
   const routes = src.filter((f) => /route\.ts$/.test(f));
   const dynamic = routes.filter((f) => !/force-static/.test(read(f)));
-  assert.deepEqual(dynamic, ["src/app/api/ebay/marketplace-deletion/route.ts"]);
+  assert.deepEqual(dynamic.sort(), ["src/app/api/ebay/marketplace-deletion/route.ts", "src/app/api/reviews/admin/route.ts", "src/app/api/reviews/route.ts"]);
 });
 
 test("the eBay keys never reach the website", () => {

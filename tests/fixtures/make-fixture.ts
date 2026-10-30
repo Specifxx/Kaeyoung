@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { History, Meta, Product } from "@/lib/types";
+import { summarize, type ReviewsFile } from "@/lib/reviews";
 import { CATEGORIES, type RegionCode } from "@/site";
 
 const names = ["Sample Snail Essence", "Test Rice Toner", "Fixture Sun Cream", "Demo Cleansing Oil", "Example Ceramide Cream", "Mock Sheet Mask", "Placeholder Eye Cream", "Stub Lip Mask", "Dummy Cushion", "Trial Body Lotion", "Proto Serum", "Beta Gel Cream"];
@@ -41,9 +42,22 @@ const products: Product[] = names.map((n, i) => {
 });
 const history: History = Object.fromEntries(products.map((f) => [f.ean, { US: [[20740, 2599], [20750, 2399], [20755, f.offers.US?.[0]?.p ?? 2199]] }]));
 const meta: Meta = { updatedAt: "2026-10-30T08:00:00Z", products: products.length, stores: {} };
+// Obviously synthetic ratings on the first three products (one with too few for review schema).
+const said = ["Fixture review: light texture, absorbs fast, no scent to speak of.", "Fixture review: fine, but the bottle is small for the price."];
+const reviews: ReviewsFile = {
+  exportedAt: "2026-10-30T08:00:00Z",
+  held: 0,
+  products: Object.fromEntries(
+    products.slice(0, 3).map((f, i) => [
+      f.ean,
+      summarize(Array.from({ length: [6, 3, 1][i] }, (_, k) => ({ id: i * 10 + k + 1, stars: 5 - ((k + i) % 3), title: k === 0 ? "Fixture headline" : null, body: k < 2 ? said[k] : null, name: k === 0 ? "Fixture Tester" : null, skin: k === 0 ? "dry" : null, created: `2026-10-2${k}T10:00:00` }))),
+    ]),
+  ),
+};
 const dir = path.join(__dirname, "data");
 fs.mkdirSync(dir, { recursive: true });
 fs.writeFileSync(path.join(dir, "products.json"), JSON.stringify({ products }, null, 1));
 fs.writeFileSync(path.join(dir, "history.json"), JSON.stringify(history));
 fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 1));
+fs.writeFileSync(path.join(dir, "reviews.json"), JSON.stringify(reviews));
 console.log(`${products.length} fixture products`);

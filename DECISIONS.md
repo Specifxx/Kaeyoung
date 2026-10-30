@@ -147,3 +147,46 @@ Strategy doc: https://claude.ai/artifact/Fn5uYBzekUHBXdZrrmpRyu
   a name pattern. Opinions rest on what a product's name says it contains, how widely it is stocked and its
   price; no medical claims (`tests/blog.test.ts`), skin-condition posts say patch test and see a dermatologist,
   written as the K Young team.
+
+## 2026-10-30: ratings and reviews, Popular, filters and search suggestions
+
+**Owner:** "users should be able to rate the products … provide feedback and potentially reviews … stars … a popular
+section … really good filters … popularity, ratings, type of product, names … in the search bar, like Rift Compare,
+some pop-ups that appear."
+
+* **The one exception to "no database, no functions"**: a `reviews` table in a free Neon project of its own,
+  written by `POST /api/reviews` and moderated by `POST /api/reviews/admin`. Both are POST-only, so a crawler or a
+  page view never runs them; a visit to a product page is still a static file. Why not files only: a review is
+  typed by a visitor and has to land somewhere the moment they press Send, and a static site has nowhere to put
+  it. Neon over the alternatives: free, Postgres (rate limits and duplicate checks are one query), the family
+  already runs it, and the Vercel integration sets `DATABASE_URL` in one click. GitHub (issues or commits) was
+  ruled out because the repo is public: spam would be public before anyone moderated it.
+* **Pages never read the database.** The daily import (`import.yml`) exports published ratings to
+  `data/public/reviews.json` (`scripts/reviews-export.ts`), and the day's build draws them into the product page's
+  server HTML with `aggregateRating` and `Review` JSON-LD, so Google reads them. A new review shows the next day;
+  the shopper's own browser shows it at once. A failed export keeps the last good reviews and warns.
+* **No accounts** (owner): a star rating needs nothing else; words, a name and a skin type are optional. Spam is
+  kept out by: POSTs only from our own pages, a hidden honeypot field, a minimum fill time, one rating per product
+  and 8 a day per visitor (an HMAC of the IP, never the IP), 400 a day site-wide, and Cloudflare Turnstile once
+  `NEXT_PUBLIC_TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY` are set.
+* **Moderation: rules first, the owner for what they flag.** The growth thread advised holding every review for
+  the owner; the owner is not watching, and a review that waits days kills the habit of writing one. So a bare
+  rating and a clean review publish at the next export; anything with a link, an email, a phone number, promo
+  words, slurs, shouting, repeated characters, a medical claim ("cured my eczema"), a shop-like name or text
+  already posted elsewhere is held for `/admin/reviews` (key `REVIEWS_ADMIN_KEY`, typed on the page, never in a
+  URL). Every review has a Report link (an email). Ops monitor warns once a day (the 09:50 UTC run) while reviews
+  are held: one daily count, never a mail per review.
+* **Schema only from a real sample**: `aggregateRating` from 3 ratings (`SCHEMA_MIN_RATINGS`); fewer show on the
+  page without markup. Ratings are labelled as visitors' opinions, not verified purchases.
+* **External reviews: not copied.** Store and Amazon review texts are their authors' and the platforms'
+  (Judge.me, Yotpo, Okendo and Amazon's terms forbid reuse), and Google ignores ratings marked up from other
+  sites. Revisit only with a licensed feed.
+* **Ratings never order prices.** They only order lists of products.
+* **Popularity** (`lib/ratings.ts`): stores stocking it in stock (+¼ for sold-out stores), plus
+  log2(1 + ratings) × how far the average sits above 2.5★. Click data would be better but Vercel Analytics can't be
+  read back; a click beacon would be a function call per click, so it waits until traffic justifies it. Category
+  pages, the home page's "Popular" row and `/popular` use it.
+* **Filters, sort and suggestions run in the browser** over `/search-index.json` (now with brand, rating,
+  popularity, first-seen date and the brand's Hangul name; ~320 KB gzipped) and `/search-images.json` (photo paths,
+  ~180 KB, loaded after it). Category and brand pages keep their server-rendered list for crawlers and first
+  visits; the client list replaces it only once a control is touched. `/search` is noindex as before.

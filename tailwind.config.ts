@@ -25,6 +25,7 @@ export default {
         mint: v("mint"),
         butter: v("butter"),
         sky: v("sky"),
+        star: v("star"),
       },
       fontFamily: {
         sans: ['"Inter Variable"', "system-ui", "Segoe UI", "Arial", "sans-serif"],

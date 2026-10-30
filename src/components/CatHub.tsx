@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { CAT_BY_KEY, type CatKey } from "@/site";
-import { productsOfCat, storeCount } from "@/lib/data";
+import { productsOfCat } from "@/lib/data";
+import { popularity } from "@/lib/ratings";
 import { TileGrid } from "./ProductTile";
 import { PageHead, Pager } from "./Section";
 import { CatIcon } from "./Art";
+import { Browse } from "./Browse";
 
 export const PER_PAGE = 48;
 
-/** A category's products, most-stocked first (ties by name), 48 a page. */
+/** A category's products, most popular first (ties by name), 48 a page. */
 export function catProducts(cat: CatKey) {
-  return productsOfCat(cat).sort((a, b) => storeCount(b) - storeCount(a) || a.name.localeCompare(b.name));
+  return productsOfCat(cat)
+    .map((f) => ({ f, p: popularity(f) }))
+    .sort((a, b) => b.p - a.p || a.f.name.localeCompare(b.f.name))
+    .map((x) => x.f);
 }
 
 export function pageCount(cat: CatKey) {
@@ -30,7 +35,7 @@ export function CatHub({ cat, page }: { cat: CatKey; page: number }) {
         title={`${c.plural.replace(/^./, (x) => x.toUpperCase())} prices${page > 1 ? `, page ${page}` : ""}`}
         sub={
           <p>
-            {c.about} {all.length.toLocaleString("en-US")} products compared across stores, matched by barcode, most widely stocked first. Prices show for your region; change it at the top.{" "}
+            {c.about} {all.length.toLocaleString("en-US")} products compared across stores, matched by barcode, most popular first. Sort and filter by brand, rating or stock below. Prices show for your region; change it at the top.{" "}
             <Link prefetch={false} href={`/guides/cheapest-${cat}`} className="font-medium text-ink underline underline-offset-4">
               See the cheapest
             </Link>
@@ -38,8 +43,10 @@ export function CatHub({ cat, page }: { cat: CatKey; page: number }) {
           </p>
         }
       />
-      {list.length ? <TileGrid products={list} /> : <p className="card p-6 text-center text-soft">Nothing in stock anywhere yet.</p>}
-      <Pager pages={pages} page={page} href={href} />
+      <Browse cat={cat}>
+        {list.length ? <TileGrid products={list} /> : <p className="card p-6 text-center text-soft">Nothing in stock anywhere yet.</p>}
+        <Pager pages={pages} page={page} href={href} />
+      </Browse>
     </div>
   );
 }

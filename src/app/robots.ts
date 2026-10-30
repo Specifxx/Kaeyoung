@@ -14,7 +14,7 @@ const QUERY_ALLOWS = ["/_next/", "/*opengraph-image", "/icon", "/apple-icon"];
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: "*", allow: ["/", ...QUERY_ALLOWS], disallow: ["/api/", "/search", "/*?"] },
+      { userAgent: "*", allow: ["/", ...QUERY_ALLOWS], disallow: ["/api/", "/admin", "/search", "/*?"] },
       { userAgent: BLOCKED_BOTS, disallow: "/" },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,

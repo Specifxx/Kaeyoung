@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { STORES } from "@/content/stores";
 import type { Meta } from "@/lib/types";
+import type { ReviewsFile } from "@/lib/reviews";
 
 type Status = "ok" | "warn" | "fail";
 type Result = { name: string; status: Status; detail: string };
@@ -41,6 +42,20 @@ export function judgeStores(meta: Meta, total: number): Omit<Result, "name"> {
   return { status: bad.length > total / 3 ? "fail" : "warn", detail };
 }
 
+/** The daily reviews export (scripts/reviews-export.ts). Held reviews raise a
+ *  warning once a day only (the 09:50 UTC run), so the owner gets one daily
+ *  count, never a mail per review. */
+export function judgeReviews(file: ReviewsFile | null, configured: boolean, now = Date.now()): Omit<Result, "name"> {
+  if (!configured) return { status: "warn", detail: "REVIEWS_DATABASE_URL not set in GitHub secrets: ratings and reviews are off" };
+  if (!file) return { status: "warn", detail: "no reviews export yet (data/public/reviews.json missing)" };
+  if (file.error) return { status: "warn", detail: `the last reviews export could not read the database: ${file.error}` };
+  const h = (now - Date.parse(file.exportedAt)) / 3_600_000;
+  if (h > 54) return { status: "warn", detail: `reviews last exported ${h.toFixed(0)}h ago: check the Import prices workflow` };
+  const rated = Object.keys(file.products).length;
+  if (file.held > 0 && new Date(now).getUTCHours() === 9) return { status: "warn", detail: `${file.held} review(s) waiting for you at /admin/reviews` };
+  return { status: "ok", detail: `${rated} products rated${file.held ? `, ${file.held} held` : ""}` };
+}
+
 async function main() {
   if (!fs.existsSync(path.join(DATA, "meta.json"))) {
     // Before the first import there is nothing to judge; a setup step, not an incident.
@@ -68,6 +83,10 @@ async function main() {
     check("Data size", () =>
       size < 12e6 ? { status: "ok", detail: `${(size / 1e6).toFixed(1)} MB` } : { status: "warn", detail: `products.json is ${(size / 1e6).toFixed(1)} MB: builds slow down; raise minStoresPerRegion or trim` },
     ),
+    check("Ratings and reviews", () => {
+      const f = path.join(DATA, "reviews.json");
+      return judgeReviews(fs.existsSync(f) ? (JSON.parse(fs.readFileSync(f, "utf8")) as ReviewsFile) : null, Boolean(process.env.REVIEWS_DATABASE_URL));
+    }),
     check("eBay listings", () => {
       if (!process.env.EBAY_CLIENT_ID) return { status: "warn", detail: "EBAY_CLIENT_ID not set in GitHub secrets: no eBay listings yet (search links still earn)" };
       if (!meta.ebay) return { status: "warn", detail: "no eBay run recorded yet" };

@@ -14,6 +14,10 @@ import { RegionTabs } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { OutLink } from "@/components/OutLink";
 import type { Product } from "@/lib/types";
+import { reviewsOf, reviewsOpen } from "@/lib/ratings";
+import { SCHEMA_MIN_RATINGS, starsText, type ProductReviews } from "@/lib/reviews";
+import { Stars } from "@/components/reviews/Stars";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 
 // Prerendered at build, one static file per product; a slug the release does
 // not know is a 404, never a render on request.
@@ -59,6 +63,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     .sort((a, b) => storeCount(b) - storeCount(a))
     .slice(0, 8);
 
+  const rated = reviewsOf(f);
+  const showSchema = !!rated && rated.n >= SCHEMA_MIN_RATINGS;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -68,6 +74,18 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     category: `Health & Beauty > Skin Care > ${cat.name}`,
     image: f.img ?? undefined,
     url: `${SITE.url}/product/${f.slug}`,
+    // Only from a real sample (SCHEMA_MIN_RATINGS), and only what the page shows.
+    aggregateRating: showSchema ? { "@type": "AggregateRating", ratingValue: starsText(rated!.avg), ratingCount: rated!.n, reviewCount: rated!.w || undefined, bestRating: 5, worstRating: 1 } : undefined,
+    review: showSchema && rated!.reviews.length
+      ? rated!.reviews.slice(0, 10).map((r) => ({
+          "@type": "Review",
+          reviewRating: { "@type": "Rating", ratingValue: r.s, bestRating: 5, worstRating: 1 },
+          author: { "@type": "Person", name: r.n },
+          datePublished: r.d,
+          name: r.t,
+          reviewBody: r.b,
+        }))
+      : undefined,
     offers: regions
       .map((r) => {
         const orderable = (f.offers[r] ?? []).filter((o) => o.st !== "out");
@@ -127,6 +145,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             {f.size && <span className="chip bg-subtle text-ink">{f.size}</span>}
             <span className="chip bg-subtle text-soft">Barcode {f.ean}</span>
           </div>
+          {rated && rated.n > 0 && (
+            <a href="#reviews" className="mt-3 inline-flex items-center gap-2 text-sm text-soft hover:text-ink">
+              <Stars value={rated.avg} size={16} />
+              <span className="font-semibold tabular-nums text-ink">{starsText(rated.avg)}</span>
+              <span className="underline-offset-4 hover:underline">
+                {rated.n} rating{rated.n === 1 ? "" : "s"}
+                {rated.w ? `, ${rated.w} review${rated.w === 1 ? "" : "s"}` : ""}
+              </span>
+            </a>
+          )}
 
           {variants.length > 0 && (
             <div className="mt-4">
@@ -251,9 +279,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </section>
       )}
 
+      <ReviewsSection ean={f.ean} slug={f.slug} name={f.name} data={rated} open={reviewsOpen()} />
+
       <section className="mt-12 max-w-3xl">
         <h2 className="h-display mb-4 text-2xl">Questions</h2>
-        <Faq f={f} regions={regions} />
+        <Faq f={f} regions={regions} rated={rated} />
       </section>
 
       {/* Phone buy bar: the region's cheapest orderable store, always in reach. */}
@@ -285,12 +315,15 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   );
 }
 
-function Faq({ f, regions }: { f: Product; regions: RegionCode[] }) {
+function Faq({ f, regions, rated }: { f: Product; regions: RegionCode[]; rated: ProductReviews | undefined }) {
   const qa: [string, string][] = [];
   for (const r of regions) {
     const b = bestIn(f, r);
     const reg = REGIONS.find((x) => x.code === r)!;
     if (b) qa.push([`Where is ${f.name} cheapest ${reg.phrase}?`, `${storeName(b.offer.s)} at ${money(b.offer.p, r)}, the lowest of ${b.stores} store${b.stores === 1 ? "" : "s"} we compared at our last check.`]);
+  }
+  if (rated && rated.n >= SCHEMA_MIN_RATINGS) {
+    qa.push([`What do shoppers rate ${f.name}?`, `${starsText(rated.avg)} out of 5 from ${rated.n} K Young shoppers' ratings, with ${rated.dist[4] + rated.dist[3]} giving it four or five stars.`]);
   }
   qa.push([
     `How do you know every store sells the same ${f.name}?`,
