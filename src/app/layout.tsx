@@ -44,6 +44,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
+        {/* Impact (affiliate network) site check, in the exact form Impact gives: a `value` attribute. */}
+        <meta {...({ name: "impact-site-verification", value: "59ec5beb-7403-4ebf-8dc5-d42ff5b432ce" } as object)} />
       </head>
       <body className="min-h-screen font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-1">
