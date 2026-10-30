@@ -224,7 +224,9 @@ them to be addressed.
   (`Partner.always`); once `AFF_*` is set they say "Paid link". Other partners still appear only once paid.
 * **Delivery is each store's own quote** (`scripts/shipping.ts`, `shipping.yml`, Sundays 02:37 UTC): its Shopify
   cart's shipping rates for a small order to one city per region (EU stores: their own country, from the domain),
-  then bigger baskets until delivery turns free, halving the gap. We store what we SAW: the fee, the smallest
+  then bigger baskets until delivery turns free (the next cheapest item takes over when one runs out of stock),
+  halving the gap. Eight runners, one store at a time each, since Shopify rate-limits carts by address; a 429 is
+  waited out twice, then the store is left for the week. Rates that name a date or promotion are ignored. We store what we SAW: the fee, the smallest
   basket that went free and the largest still charged (`data/public/shipping.json`); between the two we say "or
   free", never a guessed threshold. A failed store keeps a quote under five weeks old. Nothing is bought; carts are
   abandoned; 403/429/captcha stops that store. The commit has no `[deploy]`: it rides the daily release. The ops
