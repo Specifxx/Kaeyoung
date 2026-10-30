@@ -17,7 +17,8 @@ export function Footer({ updated }: { updated?: string | null }) {
           </p>
           {updated && <p className="mt-3 text-xs text-soft">Prices updated {updated}.</p>}
           <p className="mt-3 text-xs text-soft">
-            Contact: <a className="underline hover:text-ink" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <Link prefetch={false} href="/contact" className="underline hover:text-ink">Contact us</Link>:{" "}
+            <a className="underline hover:text-ink" href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </p>
         </div>
         <div>
@@ -45,6 +46,7 @@ export function Footer({ updated }: { updated?: string | null }) {
             <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">How we make money</Link></li>
             <li><Link prefetch={false} href="/privacy" className="text-soft hover:text-ink">Privacy</Link></li>
             <li><Link prefetch={false} href="/terms" className="text-soft hover:text-ink">Terms</Link></li>
+            <li><Link prefetch={false} href="/contact" className="text-soft hover:text-ink">Contact us</Link></li>
           </ul>
         </div>
         <div>

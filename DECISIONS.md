@@ -296,3 +296,11 @@ set up.
 * **Tokens:** Vercel holds `REVIEWS_GITHUB_TOKEN`, a fine-grained token with Contents read/write on this repo (it
   cannot be narrowed to one branch). The import and the ops monitor read the branch with their own `github.token`, so
   no GitHub secret is needed. GitHub emails the owner before the Vercel token expires.
+
+## A contact page — 2026-10-30
+
+The owner: "make sure that contact information is really clear on all of our websites so that any feedback feeds
+into the respective emails". The footer already showed compareempire@gmail.com (`SITE.email`); there was no page to
+link. `/contact` (static, in the sitemap) gives the address with subject-filled mailto links (wrong price or product,
+stores, missing products, review removals, press), and the footer links it. Still no message form, and ratings still
+email nobody.
