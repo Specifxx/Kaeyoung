@@ -59,3 +59,11 @@ asked for it specifically; the phone menu draws the same groups.
 barcode (Mirai Skin, RoseRoseShop, Olive Kollection, Korean Beauty Australia, Lewkin, AmiGlow), mirrors
 (boniik.com.au, sentisenti.com, kiyoko.ca) and shops pricing in CHF or DKK. Shops that also sell other beauty
 (Justmylook, Boozyshop, DODOSKIN …) are `mixed`: only known Korean brands get a barcode lookup there.
+
+## 2026-10-30: kaeyoung.com, and eBay and Amazon as the top two price rows
+
+* **Domain** (owner): the site lives at kaeyoung.com (the brand stays "K Young").
+* **Pinned rows** (owner): eBay and Amazon take the first two rows of every product's price table, in their own
+  button colours (eBay blue, Amazon yellow) with a "Shown first" chip, so they are seen first; otherwise they are
+  drawn exactly like a store row (same card, border and type). The beauty retailers follow, then the stores in
+  price order. Still labelled "Paid link", never counted as a store, never the cheapest.

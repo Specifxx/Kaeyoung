@@ -1,6 +1,6 @@
 # Working in this repo
 
-K Young (kyoung.com, tagline "Stay young.") compares Korean skincare and K-beauty prices across real K-beauty stores in the
+K Young (kaeyoung.com, tagline "Stay young.") compares Korean skincare and K-beauty prices across real K-beauty stores in the
 US, UK, Canada, Australia, New Zealand and Europe. A sister site of RiftCompare (`Specifxx/TCGEmpire`) and FigureCompare,
 built on FigureCompare's static engine, but carrying **no Compare branding** (owner, 2026-10-30). Read `README.md`, then
 `DECISIONS.md`.
@@ -48,7 +48,7 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
 ## Money
 
 - Affiliate tags are added at build (`src/lib/affiliate.ts`): `ky-<region>-<placement>-<ean>` in EPN `customid`,
-  Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kyoung.com`.
+  Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kaeyoung.com`.
 - **No banner ads** (owner, 2026-10-30: "cut down on the banner ads … a really nice website"): no eBay strips, no
   AdSense, no nav ad boxes. Paid links live only in a product's price table, pinned above the stores and labelled:
   eBay, Amazon (US `riftcompare-20`, AU `compareempire-22`, others by `AMAZON_TAG_<REGION>`), and the beauty

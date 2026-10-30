@@ -4,8 +4,8 @@
 export const SITE = {
   key: "ky",
   name: "K Young",
-  domain: "kyoung.com",
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://kyoung.com").replace(/\/$/, ""),
+  domain: "kaeyoung.com",
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://kaeyoung.com").replace(/\/$/, ""),
   slogan: "Stay young.",
   tagline: "Compare Korean skincare prices across real K-beauty stores",
   description:
