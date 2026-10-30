@@ -47,6 +47,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         {/* Impact (affiliate network) site check, in the exact form Impact gives: a `value` attribute. */}
         <meta {...({ name: "impact-site-verification", value: "59ec5beb-7403-4ebf-8dc5-d42ff5b432ce" } as object)} />
+        {/* Pinterest domain claim (owner, 2026-10-30). */}
+        <meta name="p:domain_verify" content="c38a5bd57e1125d042a13aff9cee0d97" />
       </head>
       <body className="min-h-screen font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-1">
