@@ -12,8 +12,18 @@ export interface Post {
   /** footer link text */
   short: string;
   description: string;
-  /** first published, YYYY-MM-DD */
+  /** The day the post goes live, YYYY-MM-DD: the real publication date, never
+   *  a backdate. A future date holds the post back (no page, no link, not in
+   *  the sitemap) until the first daily build on or after it, so posts come
+   *  out a couple a week rather than all at once (DECISIONS.md, "Honest blog
+   *  dates"). */
   date: string;
+  /** The day the TEXT was last revised (not the live price tables, which
+   *  change every day), shown as "Updated" when set. */
+  updated?: string;
+  /** Where the post's factual claims come from, listed at its foot. Posts
+   *  built only from our own price data cite the daily import instead. */
+  sources?: Source[];
   /** the drawing on its card and header */
   art: CatKey;
   /** An advice post written as data: prose sections, each optionally followed
@@ -21,6 +31,13 @@ export interface Post {
    *  most-stocked first, shown cheapest first). Posts without it have their
    *  own body in src/app/blog/[slug]/page.tsx. */
   sections?: Section[];
+}
+
+export interface Source {
+  title: string;
+  /** who published it: "American Academy of Dermatology" */
+  by: string;
+  url: string;
 }
 
 export interface Picks {
@@ -89,11 +106,22 @@ export const POSTS: Post[] = [
     short: "Avoiding fake K-beauty",
     description: "Counterfeit Korean skincare is common on open marketplaces. What to check before you buy, and why K Young only lists specialist stores.",
     date: "2026-10-30",
+    sources: [{ title: "Warning: fake cosmetics discovered", by: "Cosmetic, Toiletry and Perfumery Association (UK)", url: "https://www.ctpa.org.uk/news/warning-fake-cosmetics-discovered-4070" }],
     art: "eye-care",
   },
 ];
 
-/** Every post, the advice posts after the launch posts. */
+/** Every post written, the advice posts after the launch posts, including
+ *  those not out yet. Pages use LIVE_POSTS. */
 export const ALL_POSTS: Post[] = [...POSTS, ...ADVICE_POSTS];
 
-export const POST_BY_SLUG = Object.fromEntries(ALL_POSTS.map((p) => [p.slug, p])) as Record<string, Post>;
+/** Out on the given day (UTC): the post's date has come. */
+export function isLive(p: Post, today = new Date().toISOString().slice(0, 10)): boolean {
+  return p.date <= today;
+}
+
+/** The posts out at this build, newest first. Each page is built once a day,
+ *  so a scheduled post appears with the first build on its date. */
+export const LIVE_POSTS: Post[] = ALL_POSTS.filter((p) => isLive(p)).sort((a, b) => b.date.localeCompare(a.date));
+
+export const POST_BY_SLUG = Object.fromEntries(LIVE_POSTS.map((p) => [p.slug, p])) as Record<string, Post>;

@@ -19,10 +19,21 @@ export interface RowData {
   highlight?: boolean;
   /** eBay and Amazon: pinned first, their own button colour (owner, 2026-10-30) */
   brand?: "ebay" | "amazon";
+  /** Stores: what delivery costs (lib/shipping.ts deliveryNote), when known. */
+  ship?: string | null;
   event: { source: string; region: string; placement: string; ean?: string };
 }
 
-export function PriceRows({ pinned, stores }: { pinned: RowData[]; stores: RowData[] }) {
+export interface RowsData {
+  pinned: RowData[];
+  /** Big international retailers (YesStyle, Stylevana…): search links, no price. */
+  overseas?: RowData[];
+  /** the region's name, for "Big retailers that deliver to Australia" */
+  overseasTo?: string;
+  stores: RowData[];
+}
+
+export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsData) {
   return (
     <div className="space-y-2">
       {pinned.length > 0 && (
@@ -30,6 +41,21 @@ export function PriceRows({ pinned, stores }: { pinned: RowData[]; stores: RowDa
           {pinned.map((r) => (
             <Row key={r.name} {...r} />
           ))}
+        </div>
+      )}
+      {overseas.length > 0 && (
+        <div className="rounded-xl border border-dashed border-line bg-card px-3.5 py-3" aria-label="Big retailers that deliver here">
+          <p className="text-sm font-semibold">Big K-beauty retailers that deliver{overseasTo ? ` to ${overseasTo}` : ""}</p>
+          <p className="mt-0.5 text-xs text-soft">
+            Not part of the store comparison: we can&apos;t read their prices, so each button searches their site. Compare at their checkout, with delivery and any import charges.
+          </p>
+          <div className="mt-2.5 flex flex-wrap gap-2">
+            {overseas.map((r) => (
+              <OutLink key={r.name} href={r.href} paid={r.paid} event={r.event} className="btn-pop border border-line bg-card px-3.5 py-1.5 text-sm text-ink hover:border-soft">
+                {r.name} <span className="text-xs font-normal text-soft">· {r.sub}{r.paid ? " · Paid link" : ""}</span> <span aria-hidden>→</span>
+              </OutLink>
+            ))}
+          </div>
         </div>
       )}
       <ol className="space-y-2">
@@ -43,7 +69,7 @@ export function PriceRows({ pinned, stores }: { pinned: RowData[]; stores: RowDa
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, event }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, ship, event }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -58,6 +84,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, e
         <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
+          {ship && <span>{ship}</span>}
           {paid && <span>Paid link</span>}
         </p>
       </div>

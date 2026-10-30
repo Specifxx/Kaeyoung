@@ -61,3 +61,22 @@ fs.writeFileSync(path.join(dir, "history.json"), JSON.stringify(history));
 fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 1));
 fs.writeFileSync(path.join(dir, "reviews.json"), JSON.stringify(reviews));
 console.log(`${products.length} fixture products`);
+
+// Delivery quotes for some fixture stores (lib/shipping.ts): charged with a
+// threshold, always free, never free up to the cap; the rest unknown.
+const quote = (to: string, fee: number, freeFrom: number | null, paidAt: number) => ({ at: "2026-10-30", to, fee, freeFrom, paidAt, maxTested: Math.max(freeFrom ?? 0, paidAt) });
+fs.writeFileSync(
+  path.join(dir, "shipping.json"),
+  JSON.stringify(
+    {
+      "au-a": quote("Sydney", 995, 7990, 7490),
+      "au-b": quote("Sydney", 0, 500, 0),
+      "au-c": quote("Sydney", 1200, null, 25000),
+      "us-a": quote("New York", 599, 5000, 4800),
+      "us-b": quote("New York", 0, 1000, 0),
+      "uk-a": quote("London", 299, 3500, 3300),
+    },
+    null,
+    1,
+  ),
+);

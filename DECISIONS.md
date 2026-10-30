@@ -211,3 +211,42 @@ shared the one brand card, so a post about Australian prices showed a slogan, no
   is fairer anyway).
 * **Text only**: no product photos (the stores' own, not ours to put on a card) and no brand packaging.
   `npx tsx scripts/og/guide-cards.mts <dir> [slug…]` draws them to PNGs for a look before a post goes out.
+
+## 2026-10-30: Answering the r/AusSkincare thread (delivery, basket, big retailers, honest blog dates)
+
+The launch post drew four fair points: check YesStyle and Stylevana, does "cheapest" include delivery, can it
+compare a whole basket, and are 17 posts dated the same day reviewed for accuracy. The owner asked for all of
+them to be addressed.
+
+* **YesStyle and Stylevana always show**, in their own labelled group under the eBay/Amazon rows ("Big K-beauty
+  retailers that deliver to Australia"), as search buttons: we can't read their prices (no feed), so they are never
+  ranked, never a store and never "the cheapest". Until their programs accept us they are plain unpaid links
+  (`Partner.always`); once `AFF_*` is set they say "Paid link". Other partners still appear only once paid.
+* **Delivery is each store's own quote** (`scripts/shipping.ts`, `shipping.yml`, Sundays 02:37 UTC): its Shopify
+  cart's shipping rates for a small order to one city per region (EU stores: their own country, from the domain),
+  then bigger baskets until delivery turns free, halving the gap. We store what we SAW: the fee, the smallest
+  basket that went free and the largest still charged (`data/public/shipping.json`); between the two we say "or
+  free", never a guessed threshold. A failed store keeps a quote under five weeks old. Nothing is bought; carts are
+  abandoned; 403/429/captcha stops that store. The commit has no `[deploy]`: it rides the daily release. The ops
+  monitor warns when quotes are over nine days old or cover under 30% of stores.
+* **Item price stays the sort order.** Delivery is a line under each store, a "with delivery for one item, X works
+  out cheapest" note on the product hero when it changes the answer, and the basket's totals. "Cheapest store"
+  became "Lowest item price" so the badge says what it measures.
+* **The basket** (`/basket`, `lib/basket.ts`) runs in the browser over `/search-index.json` and one static
+  `/basket-data/<region>` per release (force-static, offers in index row order), so it costs no function. The
+  basket lives in localStorage only. Stores with the whole basket and a known total come first; items no store in
+  the region stocks are left out and said so.
+* **Honest blog dates.** The owner asked for random past dates on the posts; we did not backdate (a reader had
+  already noticed the dates, and a fake publish date is the kind of thing that ends trust in a price site and
+  that Google treats as a quality problem). Instead `Post.date` is the real release date and a future date holds a
+  post back (`LIVE_POSTS`, `isLive`): eight posts stay out from 30 Oct, the other nine come out twice a week from
+  3 Nov to 1 Dec. `updated` shows when the text is revised. `tests/blog.test.ts` fails on a date before launch or
+  a live post linking one not yet out.
+* **Sources and an accuracy pass.** Advice posts cite where their facts come from (AAD, a dermatologist's
+  summaries, peer-reviewed reviews, MFDS rules via ChemLinked, the CTPA); claims the sources don't support were
+  softened (heartleaf "oil-balancing" is marketing; snail evidence is early; PA came from Japan). Each post ends
+  with "How this post was made" and a correction address. The fake-K-beauty post now says eBay and Amazon rows
+  exist, rather than claiming we list no marketplaces.
+* **Disclosure in plain words.** `/disclosure` is "How we make money": which rows can pay, that no store in the
+  comparison pays us today (computed from `STORES`), and what commission never does. Product pages and /about say
+  how fresh prices are and where to report a wrong one.

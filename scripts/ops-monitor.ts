@@ -56,6 +56,18 @@ export function judgeReviews(file: ReviewsFile | null, configured: boolean, now 
   return { status: "ok", detail: `${rated} products rated${file.held ? `, ${file.held} held` : ""}` };
 }
 
+/** The weekly delivery quotes (scripts/shipping.ts, shipping.yml). */
+export function judgeShipping(file: Record<string, { at: string }> | null, stores: number, now = Date.now()): Omit<Result, "name"> {
+  if (!file) return { status: "warn", detail: "no delivery quotes yet (data/public/shipping.json missing): run the Delivery quotes workflow" };
+  const ats = Object.values(file).map((s) => Date.parse(s.at));
+  const newest = ats.length ? Math.max(...ats) : 0;
+  const days = (now - newest) / 86_400_000;
+  if (days > 9) return { status: "warn", detail: `delivery quotes last refreshed ${days.toFixed(0)} days ago: check the Delivery quotes workflow` };
+  const n = ats.length;
+  if (n < stores * 0.3) return { status: "warn", detail: `delivery quotes for only ${n} of ${stores} stores` };
+  return { status: "ok", detail: `${n} of ${stores} stores quoted` };
+}
+
 async function main() {
   if (!fs.existsSync(path.join(DATA, "meta.json"))) {
     // Before the first import there is nothing to judge; a setup step, not an incident.
@@ -86,6 +98,10 @@ async function main() {
     check("Ratings and reviews", () => {
       const f = path.join(DATA, "reviews.json");
       return judgeReviews(fs.existsSync(f) ? (JSON.parse(fs.readFileSync(f, "utf8")) as ReviewsFile) : null, Boolean(process.env.REVIEWS_DATABASE_URL));
+    }),
+    check("Delivery quotes", () => {
+      const f = path.join(DATA, "shipping.json");
+      return judgeShipping(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null, STORES.length);
     }),
     check("eBay listings", () => {
       if (!process.env.EBAY_CLIENT_ID) return { status: "warn", detail: "EBAY_CLIENT_ID not set in GitHub secrets: no eBay listings yet (search links still earn)" };

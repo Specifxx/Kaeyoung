@@ -9,6 +9,7 @@ import { lowestOrderable } from "./history";
 import { canonicalKey } from "./brand";
 import { BRAND_KO } from "@/content/brands-ko";
 import type { EbayData, History, Meta, Offer, Product } from "./types";
+import { deliveryFor, type ShippingData } from "./shipping";
 
 // KY_DATA_DIR points local development and tests at a fixture; production
 // always reads the committed files.
@@ -37,6 +38,8 @@ export const getProducts = (): Product[] =>
 export const getMeta = (): Meta | null => load<Meta | null>("meta.json", null);
 export const getHistory = (): History => load<History>("history.json", {});
 export const getEbay = (): EbayData => load<EbayData>("ebay.json", {});
+/** Weekly delivery quotes per store (scripts/shipping.ts; lib/shipping.ts). */
+export const getShipping = (): ShippingData => load<ShippingData>("shipping.json", {});
 
 export function getProduct(slug: string): Product | undefined {
   return once("bySlug", () => new Map(getProducts().map((f) => [f.slug, f]))).get(slug);
@@ -242,4 +245,25 @@ export function variantLabels(list: Product[]): Map<string, string> {
   const seen = new Map<string, number>();
   for (const l of base.values()) seen.set(l, (seen.get(l) ?? 0) + 1);
   return new Map(list.map((f) => [f.ean, seen.get(base.get(f.ean)!)! > 1 ? `${base.get(f.ean)} · …${f.ean.slice(-4)}` : base.get(f.ean)!]));
+}
+
+/** The cheapest store for one of this product with delivery added, among the
+ *  orderable stores whose delivery we know; null when it is the same store as
+ *  the cheapest item price, or nothing is known. `known` / `of` say how many
+ *  stores the comparison covers. */
+export function cheapestDelivered(f: Product, region: RegionCode): { offer: Offer; total: number; delivery: number; known: number; of: number } | null {
+  const ship = getShipping();
+  const orderable = (f.offers[region] ?? []).filter((o) => o.st !== "out");
+  if (orderable.length < 2) return null;
+  let best: { offer: Offer; total: number; delivery: number } | null = null;
+  let known = 0;
+  for (const o of orderable) {
+    const d = deliveryFor(ship[o.s], o.p);
+    if (d == null) continue;
+    known++;
+    if (!best || o.p + d < best.total) best = { offer: o, total: o.p + d, delivery: d };
+  }
+  const cheapest = orderable.reduce((a, b) => (b.p < a.p ? b : a));
+  if (!best || best.offer.s === cheapest.s || known < 2) return null;
+  return { ...best, known, of: orderable.length };
 }

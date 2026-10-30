@@ -1,0 +1,48 @@
+name: Delivery quotes
+
+# Once a week: each store's own cart quotes delivery to one address in its
+# region, for a small basket and up to free delivery (scripts/shipping.ts) →
+# data/public/shipping.json, committed WITHOUT [deploy] (it rides the next
+# daily release). On a claude/* branch that changes the script it runs too and
+# commits the quotes to that branch, so a change can be checked before it lands.
+
+on:
+  schedule:
+    - cron: "37 2 * * 0"
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["scripts/shipping.ts", "src/lib/shipping.ts"]
+
+concurrency:
+  group: delivery-quotes
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  quote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx tsx scripts/shipping.ts
+      - name: Commit quotes
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/public/shipping.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: delivery quotes $(date -u +%F)" -m "Written by shipping.yml. No deploy marker: it rides the next daily release."
+          for i in 1 2 3 4; do
+            git push origin HEAD:${GITHUB_REF_NAME} && exit 0
+            sleep $((2 ** i)); git pull --rebase origin ${GITHUB_REF_NAME}
+          done
+          exit 1

@@ -1,0 +1,50 @@
+{
+ "au-a": {
+  "at": "2026-10-30",
+  "to": "Sydney",
+  "fee": 995,
+  "freeFrom": 7990,
+  "paidAt": 7490,
+  "maxTested": 7990
+ },
+ "au-b": {
+  "at": "2026-10-30",
+  "to": "Sydney",
+  "fee": 0,
+  "freeFrom": 500,
+  "paidAt": 0,
+  "maxTested": 500
+ },
+ "au-c": {
+  "at": "2026-10-30",
+  "to": "Sydney",
+  "fee": 1200,
+  "freeFrom": null,
+  "paidAt": 25000,
+  "maxTested": 25000
+ },
+ "us-a": {
+  "at": "2026-10-30",
+  "to": "New York",
+  "fee": 599,
+  "freeFrom": 5000,
+  "paidAt": 4800,
+  "maxTested": 5000
+ },
+ "us-b": {
+  "at": "2026-10-30",
+  "to": "New York",
+  "fee": 0,
+  "freeFrom": 1000,
+  "paidAt": 0,
+  "maxTested": 1000
+ },
+ "uk-a": {
+  "at": "2026-10-30",
+  "to": "London",
+  "fee": 299,
+  "freeFrom": 3500,
+  "paidAt": 3300,
+  "maxTested": 3500
+ }
+}

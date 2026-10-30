@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES, SITE } from "@/site";
-import { POSTS } from "@/content/blog";
+import { POSTS, isLive } from "@/content/blog";
 import { LogoMark } from "./Logo";
 
 export function Footer({ updated }: { updated?: string | null }) {
@@ -41,7 +41,8 @@ export function Footer({ updated }: { updated?: string | null }) {
             <li><Link prefetch={false} href="/blog" className="text-soft hover:text-ink">Blog</Link></li>
             <li><Link prefetch={false} href="/stores" className="text-soft hover:text-ink">Where to buy K-beauty online</Link></li>
             <li><Link prefetch={false} href="/about" className="text-soft hover:text-ink">About &amp; how matching works</Link></li>
-            <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">Affiliate disclosure</Link></li>
+            <li><Link prefetch={false} href="/basket" className="text-soft hover:text-ink">Compare a basket</Link></li>
+            <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">How we make money</Link></li>
             <li><Link prefetch={false} href="/privacy" className="text-soft hover:text-ink">Privacy</Link></li>
             <li><Link prefetch={false} href="/terms" className="text-soft hover:text-ink">Terms</Link></li>
           </ul>
@@ -49,7 +50,7 @@ export function Footer({ updated }: { updated?: string | null }) {
         <div>
           <h2 className="eyebrow mb-3">Read</h2>
           <ul className="space-y-1.5">
-            {POSTS.map((p) => (
+            {POSTS.filter((p) => isLive(p)).map((p) => (
               <li key={p.slug}>
                 <Link prefetch={false} href={`/blog/${p.slug}`} className="text-soft hover:text-ink">
                   {p.short}
@@ -66,7 +67,9 @@ export function Footer({ updated }: { updated?: string | null }) {
       </div>
       <div className="border-t border-line px-4 py-5 text-center text-xs text-soft">
         <p>
-          Some links earn us a small commission at no cost to you; they never change the order of prices. Prices and stock change fast: the store&apos;s page is always right.
+          Some links (eBay, Amazon and the labelled retailer rows) can earn us a commission at no cost to you; they never change the order of prices.{" "}
+          <Link prefetch={false} href="/disclosure" className="underline hover:text-ink">How we make money</Link>. Prices are checked daily and can change between checks, so the store&apos;s checkout is always the final price; tell us about any
+          mistake and we fix it.
         </p>
         <p className="mt-1">
           K Young is an independent price guide, not affiliated with any brand or store. Product names and photos belong to their owners. Nothing here is medical advice.

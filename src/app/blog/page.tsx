@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ALL_POSTS } from "@/content/blog";
+import { LIVE_POSTS } from "@/content/blog";
 import { CAT_TINT, CatIcon } from "@/components/Art";
 import { PageHead } from "@/components/Section";
 import { niceDate } from "@/lib/format";
@@ -20,7 +20,7 @@ export default function Blog() {
         sub="Questions the prices answer: are brands' own stores cheaper, what a routine really costs, where sunscreen is cheapest. Every number comes from today's store prices."
       />
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {ALL_POSTS.slice().sort((a, b) => b.date.localeCompare(a.date)).map((p) => (
+        {LIVE_POSTS.map((p) => (
           <li key={p.slug}>
             <Link prefetch={false} href={`/blog/${p.slug}`} className="card tile-hover group flex h-full flex-col overflow-hidden">
               <div className={`grid h-40 place-items-center ${CAT_TINT[p.art]}`}>

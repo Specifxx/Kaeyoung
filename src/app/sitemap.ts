@@ -3,7 +3,7 @@ import { CATEGORIES, SITE } from "@/site";
 import { getBrands, getMeta, getProducts } from "@/lib/data";
 import { isIndexable } from "@/lib/index-tiers";
 import { GUIDES } from "@/lib/guides";
-import { ALL_POSTS } from "@/content/blog";
+import { LIVE_POSTS } from "@/content/blog";
 import { pageCount } from "@/components/CatHub";
 
 // Only pages worth landing on (src/lib/index-tiers.ts): hubs, brands, guides,
@@ -18,13 +18,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CATEGORIES.flatMap((c) => Array.from({ length: pageCount(c.key) - 1 }, (_, i) => u(`/${c.key}/page/${i + 2}`, 0.4))),
     u("/popular", 0.8),
     u("/deals", 0.8),
+    u("/basket", 0.5),
     u("/new", 0.7),
     u("/brands", 0.8),
     ...getBrands().map((b) => u(`/brands/${b.slug}`, 0.8)),
     u("/guides", 0.7),
     ...GUIDES.map((g) => u(`/guides/${g.slug}`, 0.8)),
     u("/blog", 0.6),
-    ...ALL_POSTS.map((p) => u(`/blog/${p.slug}`, 0.7)),
+    ...LIVE_POSTS.map((p) => u(`/blog/${p.slug}`, 0.7)),
     u("/stores", 0.6),
     u("/about", 0.3),
     ...getProducts().filter(isIndexable).map((f) => u(`/product/${f.slug}`, 0.7)),
