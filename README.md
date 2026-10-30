@@ -12,7 +12,7 @@ GitHub Actions, daily 06:11 UTC (import.yml)
   → one listing per variant with a Korean EAN-13 (880…) (src/lib/ean.ts, src/lib/import/shopify.ts)
   → refuse testers, short-dated, damaged, bundles (src/lib/title.ts); category, size, brand
   → one product per barcode, kept when 2+ stores in a region sell it (src/lib/merge.ts)
-  → eBay Browse by GTIN, budgeted (scripts/ebay-import.ts; off until a keyset and EBAY_DAILY_CAP exist)
+  → eBay Browse by GTIN, budgeted (scripts/ebay-import.ts; 2,500 calls a day, off until the keyset exists)
   → data/public/{products,history,ebay,meta}.json, data/state/*
   → commit to main with "[deploy]" in the subject → one Vercel build a day → IndexNow ping
 ```

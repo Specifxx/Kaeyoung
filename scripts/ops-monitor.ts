@@ -70,7 +70,6 @@ async function main() {
     ),
     check("eBay listings", () => {
       if (!process.env.EBAY_CLIENT_ID) return { status: "warn", detail: "EBAY_CLIENT_ID not set in GitHub secrets: no eBay listings yet (search links still earn)" };
-      if (!Number(process.env.EBAY_DAILY_CAP || 0)) return { status: "warn", detail: "EBAY_DAILY_CAP repository variable not set: the eBay pass spends nothing" };
       if (!meta.ebay) return { status: "warn", detail: "no eBay run recorded yet" };
       const age = (Date.now() - Date.parse(meta.ebay.at)) / 3_600_000;
       if (age > 30) return { status: "warn", detail: `last eBay run ${age.toFixed(0)}h ago` };

@@ -35,9 +35,9 @@ ads … a side panel like Dex Compare."
   above the stores, labelled, `rel="sponsored"`, never counted as a store or the best price.
 * **eBay**: pinned row per region (search, or the cheapest believable listing by GTIN once the eBay pass runs).
   Counterfeit K-beauty ships mostly from China and Hong Kong, so those sellers are skipped. EPN campaign
-  5339155911 (WargameCompare/FigureCompare's) until K Young has its own; the `ky-` customid separates it. The two
-  family Browse keysets are split between sister sites already, so the eBay pass spends nothing until K Young has
-  its own keyset and `EBAY_DAILY_CAP` is set.
+  5339155911 (WargameCompare/FigureCompare's) until K Young has its own; the `ky-` customid separates it. K Young and
+  CamCompare share the owner's third Browse keyset (pending eBay approval, owner 2026-10-30), 2,500 calls a day
+  each: `EBAY_DAILY_CAP` defaults to 2,500 and can only lower it; the pass is a no-op until the keys exist.
 * **Amazon**: US `riftcompare-20` and AU `compareempire-22` (the family's accounts; a US tag earns nothing on
   amazon.com.au). UK, CA and DE appear only once `AMAZON_TAG_UK/CA/EU` exist.
 * **Beauty retailers** (rates from the research thread): YesStyle (~10%), Stylevana (FlexOffers), Olive Young
