@@ -9,7 +9,7 @@ import { lowestOrderable } from "./history";
 import { canonicalKey } from "./brand";
 import { BRAND_KO } from "@/content/brands-ko";
 import type { EbayData, History, Meta, Offer, Product } from "./types";
-import { deliveryFor, type ShippingData } from "./shipping";
+import { deliveryFor, MAX_SMALL_ORDER_FEE, type ShippingData } from "./shipping";
 
 // KY_DATA_DIR points local development and tests at a fixture; production
 // always reads the committed files.
@@ -39,7 +39,8 @@ export const getMeta = (): Meta | null => load<Meta | null>("meta.json", null);
 export const getHistory = (): History => load<History>("history.json", {});
 export const getEbay = (): EbayData => load<EbayData>("ebay.json", {});
 /** Weekly delivery quotes per store (scripts/shipping.ts; lib/shipping.ts). */
-export const getShipping = (): ShippingData => load<ShippingData>("shipping.json", {});
+export const getShipping = (): ShippingData =>
+  once("shipping", () => Object.fromEntries(Object.entries(load<ShippingData>("shipping.json", {})).filter(([, q]) => q.fee <= MAX_SMALL_ORDER_FEE)));
 
 export function getProduct(slug: string): Product | undefined {
   return once("bySlug", () => new Map(getProducts().map((f) => [f.slug, f]))).get(slug);

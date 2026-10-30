@@ -27,6 +27,10 @@ export interface StoreShipping {
 
 export type ShippingData = Record<string, StoreShipping>;
 
+/** A small-order fee over this (40 units of the store's currency) is a heavy
+ *  item or a zone the store doesn't really serve, never shown or kept. */
+export const MAX_SMALL_ORDER_FEE = 4000;
+
 /** Where each region's quote is for. EU stores are asked for their own
  *  country (from the domain), since "Europe" is many delivery zones. */
 export const DESTINATIONS: Record<RegionCode, { city: string; country: string; province: string; zip: string }> = {

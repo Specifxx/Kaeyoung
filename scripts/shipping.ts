@@ -16,7 +16,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { STORES, type Store } from "@/content/stores";
-import { destinationFor, type ShippingData, type StoreShipping } from "@/lib/shipping";
+import { destinationFor, MAX_SMALL_ORDER_FEE, type ShippingData, type StoreShipping } from "@/lib/shipping";
 
 const OUT = path.resolve("data/public/shipping.json");
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
@@ -164,7 +164,7 @@ export async function quote(store: Store): Promise<StoreShipping & { calls: numb
   const base = { at: today, to: dest.city, rate: first.name };
   // A small order quoted over 40 units is a heavy item or a zone the store
   // doesn't really serve, not what a shopper would pay: leave the store out.
-  if (first.cents > 4000) throw new Error(`implausible small-order fee ${first.cents} (${first.name})`);
+  if (first.cents > MAX_SMALL_ORDER_FEE) throw new Error(`implausible small-order fee ${first.cents} (${first.name})`);
   if (first.cents === 0) return { ...base, fee: 0, freeFrom: total, paidAt: 0, maxTested: total, calls: cart.calls };
 
   // Grow the basket (about doubling) until delivery is free or we reach the
@@ -243,7 +243,7 @@ async function run(stores: Store[], prev: ShippingData): Promise<{ out: Shipping
       report.push(`ok   ${s.id.padEnd(22)} ${s.region} fee ${q.fee} free ${q.freeFrom ?? "-"} paid≤${q.paidAt} (${rate}, ${calls} calls)`);
     } catch (e) {
       const old = prev[s.id];
-      const fresh = old && (Date.parse(today) - Date.parse(old.at)) / 86_400_000 < KEEP_DAYS;
+      const fresh = old && old.fee <= MAX_SMALL_ORDER_FEE && (Date.parse(today) - Date.parse(old.at)) / 86_400_000 < KEEP_DAYS;
       if (fresh) out[s.id] = old;
       report.push(`fail ${s.id.padEnd(22)} ${s.region} ${(e as Error).message.slice(0, 140)}${fresh ? " (kept last quote)" : ""}`);
     }
