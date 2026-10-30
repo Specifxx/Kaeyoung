@@ -43,23 +43,24 @@ export function judgeStores(meta: Meta, total: number): Omit<Result, "name"> {
   return { status: bad.length > total / 3 ? "fail" : "warn", detail };
 }
 
-/** The daily reviews export (scripts/reviews-export.ts) and the private store
- *  it reads, probed live (one GitHub API read). Held reviews raise a warning
- *  once a day only (the 09:50 UTC run), so the owner gets one daily count,
- *  never a mail per review. The store's token expiring is warned 14 days ahead:
- *  without it the form can't save. */
+/** The daily reviews export (scripts/reviews-export.ts) and the reviews branch
+ *  it reads, probed live (one GitHub API read with the job's token). Held
+ *  reviews raise a warning once a day only (the 09:50 UTC run), so the owner
+ *  gets one daily count, never a mail per review. A token expiry header, when
+ *  there is one, is warned 14 days ahead (GitHub also emails the owner before
+ *  the Vercel token expires). */
 export function judgeReviews(
   file: ReviewsFile | null,
   configured: boolean,
   now = Date.now(),
   probe: { error?: string; tokenExpires?: string } = {},
 ): Omit<Result, "name"> {
-  if (!configured) return { status: "warn", detail: "REVIEWS_GITHUB_TOKEN not set in GitHub secrets: ratings and reviews are off" };
-  if (probe.error) return { status: "warn", detail: `the private reviews store can't be read: ${probe.error}` };
+  if (!configured) return { status: "warn", detail: "no token to read the reviews branch: ratings and reviews are off" };
+  if (probe.error) return { status: "warn", detail: `the reviews branch can't be read: ${probe.error}` };
   if (probe.tokenExpires) {
     const days = (Date.parse(probe.tokenExpires.replace(" UTC", "Z").replace(" ", "T")) - now) / 86_400_000;
     if (Number.isFinite(days) && days < 14)
-      return { status: "warn", detail: `the reviews token expires in ${Math.max(0, Math.floor(days))} day(s): make a new one and update REVIEWS_GITHUB_TOKEN in Vercel and GitHub` };
+      return { status: "warn", detail: `the reviews token expires in ${Math.max(0, Math.floor(days))} day(s): make a new one and update REVIEWS_GITHUB_TOKEN in Vercel` };
   }
   if (!file) return { status: "warn", detail: "no reviews export yet (data/public/reviews.json missing)" };
   if (file.error) return { status: "warn", detail: `the last reviews export could not read the store: ${file.error}` };

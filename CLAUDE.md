@@ -14,12 +14,13 @@ built on FigureCompare's static engine, but carrying **no Compare branding** (ow
   every `next/link` has `prefetch={false}`, image optimisation is off. `tests/cost-rules.test.ts` pins all of it.
 - The only function is eBay's account-deletion hook (`src/app/api/ebay/marketplace-deletion`); keep it while an eBay
   keyset exists.
-- No database at all. Reviews (DECISIONS.md "Reviews move from Neon to a private GitHub repo") live in ONE file,
-  `reviews.json`, in the PRIVATE repo `Specifxx/kaeyoung-reviews`, reached only through `src/lib/reviews-store.ts` with
-  `REVIEWS_GITHUB_TOKEN` (fine-grained, that repo's contents only; Vercel + GitHub secret, never client-side). Used by
-  the two POST-only `/api/reviews` routes, `scripts/reviews-export.ts` and the ops monitor. Pages read
-  `data/public/reviews.json`, never the store (`tests/cost-rules.test.ts`). No IP, email or flag ever goes in
-  that file. Never put review submissions in this public repo. Ratings never order prices.
+- No database at all. Reviews (DECISIONS.md "Reviews live on the public repo's reviews branch") are ONE public file,
+  `reviews.json` on this repo's `reviews` branch (never deployed, `vercel.json`), reached only through
+  `src/lib/reviews-store.ts`: the two POST-only `/api/reviews` routes write it with `REVIEWS_GITHUB_TOKEN` (Vercel
+  only, never client-side); `scripts/reviews-export.ts` and the ops monitor read it with the Actions token. Pages read
+  `data/public/reviews.json`, never the branch (`tests/cost-rules.test.ts`). Nothing about a reviewer is stored: no
+  IP, no hash of one, no email (per-visitor limits are in memory only). Never merge `reviews` into `main` or edit it by
+  hand except to moderate. Ratings never order prices.
 - Never write anything private to `data/`: it is public with the source. Never edit `data/` by hand.
 - The visitor's region is chosen in the browser (time zone, then their own pick in localStorage) by the script in
   `src/app/layout.tsx`; every region's prices are in the HTML and CSS shows one (`.rp-XX` in `globals.css`).

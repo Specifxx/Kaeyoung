@@ -274,3 +274,25 @@ them to be addressed.
   ~2,500 reviews; past that the store reads the blob API (up to 100 MB). Revisit at ~20,000 reviews.
 * **Migration:** none needed. `data/public/reviews.json` never existed on `main`, so `REVIEWS_DATABASE_URL` was never
   set and no Neon review was ever exported; the Neon driver and `REVIEWS_DATABASE_URL`/`DATABASE_URL` are gone.
+
+## 2026-10-30: reviews live on the public repo's reviews branch
+
+**Owner:** "just make the reviews in the public repo. Reviews should be public and if they aren't intended to be
+public then they don't have to leave a review." This replaces the private repo from the entry above, which was never
+set up.
+
+* **Where:** `reviews.json` on the `reviews` branch of `Specifxx/Kaeyoung` (`REVIEWS_REPO`/`REVIEWS_BRANCH`
+  override). A branch, not `main`: each review is a commit, and on `main` it would race the daily import's push and
+  fill the history. `vercel.json` never deploys the branch, CI runs only on `main` and pull requests, and a review
+  commit's subject never carries `[deploy]`.
+* **Nothing about a reviewer is stored**, because every line is public, held and hidden reviews included: no IP,
+  no hashed IP, no email. That loses two checks that needed a stored visitor key: "one rating per product per
+  visitor, ever" and "8 a day per visitor". Both now live in the function's memory (`visitorLimit`), which a cold
+  start forgets. What still stands: same-site POSTs, the honeypot, the minimum fill time, Turnstile once its keys
+  are set, the 400-a-day site-wide cap, copied-text detection and the word rules that hold a review for
+  `/admin/reviews`. If a flood gets through, switch on Turnstile first.
+* **The trade-off accepted:** a held spam review is visible on the branch until it is hidden (and stays in git history
+  after), but never on the site: the export publishes only `published` reviews.
+* **Tokens:** Vercel holds `REVIEWS_GITHUB_TOKEN`, a fine-grained token with Contents read/write on this repo (it
+  cannot be narrowed to one branch). The import and the ops monitor read the branch with their own `github.token`, so
+  no GitHub secret is needed. GitHub emails the owner before the Vercel token expires.
