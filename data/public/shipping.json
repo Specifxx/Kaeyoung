@@ -127,6 +127,14 @@
   "paidAt": 0,
   "maxTested": 1676
  },
+ "cosmeticstore-nz": {
+  "at": "2026-10-30",
+  "to": "Auckland",
+  "fee": 500,
+  "freeFrom": 5040,
+  "paidAt": 5180,
+  "maxTested": 5760
+ },
  "cupidrop": {
   "at": "2026-10-30",
   "to": "New York",
@@ -279,6 +287,14 @@
   "paidAt": 7390,
   "maxTested": 9600
  },
+ "jessicanailsupply": {
+  "at": "2026-10-30",
+  "to": "Toronto",
+  "fee": 750,
+  "freeFrom": 12000,
+  "paidAt": 11700,
+  "maxTested": 19200
+ },
  "jumiso": {
   "at": "2026-10-30",
   "to": "New York",
@@ -310,6 +326,14 @@
   "freeFrom": 7795,
   "paidAt": 5655,
   "maxTested": 7795
+ },
+ "kbeauty-cosmetics": {
+  "at": "2026-10-30",
+  "to": "Berlin",
+  "fee": 940,
+  "freeFrom": 18240,
+  "paidAt": 19140,
+  "maxTested": 19140
  },
  "kbeautyoutlet": {
   "at": "2026-10-30",
@@ -471,6 +495,14 @@
   "paidAt": 5555,
   "maxTested": 9920
  },
+ "makeup2beauty": {
+  "at": "2026-10-30",
+  "to": "Sydney",
+  "fee": 2095,
+  "freeFrom": null,
+  "paidAt": 25250,
+  "maxTested": 25250
+ },
  "manyo": {
   "at": "2026-10-30",
   "to": "New York",
@@ -583,6 +615,14 @@
   "paidAt": 3099,
   "maxTested": 3099
  },
+ "purida": {
+  "at": "2026-10-30",
+  "to": "Berlin",
+  "fee": 500,
+  "freeFrom": 3500,
+  "paidAt": 3500,
+  "maxTested": 4000
+ },
  "reiwatakiya": {
   "at": "2026-10-30",
   "to": "London",
@@ -614,6 +654,14 @@
   "freeFrom": 8091,
   "paidAt": 8320,
   "maxTested": 8352
+ },
+ "sentisenti": {
+  "at": "2026-10-30",
+  "to": "New York",
+  "fee": 645,
+  "freeFrom": 6600,
+  "paidAt": 6300,
+  "maxTested": 6600
  },
  "seoulbeautystore": {
   "at": "2026-10-30",
@@ -774,6 +822,14 @@
   "freeFrom": 4000,
   "paidAt": 3895,
   "maxTested": 4000
+ },
+ "velvetvanity": {
+  "at": "2026-10-30",
+  "to": "Toronto",
+  "fee": 1500,
+  "freeFrom": 8037,
+  "paidAt": 9138,
+  "maxTested": 9138
  },
  "wcosmetics": {
   "at": "2026-10-30",
