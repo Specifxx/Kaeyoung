@@ -54,7 +54,6 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, e
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 font-semibold">
           <span className={brand ? "shrink-0" : "truncate"}>{name}</span>
-          {brand && <span className="chip chip-first">Shown first</span>}
         </p>
         <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}

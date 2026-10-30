@@ -108,9 +108,6 @@ html:not([data-region]) .rn-US { display: none; }
     background: #ffd814;
     color: #0f1111;
   }
-  .chip-first {
-    @apply bg-accent-pale text-accent-deep;
-  }
   .chip {
     @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold;
   }
