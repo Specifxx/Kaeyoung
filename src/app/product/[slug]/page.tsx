@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
-import { bestIn, brandKo, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
+import { bestIn, brandKo, cheapestDelivered, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
 import { isIndexable } from "@/lib/index-tiers";
@@ -13,6 +13,7 @@ import { PriceHistory } from "@/components/Sparkline";
 import { RegionTabs } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { OutLink } from "@/components/OutLink";
+import { AddToBasket } from "@/components/Basket";
 import type { Product } from "@/lib/types";
 import { reviewsOf, reviewsOpen } from "@/lib/ratings";
 import { SCHEMA_MIN_RATINGS, starsText, type ProductReviews } from "@/lib/reviews";
@@ -64,6 +65,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     .slice(0, 8);
 
   const rated = reviewsOf(f);
+  const meta = getMeta();
   const showSchema = !!rated && rated.n >= SCHEMA_MIN_RATINGS;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -198,6 +200,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                         </>
                       ) : null}
                     </p>
+                    <DeliveredLine f={f} region={r.code} />
                     <OutLink
                       href={storeUrl(b.offer.s, b.offer.u)}
                       event={{ source: b.offer.s, region: r.code, placement: "hero", ean: f.ean }}
@@ -205,6 +208,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                     >
                       Shop at {storeName(b.offer.s)} <span aria-hidden>→</span>
                     </OutLink>
+                    <div>
+                      <AddToBasket slug={f.slug} />
+                    </div>
                   </div>
                 ) : (
                   <div className="card p-5 text-sm">
@@ -231,7 +237,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             </div>
           ))}
           <p className="mt-3 text-xs leading-relaxed text-soft">
-            Prices are what each store showed at our last check and exclude shipping. Every store listing here carries this product&apos;s barcode ({f.ean}), so it is the same product and size, not a look-alike.
+            Prices are what each store&apos;s own site showed at our last daily check{meta ? ` (${niceDate(meta.updatedAt)})` : ""}, before delivery, and they can change at any time: the store&apos;s checkout is always the final price. Delivery
+            costs are each store&apos;s own quote for a small order to one city in your region, checked weekly; they can differ for your address. Every store listing here carries this product&apos;s barcode ({f.ean}), so it is the same product and
+            size, not a look-alike. See a wrong price?{" "}
+            <a className="underline hover:text-ink" href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Wrong price: ${f.name}`)}`}>Tell us</a> and we fix it.{" "}
+            <Link prefetch={false} href="/basket" className="font-medium text-accent-deep hover:underline">Buying several products? Compare a whole basket →</Link>
           </p>
         </div>
 
@@ -315,6 +325,18 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   );
 }
 
+/** The hero's second line: when delivery changes which store is cheapest. */
+function DeliveredLine({ f, region }: { f: Product; region: RegionCode }) {
+  const d = cheapestDelivered(f, region);
+  if (!d) return null;
+  return (
+    <p className="mt-2 rounded-lg bg-subtle px-3 py-2 text-sm text-soft">
+      With delivery for one item, <span className="font-medium text-ink">{storeName(d.offer.s)}</span> works out cheapest: {money(d.offer.p, region)} + {d.delivery ? money(d.delivery, region) : "free"} delivery ={" "}
+      <span className="font-semibold text-ink">{money(d.total, region)}</span> (of the {d.known} stores whose delivery we know).
+    </p>
+  );
+}
+
 function Faq({ f, regions, rated }: { f: Product; regions: RegionCode[]; rated: ProductReviews | undefined }) {
   const qa: [string, string][] = [];
   for (const r of regions) {
@@ -329,7 +351,10 @@ function Faq({ f, regions, rated }: { f: Product; regions: RegionCode[]; rated: 
     `How do you know every store sells the same ${f.name}?`,
     `We match listings only by the barcode printed on the box (${f.ean}). A listing without that barcode is left out rather than guessed, so other sizes, refills, old packaging and look-alikes never get mixed up.`,
   ]);
-  qa.push(["Are these prices with shipping?", "No: they are the store's own listed price. Shipping, tax and import charges depend on where you live, and many stores ship free above a minimum order, so check the store's checkout before you buy."]);
+  qa.push([
+    "Are these prices with shipping?",
+    "The prices are each store's own listed price, before delivery, and they are sorted by that price. Under each store we show what delivery cost in that store's own quote for a small order to a city in your region (checked weekly), and from what order total it becomes free, when we know it. Your address can change the cost, so check the store's checkout before you buy. Buying several products? The basket compares whole orders with delivery.",
+  ]);
   const ld = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: qa.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) };
   return (
     <>

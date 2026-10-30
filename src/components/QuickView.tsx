@@ -8,7 +8,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { REGIONS, type RegionCode } from "@/site";
-import { PriceRows, type RowData } from "./PriceRows";
+import { PriceRows, type RowsData } from "./PriceRows";
 import { ProductImage } from "./ProductImage";
 
 interface Head {
@@ -19,7 +19,7 @@ interface Head {
 }
 interface Data {
   size: string | null;
-  rows: Record<RegionCode, { pinned: RowData[]; stores: RowData[] } | null>;
+  rows: Record<RegionCode, RowsData | null>;
 }
 
 const cache = new Map<string, Promise<Data | null>>();

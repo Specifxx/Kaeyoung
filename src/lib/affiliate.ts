@@ -131,11 +131,15 @@ export interface Partner {
   regions: RegionCode[];
   search: (q: string) => string;
   note: string;
+  /** Shown in every region it ships to even before its program accepts us,
+   *  as a plain unpaid search link (a visitor's request, 2026-10-30: YesStyle
+   *  and Stylevana are where K-beauty buyers check first). */
+  always?: boolean;
 }
 
 export const PARTNERS: Partner[] = [
-  { key: "yesstyle", name: "YesStyle", envVar: "AFF_YESSTYLE", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.yesstyle.com/en/list.html?q=${q}`, note: "ships from Hong Kong" },
-  { key: "stylevana", name: "Stylevana", envVar: "AFF_STYLEVANA", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.stylevana.com/en_US/catalogsearch/result/?q=${q}`, note: "ships worldwide" },
+  { key: "yesstyle", name: "YesStyle", envVar: "AFF_YESSTYLE", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.yesstyle.com/en/list.html?q=${q}`, note: "ships from Hong Kong", always: true },
+  { key: "stylevana", name: "Stylevana", envVar: "AFF_STYLEVANA", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.stylevana.com/en_US/catalogsearch/result/?q=${q}`, note: "ships worldwide", always: true },
   { key: "oliveyoung", name: "Olive Young Global", envVar: "AFF_OLIVEYOUNG", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://global.oliveyoung.com/display/search?query=${q}`, note: "ships from Korea" },
   { key: "iherb", name: "iHerb", envVar: "AFF_IHERB", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.iherb.com/search?kw=${q}`, note: "ships worldwide" },
   { key: "lookfantastic", name: "LOOKFANTASTIC", envVar: "AFF_LOOKFANTASTIC", regions: ["UK"], search: (q) => `https://www.lookfantastic.com/search?q=${q}`, note: "UK retailer" },
@@ -153,10 +157,12 @@ export function partnerUrl(p: Partner, query: string, sub: string, env: Record<s
     .replace("{sub}", encodeURIComponent(sub));
 }
 
-/** The partner rows a region shows today (only those with a template set). */
-export function partnersFor(region: RegionCode, query: string, sub: string): { p: Partner; href: string }[] {
-  return PARTNERS.filter((p) => p.regions.includes(region)).flatMap((p) => {
-    const href = partnerUrl(p, query, sub);
-    return href ? [{ p, href }] : [];
+/** The retailer rows a region shows today: those whose tracking template is
+ *  set (paid), plus the `always` ones as plain search links (unpaid). */
+export function partnersFor(region: RegionCode, query: string, sub: string, env: Record<string, string | undefined> = process.env): { p: Partner; href: string; paid: boolean }[] {
+  return PARTNERS.filter((p) => p.regions.includes(region)).flatMap((p): { p: Partner; href: string; paid: boolean }[] => {
+    const href = partnerUrl(p, query, sub, env);
+    if (href) return [{ p, href, paid: true }];
+    return p.always ? [{ p, href: p.search(encodeURIComponent(query)), paid: false }] : [];
   });
 }

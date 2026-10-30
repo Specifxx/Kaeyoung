@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { REGIONS, type CatKey, type RegionCode } from "@/site";
+import { REGIONS, SITE, type CatKey, type RegionCode } from "@/site";
 import { STORE_BY_ID } from "@/content/stores";
-import { ALL_POSTS, POST_BY_SLUG, type Post, type Section } from "@/content/blog";
+import { LIVE_POSTS, POST_BY_SLUG, type Post, type Section } from "@/content/blog";
 import { bestIn, dealsIn, getBrands, getMeta, getProducts, orderableIn, popularIn, productsOfCat, storeName } from "@/lib/data";
 import { money, niceDate, pct } from "@/lib/format";
 import { storeUrl } from "@/lib/affiliate";
@@ -14,7 +14,7 @@ import { CatIcon } from "@/components/Art";
 import type { Product } from "@/lib/types";
 
 export const dynamicParams = false;
-export const generateStaticParams = () => ALL_POSTS.map((p) => ({ slug: p.slug }));
+export const generateStaticParams = () => LIVE_POSTS.map((p) => ({ slug: p.slug }));
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = POST_BY_SLUG[params.slug];
@@ -23,7 +23,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     title: p.title,
     description: p.description,
     alternates: { canonical: `/blog/${p.slug}` },
-    openGraph: { type: "article", title: p.title, description: p.description, publishedTime: p.date },
+    openGraph: { type: "article", title: p.title, description: p.description, publishedTime: p.date, modifiedTime: p.updated },
   };
 }
 
@@ -37,17 +37,37 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   return (
     <article className="mx-auto max-w-4xl px-4">
       <PageHead
-        eyebrow={`Blog · ${niceDate(p.date)}`}
+        eyebrow={`Blog · Published ${niceDate(p.date)}${p.updated && p.updated > p.date ? ` · Updated ${niceDate(p.updated)}` : ""}`}
         title={p.title}
         sub={<p>{p.description}</p>}
         art={<CatIcon cat={p.art} size={150} />}
       />
       <div className="prose-ky">{Body ? <Body asOf={asOf} /> : sections ? <Advice post={p} sections={sections} /> : null}</div>
-      <aside className="mt-12 rounded-2xl bg-subtle p-5 text-sm text-soft">
-        Prices are each store&apos;s own, in its own currency{asOf ? `, as of ${asOf}` : ""}, before shipping. They change daily: the store&apos;s page is always right. Change your country at the top of the page to see its stores. Some links earn us a commission; it never changes the order.{" "}
-        <Link prefetch={false} href="/blog" className="font-medium text-accent-deep hover:underline">
-          More posts →
-        </Link>
+      <aside className="mt-12 space-y-3 rounded-2xl bg-subtle p-5 text-sm text-soft">
+        <h2 className="font-semibold text-ink">How this post was made</h2>
+        <p>
+          Every price table is drawn from the stores&apos; own listings at our daily check{asOf ? ` (last run ${asOf})` : ""}, matched by the barcode on the box, in each store&apos;s own currency and before delivery. Tables refresh every day; the text is
+          only changed when we revise it, and then it shows an updated date. Prices change fast, so the store&apos;s own page is always the final word. If you spot a mistake, email{" "}
+          <a className="underline" href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Correction: ${p.title}`)}`}>{SITE.email}</a> and we will fix it.
+        </p>
+        {p.sources?.length ? (
+          <div>
+            <h3 className="font-semibold text-ink">Sources</h3>
+            <ul className="mt-1 list-disc space-y-1 pl-5">
+              {p.sources.map((x) => (
+                <li key={x.url}>
+                  <a href={x.url} target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-ink">{x.title}</a>, {x.by}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        <p>
+          Some store links earn us a commission; it never changes the order of prices (<Link prefetch={false} href="/disclosure" className="underline">how we make money</Link>).{" "}
+          <Link prefetch={false} href="/blog" className="font-medium text-accent-deep hover:underline">
+            More posts →
+          </Link>
+        </p>
       </aside>
     </article>
   );
@@ -345,7 +365,8 @@ function AvoidFakes() {
       <H2>1. Buy from a store, not a stranger</H2>
       <P>
         Specialist K-beauty stores and the brands&apos; own stores buy their stock from the brand or its distributors. Many brands publish a list of authorised sellers on their website; if a shop is on it, that is a good sign. Every store K Young
-        compares is a real shop selling new, sealed products; we leave out open marketplaces and second-hand sellers. You can see all of them on <A href="/stores">Stores we compare</A>.
+        compares is a real shop selling new, sealed products; open marketplaces and second-hand sellers are never part of the store comparison. You can see all of them on <A href="/stores">Stores we compare</A>. We do show an eBay and an Amazon row
+        above the stores on product pages, labelled as ads and kept out of the &quot;cheapest&quot; ranking; on either site, buy from the brand&apos;s official shop or a seller with a long record.
       </P>
       <H2>2. Be wary of a price far below everyone else&apos;s</H2>
       <P>

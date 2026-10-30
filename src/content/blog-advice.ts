@@ -16,6 +16,11 @@ export const ADVICE_POSTS: Post[] = [
     short: "Routine for oily skin",
     description: "Oily skin does well on light layers, not fewer of them. Our picks for each step, with BHA, niacinamide and gel textures, priced at the cheapest store in your country.",
     date: "2026-10-30",
+    updated: "2026-10-30",
+    sources: [
+      { title: "Face washing 101", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-basics/care/face-washing-101" },
+      { title: "How to test skin care products before use", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products" },
+    ],
     art: "toners",
     sections: [
       {
@@ -26,7 +31,7 @@ export const ADVICE_POSTS: Post[] = [
       },
       {
         h: "Step 1: an oil cleanser at night",
-        p: ["It sounds backwards, but oil lifts sunscreen and sebum better than foam alone, and rinses off clean. Oily skin is the skin type that tends to like it most."],
+        p: ["It sounds backwards, but an oil cleanser dissolves sunscreen and makeup that a foam alone can leave behind, then emulsifies and rinses off. Many people with oily skin find it leaves their face less tight than a second round of foam. This is our view, not a rule: if a cleansing oil seems to clog your pores, drop it."],
         picks: { title: "Cleansing oils and balms {region}", match: "cleansing (oil|balm)|melting balm|clean(sing)? balm", cat: "cleansers", limit: 8 },
       },
       {
@@ -55,7 +60,11 @@ export const ADVICE_POSTS: Post[] = [
     title: "A Korean skincare routine for dry skin: layer, don't scrub",
     short: "Routine for dry skin",
     description: "Dry skin needs water first and something to hold it in. A layered routine with hydrating toners, ceramides and rich creams, priced at the cheapest store near you.",
-    date: "2026-10-30",
+    date: "2026-11-03",
+    sources: [
+      { title: "Face washing 101", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-basics/care/face-washing-101" },
+      { title: "How to test skin care products before use", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products" },
+    ],
     art: "moisturisers",
     sections: [
       {
@@ -86,13 +95,17 @@ export const ADVICE_POSTS: Post[] = [
     title: "Korean skincare for sensitive skin: a short, calm routine",
     short: "Sensitive skin",
     description: "Fewer products, soothing ingredients like centella, heartleaf and panthenol, and how to introduce anything new. Our picks, priced at the cheapest store in your country.",
-    date: "2026-10-30",
+    date: "2026-11-17",
+    sources: [
+      { title: "How to test skin care products before use", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products" },
+      { title: "Face washing 101", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-basics/care/face-washing-101" },
+    ],
     art: "serums",
     sections: [
       {
         p: [
           "Sensitive skin is the case where the famous ten-step routine is the worst idea. Every extra product is another chance of a reaction, so the best routine is short: a gentle cleanser, one soothing serum or toner, a plain moisturiser and sunscreen.",
-          "Add one new product at a time, patch test it on your jaw or inner arm for a few days, and keep a product only if your skin stays calm. If redness, stinging or breakouts persist, see a dermatologist: no product list replaces that.",
+          "Add one new product at a time, patch test it first: the American Academy of Dermatology suggests a small spot on the inner arm, twice a day for seven to ten days, and keep a product only if your skin stays calm. If redness, stinging or breakouts persist, see a dermatologist: no product list replaces that.",
         ],
       },
       {
@@ -112,12 +125,15 @@ export const ADVICE_POSTS: Post[] = [
     title: "Centella (cica) in Korean skincare: what it is and the best-stocked picks",
     short: "Centella and cica",
     description: "Cica, centella asiatica, madecassoside and tiger grass are one plant. What Korean brands use it for, and where the most-stocked centella products are cheapest.",
-    date: "2026-10-30",
+    date: "2026-11-10",
+    sources: [
+      { title: "Centella asiatica in cosmetology (Bylka et al., Advances in Dermatology and Allergology, 2013)", by: "Termedia", url: "https://www.termedia.pl/Review-paper-Centella-asiatica-in-cosmetology,7,20289,0,1.html" },
+    ],
     art: "serums",
     sections: [
       {
         p: [
-          "Centella asiatica goes by many names on labels: cica, tiger grass, gotu kola, and its extracts madecassoside and asiaticoside. In Korean it is 병풀. It is one of the most common ingredients in Korean soothing products, usually aimed at skin that feels irritated, red or stressed.",
+          "Centella asiatica goes by many names on labels: cica, tiger grass, gotu kola, and its extracts madecassoside and asiaticoside. In Korean it is 병풀. It is one of the most common ingredients in Korean soothing products, usually aimed at skin that feels irritated, red or stressed. Its compounds have been studied for wound healing and skin repair (see the review in the sources below), which is where its soothing reputation comes from.",
           "Our view: centella is a gentle, low-risk ingredient to try if your skin is easily upset, but a high percentage on the label does not guarantee a better product. Texture and what else is in the bottle matter as much. On K Young you can search \"cica\" or \"centella\" and both find the same products.",
         ],
       },
@@ -138,12 +154,15 @@ export const ADVICE_POSTS: Post[] = [
     title: "Heartleaf (houttuynia) skincare: why it went viral and where it costs least",
     short: "Heartleaf skincare",
     description: "Heartleaf, houttuynia cordata or 어성초: the soothing plant behind some of K-beauty's best-known toners. What it is, and where each heartleaf product is cheapest today.",
-    date: "2026-10-30",
+    date: "2026-11-24",
+    sources: [
+      { title: "Pharmacological Effects of Houttuynia cordata Thunb: A Comprehensive Review (Rafiq et al., Pharmaceuticals, 2022)", by: "MDPI", url: "https://www.mdpi.com/1424-8247/15/9/1079" },
+    ],
     art: "toners",
     sections: [
       {
         p: [
-          "Heartleaf (houttuynia cordata, 어성초 in Korean) is a plant brands use in calming and oil-balancing products. It became famous abroad through heartleaf toners that sold out again and again, and now nearly every big brand has a heartleaf line.",
+          "Heartleaf (houttuynia cordata, 어성초 in Korean) is a plant brands use in products sold as calming and oil-balancing. Lab studies report anti-inflammatory and antioxidant activity in its extracts (see the review in the sources below); good studies of heartleaf skincare on people are still scarce, so judge a product by how your skin takes it. It became famous abroad through heartleaf toners that sold out again and again, and now nearly every big brand has a heartleaf line.",
           "Our view: the hype is mostly about texture. Heartleaf toners are usually watery and light, which suits oily and combination skin that wants something calming without heaviness. Because they are stocked everywhere, prices vary a lot, so check the table before you buy.",
         ],
       },
@@ -160,12 +179,16 @@ export const ADVICE_POSTS: Post[] = [
     short: "Is snail mucin worth it?",
     description: "Snail secretion filtrate is one of K-beauty's most famous ingredients. What it does well, what it doesn't, and where the most-stocked snail products are cheapest.",
     date: "2026-10-30",
+    updated: "2026-10-30",
+    sources: [
+      { title: "Snail mucin: what it is and what the research actually shows", by: "Jane Yoo, MD, board-certified dermatologist", url: "https://www.janeyoomd.com/k-beauty/snail-mucin-what-it-is-and-what-the-research-actually-shows-2026-update/" },
+    ],
     art: "serums",
     sections: [
       {
         p: [
           "Snail mucin (snail secretion filtrate on an ingredient list, 달팽이 in Korean) is the ingredient that introduced many people to Korean skincare. Its reputation is for hydration and a smooth, bouncy feel.",
-          "Our honest take: it is a good hydrating ingredient with a pleasant, slightly slippery texture, not a miracle. If you like the feel, it is an easy daily step. If you are vegan or dislike the texture, a hyaluronic or centella serum does a similar hydrating job. And because the most famous snail essence is sold by almost every store, it is one of the products where comparing prices pays off most.",
+          "What the evidence supports: most snail research is small, early or industry-funded, so treat it as a hydrating, skin-barrier-friendly ingredient rather than a fix for wrinkles or dark spots (see the dermatologist's summary in the sources below). Our honest take: it is a good hydrating ingredient with a pleasant, slightly slippery texture, not a miracle. If you like the feel, it is an easy daily step. If you are vegan or dislike the texture, a hyaluronic acid or glycerin serum does a similar hydrating job. And because the most famous snail essence is sold by almost every store, it is one of the products where comparing prices pays off most.",
         ],
       },
       {
@@ -180,7 +203,10 @@ export const ADVICE_POSTS: Post[] = [
     title: "Double cleansing, explained: who needs it and what to buy",
     short: "Double cleansing",
     description: "An oil cleanser, then a water-based one. When double cleansing is worth it, when it isn't, and the cleansers that are cheapest in your country today.",
-    date: "2026-10-30",
+    date: "2026-11-13",
+    sources: [
+      { title: "Face washing 101", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-basics/care/face-washing-101" },
+    ],
     art: "cleansers",
     sections: [
       {
@@ -206,7 +232,7 @@ export const ADVICE_POSTS: Post[] = [
     title: "Sheet masks: worth it, and should you buy singles or a box?",
     short: "Sheet masks: singles or a box?",
     description: "What a sheet mask actually does, how often to use one, and why the same mask's price swings so much between stores and pack sizes.",
-    date: "2026-10-30",
+    date: "2026-11-27",
     art: "masks",
     sections: [
       {
@@ -227,7 +253,11 @@ export const ADVICE_POSTS: Post[] = [
     title: "How to read a Korean skincare label: PA ratings, functional cosmetics and dates",
     short: "Reading Korean labels",
     description: "PA++++, 기능성 화장품, 사용기한 and 제조일자: the Korean words and marks on the box, what they mean and why they matter when you buy abroad.",
-    date: "2026-10-30",
+    date: "2026-11-20",
+    sources: [
+      { title: "Measuring UVA protection: the PA rating", by: "Jane Yoo, MD, board-certified dermatologist", url: "https://www.janeyoomd.com/measuring-uva-protection-pa-rating/" },
+      { title: "South Korea functional cosmetic regulation", by: "ChemLinked", url: "https://cosmetic.chemlinked.com/cosmepedia/south-korea-functional-cosmetic-regulation" },
+    ],
     art: "sunscreen",
     sections: [
       {
@@ -236,8 +266,8 @@ export const ADVICE_POSTS: Post[] = [
       {
         h: "The words worth knowing",
         p: [
-          "PA+ to PA++++: Korea's UVA protection grade on sunscreens. More plus signs mean more UVA protection; SPF is the UVB number.",
-          "기능성 화장품 (functional cosmetic): the product is registered in Korea for a specific function, such as brightening, wrinkle care or UV protection.",
+          "PA+ to PA++++: the UVA protection grade on Korean (and Japanese) sunscreens. The system was developed in Japan from a lab test called PPD; PA++++ means a PPD of 16 or more. More plus signs mean more UVA protection; SPF is mainly about UVB.",
+          "기능성 화장품 (functional cosmetic): the product has been reviewed or reported to Korea's Ministry of Food and Drug Safety (MFDS) for a specific function, such as brightening, wrinkle care or UV protection.",
           "미백 (brightening), 주름 개선 (wrinkle care), 자외선 차단 (UV protection): the functions it is registered for.",
           "제조일자 (made on) and 사용기한 or 유통기한 (use by): the dates. Check them on arrival, especially on sale or outlet stock.",
           "개봉 후 12개월 (12 months after opening): how long it keeps once opened, often shown as an open jar symbol with 12M.",
@@ -256,7 +286,7 @@ export const ADVICE_POSTS: Post[] = [
     title: "K-beauty gift sets and kits worth giving this year",
     short: "K-beauty gift sets",
     description: "Brand-made gift sets, trial kits and holiday editions from Korean brands, priced at the cheapest store in your country. Our picks for every budget.",
-    date: "2026-10-30",
+    date: "2026-11-06",
     art: "lip-care",
     sections: [
       {
@@ -277,7 +307,7 @@ export const ADVICE_POSTS: Post[] = [
     title: "Rice skincare: the Korean ingredient behind the glow",
     short: "Rice skincare",
     description: "Rice water, rice bran and fermented rice in Korean skincare: what they are used for, and where the most-stocked rice products are cheapest today.",
-    date: "2026-10-30",
+    date: "2026-12-01",
     art: "cleansers",
     sections: [
       {
