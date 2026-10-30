@@ -45,9 +45,9 @@ async function main() {
     console.log("eBay keys not set: skipping (no-op).");
     return;
   }
-  // K Young needs its own keyset: both existing ones are split between
-  // sister sites. Without EBAY_DAILY_CAP set, nothing is spent.
-  const budget = Number(process.env.EBAY_DAILY_CAP || 0);
+  // K Young's keyset is shared with CamCompare, 2,500 calls a day each
+  // (owner, 2026-10-30). EBAY_DAILY_CAP can only lower it.
+  const budget = Math.min(2500, Number(process.env.EBAY_DAILY_CAP || 2500));
   const checked = read<Record<string, string>>("state/ebay-checked.json", {});
   const data = read<EbayData>("public/ebay.json", {});
   const products = getProducts();

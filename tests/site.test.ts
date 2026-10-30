@@ -32,7 +32,7 @@ test("affiliate tags name the site, region, placement and product", () => {
   assert.match(amazonSearchUrl("x", "US", "ky-us-y")!, /amazon\.com\/s\?.*tag=riftcompare-20.*ascsubtag=ky-us-y/);
   assert.match(amazonSearchUrl("x", "AU", "t")!, /amazon\.com\.au\/s\?.*tag=compareempire-22/, "the AU tag on amazon.com.au, never the US one");
   assert.equal(amazonSearchUrl("x", "UK", "t"), null, "no UK tag yet, no Amazon UK row");
-  assert.match(storeUrl("nope", "https://shop.example/p?a=1"), /utm_source=kyoung\.com&utm_medium=referral/);
+  assert.match(storeUrl("nope", "https://shop.example/p?a=1"), /utm_source=kaeyoung\.com&utm_medium=referral/);
 });
 
 test("retailer rows appear only once their tracking template is set", () => {
@@ -60,7 +60,7 @@ test("the family footer lists every sister site once", () => {
   const urls = SISTER_SITES.map((s) => s.url);
   assert.equal(new Set(urls).size, urls.length);
   for (const u of ["https://riftcompare.com", "https://opcompare.app", "https://figurecompare.com", "https://wargamecompare.com"]) assert.ok(urls.includes(u), u);
-  assert.ok(!urls.some((u) => u.includes("kyoung")));
+  assert.ok(!urls.some((u) => u.includes("kaeyoung")));
 });
 
 test("search: every word must match; a barcode finds its product", () => {

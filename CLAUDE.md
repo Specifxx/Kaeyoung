@@ -1,6 +1,6 @@
 # Working in this repo
 
-K Young (kyoung.com, tagline "Stay young.") compares Korean skincare and K-beauty prices across real K-beauty stores in the
+K Young (kaeyoung.com, tagline "Stay young.") compares Korean skincare and K-beauty prices across real K-beauty stores in the
 US, UK, Canada, Australia, New Zealand and Europe. A sister site of RiftCompare (`Specifxx/TCGEmpire`) and FigureCompare,
 built on FigureCompare's static engine, but carrying **no Compare branding** (owner, 2026-10-30). Read `README.md`, then
 `DECISIONS.md`.
@@ -48,7 +48,7 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
 ## Money
 
 - Affiliate tags are added at build (`src/lib/affiliate.ts`): `ky-<region>-<placement>-<ean>` in EPN `customid`,
-  Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kyoung.com`.
+  Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kaeyoung.com`.
 - **No banner ads** (owner, 2026-10-30: "cut down on the banner ads … a really nice website"): no eBay strips, no
   AdSense, no nav ad boxes. Paid links live only in a product's price table, pinned above the stores and labelled:
   eBay, Amazon (US `riftcompare-20`, AU `compareempire-22`, others by `AMAZON_TAG_<REGION>`), and the beauty
@@ -56,9 +56,10 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
   only once its `AFF_*` tracking template is set in Vercel. None is ever counted as a store or "the cheapest";
   commission never decides order. `tests/site.test.ts` pins it.
 - eBay listings come only from `scripts/ebay-import.ts` in GitHub Actions (Browse API by GTIN, new, Buy It Now,
-  never from CN/HK sellers, 60%–300% of the store median). K Young has no keyset of its own yet: both family
-  keysets are fully split between sister sites, so `EBAY_DAILY_CAP` defaults to 0. Never point it at a sister's
-  keyset or raise a cap without the owner.
+  never from CN/HK sellers, 60%–300% of the store median). K Young's keyset is the owner's new third one (pending
+  eBay approval, 2026-10-30), shared with CamCompare: 2,500 calls a day each, so `EBAY_DAILY_CAP` defaults to
+  2,500 and the pass is a no-op until `EBAY_CLIENT_ID`/`EBAY_CLIENT_SECRET` exist. Never point it at a sister's
+  keyset or raise the cap without the owner.
 - No pop-ups, no interstitials, no sign-up or accounts (owner, 2026-10-30).
 
 ## Design

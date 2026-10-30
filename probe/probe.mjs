@@ -7,8 +7,8 @@ import fs from "node:fs";
 
 const SHARD = Number(process.env.SHARD ?? 0);
 const SHARDS = Number(process.env.SHARDS ?? 1);
-const PAGES = 12; // up to 3,000 products
-const LOOKUPS = 120;
+const PAGES = 8; // up to 2,000 products
+const LOOKUPS = 40;
 const UA = "Mozilla/5.0 (compatible; CompareEmpireProbe/1.0; +https://compareempire.com)";
 const KBRANDS = /\b(cosrx|beauty of joseon|anua|skin1004|round ?lab|torriden|isntree|laneige|innisfree|etude|missha|some ?by ?mi|klairs|purito|medicube|numbuzin|ma:nyo|manyo|mixsoon|abib|axis-y|haruharu|dr\.? ?jart|sulwhasoo|tirtir|banila|pyunkang|heimish|benton|neogen|illiyoon|aestura|biodance|goodal|d'alba|dalba|apieu|tonymoly|holika|skinfood|by wishtrend|iunik|cos de baha|elizavecca|mediheal|nacific|rovectin|aprilskin|celimax|vt cosmetics|ample:n|jumiso|beplain|make p:rem|tocobo|thank you farmer|i'm from|im from|papa recipe|hanyul|belif|hera|peripera|rom&nd|romand|clio|3ce|amuse|fwee|dear,? klairs|kaine|dr\.? ?g|uiq|zeroid|bringgreen|cnp|daeng gi meo ri|ryo|mise en scene|stridex)\b/i;
 

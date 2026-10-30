@@ -82,6 +82,19 @@ html:not([data-region]) .rn-US { display: none; }
   .btn-buy {
     @apply bg-buy text-bg;
   }
+  /* The two pinned marketplace rows (owner, 2026-10-30): same row shape as a
+     store, but each wears its marketplace's own button colour so it is seen first. */
+  .btn-ebay {
+    background: #0064d2;
+    color: #fff;
+  }
+  .btn-amazon {
+    background: #ffd814;
+    color: #0f1111;
+  }
+  .chip-first {
+    @apply bg-accent-pale text-accent-deep;
+  }
   .chip {
     @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold;
   }

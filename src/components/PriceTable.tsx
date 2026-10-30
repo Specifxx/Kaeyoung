@@ -1,5 +1,6 @@
 // One region's price table. Stores are in price order (orderable first);
-// marketplaces and retailers (eBay, Amazon, the beauty partners) sit pinned
+// eBay and Amazon take the top two rows in their own button colours, then the
+// beauty partners (owner, 2026-10-30); all sit pinned
 // above them, labelled, never counted as a store and never the "best price"
 // (family rule: paid rows pinned, commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
@@ -41,25 +42,25 @@ export function PriceTable({ f, region, ebay, placement = "table" }: { f: Produc
         <div className="space-y-2" aria-label="Also sold by">
           {ebayUrl && (
             <Row
-              name={ebay ? "eBay" : "Search eBay"}
-              sub={ebay ? `Shown first · ${vsBest(ebay.p, best?.p)}` : `Shown first · new listings on ${ebayShopHost(region)?.replace("www.", "")}`}
+              name="eBay"
+              sub={ebay ? vsBest(ebay.p, best?.p) : `new listings on ${ebayShopHost(region)?.replace("www.", "")}`}
+              brand="ebay"
               price={ebay ? money(ebay.p, region) : null}
               status={null}
               href={ebayUrl}
               paid
-              tint="bg-ad"
               event={{ source: "ebay", region, placement: `${placement}_pinned`, ean: f.ean }}
             />
           )}
           {amazonUrl && (
             <Row
-              name="Search Amazon"
+              name="Amazon"
               sub={`${r.amazonHost?.replace("www.", "")} · check the seller`}
+              brand="amazon"
               price={null}
               status={null}
               href={amazonUrl}
               paid
-              tint="bg-ad"
               event={{ source: "amazon", region, placement: `${placement}_pinned`, ean: f.ean }}
             />
           )}
@@ -72,7 +73,6 @@ export function PriceTable({ f, region, ebay, placement = "table" }: { f: Produc
               status={null}
               href={href}
               paid
-              tint="bg-ad"
               event={{ source: p.key, region, placement: `${placement}_pinned`, ean: f.ean }}
             />
           ))}
@@ -107,6 +107,7 @@ function Row({
   paid,
   highlight = false,
   tint = "bg-card",
+  brand,
   event,
 }: {
   name: string;
@@ -117,6 +118,8 @@ function Row({
   paid: boolean;
   highlight?: boolean;
   tint?: string;
+  /** eBay and Amazon: pinned first, their own button colour (owner, 2026-10-30) */
+  brand?: "ebay" | "amazon";
   event: { source: string; region: string; placement: string; ean?: string };
 }) {
   const s = status ? STOCK[status] : null;
@@ -127,7 +130,10 @@ function Row({
       } ${status === "out" ? "opacity-60" : ""}`}
     >
       <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold">{name}</p>
+        <p className="flex items-center gap-2 font-semibold">
+          <span className={brand ? "shrink-0" : "truncate"}>{name}</span>
+          {brand && <span className="chip chip-first">Shown first</span>}
+        </p>
         <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
@@ -139,9 +145,11 @@ function Row({
         href={href}
         paid={paid}
         event={event}
-        className={`btn-pop shrink-0 px-4 py-1.5 ${status === "out" || !price ? "border border-line bg-card text-ink hover:border-soft" : "btn-buy"}`}
+        className={`btn-pop shrink-0 px-4 py-1.5 ${
+          brand === "ebay" ? "btn-ebay" : brand === "amazon" ? "btn-amazon" : status === "out" || !price ? "border border-line bg-card text-ink hover:border-soft" : "btn-buy"
+        }`}
       >
-        {status === "out" ? "View" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        {brand ? <><span className="hidden sm:inline">{price ? "Buy" : "Shop"} on</span>{name}</> : status === "out" ? "View" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
       </OutLink>
     </div>
   );
