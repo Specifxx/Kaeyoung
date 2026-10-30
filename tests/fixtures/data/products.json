@@ -1,0 +1,1086 @@
+{
+ "products": [
+  {
+   "ean": "8809000000001",
+   "slug": "brand-alpha-sample-snail-essence-100ml",
+   "name": "Brand Alpha Sample Snail Essence 100ml",
+   "brand": "Brand Alpha",
+   "b": "brand-alpha",
+   "cat": "cleansers",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-10",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/us-a/0"
+     },
+     {
+      "s": "us-b",
+      "p": 2499,
+      "st": "in",
+      "u": "https://example.com/us-b/0"
+     },
+     {
+      "s": "us-c",
+      "p": 2799,
+      "st": "in",
+      "u": "https://example.com/us-c/0"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1799,
+      "st": "in",
+      "u": "https://example.com/uk-a/0"
+     },
+     {
+      "s": "uk-b",
+      "p": 2099,
+      "st": "in",
+      "u": "https://example.com/uk-b/0"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2899,
+      "st": "in",
+      "u": "https://example.com/ca-a/0"
+     },
+     {
+      "s": "ca-b",
+      "p": 3199,
+      "st": "in",
+      "u": "https://example.com/ca-b/0"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/au-a/0"
+     },
+     {
+      "s": "au-b",
+      "p": 3595,
+      "st": "in",
+      "u": "https://example.com/au-b/0"
+     },
+     {
+      "s": "au-c",
+      "p": 3895,
+      "st": "in",
+      "u": "https://example.com/au-c/0"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/eu-a/0"
+     },
+     {
+      "s": "eu-b",
+      "p": 2299,
+      "st": "in",
+      "u": "https://example.com/eu-b/0"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000018",
+   "slug": "brand-beta-test-rice-toner-100ml",
+   "name": "Brand Beta Test Rice Toner 100ml",
+   "brand": "Brand Beta",
+   "b": "brand-beta",
+   "cat": "toners",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-11",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 2099,
+      "st": "in",
+      "u": "https://example.com/us-a/1"
+     },
+     {
+      "s": "us-b",
+      "p": 2399,
+      "st": "in",
+      "u": "https://example.com/us-b/1"
+     },
+     {
+      "s": "us-c",
+      "p": 2699,
+      "st": "out",
+      "u": "https://example.com/us-c/1"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1699,
+      "st": "in",
+      "u": "https://example.com/uk-a/1"
+     },
+     {
+      "s": "uk-b",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/uk-b/1"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2799,
+      "st": "in",
+      "u": "https://example.com/ca-a/1"
+     },
+     {
+      "s": "ca-b",
+      "p": 3099,
+      "st": "in",
+      "u": "https://example.com/ca-b/1"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3395,
+      "st": "in",
+      "u": "https://example.com/nz-a/1"
+     },
+     {
+      "s": "nz-b",
+      "p": 3695,
+      "st": "in",
+      "u": "https://example.com/nz-b/1"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1899,
+      "st": "in",
+      "u": "https://example.com/eu-a/1"
+     },
+     {
+      "s": "eu-b",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/eu-b/1"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000025",
+   "slug": "brand-gamma-fixture-sun-cream-100ml",
+   "name": "Brand Gamma Fixture Sun Cream 100ml",
+   "brand": "Brand Gamma",
+   "b": "brand-gamma",
+   "cat": "serums",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-12",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/us-a/2"
+     },
+     {
+      "s": "us-b",
+      "p": 2299,
+      "st": "out",
+      "u": "https://example.com/us-b/2"
+     },
+     {
+      "s": "us-c",
+      "p": 2599,
+      "st": "in",
+      "u": "https://example.com/us-c/2"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1599,
+      "st": "in",
+      "u": "https://example.com/uk-a/2"
+     },
+     {
+      "s": "uk-b",
+      "p": 1899,
+      "st": "out",
+      "u": "https://example.com/uk-b/2"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3095,
+      "st": "in",
+      "u": "https://example.com/au-a/2"
+     },
+     {
+      "s": "au-b",
+      "p": 3395,
+      "st": "out",
+      "u": "https://example.com/au-b/2"
+     },
+     {
+      "s": "au-c",
+      "p": 3695,
+      "st": "in",
+      "u": "https://example.com/au-c/2"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/nz-a/2"
+     },
+     {
+      "s": "nz-b",
+      "p": 3595,
+      "st": "out",
+      "u": "https://example.com/nz-b/2"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1799,
+      "st": "in",
+      "u": "https://example.com/eu-a/2"
+     },
+     {
+      "s": "eu-b",
+      "p": 2099,
+      "st": "out",
+      "u": "https://example.com/eu-b/2"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000032",
+   "slug": "brand-alpha-demo-cleansing-oil-100ml",
+   "name": "Brand Alpha Demo Cleansing Oil 100ml",
+   "brand": "Brand Alpha",
+   "b": "brand-alpha",
+   "cat": "moisturisers",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-13",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 1899,
+      "st": "out",
+      "u": "https://example.com/us-a/3"
+     },
+     {
+      "s": "us-b",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/us-b/3"
+     },
+     {
+      "s": "us-c",
+      "p": 2499,
+      "st": "in",
+      "u": "https://example.com/us-c/3"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2599,
+      "st": "out",
+      "u": "https://example.com/ca-a/3"
+     },
+     {
+      "s": "ca-b",
+      "p": 2899,
+      "st": "in",
+      "u": "https://example.com/ca-b/3"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 2995,
+      "st": "out",
+      "u": "https://example.com/au-a/3"
+     },
+     {
+      "s": "au-b",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/au-b/3"
+     },
+     {
+      "s": "au-c",
+      "p": 3595,
+      "st": "in",
+      "u": "https://example.com/au-c/3"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3195,
+      "st": "out",
+      "u": "https://example.com/nz-a/3"
+     },
+     {
+      "s": "nz-b",
+      "p": 3495,
+      "st": "in",
+      "u": "https://example.com/nz-b/3"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1699,
+      "st": "out",
+      "u": "https://example.com/eu-a/3"
+     },
+     {
+      "s": "eu-b",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/eu-b/3"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000049",
+   "slug": "brand-beta-example-ceramide-cream-100ml",
+   "name": "Brand Beta Example Ceramide Cream 100ml",
+   "brand": "Brand Beta",
+   "b": "brand-beta",
+   "cat": "sunscreen",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-14",
+   "offers": {
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1799,
+      "st": "in",
+      "u": "https://example.com/uk-a/4"
+     },
+     {
+      "s": "uk-b",
+      "p": 2099,
+      "st": "in",
+      "u": "https://example.com/uk-b/4"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2899,
+      "st": "in",
+      "u": "https://example.com/ca-a/4"
+     },
+     {
+      "s": "ca-b",
+      "p": 3199,
+      "st": "in",
+      "u": "https://example.com/ca-b/4"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/au-a/4"
+     },
+     {
+      "s": "au-b",
+      "p": 3595,
+      "st": "in",
+      "u": "https://example.com/au-b/4"
+     },
+     {
+      "s": "au-c",
+      "p": 3895,
+      "st": "in",
+      "u": "https://example.com/au-c/4"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3495,
+      "st": "in",
+      "u": "https://example.com/nz-a/4"
+     },
+     {
+      "s": "nz-b",
+      "p": 3795,
+      "st": "in",
+      "u": "https://example.com/nz-b/4"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000056",
+   "slug": "brand-gamma-mock-sheet-mask-100ml",
+   "name": "Brand Gamma Mock Sheet Mask 100ml",
+   "brand": "Brand Gamma",
+   "b": "brand-gamma",
+   "cat": "masks",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-15",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 2099,
+      "st": "in",
+      "u": "https://example.com/us-a/5"
+     },
+     {
+      "s": "us-b",
+      "p": 2399,
+      "st": "in",
+      "u": "https://example.com/us-b/5"
+     },
+     {
+      "s": "us-c",
+      "p": 2699,
+      "st": "in",
+      "u": "https://example.com/us-c/5"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1699,
+      "st": "in",
+      "u": "https://example.com/uk-a/5"
+     },
+     {
+      "s": "uk-b",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/uk-b/5"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2799,
+      "st": "in",
+      "u": "https://example.com/ca-a/5"
+     },
+     {
+      "s": "ca-b",
+      "p": 3099,
+      "st": "in",
+      "u": "https://example.com/ca-b/5"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3195,
+      "st": "in",
+      "u": "https://example.com/au-a/5"
+     },
+     {
+      "s": "au-b",
+      "p": 3495,
+      "st": "in",
+      "u": "https://example.com/au-b/5"
+     },
+     {
+      "s": "au-c",
+      "p": 3795,
+      "st": "in",
+      "u": "https://example.com/au-c/5"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1899,
+      "st": "in",
+      "u": "https://example.com/eu-a/5"
+     },
+     {
+      "s": "eu-b",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/eu-b/5"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000063",
+   "slug": "brand-alpha-placeholder-eye-cream-100ml",
+   "name": "Brand Alpha Placeholder Eye Cream 100ml",
+   "brand": "Brand Alpha",
+   "b": "brand-alpha",
+   "cat": "eye-care",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-16",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/us-a/6"
+     },
+     {
+      "s": "us-b",
+      "p": 2299,
+      "st": "in",
+      "u": "https://example.com/us-b/6"
+     },
+     {
+      "s": "us-c",
+      "p": 2599,
+      "st": "in",
+      "u": "https://example.com/us-c/6"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1599,
+      "st": "in",
+      "u": "https://example.com/uk-a/6"
+     },
+     {
+      "s": "uk-b",
+      "p": 1899,
+      "st": "in",
+      "u": "https://example.com/uk-b/6"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2699,
+      "st": "in",
+      "u": "https://example.com/ca-a/6"
+     },
+     {
+      "s": "ca-b",
+      "p": 2999,
+      "st": "in",
+      "u": "https://example.com/ca-b/6"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/nz-a/6"
+     },
+     {
+      "s": "nz-b",
+      "p": 3595,
+      "st": "in",
+      "u": "https://example.com/nz-b/6"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1799,
+      "st": "in",
+      "u": "https://example.com/eu-a/6"
+     },
+     {
+      "s": "eu-b",
+      "p": 2099,
+      "st": "in",
+      "u": "https://example.com/eu-b/6"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000070",
+   "slug": "brand-beta-stub-lip-mask-100ml",
+   "name": "Brand Beta Stub Lip Mask 100ml",
+   "brand": "Brand Beta",
+   "b": "brand-beta",
+   "cat": "lip-care",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-17",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 1899,
+      "st": "in",
+      "u": "https://example.com/us-a/7"
+     },
+     {
+      "s": "us-b",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/us-b/7"
+     },
+     {
+      "s": "us-c",
+      "p": 2499,
+      "st": "in",
+      "u": "https://example.com/us-c/7"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1499,
+      "st": "in",
+      "u": "https://example.com/uk-a/7"
+     },
+     {
+      "s": "uk-b",
+      "p": 1799,
+      "st": "in",
+      "u": "https://example.com/uk-b/7"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 2995,
+      "st": "in",
+      "u": "https://example.com/au-a/7"
+     },
+     {
+      "s": "au-b",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/au-b/7"
+     },
+     {
+      "s": "au-c",
+      "p": 3595,
+      "st": "in",
+      "u": "https://example.com/au-c/7"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3195,
+      "st": "in",
+      "u": "https://example.com/nz-a/7"
+     },
+     {
+      "s": "nz-b",
+      "p": 3495,
+      "st": "in",
+      "u": "https://example.com/nz-b/7"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1699,
+      "st": "in",
+      "u": "https://example.com/eu-a/7"
+     },
+     {
+      "s": "eu-b",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/eu-b/7"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000087",
+   "slug": "brand-gamma-dummy-cushion-100ml",
+   "name": "Brand Gamma Dummy Cushion 100ml",
+   "brand": "Brand Gamma",
+   "b": "brand-gamma",
+   "cat": "makeup",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-18",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/us-a/8"
+     },
+     {
+      "s": "us-b",
+      "p": 2499,
+      "st": "in",
+      "u": "https://example.com/us-b/8"
+     },
+     {
+      "s": "us-c",
+      "p": 2799,
+      "st": "out",
+      "u": "https://example.com/us-c/8"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2899,
+      "st": "in",
+      "u": "https://example.com/ca-a/8"
+     },
+     {
+      "s": "ca-b",
+      "p": 3199,
+      "st": "in",
+      "u": "https://example.com/ca-b/8"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3295,
+      "st": "in",
+      "u": "https://example.com/au-a/8"
+     },
+     {
+      "s": "au-b",
+      "p": 3595,
+      "st": "in",
+      "u": "https://example.com/au-b/8"
+     },
+     {
+      "s": "au-c",
+      "p": 3895,
+      "st": "out",
+      "u": "https://example.com/au-c/8"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3495,
+      "st": "in",
+      "u": "https://example.com/nz-a/8"
+     },
+     {
+      "s": "nz-b",
+      "p": 3795,
+      "st": "in",
+      "u": "https://example.com/nz-b/8"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/eu-a/8"
+     },
+     {
+      "s": "eu-b",
+      "p": 2299,
+      "st": "in",
+      "u": "https://example.com/eu-b/8"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000094",
+   "slug": "brand-alpha-trial-body-lotion-100ml",
+   "name": "Brand Alpha Trial Body Lotion 100ml",
+   "brand": "Brand Alpha",
+   "b": "brand-alpha",
+   "cat": "body-hair",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-19",
+   "offers": {
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1699,
+      "st": "in",
+      "u": "https://example.com/uk-a/9"
+     },
+     {
+      "s": "uk-b",
+      "p": 1999,
+      "st": "out",
+      "u": "https://example.com/uk-b/9"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2799,
+      "st": "in",
+      "u": "https://example.com/ca-a/9"
+     },
+     {
+      "s": "ca-b",
+      "p": 3099,
+      "st": "out",
+      "u": "https://example.com/ca-b/9"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3195,
+      "st": "in",
+      "u": "https://example.com/au-a/9"
+     },
+     {
+      "s": "au-b",
+      "p": 3495,
+      "st": "out",
+      "u": "https://example.com/au-b/9"
+     },
+     {
+      "s": "au-c",
+      "p": 3795,
+      "st": "in",
+      "u": "https://example.com/au-c/9"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3395,
+      "st": "in",
+      "u": "https://example.com/nz-a/9"
+     },
+     {
+      "s": "nz-b",
+      "p": 3695,
+      "st": "out",
+      "u": "https://example.com/nz-b/9"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000100",
+   "slug": "brand-beta-proto-serum-100ml",
+   "name": "Brand Beta Proto Serum 100ml",
+   "brand": "Brand Beta",
+   "b": "brand-beta",
+   "cat": "cleansers",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-20",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 1999,
+      "st": "out",
+      "u": "https://example.com/us-a/10"
+     },
+     {
+      "s": "us-b",
+      "p": 2299,
+      "st": "in",
+      "u": "https://example.com/us-b/10"
+     },
+     {
+      "s": "us-c",
+      "p": 2599,
+      "st": "in",
+      "u": "https://example.com/us-c/10"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1599,
+      "st": "out",
+      "u": "https://example.com/uk-a/10"
+     },
+     {
+      "s": "uk-b",
+      "p": 1899,
+      "st": "in",
+      "u": "https://example.com/uk-b/10"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2699,
+      "st": "out",
+      "u": "https://example.com/ca-a/10"
+     },
+     {
+      "s": "ca-b",
+      "p": 2999,
+      "st": "in",
+      "u": "https://example.com/ca-b/10"
+     }
+    ],
+    "AU": [
+     {
+      "s": "au-a",
+      "p": 3095,
+      "st": "out",
+      "u": "https://example.com/au-a/10"
+     },
+     {
+      "s": "au-b",
+      "p": 3395,
+      "st": "in",
+      "u": "https://example.com/au-b/10"
+     },
+     {
+      "s": "au-c",
+      "p": 3695,
+      "st": "in",
+      "u": "https://example.com/au-c/10"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1799,
+      "st": "out",
+      "u": "https://example.com/eu-a/10"
+     },
+     {
+      "s": "eu-b",
+      "p": 2099,
+      "st": "in",
+      "u": "https://example.com/eu-b/10"
+     }
+    ]
+   }
+  },
+  {
+   "ean": "8809000000117",
+   "slug": "brand-gamma-beta-gel-cream-100ml",
+   "name": "Brand Gamma Beta Gel Cream 100ml",
+   "brand": "Brand Gamma",
+   "b": "brand-gamma",
+   "cat": "toners",
+   "size": "100ml",
+   "img": null,
+   "first": "2026-10-21",
+   "offers": {
+    "US": [
+     {
+      "s": "us-a",
+      "p": 1899,
+      "st": "in",
+      "u": "https://example.com/us-a/11"
+     },
+     {
+      "s": "us-b",
+      "p": 2199,
+      "st": "in",
+      "u": "https://example.com/us-b/11"
+     },
+     {
+      "s": "us-c",
+      "p": 2499,
+      "st": "in",
+      "u": "https://example.com/us-c/11"
+     }
+    ],
+    "UK": [
+     {
+      "s": "uk-a",
+      "p": 1499,
+      "st": "in",
+      "u": "https://example.com/uk-a/11"
+     },
+     {
+      "s": "uk-b",
+      "p": 1799,
+      "st": "in",
+      "u": "https://example.com/uk-b/11"
+     }
+    ],
+    "CA": [
+     {
+      "s": "ca-a",
+      "p": 2599,
+      "st": "in",
+      "u": "https://example.com/ca-a/11"
+     },
+     {
+      "s": "ca-b",
+      "p": 2899,
+      "st": "in",
+      "u": "https://example.com/ca-b/11"
+     }
+    ],
+    "NZ": [
+     {
+      "s": "nz-a",
+      "p": 3195,
+      "st": "in",
+      "u": "https://example.com/nz-a/11"
+     },
+     {
+      "s": "nz-b",
+      "p": 3495,
+      "st": "in",
+      "u": "https://example.com/nz-b/11"
+     }
+    ],
+    "EU": [
+     {
+      "s": "eu-a",
+      "p": 1699,
+      "st": "in",
+      "u": "https://example.com/eu-a/11"
+     },
+     {
+      "s": "eu-b",
+      "p": 1999,
+      "st": "in",
+      "u": "https://example.com/eu-b/11"
+     }
+    ]
+   }
+  }
+ ]
+}

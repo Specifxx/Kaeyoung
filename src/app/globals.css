@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* K Young's look (owner, 2026-10-30: "very professional", a calm beauty
+   retailer rather than a deal site): warm off-white, white cards with hairline
+   borders, near-black type, one berry accent for prices and buttons, green
+   only for savings. Fraunces for headings, Inter for everything else. */
+:root {
+  --bg: 250 249 247;
+  --card: 255 255 255;
+  --ink: 28 27 31;
+  --soft: 104 100 110;
+  --line: 232 228 224;
+  --accent: 160 44 86;
+  --accent-deep: 132 30 68;
+  --accent-pale: 251 238 243;
+  --subtle: 245 242 239;
+  --save: 22 125 80;
+  --save-pale: 230 244 236;
+  --ad: 248 246 241;
+  --buy: 28 27 31;
+  color-scheme: light;
+}
+
+[data-theme="night"] {
+  --bg: 18 17 20;
+  --card: 27 26 30;
+  --ink: 240 238 242;
+  --soft: 165 160 172;
+  --line: 50 47 54;
+  --accent: 240 120 160;
+  --accent-deep: 248 150 182;
+  --accent-pale: 60 28 42;
+  --subtle: 36 34 40;
+  --save: 84 206 146;
+  --save-pale: 22 48 36;
+  --ad: 34 33 30;
+  --buy: 240 238 242;
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--ink));
+}
+
+/* Region panels: every region's prices are in the HTML; a tiny script in
+   <head> sets data-region before paint, so only the visitor's shows. */
+.rp { display: none; }
+html:not([data-region]) .rp-US,
+[data-region="US"] .rp-US,
+[data-region="UK"] .rp-UK,
+[data-region="CA"] .rp-CA,
+[data-region="AU"] .rp-AU,
+[data-region="NZ"] .rp-NZ,
+[data-region="EU"] .rp-EU { display: block; }
+.rp-inline.rp { display: none; }
+html:not([data-region]) .rp-inline.rp-US,
+[data-region="US"] .rp-inline.rp-US,
+[data-region="UK"] .rp-inline.rp-UK,
+[data-region="CA"] .rp-inline.rp-CA,
+[data-region="AU"] .rp-inline.rp-AU,
+[data-region="NZ"] .rp-inline.rp-NZ,
+[data-region="EU"] .rp-inline.rp-EU { display: inline; }
+/* "no price in your region" fallbacks */
+[data-region="US"] .rn-US, [data-region="UK"] .rn-UK, [data-region="CA"] .rn-CA, [data-region="AU"] .rn-AU, [data-region="NZ"] .rn-NZ,
+[data-region="EU"] .rn-EU { display: none; }
+html:not([data-region]) .rn-US { display: none; }
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-line bg-card;
+  }
+  .btn-pop {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition hover:opacity-90 active:opacity-100;
+  }
+  .btn-buy {
+    @apply bg-buy text-bg;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold;
+  }
+  .h-display {
+    @apply font-display font-medium tracking-tight;
+  }
+  .tile-hover {
+    @apply transition hover:border-soft/40 hover:shadow-[0_6px_24px_-12px_rgb(0_0_0/0.18)];
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-soft;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.2);
+}
