@@ -14,6 +14,7 @@ import { RegionTabs } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { OutLink } from "@/components/OutLink";
 import { AddToBasket } from "@/components/Basket";
+import { ReportPrice } from "@/components/ReportForms";
 import type { Product } from "@/lib/types";
 import { reviewsOf, reviewsOpen } from "@/lib/ratings";
 import { SCHEMA_MIN_RATINGS, starsText, type ProductReviews } from "@/lib/reviews";
@@ -239,10 +240,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           <p className="mt-3 text-xs leading-relaxed text-soft">
             Prices are what each store&apos;s own site showed at our last daily check{meta ? ` (${niceDate(meta.updatedAt)})` : ""}, before delivery, and they can change at any time: the store&apos;s checkout is always the final price. Delivery
             costs are each store&apos;s own quote for a small order to one city in your region, checked weekly; they can differ for your address. Every store listing here carries this product&apos;s barcode ({f.ean}), so it is the same product and
-            size, not a look-alike. See a wrong price?{" "}
-            <a className="underline hover:text-ink" href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Wrong price: ${f.name}`)}`}>Tell us</a> and we fix it.{" "}
+            size, not a look-alike.{" "}
             <Link prefetch={false} href="/basket" className="font-medium text-accent-deep hover:underline">Buying several products? Compare a whole basket →</Link>
           </p>
+          <ReportPrice
+            product={`${f.name} (${f.ean})`}
+            stores={REGIONS.flatMap((r) => (f.offers[r.code] ?? []).map((o) => ({ name: `${storeName(o.s)} (${r.code})`, price: money(o.p, r.code) })))}
+          />
         </div>
 
         <aside className="space-y-6">
