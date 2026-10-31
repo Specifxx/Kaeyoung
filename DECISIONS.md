@@ -360,3 +360,14 @@ POST only, 503 until the token is set) still holds.
   comment. Those issues are public, so they link to each report's file and never quote a note. It fails (and
   GitHub emails the owner) when a site has no `reports` branch, or the token stops working or expires within 14
   days (checked only when the token is also a TCGEmpire Actions secret). The ops monitor's job list watches it.
+
+## eBay: local sellers, delivered prices (2026-10-31)
+
+A WargameCompare visitor's feedback (the owner passed it on for every sister site): eBay rows from overseas sellers
+carried postage that made "a lot of wasted clicks". The pass keeps sellers in the region's own
+country (`localSeller`: the region's own country, any EU country for the EU) and sends the buyer's country and a central postcode as `contextualLocation`, so eBay quotes real postage.
+`ebayPick` keeps only a listing whose postage eBay states and stores the DELIVERED price (`p` = item + postage, `sh` the
+postage); the price table says "incl. postage". Sellers in Korea, the products' home country and often the cheapest genuine source, stay
+for every region (owner, the same day), priced with their postage like any other row; so the search asks only for
+`deliveryCountry` and `localSeller` does the rest. Rows stored before this have no `sh` and are hidden (`getEbay`), and
+the next eBay pass searches them first. Same change as FigureCompare.

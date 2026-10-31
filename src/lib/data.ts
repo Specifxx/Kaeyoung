@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { CATEGORIES, REGIONS, type CatKey, type RegionCode } from "@/site";
 import { STORE_BY_ID } from "@/content/stores";
+import { ebayRowShown } from "./ebay";
 import { lowestOrderable } from "./history";
 import { canonicalKey } from "./brand";
 import { BRAND_KO } from "@/content/brands-ko";
@@ -37,7 +38,17 @@ export const getProducts = (): Product[] =>
   once("products", () => load<{ products: Product[] }>("products.json", { products: [] }).products.filter((f) => f.offers && Object.values(f.offers).some((o) => o?.length)));
 export const getMeta = (): Meta | null => load<Meta | null>("meta.json", null);
 export const getHistory = (): History => load<History>("history.json", {});
-export const getEbay = (): EbayData => load<EbayData>("ebay.json", {});
+// Rows from before 2026-10-31 carry no postage (the search took any seller anywhere): not shown (lib/ebay.ts ebayRowShown).
+let ebayShown: EbayData | null = null;
+export const getEbay = (): EbayData => {
+  if (ebayShown) return ebayShown;
+  const out: EbayData = {};
+  for (const [ean, by] of Object.entries(load<EbayData>("ebay.json", {}))) {
+    const kept = Object.fromEntries(Object.entries(by).filter(([, pick]) => ebayRowShown(pick)));
+    if (Object.keys(kept).length) out[ean] = kept;
+  }
+  return (ebayShown = out);
+};
 /** Weekly delivery quotes per store (scripts/shipping.ts; lib/shipping.ts). */
 export const getShipping = (): ShippingData =>
   once("shipping", () => Object.fromEntries(Object.entries(load<ShippingData>("shipping.json", {})).filter(([, q]) => q.fee <= MAX_SMALL_ORDER_FEE)));

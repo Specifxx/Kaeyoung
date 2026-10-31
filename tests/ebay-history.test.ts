@@ -5,7 +5,7 @@ import { dayNumber, priceOn, recordHistory } from "@/lib/history";
 import type { Offer, Product } from "@/lib/types";
 
 const offers: Offer[] = [2199, 2399, 2599].map((p, i) => ({ s: `s${i}`, p, st: "in", u: "" }));
-const item = (over: Partial<EbayItem>): EbayItem => ({ title: "COSRX Advanced Snail 96 Mucin Power Essence 100ml", itemWebUrl: "https://www.ebay.com/itm/1?x=1", price: { value: "20.00", currency: "USD" }, itemLocation: { country: "KR" }, ...over });
+const item = (over: Partial<EbayItem>): EbayItem => ({ title: "COSRX Advanced Snail 96 Mucin Power Essence 100ml", itemWebUrl: "https://www.ebay.com/itm/1?x=1", price: { value: "20.00", currency: "USD" }, itemLocation: { country: "US" }, shippingOptions: [{ shippingCost: { value: "0.00", currency: "USD" } }], ...over });
 const P = (ean: string, o: Product["offers"]): Product => ({ ean, slug: ean, name: ean, brand: "", b: "", cat: "serums", size: null, img: null, first: "d", offers: o });
 
 test("eBay: cheapest believable new listing", () => {
@@ -19,6 +19,22 @@ test("eBay: counterfeit origins, too-cheap, testers and other currencies are out
   assert.equal(ebayPick([item({ price: { value: "5.99", currency: "USD" } })], offers, "US"), null);
   assert.equal(ebayPick([item({ title: "COSRX Snail Essence sample tester" })], offers, "US"), null);
   assert.equal(ebayPick([item({ price: { value: "20.00", currency: "AUD" } })], offers, "US"), null);
+});
+
+test("eBay: local sellers only, postage stated, priced and ranked delivered (visitor feedback 2026-10-31)", () => {
+  const ship = (value: string, currency = "USD") => ({ shippingOptions: [{ shippingCost: { value, currency } }] });
+  assert.ok(ebayPick([item({ itemLocation: { country: "KR" } })], offers, "US"), "a seller in Korea, the products' home country, stays (priced with postage)");
+  assert.equal(ebayPick([item({ itemLocation: { country: "GB" } })], offers, "US"), null, "a UK seller for a US buyer");
+  assert.equal(ebayPick([item({ shippingOptions: [{}] })], offers, "US"), null, "calculated postage");
+  assert.equal(ebayPick([item({ shippingOptions: undefined })], offers, "US"), null, "no postage at all");
+  assert.equal(ebayPick([item(ship("5.00", "KRW"))], offers, "US"), null, "postage in another currency");
+  const pick = ebayPick([item({ price: { value: "18.00", currency: "USD" }, ...ship("6.00") }), item({ price: { value: "20.00", currency: "USD" }, ...ship("2.00"), itemWebUrl: "https://www.ebay.com/itm/3" })], offers, "US");
+  assert.equal(pick?.u, "https://www.ebay.com/itm/3", "the cheapest delivered, not the cheapest item");
+  assert.equal(pick?.p, 2200);
+  assert.equal(pick?.sh, 200);
+  const eu = (country: string) => item({ price: { value: "20.00", currency: "EUR" }, itemLocation: { country }, ...ship("3.90", "EUR") });
+  assert.ok(ebayPick([eu("NL")], offers, "EU"), "a Dutch seller for an EU buyer");
+  assert.equal(ebayPick([eu("GB")], offers, "EU"), null, "a UK seller is outside the EU");
 });
 
 test("eBay: no store reference, no eBay row", () => {
