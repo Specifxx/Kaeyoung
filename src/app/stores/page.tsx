@@ -4,6 +4,7 @@ import { STORES } from "@/content/stores";
 import { activeStores } from "@/lib/data";
 import { storeUrl } from "@/lib/affiliate";
 import { PageHead } from "@/components/Section";
+import { SuggestStore } from "@/components/ReportForms";
 
 export const metadata: Metadata = {
   title: "Where to buy Korean skincare online",
@@ -18,7 +19,7 @@ export default function Stores() {
       <PageHead
         eyebrow="K Young"
         title="Where to buy Korean skincare online"
-        sub="Every store we compare, by region, with how many of its products are on K Young today. Real shops only: no open marketplaces, where counterfeit skincare hides. Know a store we should add? Email us from the about page."
+        sub="Every store we compare, by region, with how many of its products are on K Young today. Real shops only: no open marketplaces, where counterfeit skincare hides. Know a store we should add? Suggest it below."
       />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {REGIONS.map((r) => {
@@ -43,6 +44,11 @@ export default function Stores() {
           );
         })}
       </div>
+      <section id="suggest" className="mt-10">
+        <h2 className="h-display mb-1 text-2xl">Suggest a store</h2>
+        <p className="mb-2 text-sm text-soft">A real K-beauty shop we don&apos;t compare yet? We look at every suggestion and add the store if its listings carry barcodes we can read. Store owners welcome: listing is free.</p>
+        <SuggestStore regions={REGIONS.map((r) => [r.code, r.name])} what="Korean skincare" buttonClassName="btn-pop btn-buy px-6 py-2 text-sm" />
+      </section>
     </div>
   );
 }
