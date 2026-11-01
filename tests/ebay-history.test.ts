@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { ebayPick, ebayQuotaDay, planEbay, type EbayItem, type EbayPrio } from "@/lib/ebay";
@@ -43,7 +44,7 @@ test("eBay: no store reference, no eBay row", () => {
 
 test("eBay plan: never-checked first, within budget", () => {
   const plan = planEbay([P("a", { US: offers, AU: offers }), P("b", { US: offers })], { "a:US": "2026-10-27" }, ["US", "AU"], 2);
-  assert.deepEqual(plan.map((p) => `${p.f.ean}:${p.region}`), ["a:AU", "b:US"]);
+  assert.deepEqual(plan.map((p) => `${p.f.ean}:${p.region}`), ["b:US", "a:AU"], "never-checked first, the US first among them");
   assert.equal(planEbay([P("a", { US: offers })], {}, ["US"], 0).length, 0, "no cap set, no calls");
 });
 
@@ -58,6 +59,23 @@ test("eBay plan: home page first, then popular/new, then the rest; refreshed by 
   const checked = { "home:US": "2026-10-30", "pop:US": "2026-10-30", "rest:US": "2026-10-29" };
   assert.deepEqual(ids(planEbay(products, checked, ["US"], 3, prio, "2026-10-31")), ["home:US", "rest:US", "pop:US"]);
   assert.deepEqual(ids(planEbay(products, checked, ["US"], 1, prio, "2026-10-31")), ["home:US"]);
+});
+
+test("eBay plan: coverage first, empty searches wait, the US first among equals (owner, 2026-11-01)", () => {
+  const ids = (p: { f: Product; region: string }[]) => p.map((x) => `${x.f.ean}:${x.region}`);
+  const products = [P("found", { US: offers }), P("empty", { US: offers }), P("never", { US: offers, AU: offers })];
+  const checked = { "found:US": "2026-10-24", "empty:US": "2026-10-24" };
+  const hasRow = (ean: string) => ean === "found";
+  // A week old: the product with a listing is due again, the empty search is not (21 days for tier 2).
+  assert.deepEqual(ids(planEbay(products, checked, ["US", "AU"], 3, undefined, "2026-10-31", hasRow)), ["never:US", "never:AU", "found:US"]);
+  assert.deepEqual(ids(planEbay(products, { ...checked, "empty:US": "2026-10-10" }, ["US"], 4, undefined, "2026-10-31", hasRow)), ["never:US", "empty:US", "found:US"]);
+  // Never searched, same tier: the US goes first.
+  assert.deepEqual(ids(planEbay([P("a", { AU: offers, US: offers })], {}, ["AU", "US"], 1)), ["a:US"]);
+});
+
+test("eBay and Amazon rows are drawn like store rows (owner, 2026-11-01)", () => {
+  const rows = fs.readFileSync("src/components/PriceRows.tsx", "utf8");
+  assert.doesNotMatch(rows + fs.readFileSync("src/app/globals.css", "utf8"), /btn-ebay|btn-amazon/);
 });
 
 test("eBay quota day is the Pacific date", () => {

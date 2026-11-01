@@ -1,7 +1,8 @@
 // eBay listings for each product, looked up by its barcode through the Browse
 // API (GitHub Actions only: the website never calls eBay and holds no eBay
 // key). Off until EBAY_CLIENT_ID / EBAY_CLIENT_SECRET exist (a green no-op).
-// One call per (product, region), home-page, popular and new products first
+// One call per (product, region), home-page, popular and new products first,
+// the US first among equals, the rest weekly and empty searches every three weeks
 // (planEbay), capped at 2,500 per eBay quota day however many runs there are.
 import fs from "node:fs";
 import path from "node:path";
@@ -81,7 +82,8 @@ async function main() {
     tier: home.has(`${f.ean}:${r}`) ? 0 : hot.has(`${f.ean}:${r}`) || isNew(f) ? 1 : 2,
     score: popularity(f, r),
   });
-  const plan = planEbay(products, checked, regions, budget, prio, today);
+  // A pair whose last search found nothing waits longer (EBAY_EMPTY_RECHECK_DAYS), so the calls reach every product.
+  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r]);
   if (!plan.length) {
     console.log(`eBay: nothing to search (${spent} of ${cap} calls already spent on quota day ${qday}).`);
     return;

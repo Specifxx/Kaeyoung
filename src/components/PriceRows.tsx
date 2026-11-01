@@ -1,6 +1,6 @@
 // The rows of a price table, shared by the product page and the quick view.
-// Pinned rows (eBay first, Amazon second, then partners) sit above the stores,
-// labelled; they are never counted as a store or the best price.
+// Pinned rows (eBay first, Amazon second) sit above the stores, drawn like a
+// store row and labelled "Paid link"; they are never counted as a store or the best price.
 import type { Offer } from "@/lib/types";
 import { OutLink } from "./OutLink";
 
@@ -17,8 +17,10 @@ export interface RowData {
   href: string;
   paid: boolean;
   highlight?: boolean;
-  /** eBay and Amazon: pinned first, their own button colour (owner, 2026-10-30) */
+  /** eBay and Amazon: pinned first (owner, 2026-10-30), drawn exactly like a store row (owner, 2026-11-01). */
   brand?: "ebay" | "amazon";
+  /** The price is the cheapest listing the last search found: shown as "from". */
+  from?: boolean;
   /** Stores: what delivery costs (lib/shipping.ts deliveryNote), when known. */
   ship?: string | null;
   event: { source: string; region: string; placement: string; ean?: string };
@@ -69,7 +71,7 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, ship, event }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, event }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -79,7 +81,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, s
     >
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 font-semibold">
-          <span className={brand ? "shrink-0" : "truncate"}>{name}</span>
+          <span className="truncate">{name}</span>
         </p>
         <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}
@@ -88,16 +90,21 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, s
           {paid && <span>Paid link</span>}
         </p>
       </div>
-      {price && <span className={`text-lg font-semibold tabular-nums ${highlight ? "text-accent-deep" : ""}`}>{price}</span>}
+      {price && (
+        <span className={`text-lg font-semibold tabular-nums ${highlight ? "text-accent-deep" : ""}`}>
+          {from && <span className="mr-1 text-xs font-normal text-soft">from</span>}
+          {price}
+        </span>
+      )}
       <OutLink
         href={href}
         paid={paid}
         event={event}
         className={`btn-pop shrink-0 px-4 py-1.5 ${
-          brand === "ebay" ? "btn-ebay" : brand === "amazon" ? "btn-amazon" : status === "out" || !price ? "border border-line bg-card text-ink hover:border-soft" : "btn-buy"
+          brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
         }`}
       >
-        {brand ? <><span className="hidden sm:inline">{price ? "Buy" : "Shop"} on</span>{name}</> : status === "out" ? "View" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        {brand ? "Shop" : status === "out" ? "View" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
       </OutLink>
     </div>
   );

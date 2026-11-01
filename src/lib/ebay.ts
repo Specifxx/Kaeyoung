@@ -86,18 +86,30 @@ export interface EbayPrio {
   score: number;
 }
 
-/** Days before a pair is due again, by tier (owner, 2026-10-30: front-page,
- *  popular and recent products get eBay prices first and most often). */
+/** Days before a pair with an eBay row is searched again, by tier (owner,
+ *  2026-10-30: front-page, popular and recent products first and most often;
+ *  2026-11-01: the rest weekly, so the calls reach every product). */
 export const EBAY_REFRESH_DAYS = [1, 3, 7] as const;
+
+/** Days before a pair whose last search found nothing is searched again, by
+ *  tier. A barcode with no local listing rarely gains one within days, so those
+ *  calls wait longer and go to products never searched (owner, 2026-11-01:
+ *  coverage, so every product has an eBay price where eBay sells it). */
+export const EBAY_EMPTY_RECHECK_DAYS = [2, 7, 21] as const;
+
+/** The region searched first when everything else ties (owner, 2026-11-01: "prioritise the US"). */
+export const EBAY_FIRST_REGION: RegionCode = "US";
 
 const dayDiff = (a: string, b: string) => Math.round((Date.parse(b) - Date.parse(a)) / 86_400_000);
 
 /**
  * Which (product, region) pairs to search today, among pairs where stores sell
- * the product. Due pairs first (never checked, or older than their tier's
- * refresh interval), by tier, then oldest check, then score; budget left over
- * goes to pairs not yet due, oldest first, so no call of the day is wasted.
- * Without `prio` every pair is tier 2, scored by its store count.
+ * the product. Due pairs first (never checked, or older than their interval:
+ * EBAY_REFRESH_DAYS when the last search found a listing, EBAY_EMPTY_RECHECK_DAYS
+ * when it found none), by tier, never-searched first (coverage), US before other
+ * regions, then oldest check, then score; budget left over goes to pairs not yet due, oldest
+ * first, so no call of the day is wasted. Without `prio` every pair is tier 2,
+ * scored by its store count; without `hasRow` every pair counts as found.
  */
 export function planEbay(
   products: Product[],
@@ -106,25 +118,28 @@ export function planEbay(
   budget: number,
   prio?: (f: Product, region: RegionCode) => EbayPrio,
   today?: string,
+  hasRow?: (ean: string, region: RegionCode) => boolean,
 ): { f: Product; region: RegionCode }[] {
-  const pairs: { f: Product; region: RegionCode; at: string; due: boolean; tier: number; score: number }[] = [];
+  const pairs: { f: Product; region: RegionCode; at: string; due: boolean; tier: number; score: number; first: number }[] = [];
   for (const f of products) {
     for (const region of regions) {
       const offers = f.offers[region];
       if (!offers?.length) continue;
       const { tier, score } = prio ? prio(f, region) : { tier: 2 as const, score: offers.length };
       const at = checked[`${f.ean}:${region}`] ?? "";
-      const due = !at || !today || dayDiff(at, today) >= EBAY_REFRESH_DAYS[tier];
-      pairs.push({ f, region, at, due, tier, score });
+      const every = !hasRow || hasRow(f.ean, region) ? EBAY_REFRESH_DAYS[tier] : EBAY_EMPTY_RECHECK_DAYS[tier];
+      const due = !at || !today || dayDiff(at, today) >= every;
+      pairs.push({ f, region, at, due, tier, score, first: region === EBAY_FIRST_REGION ? 0 : 1 });
     }
   }
   return pairs
     .sort(
       (a, b) =>
         Number(b.due) - Number(a.due) ||
-        (a.due ? a.tier - b.tier : 0) ||
+        (a.due ? a.tier - b.tier || Number(!!a.at) - Number(!!b.at) || a.first - b.first : 0) ||
         a.at.localeCompare(b.at) ||
         a.tier - b.tier ||
+        a.first - b.first ||
         b.score - a.score ||
         a.f.ean.localeCompare(b.f.ean) ||
         a.region.localeCompare(b.region),

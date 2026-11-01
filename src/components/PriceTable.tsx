@@ -1,9 +1,9 @@
 // One region's price table. Stores are in price order (orderable first), each
 // with what delivery costs when its weekly quote is known (lib/shipping.ts);
-// eBay and Amazon take the top two rows in their own button colours, then the
-// beauty partners (owner, 2026-10-30); all sit pinned
-// above them, labelled, never counted as a store and never the "best price"
-// (family rule: paid rows pinned, commission never re-ranks).
+// eBay and Amazon take the top two rows (owner, 2026-10-30), drawn exactly like
+// a store row (owner, 2026-11-01: "blend in and look exactly the same"), then the
+// beauty partners; all sit above the stores, labelled "Paid link", never counted
+// as a store and never the "best price" (family rule: commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
 import { amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnersFor, storePays, storeUrl, subId } from "@/lib/affiliate";
 import { getShipping, storeName } from "@/lib/data";
@@ -14,14 +14,6 @@ import { PriceRows, type RowData, type RowsData } from "./PriceRows";
 
 export function searchQuery(f: Product): string {
   return f.name.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
-}
-
-/** How an eBay price compares with the cheapest store: never re-ranked, just said. */
-function vsBest(p: number, bestP: number | undefined): string {
-  if (bestP == null) return "new, Buy It Now";
-  if (p < bestP) return "cheaper than every store";
-  if (p === bestP) return "same as the cheapest store";
-  return `+${Math.round(((p - bestP) / bestP) * 100)}% vs cheapest store`;
 }
 
 /** One region's rows, eBay first and Amazon second, then partners, then the
@@ -39,9 +31,11 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   if (ebayUrl)
     pinned.push({
       name: "eBay",
-      sub: ebay ? `${ebay.sh ? "incl. postage" : "free postage"}, ${vsBest(ebay.p, best?.p)}` : `new listings on ${ebayShopHost(region)?.replace("www.", "")}`,
+      // The cheapest new local listing the last search found, delivered: listings come and go, so "from".
+      sub: ebay ? `New, ${ebay.sh ? "incl. postage" : "free postage"}` : `New listings on ${ebayShopHost(region)?.replace("www.", "")}`,
       brand: "ebay",
       price: ebay ? money(ebay.p, region) : null,
+      from: !!ebay,
       status: null,
       href: ebayUrl,
       paid: true,
