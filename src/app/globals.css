@@ -168,3 +168,208 @@ html:not([data-region]) .rn-US { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .qv-shimmer, .qv-panel, .qv-backdrop { animation: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   The holiday look (src/lib/season.ts; 1 November to Boxing Day by the visitor's own date). Owner, 2026-11-01: "less
+   gamified … professional Christmas". So no Santa hats or light strands here, and the tree, candy cane and stockings are drawn in its own pastels: a quiet "Holiday Edit" line
+   above the hero, a slow and sparse snowfall in rose and gold behind it, three gold snowflakes by the hero art, a
+   champagne-gold hairline under the header and a warmer wash. All of it is decoration (aria-hidden, no taps) except the
+   one link, and nothing moves for prefers-reduced-motion.
+   --------------------------------------------------------------------------- */
+:root {
+  --gold: 176 132 52; /* champagne gold: 4.6:1 on --card as text */
+}
+[data-theme="night"] {
+  --gold: 226 190 120;
+}
+.ky-holiday,
+.ky-snow,
+.ky-flakes {
+  display: none;
+}
+html[data-season="christmas"] .ky-holiday {
+  display: flex;
+}
+html[data-season="christmas"] .ky-snow,
+html[data-season="christmas"] .ky-flakes {
+  display: block;
+}
+html[data-season="christmas"] header.sticky::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(var(--gold) / 0.9) 20%, rgb(var(--accent) / 0.8) 50%, rgb(var(--gold) / 0.9) 80%, transparent);
+}
+html[data-season="christmas"] .ky-hero.wash {
+  background:
+    radial-gradient(45% 60% at 85% 20%, rgb(var(--gold) / 0.14) 0%, transparent 70%),
+    radial-gradient(60% 80% at 0% 0%, rgb(var(--peach)) 0%, transparent 60%),
+    radial-gradient(50% 70% at 100% 10%, rgb(var(--lavender)) 0%, transparent 60%),
+    radial-gradient(60% 80% at 60% 100%, rgb(var(--accent-pale)) 0%, transparent 65%),
+    rgb(var(--bg));
+}
+.ky-hero > :not(.ky-snow) {
+  position: relative;
+  z-index: 1;
+}
+.ky-holiday-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 100%;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--gold) / 0.55);
+  background: rgb(var(--card) / 0.85);
+  padding: 0.35rem 0.95rem 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  color: rgb(var(--soft));
+  box-shadow: 0 6px 18px -12px rgb(var(--gold) / 0.8);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.ky-holiday-pill:hover,
+.ky-holiday-pill:focus-visible {
+  border-color: rgb(var(--gold));
+  box-shadow: 0 8px 22px -10px rgb(var(--gold) / 0.9);
+}
+.ky-holiday-pill b {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  color: rgb(var(--ink));
+}
+.ky-flake {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 14px;
+  aspect-ratio: 1;
+  background-color: rgb(var(--gold));
+  -webkit-mask: url(/xmas/snowflake.svg) center / contain no-repeat;
+  mask: url(/xmas/snowflake.svg) center / contain no-repeat;
+}
+/* Sparse, slow snow in rose and gold, moved by transform only. */
+.ky-snow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ky-snow::before,
+.ky-snow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  --ky-a: rgb(var(--accent) / 0.28);
+  --ky-b: rgb(var(--gold) / 0.45);
+  will-change: transform;
+}
+.ky-snow::before {
+  top: -420px;
+  background-image:
+    radial-gradient(circle at 236px 291px, var(--ky-a) 2.2px, transparent 3.4px),
+    radial-gradient(circle at 404px 243px, var(--ky-a) 1.6px, transparent 2.8px),
+    radial-gradient(circle at 305px 102px, var(--ky-a) 1.3px, transparent 2.5px),
+    radial-gradient(circle at 267px 248px, var(--ky-a) 1.9px, transparent 3.1px),
+    radial-gradient(circle at 411px 100px, var(--ky-a) 1.1px, transparent 2.3px),
+    radial-gradient(circle at 160px 77px, var(--ky-a) 1.1px, transparent 2.3px),
+    radial-gradient(circle at 360px 329px, var(--ky-a) 1.1px, transparent 2.3px);
+  background-size: 420px 420px;
+  animation: ky-fall 32s linear infinite;
+}
+.ky-snow::after {
+  top: -340px;
+  background-image:
+    radial-gradient(circle at 207px 236px, var(--ky-b) 1.9px, transparent 3.1px),
+    radial-gradient(circle at 320px 85px, var(--ky-b) 1.9px, transparent 3.1px),
+    radial-gradient(circle at 275px 37px, var(--ky-b) 1.1px, transparent 2.3px),
+    radial-gradient(circle at 102px 128px, var(--ky-b) 1.8px, transparent 3.0px),
+    radial-gradient(circle at 242px 172px, var(--ky-b) 1.6px, transparent 2.8px),
+    radial-gradient(circle at 105px 270px, var(--ky-b) 1.3px, transparent 2.5px);
+  background-size: 340px 340px;
+  animation: ky-fall-b 24s linear infinite;
+}
+@keyframes ky-fall {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-30px, 420px, 0); }
+}
+@keyframes ky-fall-b {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(24px, 340px, 0); }
+}
+[data-theme="night"] .ky-snow::before {
+  --ky-a: rgb(255 255 255 / 0.35);
+}
+/* Three gold snowflakes by the hero art, turning slowly. */
+.ky-flakes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ky-flakes .ky-flake {
+  position: absolute;
+  opacity: 0.8;
+  animation: ky-turn 18s linear infinite;
+}
+.ky-flakes .ky-flake:nth-child(1) { top: 8%; right: 6%; width: 26px; }
+.ky-flakes .ky-flake:nth-child(2) { top: 62%; right: 2%; width: 16px; animation-duration: 24s; animation-direction: reverse; }
+.ky-flakes .ky-flake:nth-child(3) { top: 30%; left: 4%; width: 18px; animation-duration: 28s; opacity: 0.6; }
+@keyframes ky-turn {
+  to { transform: rotate(360deg); }
+}
+/* A small tree, a candy cane and two stockings on a gold thread, in the site's own pastels (owner, 2026-11-01: "a
+   little more festive"). Drawn flat like the hero art, never cartoon red-and-green. */
+.ky-deco {
+  position: absolute;
+  background: center / contain no-repeat;
+}
+.ky-tree {
+  background-image: url(/xmas/ky-tree.svg);
+  left: 2%;
+  bottom: -2%;
+  width: clamp(58px, 16%, 86px);
+  aspect-ratio: 80 / 110;
+}
+.ky-cane {
+  background-image: url(/xmas/ky-cane.svg);
+  right: 4%;
+  bottom: 0;
+  width: clamp(24px, 7%, 36px);
+  aspect-ratio: 1 / 2;
+  transform: rotate(14deg);
+}
+.ky-stocking {
+  background-image: url(/xmas/ky-stocking.svg);
+  top: 0;
+  width: clamp(30px, 9%, 44px);
+  aspect-ratio: 60 / 84;
+  transform-origin: 50% -18px;
+  animation: ky-sway 7s ease-in-out infinite alternate;
+}
+.ky-stocking::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 1px;
+  height: 18px;
+  background: rgb(var(--gold) / 0.8);
+}
+.ky-stocking-1 { left: 5%; top: 22px; }
+.ky-stocking-2 { left: 14%; top: 8px; animation-delay: -3s; }
+@keyframes ky-sway {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ky-stocking,
+  .ky-snow::before,
+  .ky-snow::after,
+  .ky-flakes .ky-flake {
+    animation: none;
+  }
+}

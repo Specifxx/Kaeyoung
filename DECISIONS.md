@@ -384,3 +384,15 @@ basics-first (`STEP_MENU_ORDER`, `src/site.ts`) with toners mid-list and makeup 
 routine order for everything else. Popular,
 deals and new arrivals stay data-driven. The rest of the homepage copy was checked and is already gender-neutral.
 `tests/site.test.ts` pins it.
+
+## A professional Holiday Edit: 1 November to Boxing Day (2026-11-01)
+
+Owner, 2026-11-01: every Compare site gets a Christmas theme after the Halloween one, each its own take. Owner, 2026-11-01: "less gamified, professional Christmas". So none of the sister sites' Santa hats, lights, trees or candy canes (`tests/season.test.ts` pins their absence): a gold-and-rose hairline under the header, a warmer hero wash, sparse rose and gold snow, three slowly turning gold flakes beside the hero art, and a "The Holiday Edit" pill in Fraunces italic to the gift-set post (from its 6 November release) or deals. The same day the owner approved the rest but asked for K Young "a little more festive": a Christmas tree, two stockings on gold threads and a candy cane by the hero art, drawn flat in the site's own pastels (`public/xmas/ky-*.svg`), never the sister sites' cartoon art or a Santa hat.
+
+The season window is fixed in `src/lib/season.ts`: 1 November to 26 December, every year, by the visitor's own
+date, stamped on `<html data-season>` by an inline boot script before first paint. `?season=christmas` previews it out
+of season and `?season=off` hides it in season. Every decoration is CSS-gated on that attribute, `aria-hidden`,
+`pointer-events: none`, painted under the content (never over a price or a button), animated with `transform`
+only, and stopped under `prefers-reduced-motion`. The page's content and links stay in the server HTML; the season
+adds no request, no script beyond the boot line and no database or data read. The rules are the `ky-holiday`, `ky-snow` and `ky-flake` blocks at the end of `globals.css`, not the sister sites' shared `xmas-common` block. To end it early, move the `to` date; after
+Boxing Day it switches itself off.

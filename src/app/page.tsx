@@ -10,6 +10,7 @@ import { TileGrid } from "@/components/ProductTile";
 import { Section } from "@/components/Section";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { CAT_TINT, CatIcon, HeroArt } from "@/components/Art";
+import { POST_BY_SLUG } from "@/content/blog";
 
 export const metadata: Metadata = {
   title: { absolute: `${SITE.name}: compare Korean skincare prices across K-beauty stores` },
@@ -29,11 +30,22 @@ export default function Home() {
   const stores = Object.keys(activeStores()).length;
   const counts = catCounts();
   const brands = getBrands().slice(0, 16);
+  // The Holiday Edit line goes to the gift sets post once it is live (it is dated), else to today's deals.
+  const giftHref = POST_BY_SLUG["kbeauty-gift-sets"] ? "/blog/kbeauty-gift-sets" : "/deals";
   return (
     <>
-      <section className="wash relative overflow-hidden border-b border-line">
+      <section className="ky-hero wash relative overflow-hidden border-b border-line">
+        {/* The holiday look (1 November to Boxing Day, src/lib/season.ts): quiet snow in rose and gold. Hidden otherwise. */}
+        <span className="ky-snow" aria-hidden="true" />
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-10 pt-10 md:grid-cols-[1.15fr_1fr] md:pb-12 md:pt-14">
           <div className="min-w-0">
+            <p className="ky-holiday mb-4">
+              <Link prefetch={false} href={giftHref} className="ky-holiday-pill">
+                <span className="ky-flake" aria-hidden="true" />
+                <b>The Holiday Edit</b>
+                <span className="hidden sm:inline">· K-beauty gift sets, cheapest store first →</span>
+              </Link>
+            </p>
             <p className="eyebrow mb-4 text-accent-deep">Korean skincare price comparison</p>
             <h1 className="h-display max-w-3xl text-[2.4rem] leading-[1.05] sm:text-6xl">
               Stay young. <span className="italic text-accent">Pay less.</span>
@@ -54,7 +66,18 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <HeroArt className="mx-auto w-full max-w-[300px] md:max-w-[440px]" />
+          <div className="relative">
+            <HeroArt className="mx-auto w-full max-w-[300px] md:max-w-[440px]" />
+            <span className="ky-flakes" aria-hidden="true">
+              <span className="ky-flake" />
+              <span className="ky-flake" />
+              <span className="ky-flake" />
+              <span className="ky-deco ky-tree" />
+              <span className="ky-deco ky-cane" />
+              <span className="ky-deco ky-stocking ky-stocking-1" />
+              <span className="ky-deco ky-stocking ky-stocking-2" />
+            </span>
+          </div>
         </div>
       </section>
 
