@@ -108,3 +108,11 @@ test("no Compare branding on K Young (owner, 2026-10-30)", () => {
   for (const f of ["src/components/Header.tsx", "src/components/Logo.tsx", "src/app/layout.tsx", "src/app/page.tsx"]) assert.doesNotMatch(fs.readFileSync(f, "utf8"), /Compare/, f);
   assert.equal(SITE.name, "K Young");
 });
+
+test("the homepage's step tiles leave out toners and pads (owner, 2026-11-01)", () => {
+  const src = fs.readFileSync("src/app/page.tsx", "utf8");
+  const steps = src.match(/const HOME_STEPS: CatKey\[\] = \[([^\]]*)\]/);
+  assert.ok(steps, "HOME_STEPS is listed in the homepage");
+  assert.ok(!steps[1].includes('"toners"'));
+  assert.ok(!/CATEGORIES\.(filter|map)/.test(src), "the homepage lists its own tiles, not every category");
+});

@@ -4,7 +4,7 @@
 // like DexCompare") and the phone menu (components/MobileMenu.tsx) draw this
 // one list, so the two never disagree. Static links to pages that exist.
 // No data import here: the client menus import isActive from this file.
-import { CATEGORIES, type CatKey } from "@/site";
+import { CAT_BY_KEY, STEP_MENU_ORDER, type CatKey } from "@/site";
 
 export type NavItem = { href: string; label: string; count?: number; cat?: CatKey };
 export type NavGroup = { title: string; links: NavItem[] };
@@ -13,7 +13,7 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
   return [
     {
       title: "Shop by step",
-      links: CATEGORIES.filter((c) => counts[c.key] > 0).map((c) => ({ href: `/${c.key}`, label: c.name, count: counts[c.key], cat: c.key })),
+      links: STEP_MENU_ORDER.map((k) => CAT_BY_KEY[k]).filter((c) => counts[c.key] > 0).map((c) => ({ href: `/${c.key}`, label: c.name, count: counts[c.key], cat: c.key })),
     },
     {
       title: "Save",

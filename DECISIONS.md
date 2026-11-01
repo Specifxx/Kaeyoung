@@ -371,3 +371,16 @@ postage); the price table says "incl. postage". Sellers in Korea, the products' 
 for every region (owner, the same day), priced with their postage like any other row; so the search asks only for
 `deliveryCountry` and `localSeller` does the rest. Rows stored before this have no `sh` and are hidden (`getEbay`), and
 the next eBay pass searches them first. Same change as FigureCompare.
+
+## No toners and pads on the homepage (2026-11-01)
+
+The owner: "get rid of toners and pads from the homepage … we don't want to scare away male users." The homepage's
+"Shop by step" tiles are now their own list (`HOME_STEPS`, `src/app/page.tsx`) instead of every category: the basics
+anyone uses lead (cleansers, moisturisers, sunscreen, serums, body & hair), and "More K-beauty" (sets, tools, gifts,
+257 products) takes the toner tile's place so the grid stays two full rows of five. The `/toners` hub, its nav entry,
+guides and search stay: toners are still there for anyone who looks, just not the homepage's face. The category is
+now called "Toners" (not "Toners & pads"; the hub still describes pads), and the side panel and phone menu list steps
+basics-first (`STEP_MENU_ORDER`, `src/site.ts`) with toners mid-list and makeup and lip care last; `CATEGORIES` keeps
+routine order for everything else. Popular,
+deals and new arrivals stay data-driven. The rest of the homepage copy was checked and is already gender-neutral.
+`tests/site.test.ts` pins it.
