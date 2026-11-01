@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CATEGORIES, REGIONS, SITE } from "@/site";
+import { CAT_BY_KEY, REGIONS, SITE, type CatKey } from "@/site";
 import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn } from "@/lib/data";
 import { popularNow } from "@/lib/ratings";
 import { ago } from "@/lib/format";
@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   title: { absolute: `${SITE.name}: compare Korean skincare prices across K-beauty stores` },
   alternates: { canonical: "/" },
 };
+
+/**
+ * The homepage's step tiles (owner, 2026-11-01: no "Toners & pads" on the homepage, so it doesn't put men off).
+ * The basics anyone uses lead; "More K-beauty" (sets, tools, gifts) takes the toner tile's place. The /toners hub,
+ * nav entry and guides stay.
+ */
+const HOME_STEPS: CatKey[] = ["cleansers", "moisturisers", "sunscreen", "serums", "body-hair", "masks", "eye-care", "lip-care", "makeup", "other"];
 
 export default function Home() {
   const meta = getMeta();
@@ -78,13 +85,13 @@ export default function Home() {
         <section className="mt-10">
           <h2 className="h-display mb-4 text-2xl">Shop by step</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {CATEGORIES.filter((c) => c.key !== "other" && counts[c.key] > 0).map((c) => (
+            {HOME_STEPS.map((k) => CAT_BY_KEY[k]).filter((c) => counts[c.key] > 0).map((c) => (
               <Link prefetch={false} key={c.key} href={`/${c.key}`} className={`tile-hover flex items-center gap-3 rounded-2xl px-3.5 py-3.5 ${CAT_TINT[c.key]}`}>
                 <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-card/80">
                   <CatIcon cat={c.key} size={36} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-display text-[17px] font-medium leading-tight">{c.name}</span>
+                  <span className="block font-display text-[15.5px] font-medium sm:text-[17px] leading-tight">{c.name}</span>
                   <span className="mt-0.5 block text-xs tabular-nums text-soft">{counts[c.key].toLocaleString("en-US")} compared</span>
                 </span>
               </Link>
