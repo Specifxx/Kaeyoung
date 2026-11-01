@@ -435,3 +435,32 @@ so already published reviews pick it up at the next import), and the docs. The t
 pair now reads "KaeYoung, stay young", which keeps the original rhyme with the one-word name. The logo mark (a "K") is
 unchanged. Earlier entries keep "K Young" where they record what was said at the time. The forum still reserves
 "k young" as a name, so nobody can post as the old brand.
+
+## 2026-11-01: eBay and Amazon rows look like store rows; eBay calls aim for coverage
+
+The owner, looking at the quick view: "the ebay and amazon links should blend
+in and look exactly the same as the other price rows", "estimate the price of
+the ebay listing", and "rotate the ebay API to aim for coverage across products
+so some products only get ebay prices refreshed every week". Later the same
+day, for every site: "prioritise the US".
+
+- **Rows:** eBay and Amazon keep the top two places (2026-10-30) but are drawn
+  by the same `Row` as a store: white card, the pink Shop button, "Paid link"
+  in the line under the name. The blue and yellow brand buttons are gone
+  (`btn-ebay`/`btn-amazon` deleted; `tests/ebay-history.test.ts` pins it).
+  They are still never counted as a store, never "Lowest item price".
+- **eBay's price:** where the last search found a listing, the row shows its
+  delivered price as "from US$x" ("New, incl. postage"):
+  listings sell and change between searches, so it is a "from", not a quote.
+  No listing found means a search link with no price; we never invent one (no
+  conversion from another region, no guess from the store median).
+- **Why there were none on 1 November:** the 31 October run used the code from
+  before the local-sellers-and-postage rule, so all 1,646 rows had no postage
+  and `ebayRowShown` hid every one. The import already re-searches those first.
+- **Rotation (`planEbay`):** about 31,700 (product, region) pairs, 2,500 calls a
+  day. A pair with a listing is searched again after 1/3/7 days (home page /
+  popular or new / the rest: the weekly refresh); a pair whose search found
+  nothing after 2/7/21 days (`EBAY_EMPTY_RECHECK_DAYS`), because a barcode with
+  no local listing seldom gains one within the week, and those calls are better
+  spent on products never searched. Among due pairs of a tier, never-searched
+  go first, then the US. A full first pass takes about twelve days.

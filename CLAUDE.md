@@ -57,7 +57,7 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
 - Affiliate tags are added at build (`src/lib/affiliate.ts`): `ky-<region>-<placement>-<ean>` in EPN `customid`,
   Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kaeyoung.com`.
 - **No banner ads** (owner, 2026-10-30: "cut down on the banner ads … a really nice website"): no eBay strips, no
-  AdSense, no nav ad boxes. Paid links live only in a product's price table, pinned above the stores and labelled:
+  AdSense, no nav ad boxes. Paid links live only in a product's price table, pinned above the stores, drawn like a store row (owner, 2026-11-01) and labelled:
   eBay, Amazon (US `riftcompare-20`, AU `compareempire-22`, others by `AMAZON_TAG_<REGION>`), and the beauty
   retailers in `PARTNERS` (YesStyle, Stylevana, Olive Young Global, iHerb, LOOKFANTASTIC, Cult Beauty), each shown
   only once its `AFF_*` tracking template is set in Vercel. None is ever counted as a store or "the cheapest";
