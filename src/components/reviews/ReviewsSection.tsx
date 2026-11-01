@@ -20,7 +20,7 @@ export function ReviewsSection({ ean, slug, name, data, open }: { ean: string; s
                 <div className="pb-1.5">
                   <Stars value={data!.avg} size={18} />
                   <p className="mt-0.5 text-sm text-soft">
-                    {n} rating{n === 1 ? "" : "s"} from K Young shoppers
+                    {n} rating{n === 1 ? "" : "s"} from KaeYoung shoppers
                   </p>
                 </div>
               </div>
@@ -73,7 +73,7 @@ export function ReviewsSection({ ean, slug, name, data, open }: { ean: string; s
           ) : (
             n > 0 && <p className="text-sm text-soft">No written reviews yet, just star ratings.</p>
           )}
-          {n > 0 && <p className="mt-3 text-xs leading-relaxed text-soft">Ratings come from K Young visitors and are not verified purchases. They never change the order of prices.</p>}
+          {n > 0 && <p className="mt-3 text-xs leading-relaxed text-soft">Ratings come from KaeYoung visitors and are not verified purchases. They never change the order of prices.</p>}
         </div>
       </div>
     </section>

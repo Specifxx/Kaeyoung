@@ -83,7 +83,7 @@ export function ReviewForm({ ean, name }: { ean: string; name: string }) {
         } catch {}
       }
     } catch {
-      setError("We couldn't reach K Young. Check your connection and try again.");
+      setError("We couldn't reach KaeYoung. Check your connection and try again.");
     } finally {
       setBusy(false);
     }

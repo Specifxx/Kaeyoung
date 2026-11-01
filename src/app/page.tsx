@@ -142,7 +142,7 @@ export default function Home() {
         )}
 
         <section className="mt-16">
-          <h2 className="h-display mb-6 text-2xl sm:text-3xl">How K Young works</h2>
+          <h2 className="h-display mb-6 text-2xl sm:text-3xl">How KaeYoung works</h2>
           <ol className="grid gap-4 sm:grid-cols-3">
             {[
               ["Matched by barcode", "Every listing is matched on the barcode printed on the box, size by size. No barcode, no match: we never guess from a title."],

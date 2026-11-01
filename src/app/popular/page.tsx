@@ -20,7 +20,7 @@ export default function Popular() {
       <PageHead
         eyebrow="Popular"
         title="Popular Korean skincare"
-        sub="The products the most K-beauty shops keep in stock, lifted by what K Young shoppers rate them. Prices show for your region; change it at the top."
+        sub="The products the most K-beauty shops keep in stock, lifted by what KaeYoung shoppers rate them. Prices show for your region; change it at the top."
       />
       {REGIONS.map((r) => {
         const list = popularNow(r.code, 24);

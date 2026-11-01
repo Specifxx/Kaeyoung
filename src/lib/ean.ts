@@ -1,4 +1,4 @@
-// EAN-13 barcodes: the only thing a store listing is matched on. K Young
+// EAN-13 barcodes: the only thing a store listing is matched on. KaeYoung
 // covers Korean beauty, so a barcode must carry Korea's GS1 prefix, 880. A
 // listing without one is skipped, never guessed from its title (the
 // FigureCompare rule: sizes, shades, refills, old and new packaging and fakes

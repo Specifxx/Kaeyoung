@@ -49,7 +49,7 @@ h1{font-family:Fraunces,serif;font-weight:500;font-size:104px;line-height:1;marg
 p{font-size:30px;color:#786676;margin:36px 0 0;max-width:900px;line-height:1.35}
 .rule{position:absolute;left:96px;right:96px;bottom:64px;border-top:1px solid #f3e1e8;padding-top:20px;font-size:20px;color:#786676;letter-spacing:3px;text-transform:uppercase}
 </style></head><body>
-<div class="brand">${svg.replace("<svg ", '<svg width="72" height="72" ')}<span>K Young</span></div>
+<div class="brand">${svg.replace("<svg ", '<svg width="72" height="72" ')}<span>KaeYoung</span></div>
 <h1>Stay young. <i>Pay less.</i></h1>
 <p>Korean skincare prices from real K-beauty stores, side by side. Matched by the barcode on the box.</p>
 <div class="rule">US · UK · Canada · Australia · New Zealand · Europe</div>

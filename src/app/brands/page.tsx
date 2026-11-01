@@ -5,7 +5,7 @@ import { PageHead } from "@/components/Section";
 
 export const metadata: Metadata = {
   title: "Korean skincare brands: compare prices by brand",
-  description: "Every Korean skincare and K-beauty brand K Young compares, A to Z, with how many of its products are priced across stores today.",
+  description: "Every Korean skincare and K-beauty brand KaeYoung compares, A to Z, with how many of its products are priced across stores today.",
   alternates: { canonical: "/brands" },
 };
 

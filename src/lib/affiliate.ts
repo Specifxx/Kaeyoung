@@ -14,7 +14,7 @@ export const EBAY_CAMPAIGN_ID = "5339155912";
 
 /** Amazon Associates: each marketplace is its own program and tag. The
  *  family's US (riftcompare-20) and Australian (compareempire-22) tags are the
- *  defaults; AMAZON_TAG_<REGION> sets K Young's own or another marketplace's.
+ *  defaults; AMAZON_TAG_<REGION> sets KaeYoung's own or another marketplace's.
  *  A region without a tag shows no Amazon row (a US tag earns nothing on
  *  amazon.com.au). */
 export function amazonTag(region: RegionCode): string | null {

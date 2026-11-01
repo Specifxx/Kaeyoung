@@ -55,7 +55,7 @@ test("the summary counts every rating; only written ones are listed, newest firs
   assert.equal(s.avg, 4);
   assert.deepEqual(s.dist, [0, 0, 1, 1, 1]);
   assert.deepEqual(s.reviews.map((r) => r.id), [3, 1]);
-  assert.equal(s.reviews[1].n, "K Young shopper");
+  assert.equal(s.reviews[1].n, "KaeYoung shopper");
   assert.equal(s.reviews[0].k, undefined, "an unknown skin type is dropped");
   const many = Array.from({ length: 50 }, (_, i) => ({ ...rows[0], id: i + 1, created: `2026-10-${String((i % 28) + 1).padStart(2, "0")}T00:00:00` }));
   assert.equal(summarize(many).reviews.length, PAGE_REVIEWS_MAX);

@@ -1,4 +1,4 @@
-// K Young's drawings (owner, 2026-10-30: "pretty … very graphic, like Korean
+// KaeYoung's drawings (owner, 2026-10-30: "pretty … very graphic, like Korean
 // beauty sites"): simple flat bottles, jars and tubes in the pastel set, drawn
 // in SVG so they cost nothing to load and follow the theme. No brand's
 // product or packaging is drawn: these are generic shapes.

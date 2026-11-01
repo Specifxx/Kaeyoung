@@ -5,18 +5,18 @@ import { PageHead } from "@/components/Section";
 import { Prose } from "@/components/Prose";
 
 export const metadata: Metadata = {
-  title: "About K Young and how matching works",
-  description: "How K Young compares Korean skincare prices: barcode matching, real K-beauty stores only, daily price checks, and how the site is paid for.",
+  title: "About KaeYoung and how matching works",
+  description: "How KaeYoung compares Korean skincare prices: barcode matching, real K-beauty stores only, daily price checks, and how the site is paid for.",
   alternates: { canonical: "/about" },
 };
 
 export default function About() {
   return (
     <div className="mx-auto max-w-3xl px-4">
-      <PageHead title="About K Young" sub="An independent price guide for Korean skincare. Stay young, pay less." />
+      <PageHead title="About KaeYoung" sub="An independent price guide for Korean skincare. Stay young, pay less." />
       <Prose>
         <p>
-          K Young checks {STORES.length} real K-beauty stores every day and shows every store&apos;s price for the same product, side by side, in your own currency: the US, UK, Canada, Australia, New Zealand and Europe.
+          KaeYoung checks {STORES.length} real K-beauty stores every day and shows every store&apos;s price for the same product, side by side, in your own currency: the US, UK, Canada, Australia, New Zealand and Europe.
         </p>
         <h2>How a product is matched</h2>
         <p>
@@ -46,7 +46,7 @@ export default function About() {
         </p>
         <h2>How the site is paid for</h2>
         <p>
-          K Young is free and has no ads beside the prices. It is paid for by affiliate links: if you buy after clicking eBay or Amazon (and, once their programs accept us, the big beauty retailers), we may earn a commission at no cost to you.
+          KaeYoung is free and has no ads beside the prices. It is paid for by affiliate links: if you buy after clicking eBay or Amazon (and, once their programs accept us, the big beauty retailers), we may earn a commission at no cost to you.
           Today none of the stores in the comparison pays us anything. Commission never changes the order: stores are always sorted by price. The details are in <a href="/disclosure">how we make money</a>. No sign-up, no accounts, no pop-ups.
         </p>
         <h2>Spotted a mistake? Want a store added?</h2>

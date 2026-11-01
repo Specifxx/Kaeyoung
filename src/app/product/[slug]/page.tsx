@@ -349,7 +349,7 @@ function Faq({ f, regions, rated }: { f: Product; regions: RegionCode[]; rated: 
     if (b) qa.push([`Where is ${f.name} cheapest ${reg.phrase}?`, `${storeName(b.offer.s)} at ${money(b.offer.p, r)}, the lowest of ${b.stores} store${b.stores === 1 ? "" : "s"} we compared at our last check.`]);
   }
   if (rated && rated.n >= SCHEMA_MIN_RATINGS) {
-    qa.push([`What do shoppers rate ${f.name}?`, `${starsText(rated.avg)} out of 5 from ${rated.n} K Young shoppers' ratings, with ${rated.dist[4] + rated.dist[3]} giving it four or five stars.`]);
+    qa.push([`What do shoppers rate ${f.name}?`, `${starsText(rated.avg)} out of 5 from ${rated.n} KaeYoung shoppers' ratings, with ${rated.dist[4] + rated.dist[3]} giving it four or five stars.`]);
   }
   qa.push([
     `How do you know every store sells the same ${f.name}?`,

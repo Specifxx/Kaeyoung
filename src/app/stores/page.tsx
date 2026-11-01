@@ -8,7 +8,7 @@ import { SuggestStore } from "@/components/ReportForms";
 
 export const metadata: Metadata = {
   title: "Where to buy Korean skincare online",
-  description: "The K-beauty stores K Young compares every day, by region: specialist Korean skincare shops in the US, UK, Canada, Australia, New Zealand and Europe.",
+  description: "The K-beauty stores KaeYoung compares every day, by region: specialist Korean skincare shops in the US, UK, Canada, Australia, New Zealand and Europe.",
   alternates: { canonical: "/stores" },
 };
 
@@ -17,9 +17,9 @@ export default function Stores() {
   return (
     <div className="mx-auto max-w-6xl px-4">
       <PageHead
-        eyebrow="K Young"
+        eyebrow="KaeYoung"
         title="Where to buy Korean skincare online"
-        sub="Every store we compare, by region, with how many of its products are on K Young today. Real shops only: no open marketplaces, where counterfeit skincare hides. Know a store we should add? Suggest it below."
+        sub="Every store we compare, by region, with how many of its products are on KaeYoung today. Real shops only: no open marketplaces, where counterfeit skincare hides. Know a store we should add? Suggest it below."
       />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {REGIONS.map((r) => {

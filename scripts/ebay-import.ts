@@ -51,7 +51,7 @@ async function main() {
     console.log("eBay keys not set: skipping (no-op).");
     return;
   }
-  // K Young's keyset is shared with CamCompare, 2,500 calls a day each
+  // KaeYoung's keyset is shared with CamCompare, 2,500 calls a day each
   // (owner, 2026-10-30). EBAY_DAILY_CAP can only lower it.
   // A second run on the same quota day (a manual dispatch) gets only what is left.
   const cap = Math.min(2500, Number(process.env.EBAY_DAILY_CAP || 2500));

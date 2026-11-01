@@ -31,7 +31,7 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
       links: [...topBrands.map((b) => ({ href: `/brands/${b.slug}`, label: b.name })), { href: "/brands", label: "All brands" }],
     },
     {
-      title: "K Young",
+      title: "KaeYoung",
       links: [
         { href: "/forum", label: "Community" },
         { href: "/stores", label: "Stores we compare" },

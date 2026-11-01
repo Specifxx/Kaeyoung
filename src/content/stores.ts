@@ -1,4 +1,4 @@
-// Every store K Young reads. Real shops only, never marketplaces (fakes are
+// Every store KaeYoung reads. Real shops only, never marketplaces (fakes are
 // common in K-beauty). Each one is read through its public Shopify
 // products.json, two at a time at most, about a request a second, and a store
 // that keeps answering 403/429 is skipped for the run (never worked around).

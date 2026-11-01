@@ -104,7 +104,7 @@ export const POSTS: Post[] = [
     slug: "avoid-fake-kbeauty",
     title: "How to avoid fake K-beauty when you shop online",
     short: "Avoiding fake K-beauty",
-    description: "Counterfeit Korean skincare is common on open marketplaces. What to check before you buy, and why K Young only lists specialist stores.",
+    description: "Counterfeit Korean skincare is common on open marketplaces. What to check before you buy, and why KaeYoung only lists specialist stores.",
     date: "2026-10-30",
     sources: [{ title: "Warning: fake cosmetics discovered", by: "Cosmetic, Toiletry and Perfumery Association (UK)", url: "https://www.ctpa.org.uk/news/warning-fake-cosmetics-discovered-4070" }],
     art: "eye-care",

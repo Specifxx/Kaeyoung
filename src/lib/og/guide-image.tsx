@@ -53,7 +53,7 @@ export function guideImage(opts: { region: RegionCode; title: string; kicker: st
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
             <img src={ICON} width={44} height={44} />
-            <div style={{ display: "flex", fontFamily: "Fraunces", fontSize: 32 }}>K Young</div>
+            <div style={{ display: "flex", fontFamily: "Fraunces", fontSize: 32 }}>KaeYoung</div>
           </div>
           <div style={{ display: "flex", fontSize: 18, letterSpacing: 2, color: SOFT, textTransform: "uppercase" }}>{kicker}</div>
         </div>
