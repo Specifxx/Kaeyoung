@@ -33,6 +33,7 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
     {
       title: "K Young",
       links: [
+        { href: "/forum", label: "Community" },
         { href: "/stores", label: "Stores we compare" },
         { href: "/about", label: "How it works" },
         { href: "/disclosure", label: "How we make money" },

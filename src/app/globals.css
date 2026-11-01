@@ -373,3 +373,17 @@ html[data-season="christmas"] .ky-hero.wash {
     animation: none;
   }
 }
+
+/* The beta forum (src/components/forum/forum.css) in this site's colours. */
+.fm {
+  --fm-card: rgb(var(--card));
+  --fm-sunk: rgb(var(--subtle));
+  --fm-line: rgb(var(--line));
+  --fm-ink: rgb(var(--ink));
+  --fm-muted: rgb(var(--soft));
+  --fm-accent: rgb(var(--accent-deep));
+  --fm-on-accent: rgb(var(--card));
+  --fm-accent-soft: rgb(var(--accent-pale));
+  --fm-radius: 16px;
+  --fm-head: "Fraunces Variable", Georgia, serif;
+}
