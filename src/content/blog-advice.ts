@@ -323,4 +323,67 @@ export const ADVICE_POSTS: Post[] = [
       },
     ],
   },
+  {
+    slug: "korean-toner-pads-compared",
+    title: "Korean toner pads: which to pick, and where they're cheapest",
+    short: "Toner pads",
+    description: "Exfoliating, calming and brightening Korean toner pads, what the names on the jar mean, and today's cheapest store for each in your country.",
+    date: "2026-12-04",
+    art: "toners",
+    sections: [
+      {
+        p: [
+          "Toner pads are one of the most Korean products there is: a jar of soaked cotton rounds you swipe over your face after cleansing. They replace a toner and a cotton pad, and they travel well. The trouble is that the jars look alike while the pads inside do very different jobs.",
+          "Our view: read the name. Korean brands put the job on the label, so \"peeling\", \"pore\", \"PHA\", \"LHA\" or \"BHA\" mean an exfoliating pad, while \"calming\", \"cica\" or \"heartleaf\" mean a soothing one. Start with one jar, not one of each, and use an exfoliating pad a few evenings a week rather than every day. Patch test anything new.",
+        ],
+      },
+      {
+        h: "Exfoliating pads",
+        p: ["Pads with acids in the name are for texture and pores. Use them at night and wear sunscreen the next day: exfoliated skin burns more easily."],
+        picks: { title: "Exfoliating toner pads {region}", match: "(peel|pore|\\bpha\\b|\\blha\\b|\\bbha\\b|\\baha\\b|exfoliat).*\\bpads?\\b|\\bpads?\\b.*(peel|pore|\\bpha\\b|\\blha\\b|\\bbha\\b|\\baha\\b|exfoliat)", limit: 10 },
+      },
+      {
+        h: "Calming pads",
+        p: ["Heartleaf, centella (cica) and other soothing pads are the gentle everyday kind, and the ones most people keep in the fridge for mornings. More on the ingredients in our [heartleaf guide](/blog/heartleaf-skincare-guide) and [centella guide](/blog/centella-cica-skincare-guide)."],
+        picks: { title: "Calming toner pads {region}", match: "(heartleaf|cica|centella|calm|sooth|madeca).*\\bpads?\\b|\\bpads?\\b.*(heartleaf|cica|centella|calm|sooth)", limit: 10 },
+      },
+      {
+        h: "Brightening and vitamin pads",
+        p: ["Pads that name vitamin C, glutathione or \"dark spot\" are aimed at uneven tone. They are usually the priciest jars, so compare the store prices before you buy."],
+        picks: { title: "Brightening toner pads {region}", match: "(vita|vitamin|glutathi|dark spot|bright|niacinamide).*\\bpads?\\b|\\bpads?\\b.*(vita|vitamin|bright)", limit: 10 },
+      },
+      {
+        h: "Price per pad",
+        p: ["Jar counts vary (60, 70, 80 and 90 pads are all common), and refills are sold separately. Check the count on the label before you compare: a cheaper jar with fewer pads can cost more per use. The rest of the toner aisle is on [Korean toners](/toners)."],
+      },
+    ],
+  },
+  {
+    slug: "korean-vitamin-c-serums",
+    title: "Korean vitamin C serums: the most stocked, and where they're cheapest",
+    short: "Vitamin C serums",
+    description: "Korean vitamin C serums and ampoules from the brands stores stock most, with what to look for on the label and today's cheapest store in your country.",
+    date: "2026-12-08",
+    art: "serums",
+    sections: [
+      {
+        p: [
+          "Vitamin C is the brightening serum most people try first, and Korean brands make a lot of them, from gentle derivatives to high-strength ampoules. Prices vary more than the ingredient does, which is exactly what comparing stores is for.",
+          "Our view: a gentle, well-stocked vitamin C serum used every morning beats a strong one that stings and ends up in a drawer. If the name gives a percentage, start low. Vitamin C goes before moisturiser and sunscreen, and sunscreen is the step that matters most for uneven tone. Patch test first, and stop if it stings.",
+        ],
+      },
+      {
+        h: "Vitamin C serums and ampoules",
+        p: [],
+        picks: { title: "Vitamin C serums {region}", match: "vita(min)? ?c\\b|\\bvita c\\b|ascorbic", cat: "serums", limit: 14 },
+      },
+      {
+        h: "Reading the label",
+        p: [
+          "\"Pure\" or \"ascorbic acid\" vitamin C is the strongest kind and the most likely to tingle. Derivatives (ascorbyl glucoside and similar) are gentler and more stable. A dark bottle or an airless pump helps it keep, and a serum that has turned dark orange has gone off.",
+          "Vitamin C turns up in toners, pads and sheet masks too. Our [toner pad comparison](/blog/korean-toner-pads-compared) has the brightening jars, and [sunscreen](/blog/korean-sunscreen-where-cheapest) is the step to pair it with.",
+        ],
+      },
+    ],
+  },
 ];
