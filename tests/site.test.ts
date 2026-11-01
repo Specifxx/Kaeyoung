@@ -56,7 +56,7 @@ test("stores: unique ids and hosts, every region covered", () => {
   for (const r of ["US", "UK", "CA", "AU", "NZ", "EU"]) assert.ok(STORES.filter((s) => s.region === r).length >= 2, r);
 });
 
-test("K Young stands alone: no sister-site links (owner, 2026-10-30)", () => {
+test("KaeYoung stands alone: no sister-site links (owner, 2026-10-30)", () => {
   const src = ["src/site.ts", "src/components/Footer.tsx"].map((f) => fs.readFileSync(f, "utf8")).join("\n");
   for (const s of ["riftcompare", "dexcompare", "figurecompare", "wargamecompare", "Sister sites"]) assert.ok(!src.toLowerCase().includes(s.toLowerCase()), s);
 });
@@ -104,9 +104,9 @@ test("no banner ads (owner, 2026-10-30): paid links live in the price table only
   assert.match(fs.readFileSync("src/components/QuickView.tsx", "utf8"), /<PriceRows /);
 });
 
-test("no Compare branding on K Young (owner, 2026-10-30)", () => {
+test("no Compare branding on KaeYoung (owner, 2026-10-30)", () => {
   for (const f of ["src/components/Header.tsx", "src/components/Logo.tsx", "src/app/layout.tsx", "src/app/page.tsx"]) assert.doesNotMatch(fs.readFileSync(f, "utf8"), /Compare/, f);
-  assert.equal(SITE.name, "K Young");
+  assert.equal(SITE.name, "KaeYoung");
 });
 
 test("the homepage's step tiles leave out toners and pads (owner, 2026-11-01)", () => {

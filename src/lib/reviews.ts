@@ -26,7 +26,7 @@ export const TITLE_MAX = 80;
 export const BODY_MIN = 20;
 export const BODY_MAX = 3000;
 export const NAME_MAX = 40;
-export const DEFAULT_NAME = "K Young shopper";
+export const DEFAULT_NAME = "KaeYoung shopper";
 /** Fewer than this many seconds between the form appearing and the send: a bot. */
 export const MIN_FILL_SECONDS = 4;
 /** Google shows review stars only from a real sample; below this the page says

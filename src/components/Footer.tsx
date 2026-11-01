@@ -10,7 +10,7 @@ export function Footer({ updated }: { updated?: string | null }) {
         <div>
           <div className="flex items-center gap-2.5">
             <LogoMark size={30} />
-            <span className="font-display text-xl font-semibold">K Young</span>
+            <span className="font-display text-xl font-semibold">KaeYoung</span>
           </div>
           <p className="mt-3 text-soft">
             Korean skincare prices from real K-beauty stores, matched by the barcode on the box and checked every day. {SITE.slogan}
@@ -34,7 +34,7 @@ export function Footer({ updated }: { updated?: string | null }) {
           </ul>
         </div>
         <div>
-          <h2 className="eyebrow mb-3">K Young</h2>
+          <h2 className="eyebrow mb-3">KaeYoung</h2>
           <ul className="space-y-1.5">
             <li><Link prefetch={false} href="/deals" className="text-soft hover:text-ink">K-beauty deals today</Link></li>
             <li><Link prefetch={false} href="/brands" className="text-soft hover:text-ink">Korean skincare brands</Link></li>
@@ -76,7 +76,7 @@ export function Footer({ updated }: { updated?: string | null }) {
           mistake and we fix it.
         </p>
         <p className="mt-1">
-          K Young is an independent price guide, not affiliated with any brand or store. Product names and photos belong to their owners. Nothing here is medical advice.
+          KaeYoung is an independent price guide, not affiliated with any brand or store. Product names and photos belong to their owners. Nothing here is medical advice.
         </p>
       </div>
     </footer>

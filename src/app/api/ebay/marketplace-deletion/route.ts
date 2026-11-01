@@ -1,5 +1,5 @@
 // eBay Marketplace Account Deletion endpoint, required for production Browse
-// API keys. K Young stores no eBay user data (only listing prices, titles
+// API keys. KaeYoung stores no eBay user data (only listing prices, titles
 // and photos), so a notification needs no action: it is acknowledged.
 // Runs only when eBay calls it; no page uses it.
 import { createHash } from "node:crypto";

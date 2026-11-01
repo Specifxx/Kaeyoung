@@ -23,7 +23,7 @@ async function check(name: string, fn: () => Promise<Omit<Result, "name">> | Omi
 }
 
 async function get(p: string) {
-  const r = await fetch(`${site}${p}`, { signal: AbortSignal.timeout(20000), headers: { "User-Agent": "K Young ops monitor" } });
+  const r = await fetch(`${site}${p}`, { signal: AbortSignal.timeout(20000), headers: { "User-Agent": "KaeYoung ops monitor" } });
   return r;
 }
 

@@ -1,9 +1,9 @@
-// K Young's forum settings (the rules are in ./core.ts, docs/forum.md).
+// KaeYoung's forum settings (the rules are in ./core.ts, docs/forum.md).
 import type { ForumSite } from "./core";
 
 export const FORUM_SITE: ForumSite = {
   site: "kaeyoung",
-  siteName: "K Young",
+  siteName: "KaeYoung",
   repo: "Specifxx/Kaeyoung",
   hosts: ["kaeyoung.com", "www.kaeyoung.com"],
   base: "/forum",

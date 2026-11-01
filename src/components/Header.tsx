@@ -10,7 +10,7 @@ export function Header({ groups }: { groups: NavGroup[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-card/90 backdrop-blur">
       <div className="flex h-[4.25rem] items-center gap-4 px-4 lg:px-5">
-        <Link href="/" prefetch={false} className="shrink-0" aria-label="K Young home">
+        <Link href="/" prefetch={false} className="shrink-0" aria-label="KaeYoung home">
           <Logo />
         </Link>
         <div className="hidden max-w-xl flex-1 md:block lg:ml-[4.5rem]">

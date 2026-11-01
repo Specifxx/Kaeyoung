@@ -6,7 +6,7 @@
 // Rules (DECISIONS.md "Advice posts"): one question per post; opinions rest on
 // what a product's own name says it contains, how widely it is stocked and what
 // it costs, never on medical claims; skin-condition posts say patch test and
-// see a dermatologist; written as the K Young team, no invented reviewers.
+// see a dermatologist; written as the KaeYoung team, no invented reviewers.
 import type { Post } from "./blog";
 
 export const ADVICE_POSTS: Post[] = [
@@ -134,7 +134,7 @@ export const ADVICE_POSTS: Post[] = [
       {
         p: [
           "Centella asiatica goes by many names on labels: cica, tiger grass, gotu kola, and its extracts madecassoside and asiaticoside. In Korean it is 병풀. It is one of the most common ingredients in Korean soothing products, usually aimed at skin that feels irritated, red or stressed. Its compounds have been studied for wound healing and skin repair (see the review in the sources below), which is where its soothing reputation comes from.",
-          "Our view: centella is a gentle, low-risk ingredient to try if your skin is easily upset, but a high percentage on the label does not guarantee a better product. Texture and what else is in the bottle matter as much. On K Young you can search \"cica\" or \"centella\" and both find the same products.",
+          "Our view: centella is a gentle, low-risk ingredient to try if your skin is easily upset, but a high percentage on the label does not guarantee a better product. Texture and what else is in the bottle matter as much. On KaeYoung you can search \"cica\" or \"centella\" and both find the same products.",
         ],
       },
       {
@@ -238,7 +238,7 @@ export const ADVICE_POSTS: Post[] = [
       {
         p: [
           "A sheet mask is a serum-soaked sheet you leave on for 15 to 20 minutes. It gives an immediate plumped, hydrated look, which is why people use them before an event. It is a treat for a few days of glow, not a long-term treatment.",
-          "Our view: buy a box of a mask you already know you like, and singles to try new ones. One warning from our own data: stores sometimes list a single sheet and a box of ten under the same barcode. K Young leaves those listings out rather than show you a misleading price, so every row below is the same pack.",
+          "Our view: buy a box of a mask you already know you like, and singles to try new ones. One warning from our own data: stores sometimes list a single sheet and a box of ten under the same barcode. KaeYoung leaves those listings out rather than show you a misleading price, so every row below is the same pack.",
         ],
       },
       {

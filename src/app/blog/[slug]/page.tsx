@@ -189,7 +189,7 @@ function BrandStores() {
       />
       <P>
         <span className="mt-6 block">
-          Every product page on K Young lists the brand&apos;s own store alongside the shops when it sells there, so you never have to check twice. Start with the <A href="/deals">deals list</A> or search for your product at the top.
+          Every product page on KaeYoung lists the brand&apos;s own store alongside the shops when it sells there, so you never have to check twice. Start with the <A href="/deals">deals list</A> or search for your product at the top.
         </span>
       </P>
     </>
@@ -288,7 +288,7 @@ function Sunscreen() {
       />
       <H2>One thing to check</H2>
       <P>
-        Sunscreen rules differ by country, so a sunscreen sold in one country can be labelled or formulated differently in another. K Young only ever compares the exact same barcode, so the stores in each row sell the identical product; check
+        Sunscreen rules differ by country, so a sunscreen sold in one country can be labelled or formulated differently in another. KaeYoung only ever compares the exact same barcode, so the stores in each row sell the identical product; check
         the store&apos;s listing for the SPF and PA rating you want. Every sunscreen we compare is in <A href="/sunscreen">Sunscreen</A>.
       </P>
     </>
@@ -301,7 +301,7 @@ function Gaps() {
   return (
     <>
       <P>
-        The same product, the same size, the same barcode, and one store charges far more than another. That is the whole reason K Young exists. Here are today&apos;s widest gaps in your country among products at least two stores have in stock,
+        The same product, the same size, the same barcode, and one store charges far more than another. That is the whole reason KaeYoung exists. Here are today&apos;s widest gaps in your country among products at least two stores have in stock,
         with the cheapest store first.
       </P>
       <PerRegion
@@ -364,13 +364,13 @@ function AvoidFakes() {
       </P>
       <H2>1. Buy from a store, not a stranger</H2>
       <P>
-        Specialist K-beauty stores and the brands&apos; own stores buy their stock from the brand or its distributors. Many brands publish a list of authorised sellers on their website; if a shop is on it, that is a good sign. Every store K Young
+        Specialist K-beauty stores and the brands&apos; own stores buy their stock from the brand or its distributors. Many brands publish a list of authorised sellers on their website; if a shop is on it, that is a good sign. Every store KaeYoung
         compares is a real shop selling new, sealed products; open marketplaces and second-hand sellers are never part of the store comparison. You can see all of them on <A href="/stores">Stores we compare</A>. We do show an eBay and an Amazon row
         above the stores on product pages, labelled as ads and kept out of the &quot;cheapest&quot; ranking; on either site, buy from the brand&apos;s official shop or a seller with a long record.
       </P>
       <H2>2. Be wary of a price far below everyone else&apos;s</H2>
       <P>
-        Real stores price within a fairly narrow band of each other. When one listing is a fraction of what every store charges, ask why. When three or more stores sell a product, K Young drops any price far below the others, so a price that looks too
+        Real stores price within a fairly narrow band of each other. When one listing is a fraction of what every store charges, ask why. When three or more stores sell a product, KaeYoung drops any price far below the others, so a price that looks too
         good to be true doesn&apos;t become the &quot;cheapest&quot;.
       </P>
       <H2>3. Check the box when it arrives</H2>
@@ -380,7 +380,7 @@ function AvoidFakes() {
       </P>
       <H2>4. What a barcode does and doesn&apos;t tell you</H2>
       <P>
-        K Young matches every listing by the barcode printed on the box (Korean products&apos; barcodes start with 880), which is how we know two stores sell the identical product and size. A barcode alone does not prove a product is genuine,
+        KaeYoung matches every listing by the barcode printed on the box (Korean products&apos; barcodes start with 880), which is how we know two stores sell the identical product and size. A barcode alone does not prove a product is genuine,
         because a counterfeit can copy it; that is why we also only list real stores.
       </P>
       <P>

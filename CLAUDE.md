@@ -1,6 +1,6 @@
 # Working in this repo
 
-K Young (kaeyoung.com, tagline "Stay young.") compares Korean skincare and K-beauty prices across real K-beauty stores in the
+KaeYoung (kaeyoung.com, tagline "Stay young.") compares Korean skincare and K-beauty prices across real K-beauty stores in the
 US, UK, Canada, Australia, New Zealand and Europe. A sister site of RiftCompare (`Specifxx/TCGEmpire`) and FigureCompare,
 built on FigureCompare's static engine, but carrying **no Compare branding** (owner, 2026-10-30). Read `README.md`, then
 `DECISIONS.md`.
@@ -63,7 +63,7 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
   only once its `AFF_*` tracking template is set in Vercel. None is ever counted as a store or "the cheapest";
   commission never decides order. `tests/site.test.ts` pins it.
 - eBay listings come only from `scripts/ebay-import.ts` in GitHub Actions (Browse API by GTIN, new, Buy It Now,
-  never from CN/HK sellers, 60%–300% of the store median). K Young's keyset is the owner's new third one (pending
+  never from CN/HK sellers, 60%–300% of the store median). KaeYoung's keyset is the owner's new third one (pending
   eBay approval, 2026-10-30), shared with CamCompare: 2,500 calls a day each, so `EBAY_DAILY_CAP` defaults to
   2,500 and the pass is a no-op until `EBAY_CLIENT_ID`/`EBAY_CLIENT_SECRET` exist. Never point it at a sister's
   keyset or raise the cap without the owner.

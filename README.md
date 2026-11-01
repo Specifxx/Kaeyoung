@@ -1,4 +1,4 @@
-# K Young
+# KaeYoung
 
 **Stay young.** Compare Korean skincare and K-beauty prices across real K-beauty stores in the US, UK, Canada,
 Australia, New Zealand and Europe. Matched by the barcode on the box, size by size, checked every day.

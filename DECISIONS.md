@@ -424,3 +424,14 @@ reason to come back that search rankings alone don't. `/forum` (docs/forum.md):
   DiscussionForumPosting JSON-LD.
 - **Moderation:** the owner asks Claude; a post is removed by an edit to
   `forum.json` (`removeFromForum` in `src/lib/forum/core.ts`).
+
+## 2026-11-01: the brand is KaeYoung, one word, like the domain
+
+Owner, 2026-11-01: "make the name K Young officially KaeYoung … it needs to be consistent with the domain name."
+Every place the site names itself now says **KaeYoung**: `SITE.name` (titles, `og:site_name`, JSON-LD), the header
+logo and its label, the footer, the share image and the guide share cards, the blog and advice posts (queued ones
+included), the forms and their errors, the review default name ("KaeYoung shopper", applied when ratings are exported,
+so already published reviews pick it up at the next import), and the docs. The tagline stays **"Stay young."**: the
+pair now reads "KaeYoung, stay young", which keeps the original rhyme with the one-word name. The logo mark (a "K") is
+unchanged. Earlier entries keep "K Young" where they record what was said at the time. The forum still reserves
+"k young" as a name, so nobody can post as the old brand.

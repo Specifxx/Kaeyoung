@@ -1,4 +1,4 @@
-// The holiday look (owner, 2026-11-01: "make all of the sites Christmas themed … K Young, maybe we can make it less
+// The holiday look (owner, 2026-11-01: "make all of the sites Christmas themed … KaeYoung, maybe we can make it less
 // gamified, professional Christmas"): from 1 November through Boxing Day, every year, by the VISITOR'S OWN calendar.
 // Decided in the browser before first paint by SEASON_BOOT_SCRIPT, never on the server: every page is a static file built
 // once a day, and the look turns itself off on 27 December with no deploy. globals.css keys everything on

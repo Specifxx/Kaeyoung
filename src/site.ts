@@ -1,9 +1,9 @@
-// K Young's one config file: name, host, regions and product categories.
+// KaeYoung's one config file: name, host, regions and product categories.
 // Store lists live in src/content/stores.ts.
 
 export const SITE = {
   key: "ky",
-  name: "K Young",
+  name: "KaeYoung",
   domain: "kaeyoung.com",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://kaeyoung.com").replace(/\/$/, ""),
   slogan: "Stay young.",
@@ -101,7 +101,7 @@ export const CATEGORIES: Category[] = [
 ];
 
 /**
- * Basics first, for menus that list steps (owner, 2026-11-01: K Young should not put men off). The cleanse,
+ * Basics first, for menus that list steps (owner, 2026-11-01: KaeYoung should not put men off). The cleanse,
  * moisturise, sunscreen core leads; toners sit mid-list; makeup and lip care last. CATEGORIES keeps routine order.
  */
 export const STEP_MENU_ORDER: CatKey[] = ["cleansers", "moisturisers", "sunscreen", "serums", "toners", "body-hair", "masks", "eye-care", "lip-care", "makeup", "other"];
