@@ -88,7 +88,7 @@ export interface Category {
 /** In the order a routine runs; "other" is last and has no hub of its own in the nav. */
 export const CATEGORIES: Category[] = [
   { key: "cleansers", name: "Cleansers", plural: "Korean cleansers", about: "Oil cleansers, cleansing balms and foams: the first and second step of a Korean double cleanse." },
-  { key: "toners", name: "Toners & pads", plural: "Korean toners", about: "Hydrating and exfoliating toners, toner pads and mists, used after cleansing." },
+  { key: "toners", name: "Toners", plural: "Korean toners", about: "Hydrating and exfoliating toners, toner pads and mists, used after cleansing." },
   { key: "serums", name: "Serums & essences", plural: "Korean serums and essences", about: "Serums, essences and ampoules: concentrated treatments for hydration, brightening, acne and repair." },
   { key: "moisturisers", name: "Moisturisers", plural: "Korean moisturisers", about: "Creams, gel creams, lotions and emulsions that seal in the steps before them." },
   { key: "sunscreen", name: "Sunscreen", plural: "Korean sunscreen", about: "Korean sun creams, sticks and sun serums, known for light textures and no white cast." },
@@ -99,5 +99,11 @@ export const CATEGORIES: Category[] = [
   { key: "body-hair", name: "Body & hair", plural: "Korean body and hair care", about: "Body washes, lotions, shampoos, hair treatments and hand creams." },
   { key: "other", name: "More K-beauty", plural: "more Korean beauty", about: "Sets, tools and everything else K-beauty stores sell under one barcode." },
 ];
+
+/**
+ * Basics first, for menus that list steps (owner, 2026-11-01: K Young should not put men off). The cleanse,
+ * moisturise, sunscreen core leads; toners sit mid-list; makeup and lip care last. CATEGORIES keeps routine order.
+ */
+export const STEP_MENU_ORDER: CatKey[] = ["cleansers", "moisturisers", "sunscreen", "serums", "toners", "body-hair", "masks", "eye-care", "lip-care", "makeup", "other"];
 
 export const CAT_BY_KEY = Object.fromEntries(CATEGORIES.map((c) => [c.key, c])) as Record<CatKey, Category>;
