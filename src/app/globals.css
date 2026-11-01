@@ -171,7 +171,7 @@ html:not([data-region]) .rn-US { display: none; }
 
 /* ---------------------------------------------------------------------------
    The holiday look (src/lib/season.ts; 1 November to Boxing Day by the visitor's own date). Owner, 2026-11-01: "less
-   gamified … professional Christmas". So no hats, light strands, trees or candy canes here: a quiet "Holiday Edit" line
+   gamified … professional Christmas". So no Santa hats or light strands here, and the tree, candy cane and stockings are drawn in its own pastels: a quiet "Holiday Edit" line
    above the hero, a slow and sparse snowfall in rose and gold behind it, three gold snowflakes by the hero art, a
    champagne-gold hairline under the header and a warmer wash. All of it is decoration (aria-hidden, no taps) except the
    one link, and nothing moves for prefers-reduced-motion.
@@ -321,7 +321,52 @@ html[data-season="christmas"] .ky-hero.wash {
 @keyframes ky-turn {
   to { transform: rotate(360deg); }
 }
+/* A small tree, a candy cane and two stockings on a gold thread, in the site's own pastels (owner, 2026-11-01: "a
+   little more festive"). Drawn flat like the hero art, never cartoon red-and-green. */
+.ky-deco {
+  position: absolute;
+  background: center / contain no-repeat;
+}
+.ky-tree {
+  background-image: url(/xmas/ky-tree.svg);
+  left: 2%;
+  bottom: -2%;
+  width: clamp(58px, 16%, 86px);
+  aspect-ratio: 80 / 110;
+}
+.ky-cane {
+  background-image: url(/xmas/ky-cane.svg);
+  right: 4%;
+  bottom: 0;
+  width: clamp(24px, 7%, 36px);
+  aspect-ratio: 1 / 2;
+  transform: rotate(14deg);
+}
+.ky-stocking {
+  background-image: url(/xmas/ky-stocking.svg);
+  top: 0;
+  width: clamp(30px, 9%, 44px);
+  aspect-ratio: 60 / 84;
+  transform-origin: 50% -18px;
+  animation: ky-sway 7s ease-in-out infinite alternate;
+}
+.ky-stocking::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 1px;
+  height: 18px;
+  background: rgb(var(--gold) / 0.8);
+}
+.ky-stocking-1 { left: 5%; top: 22px; }
+.ky-stocking-2 { left: 14%; top: 8px; animation-delay: -3s; }
+@keyframes ky-sway {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
+}
 @media (prefers-reduced-motion: reduce) {
+  .ky-stocking,
   .ky-snow::before,
   .ky-snow::after,
   .ky-flakes .ky-flake {

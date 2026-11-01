@@ -41,9 +41,11 @@ test("the layout stamps the season before paint, and the holiday pieces are quie
   const css = readFileSync("src/app/globals.css", "utf8");
   assert.match(css, /\.ky-holiday,\s*\.ky-snow,\s*\.ky-flakes \{\s*display: none;/);
   assert.match(css, /\.ky-snow \{[^}]*pointer-events: none;/);
-  assert.match(css, /prefers-reduced-motion: reduce\) \{\s*\.ky-snow::before/);
+  assert.match(css, /prefers-reduced-motion: reduce\) \{\s*\.ky-stocking,\s*\.ky-snow::before/);
   const home = readFileSync("src/app/page.tsx", "utf8");
   assert.match(home, /<span className="ky-snow" aria-hidden="true" \/>/);
-  // Professional, not gamified (owner): no Santa hats, light strands, trees or candy canes on K Young.
-  assert.doesNotMatch(css + home, /santa-hat|xmas-lights|xmas-tree|candy-cane/);
+  // Professional, not gamified (owner): no Santa hats or light strands, and none of the sister sites' cartoon art; the
+  // tree, cane and stockings (owner, 2026-11-01: "a little more festive") are K Young's own pastel drawings.
+  assert.doesNotMatch(css + home, /santa-hat|xmas-lights|xmas-tree|candy-cane\.svg|xmas-hat/);
+  for (const f of ["ky-tree", "ky-cane", "ky-stocking"]) assert.match(css, new RegExp(`/xmas/${f}\\.svg`), f);
 });

@@ -374,7 +374,7 @@ the next eBay pass searches them first. Same change as FigureCompare.
 
 ## A professional Holiday Edit: 1 November to Boxing Day (2026-11-01)
 
-Owner, 2026-11-01: every Compare site gets a Christmas theme after the Halloween one, each its own take. Owner, 2026-11-01: "less gamified, professional Christmas". So none of the sister sites' Santa hats, lights, trees or candy canes (`tests/season.test.ts` pins their absence): a gold-and-rose hairline under the header, a warmer hero wash, sparse rose and gold snow, three slowly turning gold flakes beside the hero art, and a "The Holiday Edit" pill in Fraunces italic to the gift-set post (from its 6 November release) or deals. Only `public/xmas/snowflake.svg` is used.
+Owner, 2026-11-01: every Compare site gets a Christmas theme after the Halloween one, each its own take. Owner, 2026-11-01: "less gamified, professional Christmas". So none of the sister sites' Santa hats, lights, trees or candy canes (`tests/season.test.ts` pins their absence): a gold-and-rose hairline under the header, a warmer hero wash, sparse rose and gold snow, three slowly turning gold flakes beside the hero art, and a "The Holiday Edit" pill in Fraunces italic to the gift-set post (from its 6 November release) or deals. The same day the owner approved the rest but asked for K Young "a little more festive": a Christmas tree, two stockings on gold threads and a candy cane by the hero art, drawn flat in the site's own pastels (`public/xmas/ky-*.svg`), never the sister sites' cartoon art or a Santa hat.
 
 The season window is fixed in `src/lib/season.ts`: 1 November to 26 December, every year, by the visitor's own
 date, stamped on `<html data-season>` by an inline boot script before first paint. `?season=christmas` previews it out

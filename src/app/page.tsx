@@ -65,6 +65,10 @@ export default function Home() {
               <span className="ky-flake" />
               <span className="ky-flake" />
               <span className="ky-flake" />
+              <span className="ky-deco ky-tree" />
+              <span className="ky-deco ky-cane" />
+              <span className="ky-deco ky-stocking ky-stocking-1" />
+              <span className="ky-deco ky-stocking ky-stocking-2" />
             </span>
           </div>
         </div>
