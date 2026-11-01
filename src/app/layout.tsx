@@ -1,3 +1,4 @@
+import { SEASON_BOOT_SCRIPT } from "@/lib/season";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import "@fontsource-variable/inter";
@@ -45,6 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
+        {/* The holiday look (1 November to Boxing Day): data-season on <html> from the visitor's own date. lib/season.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: SEASON_BOOT_SCRIPT }} />
         {/* Impact (affiliate network) site check, in the exact form Impact gives: a `value` attribute. */}
         <meta {...({ name: "impact-site-verification", value: "59ec5beb-7403-4ebf-8dc5-d42ff5b432ce" } as object)} />
         {/* Pinterest domain claim (owner, 2026-10-30). */}
