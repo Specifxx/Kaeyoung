@@ -6,7 +6,8 @@
       "claude/**": false,
       "ccr-*": false,
       "reviews": false,
-      "reports": false
+      "reports": false,
+      "forum": false
     }
   },
   "ignoreCommand": "bash scripts/vercel-ignore-build.sh"
