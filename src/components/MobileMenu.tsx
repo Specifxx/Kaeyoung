@@ -9,6 +9,7 @@ import { createPortal } from "react-dom";
 import { isActive, type NavGroup } from "@/lib/nav";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { setRegion, useRegion } from "./RegionPicker";
+import { Flag } from "./Flag";
 
 export function MobileMenu({ groups }: { groups: NavGroup[] }) {
   const [open, setOpen] = useState(false);
@@ -112,7 +113,7 @@ export function MobileMenu({ groups }: { groups: NavGroup[] }) {
                         aria-pressed={region === r.code}
                         className={`w-full rounded-lg border px-2 py-1.5 text-left text-sm ${region === r.code ? "border-ink bg-ink text-bg" : "border-line bg-card text-ink hover:border-soft"}`}
                       >
-                        {r.flag} {r.name}
+                        <Flag code={r.code} /> {r.name}
                       </button>
                     </li>
                   ))}

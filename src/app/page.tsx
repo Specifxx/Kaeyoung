@@ -5,7 +5,7 @@ import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newe
 import { popularNow } from "@/lib/ratings";
 import { ago } from "@/lib/format";
 import { SearchBox } from "@/components/SearchBox";
-import { RegionPicker } from "@/components/RegionPicker";
+import { RegionChips } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { Section } from "@/components/Section";
 import { ACTIVE_REGIONS } from "@/lib/regions";
@@ -53,7 +53,8 @@ export default function Home() {
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-soft">
               Every K-beauty store&apos;s price for the same product, side by side. {stores ? `${stores} stores` : "Real stores"}, matched by the barcode on the box and checked every day.
             </p>
-            <div className="mt-7 max-w-xl">
+            <RegionChips className="mt-6" />
+            <div className="mt-4 max-w-xl">
               <SearchBox big />
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-soft">
@@ -61,9 +62,6 @@ export default function Home() {
               <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line"><b className="font-semibold text-ink">{stores}</b> stores</span>
               <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line"><b className="font-semibold text-ink">{ACTIVE_REGIONS.length}</b> countries</span>
               {meta && <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line">Checked {ago(meta.updatedAt)}</span>}
-              <span className="flex items-center gap-2 pl-1">
-                Prices for <RegionPicker />
-              </span>
             </div>
           </div>
           <div className="relative">
