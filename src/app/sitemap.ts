@@ -28,6 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/blog", 0.6),
     ...LIVE_POSTS.map((p) => u(`/blog/${p.slug}`, 0.7)),
     u("/stores", 0.6),
+    u("/widgets", 0.4),
+    u("/price-report", 0.6),
     u("/about", 0.3),
     u("/contact", 0.2),
     ...getProducts().filter(isIndexable).map((f) => u(`/product/${f.slug}`, 0.7)),
