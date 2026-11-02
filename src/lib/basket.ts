@@ -69,3 +69,25 @@ export function writeBasket(slugs: string[]) {
   } catch {}
   window.dispatchEvent(new CustomEvent("ky-basket"));
 }
+
+// A shared basket (owner, 2026-11-02: word of mouth): the products travel in the link, /basket?b=<slug>,<slug>…,
+// nothing is stored and no account exists. Slugs are kept forever (data/state/slugs.json), so a link keeps working.
+export const SHARED_PARAM = "b";
+export function encodeShared(slugs: readonly string[]): string {
+  return slugs.slice(0, 30).map(encodeURIComponent).join(",");
+}
+export function decodeShared(search: string): string[] | null {
+  const v = new URLSearchParams(search).get(SHARED_PARAM);
+  if (v == null) return null;
+  const out = v.split(",").map((s) => s.trim()).filter((s) => /^[a-z0-9][a-z0-9-]{0,150}$/.test(s));
+  return [...new Set(out)].slice(0, 30);
+}
+
+/** One basket row's cheapest in-stock store in the region: its name and price, or null. */
+export function cheapestOf(data: BasketData, row: number): { name: string; price: number } | null {
+  const flat = data.offers[row];
+  if (!flat) return null;
+  let best: { name: string; price: number } | null = null;
+  for (let i = 0; i < flat.length; i += 2) if (!best || flat[i + 1] < best.price) best = { name: data.stores[flat[i]][1], price: flat[i + 1] };
+  return best;
+}

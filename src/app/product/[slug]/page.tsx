@@ -20,6 +20,8 @@ import { reviewsOf, reviewsOpen } from "@/lib/ratings";
 import { SCHEMA_MIN_RATINGS, starsText, type ProductReviews } from "@/lib/reviews";
 import { Stars } from "@/components/reviews/Stars";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { ShareButton } from "@/components/ShareButton";
+import { shareTexts } from "@/lib/share-texts";
 
 // Prerendered at build, one static file per product; a slug the release does
 // not know is a 404, never a render on request.
@@ -143,6 +145,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               </p>
             ))}
           <h1 className="h-display mt-1.5 text-3xl leading-tight sm:text-[2.4rem]">{f.name}</h1>
+          <ShareButton title={f.name} path={`/product/${f.slug}`} texts={shareTexts(f)} className="mt-3" />
           <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
             <span className="chip bg-subtle text-ink">{cat.name}</span>
             {f.size && <span className="chip bg-subtle text-ink">{f.size}</span>}

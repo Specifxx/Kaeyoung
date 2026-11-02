@@ -9,7 +9,8 @@ const BLOCKED_BOTS = [
   "MJ12bot", "DotBot", "PetalBot", "DataForSeoBot", "BLEXBot", "Barkrowler", "serpstatbot", "SeekportBot", "ImagesiftBot", "Timpibot",
 ];
 // No sitemap URL carries a query; the longest rule wins, so these beat "/*?".
-const QUERY_ALLOWS = ["/_next/", "/*opengraph-image", "/icon", "/apple-icon"];
+// A shared link (utm_source=share, lib/share-link.ts) too: X and Reddit fetch its preview and obey robots.txt.
+const QUERY_ALLOWS = ["/_next/", "/*opengraph-image", "/icon", "/apple-icon", "/*utm_source=share"];
 
 export default function robots(): MetadataRoute.Robots {
   return {

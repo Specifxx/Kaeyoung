@@ -10,6 +10,7 @@ import Link from "next/link";
 import { REGIONS, type RegionCode } from "@/site";
 import { PriceRows, type RowsData } from "./PriceRows";
 import { ProductImage } from "./ProductImage";
+import { ShareButton } from "./ShareButton";
 
 interface Head {
   slug: string;
@@ -20,6 +21,8 @@ interface Head {
 interface Data {
   size: string | null;
   rows: Record<RegionCode, RowsData | null>;
+  /** the share message per region (lib/share-texts.ts) */
+  share?: Partial<Record<string, string>>;
 }
 
 const cache = new Map<string, Promise<Data | null>>();
@@ -95,6 +98,7 @@ export function QuickView() {
             {head.brand && <p className="eyebrow truncate">{head.brand}</p>}
             <h2 className="h-display mt-0.5 text-lg leading-snug">{short}</h2>
             {data && data !== "loading" && data.size && <p className="mt-1 text-xs text-soft">{data.size}</p>}
+            {data && data !== "loading" && <ShareButton title={short} path={`/product/${head.slug}`} texts={data.share} className="mt-2" />}
           </div>
           <button ref={closeRef} type="button" onClick={close} aria-label="Close" className="-mr-1 -mt-1 grid h-9 w-9 shrink-0 place-items-center rounded-full text-soft hover:bg-subtle hover:text-ink">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
