@@ -83,6 +83,9 @@ export function Footer({ updated }: { updated?: string | null }) {
           mistake and we fix it.
         </p>
         <p className="mt-1">
+          As an Amazon Associate we earn from qualifying purchases. Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates.
+        </p>
+        <p className="mt-1">
           KaeYoung is an independent price guide, not affiliated with any brand or store. Product names and photos belong to their owners. Nothing here is medical advice.
         </p>
       </div>
