@@ -108,7 +108,7 @@ async function main() {
     check("Store imports", () => judgeStores(meta, STORES.length)),
     check("Catalogue", () => (meta.products > 0 ? { status: "ok", detail: `${meta.products} products` } : { status: "fail", detail: "no products in data/public/products.json" })),
     check("Data size", () =>
-      size < 12e6 ? { status: "ok", detail: `${(size / 1e6).toFixed(1)} MB` } : { status: "warn", detail: `products.json is ${(size / 1e6).toFixed(1)} MB: builds slow down; raise minStoresPerRegion or trim` },
+      size < 12e6 ? { status: "ok", detail: `${(size / 1e6).toFixed(1)} MB` } : { status: "warn", detail: `products.json is ${(size / 1e6).toFixed(1)} MB: builds slow down; trim fields in src/lib/products-file.ts before raising minStoresPerRegion` },
     ),
     check("Ratings and reviews", async () => {
       const f = path.join(DATA, "reviews.json");
