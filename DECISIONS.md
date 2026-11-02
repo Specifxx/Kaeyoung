@@ -479,3 +479,11 @@ of the passive-growth plan (owner, 2026-11-02: no daily Reddit posts).
 compared here") that the daily outreach offers instead of asking for a link (passive-growth plan, owner 2026-11-02).
 No live price iframe like the card sites': that needs a function or a script, and this site is fully static. Each badge
 is one `<a>` with inline CSS (`src/lib/link-badges.ts`, tested), so the link sits on the other site's page.
+
+## 2026-11-02 — Self-updating price report
+
+`/price-report` is one page, kept at one URL, prerendered at each daily build from that day's prices: per region, how
+many stores and products are on sale, the typical gap between the cheapest and dearest store for the same barcode and
+how often it is 10% or more, and the median price of a product per category. It is the citable asset the daily
+outreach offers beauty writers (passive-growth plan, owner 2026-11-02), with a quote line. Pure numbers in
+`src/lib/price-report.ts` (tested).

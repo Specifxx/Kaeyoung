@@ -45,6 +45,7 @@ export function Footer({ updated }: { updated?: string | null }) {
             <li><Link prefetch={false} href="/about" className="text-soft hover:text-ink">About &amp; how matching works</Link></li>
             <li><Link prefetch={false} href="/forum" className="text-soft hover:text-ink">Community (beta)</Link></li>
             <li><Link prefetch={false} href="/basket" className="text-soft hover:text-ink">Compare a basket</Link></li>
+            <li><Link prefetch={false} href="/price-report" className="text-soft hover:text-ink">Monthly K-beauty price report</Link></li>
             <li><Link prefetch={false} href="/widgets" className="text-soft hover:text-ink">Free price links for your site</Link></li>
             <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">How we make money</Link></li>
             <li><Link prefetch={false} href="/privacy" className="text-soft hover:text-ink">Privacy</Link></li>
