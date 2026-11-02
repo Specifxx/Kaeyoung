@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CATEGORIES.flatMap((c) => Array.from({ length: pageCount(c.key) - 1 }, (_, i) => u(`/${c.key}/page/${i + 2}`, 0.4))),
     u("/popular", 0.8),
     u("/deals", 0.8),
+    u("/black-friday", 0.8),
     u("/basket", 0.5),
     u("/new", 0.7),
     u("/brands", 0.8),

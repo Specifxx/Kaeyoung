@@ -37,6 +37,7 @@ export function Footer({ updated }: { updated?: string | null }) {
           <h2 className="eyebrow mb-3">KaeYoung</h2>
           <ul className="space-y-1.5">
             <li><Link prefetch={false} href="/deals" className="text-soft hover:text-ink">K-beauty deals today</Link></li>
+            <li><Link prefetch={false} href="/black-friday" className="text-soft hover:text-ink">Black Friday K-beauty deals</Link></li>
             <li><Link prefetch={false} href="/brands" className="text-soft hover:text-ink">Korean skincare brands</Link></li>
             <li><Link prefetch={false} href="/guides" className="text-soft hover:text-ink">Price guides</Link></li>
             <li><Link prefetch={false} href="/blog" className="text-soft hover:text-ink">Blog</Link></li>
