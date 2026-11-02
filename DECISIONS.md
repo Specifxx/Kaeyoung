@@ -506,3 +506,20 @@ component, `src/components/SaleSeasonPage.tsx`, prerendered at the daily build. 
 cover, never one country. Dates, the year a page is about (it rolls over a week after the event) and the intro are
 pure in `src/lib/sale-seasons.ts` (`tests/sale-seasons.test.ts`); Lunar New Year is a published-date table to 2040
 (6 February 2027). Footer and sitemap. Never a "was" price, a countdown or an invented sale.
+
+## 2026-11-02 — Share buttons and shared baskets
+
+The owner wants word of mouth to be a big growth driver on every site (RiftCompare's DECISIONS has the twelve-site
+entry). Client-side only, no new function:
+
+- **Share button** on product pages and in the quick view: the phone's share sheet, else link and message copied. No
+  pop-up, no reward. The message (the real gap between the cheapest and dearest orderable store in each region,
+  `lib/share-texts.ts`) is written at build into the page and the quick view's static JSON; the button picks the
+  visitor's region from `data-region`. No per-product share image (thousands at build).
+- **Shared baskets**: `/basket?b=<slug>,<slug>…` carries the basket in the link (slugs are kept forever). It opens as
+  "A shared basket", read-only, beside "Save it as my basket"; the visitor's own basket is never overwritten without
+  that tap. Each item now shows its cheapest in-stock store in the region (`cheapestOf`). A shared basket adds a
+  `noindex` robots meta (the page itself stays indexable; canonical `/basket`).
+- **Counting**: every shared link carries `utm_source=share&utm_medium=<product|basket>`; the button sends a Vercel
+  `share` event, `ShareArrival` one `share_visit` per tab, and RiftCompare's weekly growth report counts both.
+  robots.txt allows `/*utm_source=share` because X's and Reddit's preview fetchers obey it.

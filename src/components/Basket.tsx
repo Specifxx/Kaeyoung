@@ -7,7 +7,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { REGION_BY_CODE } from "@/site";
 import { loadIndex, searchRows, type IndexRow } from "@/lib/browse";
-import { compareBasket, readBasket, writeBasket, type BasketData } from "@/lib/basket";
+import { cheapestOf, compareBasket, decodeShared, encodeShared, readBasket, writeBasket, type BasketData } from "@/lib/basket";
+import { ShareButton } from "./ShareButton";
 import { freeLine } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import { useRegion } from "./RegionPicker";
@@ -25,13 +26,25 @@ export function Basket() {
   const fmt = (m: number) => money(m, region);
   const [index, setIndex] = useState<IndexRow[] | null>(null);
   const [data, setData] = useState<BasketData | null>(null);
-  const [slugs, setSlugs] = useState<string[]>([]);
+  const [own, setOwn] = useState<string[]>([]);
+  // A basket someone shared (/basket?b=…, lib/basket.ts): shown as it is, never written over the visitor's own
+  // until they choose "Save as my basket". The page is then kept out of the index (it is someone's own list).
+  const [shared, setShared] = useState<string[] | null>(null);
+  const slugs = shared ?? own;
   const [q, setQ] = useState("");
 
   useEffect(() => {
     loadIndex().then(setIndex);
-    const read = () => setSlugs(readBasket());
+    const read = () => setOwn(readBasket());
     read();
+    const fromLink = decodeShared(location.search);
+    if (fromLink) {
+      setShared(fromLink);
+      const m = document.createElement("meta");
+      m.name = "robots";
+      m.content = "noindex, follow";
+      document.head.appendChild(m);
+    }
     window.addEventListener("ky-basket", read);
     return () => window.removeEventListener("ky-basket", read);
   }, []);
@@ -58,15 +71,36 @@ export function Basket() {
 
   const add = (slug: string) => {
     if (!slugs.includes(slug)) writeBasket([...slugs, slug]);
+    setShared(null);
     setQ("");
   };
-  const remove = (slug: string) => writeBasket(slugs.filter((s) => s !== slug));
+  const remove = (slug: string) => {
+    writeBasket(slugs.filter((s) => s !== slug));
+    setShared(null);
+  };
+  const keepShared = () => {
+    if (shared) writeBasket(shared);
+    setShared(null);
+    history.replaceState(null, "", "/basket");
+  };
+  const best = full[0] ?? null;
+  const shareText = best && best.total != null
+    ? `My K-beauty basket: ${rows.length} products for ${fmt(best.total)} delivered at ${best.name}. Every store compared on KaeYoung:`
+    : `My K-beauty basket: ${slugs.length} products, every store's price on KaeYoung:`;
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
       <section className="min-w-0">
-        <h2 className="h-display mb-3 text-xl">Your basket</h2>
-        <label className="block">
+        <h2 className="h-display mb-3 text-xl">{shared ? "A shared basket" : "Your basket"}</h2>
+        {shared && (
+          <p className="mb-3 rounded-xl border border-line bg-subtle px-4 py-3 text-sm">
+            Someone shared this basket with you.{" "}
+            <button type="button" onClick={keepShared} className="font-semibold text-accent-deep underline">
+              Save it as my basket
+            </button>
+          </p>
+        )}
+        <label className={shared ? "hidden" : "block"}>
           <span className="sr-only">Add a product</span>
           <input
             value={q}
@@ -75,7 +109,7 @@ export function Basket() {
             className="w-full rounded-xl border border-line bg-card px-4 py-2.5 text-[15px] outline-none focus:border-soft"
           />
         </label>
-        {hits.length > 0 && (
+        {!shared && hits.length > 0 && (
           <ul className="mt-2 divide-y divide-line rounded-xl border border-line bg-card text-sm">
             {hits.map((h) => (
               <li key={h[0]}>
@@ -97,19 +131,33 @@ export function Basket() {
                 <Link prefetch={false} href={`/product/${s}`} className="min-w-0 flex-1 truncate font-medium hover:underline">
                   {x ? x[1] : s}
                 </Link>
-                <span className="shrink-0 tabular-nums text-soft">{x && x[4][region] != null ? `from ${fmt(x[4][region]!)}` : `not ${r.phrase}`}</span>
-                <button type="button" onClick={() => remove(s)} className="shrink-0 text-soft hover:text-ink" aria-label={`Remove ${x ? x[1] : s}`}>
-                  ✕
-                </button>
+                <span className="shrink-0 text-right tabular-nums text-soft">
+                  {(() => {
+                    // The cheapest in-stock store for this item in the region, once the prices are in.
+                    const c = data && row != null ? cheapestOf(data, row) : null;
+                    if (c) return <>{fmt(c.price)}<span className="block text-[11px]">at {c.name}</span></>;
+                    return x && x[4][region] != null ? `from ${fmt(x[4][region]!)}` : `not ${r.phrase}`;
+                  })()}
+                </span>
+                {!shared && (
+                  <button type="button" onClick={() => remove(s)} className="shrink-0 text-soft hover:text-ink" aria-label={`Remove ${x ? x[1] : s}`}>
+                    ✕
+                  </button>
+                )}
               </li>
             );
           })}
         </ul>
         {!slugs.length && <p className="mt-4 text-sm text-soft">Empty for now. Search above, or press &quot;Add to basket&quot; on any product page.</p>}
         {slugs.length > 0 && (
-          <button type="button" onClick={() => writeBasket([])} className="mt-3 text-sm text-soft underline hover:text-ink">
-            Empty the basket
-          </button>
+          <div className="mt-3 flex flex-wrap items-center gap-4">
+            <ShareButton title="My K-beauty basket" path={`/basket?b=${encodeShared(slugs)}`} medium="basket" texts={{ [region]: shareText }} />
+            {!shared && (
+              <button type="button" onClick={() => writeBasket([])} className="text-sm text-soft underline hover:text-ink">
+                Empty the basket
+              </button>
+            )}
+          </div>
         )}
       </section>
 
