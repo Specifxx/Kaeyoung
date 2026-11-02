@@ -576,3 +576,23 @@ every three-hourly price commit, because neither had the gate.
   (Vercel: when a branch matches several rules, any `true` wins). No preview is built for any branch or pull
   request, `[preview]` included; the older per-branch `false` entries stay for orphan commits' own copies.
 - So "push to prod" means land on the production branch; the release reaches visitors within a day.
+
+## 2026-11-02 — products.json is written compact
+
+**Why.** The ops monitor warned that `data/public/products.json` was 15.5 MB (10,969 products, 91,034 offers).
+Three quarters of it was the offers, and most of each offer repeated what the store list already knows: the
+store's own `https://<base>/products/` prefix, the `"s"/"p"/"st"/"u"` keys and `"in"`. Every image repeated
+`https://cdn.shopify.com/s/files/`. Raising `minStoresPerRegion` would have cut real products the owner wants.
+
+**What.**
+- `src/lib/products-file.ts` is the only code that knows the file's shape. Version 2 (`"v": 2`) keeps each
+  product an object but stores an offer as `[store, cents, url]` (`[…, 0]` when out of stock), the URL as the part
+  after `<store base>/products/`, and the image as the part after the Shopify CDN prefix. Lossless: the real file
+  packs and unpacks to the same `Product[]` (checked on the 2026-11-02 file), and a URL that does not start with
+  its store's base is kept whole.
+- `scripts/import.ts` writes it with `packProducts`; `src/lib/data.ts` and the import read it with
+  `unpackProducts`, which still reads the old shape (no `v`), so the next import converts the committed file
+  itself; nobody edits `data/` by hand. The test fixture stays in the old shape and so covers that path.
+- The same data is 10.2 MB (−34%), under the monitor's 12 MB line with room for more stores. If it grows past it
+  again, the next steps are splitting the file per region or dropping out-of-stock offers older than a week,
+  before any store-count rule.

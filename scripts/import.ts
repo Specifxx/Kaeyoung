@@ -9,7 +9,8 @@ import { REGION_BY_CODE } from "@/site";
 import { dropMirrors, mergeListings, type MergeState } from "@/lib/merge";
 import { recordHistory } from "@/lib/history";
 import { readShopify, shopifyOwnCurrency, PRODUCT_LOOKUPS_PER_RUN, type BarcodeCache, type ReadResult } from "@/lib/import/shopify";
-import type { History, Listing, Meta, Product, StoreRun } from "@/lib/types";
+import { packProducts, unpackProducts } from "@/lib/products-file";
+import type { History, Listing, Meta, StoreRun } from "@/lib/types";
 
 const DATA = path.join(process.cwd(), "data");
 const read = <T>(p: string, fallback: T): T => {
@@ -39,7 +40,7 @@ async function main() {
   const cache = read<BarcodeCache>("state/barcodes.json", {});
   const state: MergeState = { slugs: read("state/slugs.json", {}), first: read("state/first-seen.json", {}) };
   const prevMeta = read<Meta | null>("public/meta.json", null);
-  const prevProducts = read<{ products: Product[] }>("public/products.json", { products: [] }).products;
+  const prevProducts = unpackProducts(read<Parameters<typeof unpackProducts>[0]>("public/products.json", null));
 
   const runs: Record<string, StoreRun> = {};
   const listings: Listing[] = [];
@@ -90,7 +91,7 @@ async function main() {
   const history = recordHistory(read<History>("public/history.json", {}), products, today);
 
   const meta: Meta = { updatedAt: new Date().toISOString(), products: products.length, stores: runs, ebay: prevMeta?.ebay };
-  write("public/products.json", { products });
+  write("public/products.json", packProducts(products));
   write("public/history.json", history);
   write("public/meta.json", meta, true);
   write("state/barcodes.json", cache);
