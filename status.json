@@ -1,0 +1,53 @@
+{
+ "v": 1,
+ "site": "kaeyoung.com",
+ "at": "2026-11-02T03:16:13.118Z",
+ "overall": "warn",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "HTTP 200"
+  },
+  {
+   "name": "Search index",
+   "status": "ok",
+   "detail": "10969 products live"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "13.7h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "ok",
+   "detail": "138 stores read"
+  },
+  {
+   "name": "Catalogue",
+   "status": "ok",
+   "detail": "10969 products"
+  },
+  {
+   "name": "Data size",
+   "status": "warn",
+   "detail": "products.json is 15.5 MB: builds slow down; raise minStoresPerRegion or trim"
+  },
+  {
+   "name": "Ratings and reviews",
+   "status": "ok",
+   "detail": "0 products rated"
+  },
+  {
+   "name": "Delivery quotes",
+   "status": "ok",
+   "detail": "111 of 138 stores quoted"
+  },
+  {
+   "name": "eBay listings",
+   "status": "ok",
+   "detail": "2500/2500 calls on 2026-11-01"
+  }
+ ]
+}
