@@ -464,3 +464,11 @@ day, for every site: "prioritise the US".
   no local listing seldom gains one within the week, and those calls are better
   spent on products never searched. Among due pairs of a tier, never-searched
   go first, then the US. A full first pass takes about twelve days.
+
+## 2026-11-02 — Black Friday page
+
+`/black-friday` shows today's deals per region (`dealsIn`, the same tiles as `/deals`) under a Black Friday heading, at
+one URL kept every year so links and rankings carry over. It has to be indexed weeks before the day (27 November 2026),
+so it ships now; the footer and sitemap link it all year. Prerendered at the daily build like every page. Never a "was"
+price of our own, a countdown, "ends soon" or an invented sale. Dates are pure (`src/lib/black-friday.ts`, tested). Part
+of the passive-growth plan (owner, 2026-11-02: no daily Reddit posts).
