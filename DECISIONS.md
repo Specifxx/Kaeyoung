@@ -472,3 +472,10 @@ one URL kept every year so links and rankings carry over. It has to be indexed w
 so it ships now; the footer and sitemap link it all year. Prerendered at the daily build like every page. Never a "was"
 price of our own, a countdown, "ends soon" or an invented sale. Dates are pure (`src/lib/black-friday.ts`, tested). Part
 of the passive-growth plan (owner, 2026-11-02: no daily Reddit posts).
+
+## 2026-11-02 — Free link badges
+
+`/widgets` gives blogs, routine guides and stores plain-HTML link badges (a product, a category, "our prices are
+compared here") that the daily outreach offers instead of asking for a link (passive-growth plan, owner 2026-11-02).
+No live price iframe like the card sites': that needs a function or a script, and this site is fully static. Each badge
+is one `<a>` with inline CSS (`src/lib/link-badges.ts`, tested), so the link sits on the other site's page.
