@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/price-report", 0.6),
     u("/about", 0.3),
     u("/contact", 0.2),
+    u("/how-we-pick-stores", 0.3),
     ...getProducts().filter(isIndexable).map((f) => u(`/product/${f.slug}`, 0.7)),
   ];
 }
