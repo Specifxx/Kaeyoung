@@ -12,17 +12,18 @@ import { STORE_BY_ID } from "@/content/stores";
  *  sites apart in the reports. */
 export const EBAY_CAMPAIGN_ID = "5339155912";
 
-/** Amazon Associates: each marketplace is its own program and tag. The
- *  family's US (riftcompare-20) and Australian (compareempire-22) tags are the
- *  defaults; AMAZON_TAG_<REGION> sets KaeYoung's own or another marketplace's.
- *  A region without a tag shows no Amazon row (a US tag earns nothing on
- *  amazon.com.au). */
+/** Amazon Associates: each marketplace is its own program and tag, so each has
+ *  the owner's own, hard-coded (owner, 2026-11-02: no Vercel variable decides a
+ *  tag). A region without an Associates programme shows no Amazon row. */
 export function amazonTag(region: RegionCode): string | null {
-  const own = process.env[`AMAZON_TAG_${region}`];
-  if (own) return own;
-  if (region === "US") return "riftcompare-20";
-  if (region === "AU") return "compareempire-22";
-  return null;
+  const tags: Partial<Record<RegionCode, string>> = {
+    US: "riftcompare-20",
+    AU: "compareempire-22",
+    UK: "compareempi03-21",
+    CA: "compareempire-20",
+    EU: "compareempire-21",
+  };
+  return tags[region] ?? null;
 }
 
 const EBAY_ROTATION: Record<string, string> = {

@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -31,7 +32,10 @@ test("affiliate tags name the site, region, placement and product", () => {
   assert.match(ebaySearchUrl("COSRX Snail Essence", "NZ", "t")!, /ebay\.com\.au.*campid=/, "NZ shops on eBay Australia");
   assert.match(amazonSearchUrl("x", "US", "ky-us-y")!, /amazon\.com\/s\?.*tag=riftcompare-20.*ascsubtag=ky-us-y/);
   assert.match(amazonSearchUrl("x", "AU", "t")!, /amazon\.com\.au\/s\?.*tag=compareempire-22/, "the AU tag on amazon.com.au, never the US one");
-  assert.equal(amazonSearchUrl("x", "UK", "t"), null, "no UK tag yet, no Amazon UK row");
+  assert.match(amazonSearchUrl("x", "UK", "t")!, /amazon\.co\.uk\/.*tag=compareempi03-21/, "the owner's UK account");
+  assert.match(amazonSearchUrl("x", "EU", "t")!, /amazon\.de\/.*tag=compareempire-21/);
+  assert.equal(amazonSearchUrl("x", "NZ", "t"), null, "no Amazon NZ");
+  assert.doesNotMatch(readFileSync(new URL("../src/lib/affiliate.ts", import.meta.url), "utf8"), /AMAZON_TAG_|AMAZON_ASSOCIATE_TAG/, "tags are hard-coded");
   assert.match(storeUrl("nope", "https://shop.example/p?a=1"), /utm_source=kaeyoung\.com&utm_medium=referral/);
 });
 
