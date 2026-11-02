@@ -7,7 +7,8 @@
       "ccr-*": false,
       "reviews": false,
       "reports": false,
-      "forum": false
+      "forum": false,
+      "ops-status": false
     }
   },
   "ignoreCommand": "bash scripts/vercel-ignore-build.sh"
