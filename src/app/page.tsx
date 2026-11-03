@@ -13,6 +13,7 @@ import { CAT_TINT, CatIcon, HeroArt } from "@/components/Art";
 import { POST_BY_SLUG } from "@/content/blog";
 import { GUIDES } from "@/lib/guides";
 import { JsonLd, faqLd, siteLd } from "@/lib/seo";
+import { SiteReviews } from "@/components/site-reviews/SiteReviews";
 
 export const metadata: Metadata = {
   // 60 characters, keyword first, brand last (SEO audit, 2026-11-03).
@@ -191,6 +192,9 @@ export default function Home() {
             ))}
           </ul>
         </section>
+
+        {/* The site's own star score and approved reviews (owner, 2026-11-03), loaded in the browser; nothing until there is a rating. */}
+        <SiteReviews className="mt-16" />
 
         <section className="mt-16 max-w-3xl">
           <h2 className="h-display mb-4 text-2xl sm:text-3xl">Questions</h2>

@@ -5,12 +5,14 @@ import { ShareArrival } from "@/components/ShareArrival";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/fraunces";
 import "./globals.css";
+import "@/components/site-reviews/site-reviews.css";
 import { SITE } from "@/site";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SideNav } from "@/components/SideNav";
 import { QuickView } from "@/components/QuickView";
+import { RateCard } from "@/components/site-reviews/RateCard";
 import { navGroups } from "@/lib/nav";
 import { catCounts, getBrands, getMeta } from "@/lib/data";
 import { niceDate } from "@/lib/format";
@@ -67,6 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <Footer updated={meta ? niceDate(meta.updatedAt) : null} />
         <QuickView />
+        {/* Rate us (owner, 2026-11-03): the corner card, asking only after real use; the ratings are kept by the shared review service. */}
+        <RateCard />
         <Analytics />
         <ShareArrival />
       </body>

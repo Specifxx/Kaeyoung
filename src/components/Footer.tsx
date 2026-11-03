@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CATEGORIES, SITE } from "@/site";
 import { POSTS, isLive } from "@/content/blog";
 import { LogoMark } from "./Logo";
+import { RateUsLink } from "./site-reviews/SiteReviews";
 
 export function Footer({ updated }: { updated?: string | null }) {
   return (
@@ -55,6 +56,7 @@ export function Footer({ updated }: { updated?: string | null }) {
             <li><Link prefetch={false} href="/privacy" className="text-soft hover:text-ink">Privacy</Link></li>
             <li><Link prefetch={false} href="/terms" className="text-soft hover:text-ink">Terms</Link></li>
             <li><Link prefetch={false} href="/contact" className="text-soft hover:text-ink">Contact us</Link></li>
+            <li><RateUsLink className="text-soft hover:text-ink">Rate KaeYoung</RateUsLink></li>
             <li><Link prefetch={false} href="/stores#suggest" className="text-soft hover:text-ink">Suggest a store</Link></li>
             <li><Link prefetch={false} href="/how-we-pick-stores" className="text-soft hover:text-ink">How we pick stores</Link></li>
           </ul>
