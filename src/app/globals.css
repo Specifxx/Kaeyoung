@@ -377,3 +377,14 @@ html[data-season="christmas"] .ky-hero.wash {
   --fm-radius: 16px;
   --fm-head: "Fraunces Variable", Georgia, serif;
 }
+
+/* Rate us card and "What people say" (components/site-reviews): drawn in the site's own theme, light and night. */
+:root {
+  --srv-bg: rgb(var(--card));
+  --srv-fg: rgb(var(--ink));
+  --srv-muted: rgb(var(--soft));
+  --srv-line: rgb(var(--line));
+  --srv-accent: rgb(var(--accent));
+  --srv-accent-fg: rgb(var(--card));
+  --srv-field: rgb(var(--bg));
+}

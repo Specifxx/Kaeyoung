@@ -637,3 +637,15 @@ every price guide. Product, brand, step hub, guide and blog pages show a breadcr
 (`<Crumbs>`, `src/lib/seo.tsx`). Product/AggregateOffer already existed on product pages. hreflang is deliberately absent:
 every page is ONE URL for all regions (CSS shows the visitor's), so there are no alternates to declare. `/llms.txt` is a
 static route. Title: "Korean Skincare Price Comparison: K-Beauty Stores | KaeYoung" (60). `tests/seo.test.ts` pins it.
+
+## Rate KaeYoung and "What people say", run by the shared review service (2026-11-03)
+
+The owner wanted RiftCompare's rating pop-up on every site, each site's reviews public, and every written review approved in
+RiftCompare's admin; star ratings count at once. These are ratings of KaeYoung itself, separate from the product reviews on the
+`reviews` branch. KaeYoung stores nothing and gains no function: the corner card (`components/site-reviews/RateCard.tsx`, in the
+root layout) posts cross-origin to `https://riftcompare.com/api/site-reviews`, and the homepage's "What people say" reads the
+score and approved reviews from `https://riftcompare.com/api/site-reviews/kaeyoung` in the browser (public JSON, CDN six hours).
+Nothing on the page names a sister site. The card is a small corner card, never on arrival: after 4 pages and 3 minutes or on
+return from a store tab, at most three times 14 days apart, always closable; "Rate KaeYoung" in the footer opens it. While no
+ad script is on the page it says "We don't run banner ads, so if this helped, please leave us a review." No email asked for,
+never review markup.
