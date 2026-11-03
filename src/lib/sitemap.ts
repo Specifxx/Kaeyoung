@@ -74,6 +74,7 @@ function pageUrls(): SitemapUrl[] {
     u("/widgets", 0.4),
     u("/price-report", 0.6),
     u("/about", 0.3),
+    u("/creators", 0.4),
     u("/contact", 0.2),
     u("/how-we-pick-stores", 0.3),
   ];

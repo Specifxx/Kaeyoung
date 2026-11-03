@@ -5,6 +5,7 @@ import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newe
 import { popularNow } from "@/lib/ratings";
 import { ago } from "@/lib/format";
 import { SearchBox } from "@/components/SearchBox";
+import { CreatorsCornerBadge } from "@/components/creators/CreatorsCornerBadge";
 import { RegionChips } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { Section } from "@/components/Section";
@@ -61,8 +62,10 @@ export default function Home() {
       <section className="ky-hero wash relative overflow-hidden border-b border-line">
         {/* The holiday look (1 November to Boxing Day, src/lib/season.ts): quiet snow in rose and gold. Hidden otherwise. */}
         <span className="ky-snow" aria-hidden="true" />
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-10 pt-10 md:grid-cols-[1.15fr_1fr] md:pb-12 md:pt-14">
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-10 pt-10 md:grid-cols-[1.15fr_1fr] md:pb-12 md:pt-14">
           <div className="min-w-0">
+            {/* The creators hub, above the fold (owner, 2026-11-03): top-right corner of the hero from sm, a pill above the holiday line on a phone. */}
+            <CreatorsCornerBadge />
             <p className="ky-holiday mb-4">
               <Link prefetch={false} href={giftHref} className="ky-holiday-pill">
                 <span className="ky-flake" aria-hidden="true" />
