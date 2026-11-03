@@ -596,3 +596,18 @@ store's own `https://<base>/products/` prefix, the `"s"/"p"/"st"/"u"` keys and `
 - The same data is 10.2 MB (−34%), under the monitor's 12 MB line with room for more stores. If it grows past it
   again, the next steps are splitting the file per region or dropping out-of-stock offers older than a week,
   before any store-count rule.
+
+## 2026-11-03: The sitemap starts with widely stocked products
+
+**Why.** The owner asked to drop products nobody wants and focus on what drives demand. KaeYoung has been in
+Search Console for three days (1 click, 186 impressions, 2 product pages seen), so there is no demand data yet,
+and the 10,996 products cost little: the project's Vercel bill was A$2.95 in the week to 2 November, and pages are
+static files. What does hurt a new domain is a large sitemap of thin pages (the family's lesson, `index-tiers.ts`):
+Google crawls a little of it at random.
+
+**What.** The sitemap lists products stocked widely, `inSitemap` in `src/lib/index-tiers.ts`: 3+ stores in one
+region, or 2+ in two regions (6,459 of 10,996 on 2026-11-03). Stores stock what sells, so that is the demand proxy
+until Search Console has some. The other 4,537 (two stores, one region) keep their pages, stay indexable and stay
+linked from their category and brand pages; nothing is deleted, nothing is noindexed that wasn't. The same tiered
+start as Compare Empire's `SITEMAP_TIER` (2026-10-25). Widen it to every indexable product once Search Console
+shows most of this tier indexed; judge with real clicks around 1 December.

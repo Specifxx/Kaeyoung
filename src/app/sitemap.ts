@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
 import { CATEGORIES, SITE } from "@/site";
 import { getBrands, getMeta, getProducts } from "@/lib/data";
-import { isIndexable } from "@/lib/index-tiers";
+import { inSitemap } from "@/lib/index-tiers";
 import { GUIDES } from "@/lib/guides";
 import { LIVE_POSTS } from "@/content/blog";
 import { pageCount } from "@/components/CatHub";
 
 // Only pages worth landing on (src/lib/index-tiers.ts): hubs, brands, guides,
-// and products someone can order with 2+ stores compared. Sold-out products
-// stay reachable but noindex, and out of here.
+// and products someone can order with 2+ stores compared, stocked widely
+// (inSitemap). Sold-out products stay reachable but noindex, and out of here.
 export default function sitemap(): MetadataRoute.Sitemap {
   const updated = getMeta()?.updatedAt ?? new Date().toISOString();
   const u = (p: string, priority: number): MetadataRoute.Sitemap[number] => ({ url: `${SITE.url}${p}`, lastModified: updated, priority });
@@ -34,6 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/about", 0.3),
     u("/contact", 0.2),
     u("/how-we-pick-stores", 0.3),
-    ...getProducts().filter(isIndexable).map((f) => u(`/product/${f.slug}`, 0.7)),
+    ...getProducts().filter(inSitemap).map((f) => u(`/product/${f.slug}`, 0.7)),
   ];
 }
