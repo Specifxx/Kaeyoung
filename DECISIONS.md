@@ -611,3 +611,13 @@ until Search Console has some. The other 4,537 (two stores, one region) keep the
 linked from their category and brand pages; nothing is deleted, nothing is noindexed that wasn't. The same tiered
 start as Compare Empire's `SITEMAP_TIER` (2026-10-25). Widen it to every indexable product once Search Console
 shows most of this tier indexed; judge with real clicks around 1 December.
+
+## 2026-11-03 SEO audit: sitemap index, site schema, breadcrumbs, llms.txt
+
+Bill's network SEO audit found no JSON-LD on the homepage, a 10,405-URL single sitemap and a 66-character title.
+`/sitemap.xml` is now a static index of `/sitemaps/pages.xml` and `/sitemaps/products-N.xml` (5,000 products each, widely
+stocked first, `src/lib/sitemap.ts`). The homepage carries Organization + WebSite + a printed FAQ with FAQPage, and links
+every price guide. Product, brand, step hub, guide and blog pages show a breadcrumb trail with a matching BreadcrumbList
+(`<Crumbs>`, `src/lib/seo.tsx`). Product/AggregateOffer already existed on product pages. hreflang is deliberately absent:
+every page is ONE URL for all regions (CSS shows the visitor's), so there are no alternates to declare. `/llms.txt` is a
+static route. Title: "Korean Skincare Price Comparison: K-Beauty Stores | KaeYoung" (60). `tests/seo.test.ts` pins it.

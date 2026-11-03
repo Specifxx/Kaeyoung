@@ -6,8 +6,10 @@ import { TileGrid } from "./ProductTile";
 import { PageHead, Pager } from "./Section";
 import { CatIcon } from "./Art";
 import { Browse } from "./Browse";
+import { Crumbs } from "@/lib/seo";
+import { HUB_PER_PAGE } from "@/lib/sitemap";
 
-export const PER_PAGE = 48;
+export const PER_PAGE = HUB_PER_PAGE;
 
 /** A category's products, most popular first (ties by name), 48 a page. */
 export function catProducts(cat: CatKey) {
@@ -29,6 +31,7 @@ export function CatHub({ cat, page }: { cat: CatKey; page: number }) {
   const href = (p: number) => (p === 1 ? `/${cat}` : `/${cat}/page/${p}`);
   return (
     <div className="mx-auto max-w-6xl px-4">
+      <Crumbs items={[{ name: c.plural.replace(/^./, (x) => x.toUpperCase()), path: href(1) }]} />
       <PageHead
         eyebrow="Shop by step"
         art={<CatIcon cat={cat} size={150} />}

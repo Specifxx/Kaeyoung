@@ -187,7 +187,7 @@ export function SearchBox({ big = false }: { big?: boolean }) {
                   <li key={r[0]}>
                     <a href={href} onMouseEnter={() => setActive(idx(href))} className={rowCls(href)}>
                       <span className="h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-line bg-white">
-                        {img && <img src={img} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-contain text-transparent" />}
+                        {img && <img src={img} alt={r[1]} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-contain text-transparent" />}
                       </span>
                       <span className="min-w-0 flex-1">
                         {r[5] && <span className="eyebrow block truncate text-[10px]">{r[5]}</span>}

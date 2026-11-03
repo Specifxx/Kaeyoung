@@ -6,6 +6,7 @@ import { brandKo, getBrand, getBrands, storeCount } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
 import { PageHead } from "@/components/Section";
 import { Browse } from "@/components/Browse";
+import { JsonLd, breadcrumbLd } from "@/lib/seo";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -30,6 +31,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
   const cats = CATEGORIES.filter((c) => list.some((f) => f.cat === c.key));
   return (
     <div className="mx-auto max-w-6xl px-4">
+      <JsonLd data={breadcrumbLd([{ name: "Brands", path: "/brands" }, { name: b.name, path: `/brands/${b.slug}` }])} />
       <nav aria-label="Breadcrumb" className="mt-5 text-sm text-soft">
         <Link prefetch={false} href="/brands" className="hover:text-ink">Brands</Link>
         <span className="mx-1.5">/</span>

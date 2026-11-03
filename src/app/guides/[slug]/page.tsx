@@ -11,6 +11,7 @@ import { storeUrl } from "@/lib/affiliate";
 import { PageHead } from "@/components/Section";
 import { PriceList } from "@/components/PriceList";
 import type { Product } from "@/lib/types";
+import { Crumbs } from "@/lib/seo";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => GUIDES.map((g) => ({ slug: g.slug }));
@@ -38,6 +39,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
     const list = productsOfCat(g.cat);
     return (
       <div className="mx-auto max-w-5xl px-4">
+        <Crumbs items={[{ name: "Guides", path: "/guides" }, { name: g.title, path: `/guides/${g.slug}` }]} />
         <PageHead
           eyebrow="Price guide"
           title={g.title}
@@ -71,6 +73,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
   const gaps = shareRows(g.region, getProducts(), 5, g.region === "NZ" ? 2 : 3).flatMap((x) => getProduct(x.slug) ?? []);
   return (
     <div className="mx-auto max-w-5xl px-4">
+      <Crumbs items={[{ name: "Guides", path: "/guides" }, { name: g.title, path: `/guides/${g.slug}` }]} />
       <PageHead
         eyebrow="Price guide"
         title={g.title}

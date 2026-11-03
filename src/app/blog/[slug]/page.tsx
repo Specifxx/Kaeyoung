@@ -12,6 +12,7 @@ import { PageHead } from "@/components/Section";
 import { PriceList } from "@/components/PriceList";
 import { CatIcon } from "@/components/Art";
 import type { Product } from "@/lib/types";
+import { Crumbs } from "@/lib/seo";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => LIVE_POSTS.map((p) => ({ slug: p.slug }));
@@ -36,6 +37,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const sections = p.sections;
   return (
     <article className="mx-auto max-w-4xl px-4">
+      <Crumbs items={[{ name: "Blog", path: "/blog" }, { name: p.title, path: `/blog/${p.slug}` }]} />
       <PageHead
         eyebrow={`Blog · Published ${niceDate(p.date)}${p.updated && p.updated > p.date ? ` · Updated ${niceDate(p.updated)}` : ""}`}
         title={p.title}
