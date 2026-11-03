@@ -11,6 +11,7 @@ import { REGIONS, type RegionCode } from "@/site";
 import { PriceRows, type RowsData } from "./PriceRows";
 import { ProductImage } from "./ProductImage";
 import { ShareButton } from "./ShareButton";
+import { closeQuickViewUrl, onQuickViewHistory, openQuickViewUrl } from "@/lib/quick-view-url";
 
 interface Head {
   slug: string;
@@ -42,7 +43,12 @@ export function QuickView() {
   const [head, setHead] = useState<Head | null>(null);
   const [data, setData] = useState<Data | null | "loading">(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const close = useCallback(() => setHead(null), []);
+  // Closing steps back to the list's own URL (lib/quick-view-url.ts); the details link only hides it, and lands on the URL already shown.
+  const close = useCallback(() => {
+    setHead(null);
+    closeQuickViewUrl();
+  }, []);
+  const hide = useCallback(() => setHead(null), []);
 
   useEffect(() => {
     // Capture phase on the document: runs before Next's Link, which then sees
@@ -52,11 +58,19 @@ export function QuickView() {
       const a = (e.target as Element | null)?.closest?.("a[data-qv]") as HTMLAnchorElement | null;
       if (!a) return;
       e.preventDefault();
-      const slug = a.dataset.qv!;
-      setHead({ slug, name: a.dataset.qvName || "", brand: a.dataset.qvBrand || "", img: a.dataset.qvImg || null });
-      setData("loading");
-      load(slug).then((d) => setData((cur) => (cur === "loading" ? d : cur)));
+      const h: Head = { slug: a.dataset.qv!, name: a.dataset.qvName || "", brand: a.dataset.qvBrand || "", img: a.dataset.qvImg || null };
+      show(h);
+      // The product's own link in the address bar while it is open (owner, 2026-11-03), so it can be copied, shared or bookmarked.
+      openQuickViewUrl(`/product/${h.slug}`, h);
     }
+    function show(h: Head | null) {
+      setHead(h);
+      if (!h) return;
+      setData("loading");
+      load(h.slug).then((d) => setData((cur) => (cur === "loading" ? d : cur)));
+    }
+    // Back closes the pop-up, Forward reopens it.
+    const offHistory = onQuickViewHistory<Head>(show);
     // Warm the file when a pointer rests on a tile, so most opens are instant.
     function onOver(e: PointerEvent) {
       const a = (e.target as Element | null)?.closest?.("a[data-qv]") as HTMLAnchorElement | null;
@@ -67,6 +81,7 @@ export function QuickView() {
     return () => {
       document.removeEventListener("click", onClick, true);
       document.removeEventListener("pointerover", onOver);
+      offHistory();
     };
   }, []);
 
@@ -124,7 +139,7 @@ export function QuickView() {
           )}
         </div>
         <div className="border-t border-line p-4 sm:px-5">
-          <Link prefetch={false} href={href} onClick={close} className="btn-pop btn-buy flex w-full justify-center px-5 py-2.5 text-[15px]">
+          <Link prefetch={false} href={href} onClick={hide} className="btn-pop btn-buy flex w-full justify-center px-5 py-2.5 text-[15px]">
             See price history and details <span aria-hidden>→</span>
           </Link>
         </div>
