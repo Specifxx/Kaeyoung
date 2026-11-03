@@ -627,3 +627,13 @@ push through and the page under the pop-up never re-renders.
 
 **SEO.** No new URL exists: the link is the canonical product page, which a reload, a share or a crawler gets in full
 server HTML. Never a `?view=` or `#` variant (duplicate URLs, extra CDN copies). Pinned by `tests/quick-view-url.test.ts`.
+
+## 2026-11-03 SEO audit: sitemap index, site schema, breadcrumbs, llms.txt
+
+Bill's network SEO audit found no JSON-LD on the homepage, a 10,405-URL single sitemap and a 66-character title.
+`/sitemap.xml` is now a static index of `/sitemaps/pages.xml` and `/sitemaps/products-N.xml` (5,000 products each, widely
+stocked first, `src/lib/sitemap.ts`). The homepage carries Organization + WebSite + a printed FAQ with FAQPage, and links
+every price guide. Product, brand, step hub, guide and blog pages show a breadcrumb trail with a matching BreadcrumbList
+(`<Crumbs>`, `src/lib/seo.tsx`). Product/AggregateOffer already existed on product pages. hreflang is deliberately absent:
+every page is ONE URL for all regions (CSS shows the visitor's), so there are no alternates to declare. `/llms.txt` is a
+static route. Title: "Korean Skincare Price Comparison: K-Beauty Stores | KaeYoung" (60). `tests/seo.test.ts` pins it.

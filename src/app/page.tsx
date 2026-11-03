@@ -11,9 +11,13 @@ import { Section } from "@/components/Section";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { CAT_TINT, CatIcon, HeroArt } from "@/components/Art";
 import { POST_BY_SLUG } from "@/content/blog";
+import { GUIDES } from "@/lib/guides";
+import { JsonLd, faqLd, siteLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: { absolute: `${SITE.name}: compare Korean skincare prices across K-beauty stores` },
+  // 60 characters, keyword first, brand last (SEO audit, 2026-11-03).
+  title: { absolute: `Korean Skincare Price Comparison: K-Beauty Stores | ${SITE.name}` },
+  description: SITE.description,
   alternates: { canonical: "/" },
 };
 
@@ -23,6 +27,25 @@ export const metadata: Metadata = {
  * nav entry and guides stay.
  */
 const HOME_STEPS: CatKey[] = ["cleansers", "moisturisers", "sunscreen", "serums", "body-hair", "masks", "eye-care", "lip-care", "makeup", "other"];
+
+const FAQ: [string, string][] = [
+  [
+    "Where is the cheapest place to buy Korean skincare?",
+    "It depends on the product and where you live: a different K-beauty store is cheapest for different products, and prices move every week. We compare every store's own price for the same barcode, size by size, every day, and show the cheapest in-stock store first for your country.",
+  ],
+  [
+    "Are the products genuine?",
+    "We only list specialist K-beauty stores selling new, sealed product, never open marketplaces where fakes hide. A listing is matched only by the Korean barcode on the box, so testers, samples, short-dated and damaged stock are left out.",
+  ],
+  [
+    "Do the prices include shipping?",
+    "No. They are each store's listed item price in its own currency, never converted. Shipping and free-delivery thresholds differ by store, so check the checkout before you buy.",
+  ],
+  [
+    "Which countries do you compare?",
+    "The United States, the United Kingdom, Canada, Australia, New Zealand and Europe. Each country compares only the stores that sell there in its own currency.",
+  ],
+];
 
 export default function Home() {
   const meta = getMeta();
@@ -155,6 +178,33 @@ export default function Home() {
             ))}
           </ol>
         </section>
+
+        <section className="mt-16">
+          <h2 className="h-display mb-4 text-2xl sm:text-3xl">Price guides</h2>
+          <ul className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+            {GUIDES.map((g) => (
+              <li key={g.slug}>
+                <Link prefetch={false} href={`/guides/${g.slug}`} className="font-medium text-ink underline-offset-4 hover:underline">
+                  {g.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="mt-16 max-w-3xl">
+          <h2 className="h-display mb-4 text-2xl sm:text-3xl">Questions</h2>
+          <div className="space-y-5">
+            {FAQ.map(([q, a]) => (
+              <div key={q}>
+                <h3 className="font-semibold">{q}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-soft">{a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+        <JsonLd data={siteLd()} />
+        <JsonLd data={faqLd(FAQ)} />
       </div>
     </>
   );

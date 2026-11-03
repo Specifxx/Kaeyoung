@@ -22,6 +22,7 @@ import { Stars } from "@/components/reviews/Stars";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { ShareButton } from "@/components/ShareButton";
 import { shareTexts } from "@/lib/share-texts";
+import { JsonLd, breadcrumbLd } from "@/lib/seo";
 
 // Prerendered at build, one static file per product; a slug the release does
 // not know is a 404, never a render on request.
@@ -111,6 +112,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-28 pt-5 md:pb-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={breadcrumbLd([{ name: cat.name, path: `/${cat.key}` }, ...(hasBrandPage ? [{ name: f.brand, path: `/brands/${f.b}` }] : []), { name: f.name, path: `/product/${f.slug}` }])} />
       <nav aria-label="Breadcrumb" className="mb-4 text-sm text-soft">
         <Link prefetch={false} href="/" className="hover:text-ink">Home</Link>
         <span className="mx-1.5">/</span>
