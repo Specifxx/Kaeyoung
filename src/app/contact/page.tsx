@@ -23,7 +23,7 @@ export default function Contact() {
           Email <a href={`mailto:${SITE.email}`}><strong>{SITE.email}</strong></a>. A person reads every message, usually within two working days.
         </p>
         <p>
-          Seen a wrong price? Use <strong>Report a wrong price</strong> under the product&apos;s prices, and <a href="/stores#suggest">suggest a store</a> on the stores page: no email needed.
+          Seen a wrong price? Use <strong>Report a wrong price</strong> under the product&apos;s prices, and <a href="/stores#suggest">suggest a store</a> on the stores page: no email needed. Run a store? <a href="/list-your-store">List your store</a>, free.
         </p>
         <ul>
           <li><a href={mail("Wrong price or product")}>A wrong price or the wrong product</a>: the KaeYoung page, the store, and what is wrong (a size or a shade helps).</li>
