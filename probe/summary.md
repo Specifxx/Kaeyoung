@@ -1,129 +1,68 @@
-# Skincare store probe 2026-10-30
+# Skincare store probe 2026-11-04
 
-195 candidates, 107 readable Shopify shops.
+142 candidates, 48 readable Shopify shops.
 
 | Currency | Readable shops | With 50+ K-beauty products | Barcodes in 2+ shops (all / 880) |
 | --- | --- | --- | --- |
-| AUD | 15 | 9 | 2069 / 533 |
-| CAD | 7 | 6 | 342 / 339 |
-| EGP | 1 | 1 | 0 / 0 |
-| EUR | 26 | 22 | 689 / 686 |
-| GBP | 19 | 14 | 131 / 131 |
-| INR | 1 | 0 | 0 / 0 |
+| AUD | 3 | 2 | 0 / 0 |
+| CAD | 4 | 4 | 10 / 10 |
+| CHF | 1 | 1 | 0 / 0 |
+| EUR | 20 | 17 | 141 / 141 |
+| GBP | 5 | 5 | 17 / 17 |
 | KRW | 1 | 1 | 0 / 0 |
-| NZD | 5 | 2 | 7 / 7 |
-| PKR | 1 | 1 | 0 / 0 |
-| SEK | 5 | 5 | 99 / 97 |
-| USD | 26 | 20 | 25 / 25 |
+| NZD | 8 | 6 | 13 / 13 |
+| SEK | 2 | 2 | 98 / 96 |
+| USD | 4 | 2 | 0 / 0 |
 
 | Shop | Currency | Products | K-beauty | EAN in SKU | Sample with barcode | Korean codes |
 | --- | --- | --- | --- | --- | --- | --- |
-| https://koreanskinca.re | USD | 2000 | 1337 | 8 | 1/40 | 3 |
-| https://silverglass.co | USD | 1990 | 1322 | 0 | 27/40 | 27 |
-| https://hikoco.com | NZD | 2000 | 1216 | 0 | 34/40 | 34 |
-| https://aubeautybazaar.com | AUD | 2000 | 1197 | 0 | 1/40 | 1 |
-| https://midakbeauty.com | USD | 2000 | 1194 | 0 | 6/40 | 6 |
-| https://kbeauty.sale | USD | 1998 | 1179 | 0 | 29/40 | 29 |
-| https://moidaus.com | USD | 2000 | 1144 | 0 | 37/40 | 39 |
-| https://keautyworld.com | SEK | 2000 | 1104 | 0 | 34/40 | 34 |
-| https://elikoglow.ca | CAD | 1476 | 1062 | 2 | 40/40 | 42 |
-| https://rossi.lv | EUR | 1489 | 1027 | 0 | 31/31 | 38 |
-| https://peachesandcremeshop.com | EUR | 2000 | 1021 | 0 | 3/39 | 3 |
-| https://yepposoonsoo.com | EUR | 2000 | 1001 | 3469 | 1/6 | 3349 |
-| https://korean-skincare.fr | EUR | 2000 | 924 | 50 | 40/40 | 85 |
-| https://koreanskincare.com | EUR | 2000 | 799 | 262 | 40/40 | 302 |
-| https://koreanbeauty.co.uk | SEK | 1226 | 797 | 57 | 39/40 | 97 |
-| https://koreanbeauty.fi | SEK | 1226 | 797 | 57 | 39/40 | 97 |
-| https://koreanbeauty.nl | SEK | 1226 | 797 | 57 | 39/40 | 97 |
-| https://koreanbeauty.sk | SEK | 1226 | 797 | 57 | 39/40 | 97 |
-| https://kbeautyworld.com | EUR | 980 | 786 | 0 | 32/40 | 28 |
-| https://kbeautyoutletusa.com | USD | 1152 | 775 | 15 | 0/0 | 14 |
-| https://sukoshi.com | CAD | 2000 | 760 | 0 | 40/40 | 44 |
-| https://saranghae.es | EUR | 976 | 709 | 168 | 39/40 | 196 |
-| https://toktokbeauty.com | USD | 1908 | 692 | 0 | 40/40 | 46 |
-| https://lacosmetique.com.au | AUD | 2000 | 677 | 3212 | 0/19 | 2765 |
-| https://bellubeauty.co.uk | GBP | 960 | 659 | 0 | 40/40 | 40 |
-| https://beautydiary.com.au | AUD | 2000 | 638 | 2507 | 1/40 | 1037 |
-| https://shoppalacebeauty.com | USD | 2000 | 627 | 1 | 10/40 | 11 |
-| https://holiholic.com | USD | 2000 | 613 | 0 | 0/40 | 0 |
+| https://mikaela-beauty.com | CAD | 2000 | 1582 | 0 | 26/40 | 26 |
+| https://ladybonita.co.nz | NZD | 2000 | 1357 | 1 | 4/40 | 3 |
+| https://aubeautybazaar.com | AUD | 2000 | 1199 | 0 | 6/40 | 6 |
+| https://bloom-and-shine.de | EUR | 1134 | 917 | 0 | 33/40 | 33 |
+| https://koreanbeauty.es | SEK | 1239 | 808 | 57 | 39/40 | 96 |
+| https://koreanbeauty.nl | SEK | 1239 | 808 | 57 | 39/40 | 96 |
+| https://koreanskincare.com | EUR | 2000 | 797 | 264 | 40/40 | 304 |
+| https://joobeauty.fr | EUR | 1248 | 793 | 19 | 40/40 | 57 |
+| https://planet-skin.com | EUR | 1889 | 791 | 1909 | 0/12 | 1901 |
+| https://sulskin.com | AUD | 1104 | 656 | 1378 | 5/30 | 1140 |
 | https://cosmeticary.com | EUR | 1279 | 570 | 0 | 0/40 | 0 |
-| https://yoonah.fr | EUR | 686 | 536 | 0 | 0/40 | 0 |
-| https://kbeauty.ca | CAD | 761 | 534 | 924 | 0/40 | 906 |
-| https://koreabe.com | KRW | 2000 | 471 | 0 | 17/40 | 17 |
-| https://happyandpretty.de | EUR | 748 | 455 | 0 | 40/40 | 40 |
-| https://glamglobal.com | GBP | 2000 | 443 | 0 | 0/40 | 0 |
-| https://moona.store | NZD | 883 | 443 | 1174 | 0/40 | 1173 |
-| https://kbeautystore.com | EUR | 803 | 433 | 938 | 4/9 | 891 |
-| https://soonsubeauty.com | USD | 2000 | 419 | 0 | 0/40 | 0 |
-| https://yasminebeautybar.com | EGP | 2000 | 403 | 0 | 39/40 | 39 |
-| https://velvetvanity.ca | CAD | 588 | 396 | 885 | 12/16 | 856 |
-| https://amorecosmetics.ca | CAD | 704 | 382 | 0 | 0/40 | 0 |
-| https://thekbeautyedit.co.uk | GBP | 446 | 346 | 0 | 39/40 | 39 |
-| https://shopmissa.com | USD | 2000 | 336 | 0 | 0/40 | 0 |
-| https://skinseoul.co.uk | GBP | 438 | 316 | 0 | 40/40 | 39 |
-| https://eyurs.com | USD | 429 | 313 | 0 | 39/40 | 39 |
-| https://jejuskin.fr | EUR | 497 | 309 | 0 | 40/40 | 42 |
-| https://kosmobox.co.uk | GBP | 390 | 273 | 330 | 32/35 | 360 |
-| https://kbeauty-cosmetics.com | EUR | 431 | 244 | 478 | 1/40 | 479 |
-| https://kskin.ie | EUR | 298 | 239 | 0 | 1/40 | 1 |
-| https://aurynskin.com | EUR | 526 | 237 | 0 | 12/40 | 12 |
-| https://beautyandseoul.co.uk | GBP | 264 | 211 | 310 | 0/6 | 309 |
-| https://cosmehut.com.au | AUD | 654 | 208 | 414 | 40/40 | 365 |
-| https://zestbeauty.com | GBP | 1866 | 205 | 0 | 6/40 | 6 |
-| https://coos-cosmetics.com | EUR | 423 | 195 | 0 | 0/40 | 0 |
-| https://kptown.com | USD | 2000 | 183 | 0 | 0/38 | 0 |
-| https://baqueen.it | EUR | 291 | 170 | 0 | 39/40 | 40 |
-| https://kiyobeauty.com | GBP | 2000 | 166 | 0 | 38/40 | 38 |
-| https://irelkglow.co.uk | GBP | 214 | 162 | 0 | 32/40 | 35 |
-| https://piyonna.com | EUR | 2000 | 161 | 0 | 40/40 | 48 |
-| https://momokocosmetic.com.au | AUD | 1303 | 150 | 14 | 38/40 | 39 |
-| https://belvera.co.uk | GBP | 2000 | 140 | 0 | 40/40 | 40 |
-| https://mediheal.com | USD | 133 | 133 | 0 | 27/40 | 28 |
-| https://us.sulwhasoo.com | USD | 131 | 131 | 0 | 16/40 | 16 |
-| https://asiangroceronline.com.au | AUD | 2000 | 126 | 1655 | 0/40 | 164 |
-| https://umall.com.au | AUD | 2000 | 126 | 1655 | 0/40 | 164 |
-| https://misshaus.com | USD | 126 | 116 | 0 | 26/40 | 51 |
-| https://yukiobeauty.com | USD | 308 | 116 | 3 | 37/40 | 37 |
-| https://koreco.fr | EUR | 146 | 107 | 0 | 0/40 | 0 |
-| https://kiyoko.com | CAD | 225 | 105 | 297 | 0/3 | 255 |
+| https://yoonah.fr | EUR | 704 | 546 | 0 | 0/40 | 0 |
+| https://koreabe.com | KRW | 2000 | 467 | 0 | 14/40 | 14 |
+| https://olivekollection.com | USD | 881 | 436 | 0 | 0/40 | 0 |
+| https://moida.co.uk | GBP | 631 | 407 | 0 | 39/40 | 40 |
+| https://refreshskincare.co.uk | GBP | 511 | 394 | 0 | 28/40 | 28 |
+| https://vglebeauty.com | CAD | 490 | 382 | 0 | 16/40 | 16 |
+| https://esmea.ca | CAD | 463 | 376 | 0 | 10/40 | 10 |
+| https://pharmatoul.com | CAD | 463 | 376 | 0 | 10/40 | 10 |
+| https://atelierdeglow.com | GBP | 626 | 371 | 672 | 1/8 | 670 |
+| https://koreancosmetics.nl | EUR | 417 | 350 | 1 | 0/40 | 1 |
+| https://7hada.co.nz | NZD | 528 | 335 | 0 | 39/40 | 39 |
+| https://pboo.co.nz | NZD | 539 | 298 | 0 | 9/40 | 9 |
+| https://roseroseshop.com | USD | 2000 | 289 | 0 | 0/40 | 0 |
+| https://mochimochi.nz | NZD | 682 | 279 | 0 | 0/40 | 0 |
+| https://likeskincare.com | GBP | 416 | 269 | 0 | 5/40 | 5 |
+| https://kskin.ie | EUR | 300 | 240 | 0 | 1/40 | 1 |
+| https://amiglow.co.nz | NZD | 207 | 165 | 0 | 0/40 | 0 |
+| https://my-kare.com | EUR | 268 | 158 | 0 | 40/40 | 40 |
+| https://coreebeauty.com | CHF | 204 | 150 | 0 | 38/40 | 38 |
+| https://seoulonni.de | EUR | 246 | 148 | 0 | 0/40 | 0 |
+| https://keeobeauty.fr | EUR | 149 | 123 | 0 | 29/40 | 29 |
+| https://weeghostbeauty.com | GBP | 268 | 113 | 0 | 0/40 | 0 |
+| https://minkibeauty.es | EUR | 180 | 105 | 0 | 40/40 | 40 |
 | https://krush.ie | EUR | 123 | 100 | 0 | 0/40 | 0 |
-| https://periwinklebeauty.co.uk | GBP | 122 | 98 | 0 | 0/40 | 0 |
-| https://us.laneige.com | USD | 96 | 96 | 0 | 11/40 | 15 |
-| https://glassskinrituals.com.au | AUD | 103 | 95 | 0 | 37/40 | 36 |
-| https://skincupid.us | GBP | 241 | 92 | 0 | 40/40 | 46 |
-| https://yok-beauty.com | GBP | 107 | 90 | 0 | 20/40 | 26 |
-| https://beautyaffairs.co.nz | AUD | 2000 | 76 | 306 | 22/38 | 103 |
-| https://oppastore.com | USD | 2000 | 73 | 0 | 6/40 | 0 |
-| https://theskinfit.com | PKR | 2000 | 64 | 0 | 37/40 | 50 |
-| https://cloud10beauty.com | EUR | 2000 | 63 | 262 | 40/40 | 52 |
-| https://seoulbeautystore.com | GBP | 114 | 60 | 0 | 36/40 | 41 |
-| https://aiyabeauty.shop | EUR | 982 | 58 | 0 | 40/40 | 40 |
-| https://haruharuusa.com | USD | 51 | 51 | 0 | 24/40 | 27 |
-| https://k-beauty4you.de | EUR | 49 | 44 | 0 | 24/40 | 24 |
-| https://myqt.com.au | AUD | 2000 | 44 | 0 | 40/40 | 41 |
-| https://naturerepublicusa.com | USD | 223 | 38 | 0 | 9/40 | 5 |
-| https://mazari.nl | EUR | 37 | 32 | 0 | 0/37 | 0 |
-| https://cosmeticsonline.co.nz | AUD | 2000 | 28 | 0 | 36/40 | 28 |
-| https://cosmeticsonline.net.au | AUD | 2000 | 28 | 0 | 36/40 | 28 |
-| https://inishpharmacy.com | EUR | 2000 | 28 | 23 | 36/40 | 28 |
-| https://reiwatakiya.co.uk | GBP | 721 | 21 | 711 | 0/10 | 45 |
-| https://skindays.com | GBP | 614 | 19 | 0 | 18/40 | 17 |
-| https://bellaviacanada.ca | CAD | 2000 | 16 | 0 | 20/40 | 15 |
-| https://ry.com.au | AUD | 2000 | 16 | 117 | 33/40 | 16 |
-| https://britishharmonia.co.uk | GBP | 2000 | 14 | 0 | 14/40 | 13 |
-| https://sonagi.co.uk | GBP | 62 | 11 | 0 | 1/40 | 0 |
-| https://wooltariusa.com | USD | 1490 | 11 | 0 | 12/40 | 12 |
-| https://matakanapharmacy.com | NZD | 2000 | 7 | 0 | 27/40 | 7 |
-| https://unichem.co.nz | NZD | 2000 | 6 | 0 | 27/40 | 6 |
-| https://millies.ie | EUR | 237 | 2 | 175 | 0/40 | 3 |
-| https://soojib.com | GBP | 2000 | 2 | 0 | 5/40 | 5 |
-| https://source-self.com | USD | 508 | 2 | 0 | 0/40 | 0 |
-| https://cosmeticssquad.com.au | AUD | 2000 | 1 | 0 | 24/40 | 1 |
-| https://arencia.us | USD | 67 | 0 | 0 | 27/37 | 29 |
-| https://buykiwi.co.nz | NZD | 2000 | 0 | 37 | 1/40 | 0 |
-| https://kajabeauty.com | USD | 28 | 0 | 0 | 22/28 | 97 |
-| https://keikofashion.com | AUD | 83 | 0 | 0 | 0/40 | 0 |
-| https://kicksmachine.com | INR | 2000 | 0 | 225 | 0/40 | 0 |
-| https://thenimetyou.com | USD | 25 | 0 | 0 | 1/25 | 0 |
+| https://skincation.com | EUR | 246 | 95 | 3 | 40/40 | 40 |
+| https://k-beautystudio.com | EUR | 127 | 86 | 29 | 36/40 | 65 |
+| https://koreanskinworld.com | EUR | 317 | 86 | 0 | 0/40 | 0 |
+| https://ciamane.com | EUR | 280 | 62 | 0 | 39/40 | 39 |
+| https://sihaaskin.co.nz | NZD | 60 | 57 | 0 | 0/40 | 0 |
+| https://kskinbeauty.fr | EUR | 85 | 46 | 0 | 8/40 | 8 |
+| https://lifepharmacy.co.nz | NZD | 2000 | 41 | 0 | 40/40 | 40 |
+| https://koreanqueens.com | EUR | 44 | 33 | 0 | 0/40 | 0 |
+| https://beautyboutiqueshop.it | EUR | 104 | 25 | 0 | 40/40 | 37 |
+| https://healthnewzealand.co.nz | NZD | 485 | 18 | 0 | 38/39 | 33 |
+| https://gochujar.com | USD | 439 | 7 | 0 | 0/40 | 0 |
+| https://peachandlily.com | USD | 142 | 0 | 0 | 0/40 | 0 |
+| https://stylestory.com.au | AUD | 9 | 0 | 0 | 0/9 | 0 |
 
-Not readable: ahoybeauty.com (HTTP 404), alittlemall.com (fetch failed), all4skin.si (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), anua.com.au (fetch failed), arktastic.com (HTTP 404), beautybuddy.nl (HTTP 401), belifusa.com (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), besfrenbeauty.com (HTTP 404), bigapplebuddy.com (HTTP 404), blushbeauty.co.uk (HTTP 404), cellfusionc.us (fetch failed), cosmicnz.co.nz (HTTP 406), daikoku.co.nz (HTTP 404), drjart.com (HTTP 403), etudehouse.com.au (fetch failed), evesshoppe.co.nz (HTTP 404), flowkbeauty.com (Unexpected token '<', "<!doctype "... is not valid JSON), glamglobal.co.uk (fetch failed), glowdy.com.au (fetch failed), glowskin.co.nz (HTTP 404), gumihobeauty.com (fetch failed), hohtava.com (fetch failed), hollyskin.nl (fetch failed), houseofkorea.co.uk (HTTP 404), innisfree.co.nz (HTTP 404), ippondo.co.nz (fetch failed), isntree.com.au (fetch failed), iunik.com.au (fetch failed), jellymirror.com (fetch failed), jung-ho.fr (fetch failed), kalea-wien.com (HTTP 401), kbeauty.nz (fetch failed), kbeauty.shop (HTTP 403), kbeautyhub.com.au (fetch failed), kbeautysydney.com.au (fetch failed), kebeautyshop.com (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), kiseki.ca (HTTP 403), klairs.com.au (fetch failed), koreanbeauty.co.nz (fetch failed), koreanbeautyusa.com (fetch failed), koreanmini.shop (HTTP 404), koreanrituals.com (fetch failed), koreanshop.ca (HTTP 404), koreanskincareaustralia.com.au (fetch failed), kosmetix.fr (HTTP 401), kossmetics.es (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), koyocosmetics.com.au (HTTP 404), ksisters.de (HTTP 404), ksisters.ee (HTTP 404), ksisters.hr (HTTP 404), ksisters.pt (HTTP 404), kskin.co.nz (HTTP 402), laneige.com.au (fetch failed), likeskin.co.uk (fetch failed), luuela.com (HTTP 402), matrigencosmetics.co.uk (HTTP 400), meandskin.com (fetch failed), medicube.co.nz (fetch failed), medicube.com.au (fetch failed), mediheal.com.au (HTTP 404), mitso.pt (fetch failed), moida.pt (HTTP 404), naraglow.com (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), nikkicosmo.com.au (fetch failed), numberskin.com (fetch failed), ozhairandbeauty.com (HTTP 404), pibubeauty.com (HTTP 404), pristinebeauty.co.nz (HTTP 404), propr.ca (HTTP 404), purito.com.au (fetch failed), roundlab.com.au (fetch failed), seoulmagic.com (HTTP 404), seoulskin.co.nz (fetch failed), shikoreanbeauty.com (HTTP 404), skin1004.com.au (fetch failed), skincute.co.uk (HTTP 404), skinguru24.com.hr (HTTP 403), skinsli.com (HTTP 404), sulwhasoo.com.au (fetch failed), thecoolhour.com (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), thefaceshop.ca (HTTP 403), thefaceshop.com.au (fetch failed), theglowshop.co.uk (fetch failed), theskincounter.com (fetch failed), tonymoly.co.nz (HTTP 404), unblemish.co.uk (HTTP 404), unnie111.com.au (fetch failed), weareeves.com (HTTP 404)
+Not readable: adorebeauty.com.au (HTTP 404), aniqa.com.au (fetch failed), asianbeautybox.com.au (fetch failed), bambeau.com (fetch failed), beautyamora.com.au (HTTP 404), beautybay.com (Unexpected token '<', "<!doctype "... is not valid JSON), beautybliss.co.nz (HTTP 403), beautyboxkorea.com (HTTP 404), beautycrushskin.com.au (HTTP 403), beautynetkorea.com (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), beautytap.com (HTTP 404), bomcosmetik.com (HTTP 400), boomskincare.com.au (fetch failed), boots.com (HTTP 404), chemistwarehouse.co.nz (HTTP 403), chemistwarehouse.com.au (HTTP 403), chuusi.ca (HTTP 401), corglow.ca (HTTP 400), cosmeticakoreana.com (HTTP 404), cosmicnz.co.nz (HTTP 406), cyhouse.com.au (fetch failed), dewbeauty.ca (HTTP 404), dm.de (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), douglas.de (HTTP 403), eu.skinsider.com (fetch failed), farmers.co.nz (HTTP 403), flaconi.de (HTTP 403), glowieco.com (HTTP 522), glowyskin.co.uk (HTTP 404), haruharubeauty.com (HTTP 404), houseofkglow.com (HTTP 404), houseofkorea.co.uk (HTTP 404), ibuybeauti.com (fetch failed), jolse.com (HTTP 404), juui.de (HTTP 404), k-youty.fr (HTTP 404), kbeautyaustralia.com.au (HTTP 404), kbeautyhouse.de (HTTP 404), kbeautyoutlet.com (fetch failed), klubeauty.com (fetch failed), kollectionk.com (HTTP 404), koreabeauty.ca (HTTP 404), koreadepart.com (HTTP 404), koreanbeautyshopeu.com (HTTP 400), koreandreams.es (HTTP 404), koreanshop.ca (HTTP 404), koreanshopbeauty.com (HTTP 400), koshicosmetics.fr (HTTP 402), koyocosmetics.com.au (HTTP 404), ksisters.de (HTTP 404), ksisters.it (HTTP 404), lilabeauty.co.uk (fetch failed), lilacandberries.com (fetch failed), littlewonderland.nl (HTTP 404), masksheets.com (HTTP 404), mecca.com (fetch failed), meccabeauty.co.nz (fetch failed), meetunni.com (fetch failed), melonandstarfish.com (HTTP 404), miin-cosmetics.com (HTTP 404), mimibeauty.co.uk (fetch failed), miyoki.co.nz (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), moodyskin.it (HTTP 403), mybeautyroutine.it (HTTP 404), notino.de (HTTP 403), ohmyskin.nl (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), ozhairandbeauty.com (HTTP 404), priceline.com.au (HTTP 404), sephora.ca (HTTP 403), sephora.co.uk (HTTP 403), sephora.com (HTTP 403), sephora.com.au (The operation was aborted due to timeout), sephora.nz (The operation was aborted due to timeout), sheetmaskshop.com.au (fetch failed), shoppersdrugmart.ca (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), skincarehero.co.uk (fetch failed), skincute.co.uk (fetch failed), skinsider.co.uk (HTTP 404), skinthinks.com (HTTP 403), skinwithseoul.co.uk (fetch failed), soulofseoul.co.uk (HTTP 404), spacenk.com (HTTP 404), stylekorean.com (HTTP 404), sumibeauty.co.uk (fetch failed), sunisoo.com (HTTP 404), superdrug.com (HTTP 403), testerkorea.com (HTTP 404), theglowshop.co.uk (fetch failed), thekbeauty.com (HTTP 404), tonic15.com (HTTP 401), ulta.com (Unexpected token '<', "<esi:debug"... is not valid JSON), us.oliveyoung.com (HTTP 403), well.ca (Unexpected token '<', "<!DOCTYPE "... is not valid JSON), yoonbi.co.uk (fetch failed)
