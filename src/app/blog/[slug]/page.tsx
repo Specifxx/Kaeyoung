@@ -24,7 +24,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     title: p.title,
     description: p.description,
     alternates: { canonical: `/blog/${p.slug}` },
-    openGraph: { type: "article", title: p.title, description: p.description, publishedTime: p.date, modifiedTime: p.updated },
+    openGraph: { type: "article", title: p.title, description: p.description, publishedTime: p.date, modifiedTime: p.updated, ...(p.image ? { images: [{ url: p.image.src, width: 1200, height: 630, alt: p.image.alt }] } : {}) },
+    ...(p.image ? { twitter: { card: "summary_large_image", images: [p.image.src] } } : {}),
   };
 }
 
@@ -44,6 +45,11 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         sub={<p>{p.description}</p>}
         art={<CatIcon cat={p.art} size={150} />}
       />
+      {p.image ? (
+        // The post's own thumbnail, a static file in public/blog: no optimiser, no function.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={p.image.src} alt={p.image.alt} width={1200} height={630} className="mb-8 aspect-[1200/630] w-full rounded-2xl border border-line object-cover" />
+      ) : null}
       <div className="prose-ky">{Body ? <Body asOf={asOf} /> : sections ? <Advice post={p} sections={sections} /> : null}</div>
       <aside className="mt-12 space-y-3 rounded-2xl bg-subtle p-5 text-sm text-soft">
         <h2 className="font-semibold text-ink">How this post was made</h2>
