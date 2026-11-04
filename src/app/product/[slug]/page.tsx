@@ -104,6 +104,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           highPrice: decimal(Math.max(...ps), r),
           offerCount: orderable.length,
           availability: "https://schema.org/InStock",
+          // Prices refresh on the daily import: good until tomorrow (schema.org priceValidUntil).
+          priceValidUntil: new Date(Date.now() + 86400e3).toISOString().slice(0, 10),
         };
       })
       .filter(Boolean),
