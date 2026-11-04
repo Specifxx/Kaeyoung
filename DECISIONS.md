@@ -664,3 +664,24 @@ rules): the marks are a sparkle and a coffee cup, drawn inline. `CreatorsCornerB
 (top-right from sm, a pill above the holiday line on a phone); the side panel's "More", the footer and the sitemap link
 the page. Prerendered like every page. Still no sister-site link anywhere, and not called "partners": that word means the
 affiliate links.
+
+## 2026-11-04: 159 stores (probe round 5, the big-store gap research)
+
+Owner: "ensure all big stores are captured with no gaps … I don't have domain knowledge outside of Australia". A
+research pass per region (trade press, Trustpilot counts, r/AsianBeauty and the country "where to buy" guides) named
+142 shops not on the list; the probe (`probe/summary.md`) found 48 readable Shopify shops, and 21 passed the round-4
+rule (region currency, 50+ K-beauty products, 880 barcodes readable in the sample or as EAN-13 SKUs): Canada 3
+(Mikaela Beauty, VGLE Beauty, Pharmatoul's esmea.ca), New Zealand 3 (Lady Bonita, 7HADA, P.boo), Australia 2 (AU
+Beauty Bazaar, SUL Skin), Europe 9 (Bloom & Shine, Joo Beauty, Planet Skin, My-Kare, Keeo Beauty, Minki Beauty,
+Skincation, K-Beauty Studio, Ciamane), UK 4 (Moida, Refresh Skincare, Atelier De Glow, Likeskin). Left out as the
+same stock: pharmatoul.com (esmea.ca), koreanskincare.com (korean-skincare.nl, already listed), koreanbeauty.es and
+koreanbeauty.nl (one shop, charges SEK). Left out for currency or share: Corée Beauty (CHF), KoreaBe (KRW), Life
+Pharmacy and Health New Zealand (general pharmacies, under 50 K-beauty products), Peach & Lily and Style Story (own
+brands only in the feed), Olive Kollection, Rose Rose Shop and Mochimochi (no barcode readable).
+
+**The big names the research found cannot be read** and stay off the list until a reader or a feed exists:
+Ulta, Sephora (US/CA/UK/AU/NZ), Olive Young US, Beauty Bay, Boots, Superdrug, Space NK, Skinsider, Shoppers Drug
+Mart, Well.ca, Adore Beauty, Chemist Warehouse, Priceline, MECCA, Farmers, Douglas, dm, Flaconi, Notino,
+Little Wonderland, MiiN Cosmetics, Ksisters: custom platforms, no Shopify or WooCommerce feed, most behind bot
+protection (403). The ships-from-Korea sellers (Jolse, StyleKorean, Korea Depart, Beauty Box Korea, BeautyNetKorea,
+TesterKorea) have no feed either and would belong to no region.
