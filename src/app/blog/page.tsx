@@ -23,9 +23,14 @@ export default function Blog() {
         {LIVE_POSTS.map((p) => (
           <li key={p.slug}>
             <Link prefetch={false} href={`/blog/${p.slug}`} className="card tile-hover group flex h-full flex-col overflow-hidden">
-              <div className={`grid h-40 place-items-center ${CAT_TINT[p.art]}`}>
-                <CatIcon cat={p.art} size={96} />
-              </div>
+              {p.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={p.image.src} alt={p.image.alt} width={1200} height={630} loading="lazy" decoding="async" className="aspect-[1200/630] w-full object-cover" />
+              ) : (
+                <div className={`grid h-40 place-items-center ${CAT_TINT[p.art]}`}>
+                  <CatIcon cat={p.art} size={96} />
+                </div>
+              )}
               <div className="flex flex-1 flex-col p-5">
                 <p className="eyebrow">{niceDate(p.date)}</p>
                 <h2 className="h-display mt-1.5 text-xl leading-snug group-hover:text-accent-deep">{p.title}</h2>

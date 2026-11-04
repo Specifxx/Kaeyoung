@@ -26,6 +26,8 @@ export interface Post {
   sources?: Source[];
   /** the drawing on its card and header */
   art: CatKey;
+  /** The post's own thumbnail (public/blog/<slug>.jpg, 1200×630): its link preview and the picture on its card. Absent: the drawing and the site's share image. */
+  image?: { src: string; alt: string };
   /** An advice post written as data: prose sections, each optionally followed
    *  by a live price table of the products its `picks` select (per region,
    *  most-stocked first, shown cheapest first). Posts without it have their
@@ -57,6 +59,61 @@ export interface Section {
 }
 
 export const POSTS: Post[] = [
+  {
+    slug: "kbeauty-price-map-november-2026",
+    title: "The K-beauty price map, November 2026: what the boom did to shelves and prices",
+    short: "K-beauty price map, Nov 2026",
+    description:
+      "Korea's cosmetics exports hit a record in 2025 and the US became the biggest market. What that looks like on the shelves of 139 stores in six countries, how far prices spread for the same barcode, and where we think prices head into 11.11 and Black Friday.",
+    date: "2026-11-04",
+    sources: [
+      { title: "Korea's cosmetics exports surpass record $11 billion in 2025", by: "Korea JoongAng Daily", url: "https://www.koreajoongangdaily.com/business/koreas-cosmetics-exports-surpass-record-11-billion-in-2025/12129724" },
+      { title: "US surpasses China as K-beauty's top market amid record-breaking exports", by: "Personal Care Insights", url: "https://www.personalcareinsights.com/news/kbeauty-export-record-us-china-shift.html" },
+      { title: "Korean beauty products are a $1.7 billion US market. Tariffs could change that", by: "Associated Press, via Fortune", url: "https://fortune.com/2025/07/28/1-7-billion-korean-beauty-market-tariffs-trade/" },
+    ],
+    art: "serums",
+    image: { src: "/blog/kbeauty-price-map-november-2026.jpg", alt: "Bar chart: the price spread between the cheapest and dearest store for the same K-beauty product, by country" },
+    sections: [
+      {
+        p: [
+          "K-beauty stopped being a niche some time in 2024, and the numbers caught up in 2025. Korea exported US$11.43 billion of cosmetics last year, up 12.3% on 2024's record, and for the first time the United States was the biggest buyer, at US$2.2 billion, ahead of China. The US imported 54% more Korean cosmetics in 2024 than in 2023 and bought more skincare from Korea than from any other country, France included. That boom is why there are now dozens of specialist K-beauty shops in each English-speaking country, and why the same serum can cost very different amounts depending on which one you open.",
+          "This post is a snapshot of what that looks like from where we sit: 139 stores across the US, UK, Canada, Australia, New Zealand and Europe, 11,089 products matched by their Korean barcode, read on 4 November 2026. The tables are live and refresh every day; the figures in the text are from that morning.",
+        ],
+      },
+      {
+        h: "What is on the shelves",
+        p: [
+          "The brands stocked by the most stores are not the ones with the biggest marketing. Across every country, MISSHA (430 products), TIRTIR (336), medicube (297), peripera (291), fwee (248) and rom&nd (246) lead the count, with COSRX, Anua and SKIN1004 close behind. Three of the top six are makeup brands, which says something about where the shops see the next wave: makeup is already the largest category we track, at 3,071 products, ahead of serums (1,385), masks (1,339) and moisturisers (1,283). Sunscreen, the product most people arrive looking for, is just 324 products, because a few famous ones carry the whole category.",
+          "TIRTIR is the clearest case of a brand made by the boom. Its cushion foundation alone is 171 separate shades and sizes in our data, and it is the most-stocked brand in the US, Australia and Europe. medicube, whose devices and PDRN serums were everywhere on social media this year, is the most-stocked brand in the UK.",
+        ],
+        picks: { title: "The most-stocked TIRTIR products {region}", match: "tirtir", limit: 6 },
+      },
+      {
+        h: "How far prices spread for one barcode",
+        p: [
+          "Because we match on the barcode, we can compare the exact same item across stores. For products sold by three or more stores in a country, the dearest store charges, at the median, 1.43 times the cheapest in the US and in Canada, 1.53 times in Europe, 1.54 times in the UK and 1.67 times in Australia. A quarter of Australian products have a store charging double the cheapest price. New Zealand's spread is the narrowest, at 1.14 times, but only because five stores stock the market.",
+          "That spread is the most useful number on this page. It is far wider than the gap between countries, and far wider than any sale. If you buy from the first shop a search returns, you are paying the spread more often than not.",
+        ],
+        picks: { title: "medicube, at every store {region}", match: "medicube", limit: 8 },
+      },
+      {
+        h: "Where prices have been going",
+        p: [
+          "We have tracked prices daily since 30 October, which is too short to call a trend, but the direction in that week was down: of the products with a price on both 30 October and 4 November, 343 got cheaper by more than 3%, 149 got dearer and 301 held. Stores were already cutting before the November sales started.",
+          "Beyond our own data, two forces pull in opposite directions. The US tariff regime on Korean goods changed in 2025 (cosmetics had entered the US duty-free under the 2012 free trade agreement), and the specialist stores we track have not, so far, passed anything visible through: the US has the second-narrowest price spread we measure. Against that, the number of stores keeps rising, and every new store opens by undercutting on the famous products. Our read is that the famous products (Beauty of Joseon's sunscreen, COSRX's snail mucin, Anua's cleansing oil, SKIN1004's centella line) keep getting cheaper at the cheapest store, while the long tail of a brand's range stays at full price because nobody competes on it.",
+        ],
+        picks: { title: "The famous ones {region}", match: "beauty of joseon.*(rice|relief sun)|cosrx.*snail|anua.*heartleaf.*cleansing oil|skin1004.*centella.*ampoule", limit: 8 },
+      },
+      {
+        h: "The next five weeks",
+        p: [
+          "11 November is Singles' Day, which the K-beauty stores treat as the start of the season, Black Friday is 27 November and Cyber Monday 30 November. K-beauty shops tend to run these weeks as site-wide percentage codes rather than cuts on individual products, which means the cheapest store on a product today is usually still the cheapest once everyone's code is applied. Our advice is to find the cheapest store for the exact product now, then wait for that store's code.",
+          "Two things we expect to see more of: brands' own stores undercutting the shops that stock them, which [we found already happening in October](/blog/brand-stores-vs-kbeauty-shops), and toner pads and PDRN products, this year's two breakout categories, going from a handful of stores to every store. The pads are already at 52 products and PDRN or salmon-labelled products at 304.",
+        ],
+        picks: { title: "PDRN and toner pads {region}", match: "pdrn|toner pad", limit: 8 },
+      },
+    ],
+  },
   {
     slug: "brand-stores-vs-kbeauty-shops",
     title: "Are K-beauty brands' own stores cheaper than K-beauty shops?",
