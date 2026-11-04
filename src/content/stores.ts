@@ -171,6 +171,29 @@ export const STORES: Store[] = [
   { id: "velvetvanity", name: "Velvet Vanity", region: "CA", base: "https://velvetvanity.ca", platform: "shopify" },
   { id: "yok-beauty", name: "Yo K-Beauty", region: "UK", base: "https://yok-beauty.com", platform: "shopify" },
   { id: "yukiobeauty", name: "Yukio Beauty", region: "US", base: "https://yukiobeauty.com", platform: "shopify", mixed: true },
+  // Round 5 (2026-11-04, probe/summary.md): the big-store gap research, every region. Readable barcodes in the
+  // sample (or EAN-13 SKUs); mirrors dropped (pharmatoul.com = esmea.ca; koreanskincare.com = korean-skincare.nl; koreanbeauty.es = koreanbeauty.nl charge SEK).
+  { id: "mikaelabeauty", name: "Mikaela Beauty", region: "CA", base: "https://mikaela-beauty.com", platform: "shopify" },
+  { id: "vglebeauty", name: "VGLE Beauty", region: "CA", base: "https://vglebeauty.com", platform: "shopify" },
+  { id: "esmea", name: "Pharmatoul", region: "CA", base: "https://esmea.ca", platform: "shopify" },
+  { id: "ladybonita", name: "Lady Bonita", region: "NZ", base: "https://ladybonita.co.nz", platform: "shopify" },
+  { id: "7hada", name: "7HADA", region: "NZ", base: "https://7hada.co.nz", platform: "shopify" },
+  { id: "pboo", name: "P.boo", region: "NZ", base: "https://pboo.co.nz", platform: "shopify" },
+  { id: "aubeautybazaar", name: "AU Beauty Bazaar", region: "AU", base: "https://aubeautybazaar.com", platform: "shopify" },
+  { id: "sulskin", name: "SUL Skin", region: "AU", base: "https://sulskin.com", platform: "shopify" },
+  { id: "bloomandshine", name: "Bloom & Shine Korean Skincare", region: "EU", base: "https://bloom-and-shine.de", platform: "shopify" },
+  { id: "joobeauty", name: "Joo Beauty", region: "EU", base: "https://joobeauty.fr", platform: "shopify" },
+  { id: "planetskin", name: "Planet Skin", region: "EU", base: "https://planet-skin.com", platform: "shopify" },
+  { id: "mykare", name: "My-Kare", region: "EU", base: "https://my-kare.com", platform: "shopify" },
+  { id: "keeobeauty", name: "Keeo Beauty", region: "EU", base: "https://keeobeauty.fr", platform: "shopify" },
+  { id: "minkibeauty", name: "Minki Beauty", region: "EU", base: "https://minkibeauty.es", platform: "shopify" },
+  { id: "skincation", name: "Skincation", region: "EU", base: "https://skincation.com", platform: "shopify" },
+  { id: "kbeautystudio", name: "K-Beauty Studio", region: "EU", base: "https://k-beautystudio.com", platform: "shopify" },
+  { id: "ciamane", name: "Ciamane", region: "EU", base: "https://ciamane.com", platform: "shopify" },
+  { id: "moidauk", name: "Moida K-Beauty", region: "UK", base: "https://moida.co.uk", platform: "shopify" },
+  { id: "refreshskincare", name: "Refresh Skincare", region: "UK", base: "https://refreshskincare.co.uk", platform: "shopify" },
+  { id: "atelierdeglow", name: "Atelier De Glow", region: "UK", base: "https://atelierdeglow.com", platform: "shopify" },
+  { id: "likeskincare", name: "Likeskin", region: "UK", base: "https://likeskincare.com", platform: "shopify" },
 ];
 
 export const STORE_BY_ID: Record<string, Store> = Object.fromEntries(STORES.map((s) => [s.id, s]));
