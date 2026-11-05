@@ -697,3 +697,21 @@ The request is filed as a `suggest-store` report with `issue: "owner"`; RiftComp
 those first and asks for a reply within two days. No email is asked for (the reports branch is public); no pop-up,
 no cold email. RiftCompare and OP Compare keep their `/stores/suggest` page (now the owner pitch) and redirect
 `/list-your-store` to it.
+
+## 2026-11-05 — Two popular products in the hero, and on the link thumbnail
+
+The owner: "display images of two very popular products and their price and stores on the hero itself on the right
+side ... so people immediately know what the site does", and "same with the link thumbnail". The hero's right column
+(the flat bottle drawing, kept in `Art.tsx`) is now two product cards (`HeroPicks.tsx`, `src/lib/hero-picks.ts`): the
+most popular products someone can order in the visitor's country today (`popularity`, the same ranking as the
+Popular row), each with a photo, the cheapest in-stock price, the store charging it and the store count, one per
+brand, and only when at least `HERO_MIN_STORES` (3) stores have it in stock, so the card is a real comparison. Every
+country's pair is in the server HTML and CSS shows one (`.rp-XX`), like the tiles; on a phone the pair sits under
+the search. No heading, no new text in the outline: the h1, the title, the metadata and the URLs are unchanged.
+The holiday decorations moved to the edges of the column so they peek out from behind the cards.
+
+The link preview (`src/app/opengraph-image.tsx`, `src/lib/og/home-image.tsx`) is the same two US products with
+their photos, drawn at each day's build (a static route, like the guides' cards) instead of the hand-rendered
+`opengraph-image.jpg`, so a share always shows today's prices. The photos are the stores' own, read at build
+with a short timeout; one that cannot be read drops that product from the card and two unreadable photos give the
+old text-only brand card, never a broken image or a failed build. `scripts/og/render.mjs` now draws only the icons.

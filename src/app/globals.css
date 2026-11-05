@@ -317,17 +317,23 @@ html[data-season="christmas"] .ky-hero.wash {
   position: absolute;
   background: center / contain no-repeat;
 }
+/* The hero's two product cards (.ky-picks, owner 2026-11-05) sit above the decorations, which now peek out
+   from behind their edges instead of lying across the hero art they were drawn for. */
+.ky-picks {
+  position: relative;
+  z-index: 1;
+}
 .ky-tree {
   background-image: url(/xmas/ky-tree.svg);
-  left: 2%;
-  bottom: -2%;
+  left: -9%;
+  bottom: -6%;
   width: clamp(58px, 16%, 86px);
   aspect-ratio: 80 / 110;
 }
 .ky-cane {
   background-image: url(/xmas/ky-cane.svg);
-  right: 4%;
-  bottom: 0;
+  right: -2%;
+  bottom: -2%;
   width: clamp(24px, 7%, 36px);
   aspect-ratio: 1 / 2;
   transform: rotate(14deg);
@@ -349,8 +355,8 @@ html[data-season="christmas"] .ky-hero.wash {
   height: 18px;
   background: rgb(var(--gold) / 0.8);
 }
-.ky-stocking-1 { left: 5%; top: 22px; }
-.ky-stocking-2 { left: 14%; top: 8px; animation-delay: -3s; }
+.ky-stocking-1 { right: 4%; top: -10px; }
+.ky-stocking-2 { right: 13%; top: -22px; animation-delay: -3s; }
 @keyframes ky-sway {
   from { transform: rotate(-4deg); }
   to { transform: rotate(4deg); }

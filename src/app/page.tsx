@@ -10,7 +10,8 @@ import { RegionChips } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { Section } from "@/components/Section";
 import { ACTIVE_REGIONS } from "@/lib/regions";
-import { CAT_TINT, CatIcon, HeroArt } from "@/components/Art";
+import { CAT_TINT, CatIcon } from "@/components/Art";
+import { HeroPicks } from "@/components/HeroPicks";
 import { POST_BY_SLUG } from "@/content/blog";
 import { GUIDES } from "@/lib/guides";
 import { JsonLd, faqLd, siteLd } from "@/lib/seo";
@@ -91,8 +92,10 @@ export default function Home() {
               {meta && <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line">Checked {ago(meta.updatedAt)}</span>}
             </div>
           </div>
-          <div className="relative">
-            <HeroArt className="mx-auto w-full max-w-[300px] md:max-w-[440px]" />
+          {/* Two popular products with price and stores, right of the copy from md, under the search on a phone
+              (owner, 2026-11-05): the site's job shown, not described. The hero art it replaces stays in Art.tsx. */}
+          <div className="relative mx-auto w-full max-w-md md:max-w-none">
+            <HeroPicks />
             <span className="ky-flakes" aria-hidden="true">
               <span className="ky-flake" />
               <span className="ky-flake" />
