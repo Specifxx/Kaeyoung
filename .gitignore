@@ -9,3 +9,4 @@ out
 data/.cache
 probe/out-*.json
 shipping-out-*.json
+data/amazon-live/

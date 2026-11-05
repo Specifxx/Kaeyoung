@@ -5,8 +5,9 @@
 // beauty partners; all sit above the stores, labelled "Paid link", never counted
 // as a store and never the "best price" (family rule: commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
-import { amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnersFor, storePays, storeUrl, subId } from "@/lib/affiliate";
+import { amazonItemUrl, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnersFor, storePays, storeUrl, subId } from "@/lib/affiliate";
 import { getShipping, storeName } from "@/lib/data";
+import { AMAZON_CLOCK, amazonLive } from "@/lib/amazon-live";
 import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import type { EbayPick, Product } from "@/lib/types";
@@ -27,7 +28,11 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   const sub = subId(region, `${placement}_pinned`, f.ean);
   const ebayUrl = ebay ? ebayAffiliateUrl(ebay.u, sub) : ebaySearchUrl(q, region, sub);
   // Never in the quick view (2026-11-02): Amazon's Operating Agreement allows no Amazon link in a pop-up window.
-  const amazonUrl = placement.startsWith("quickview") ? null : amazonSearchUrl(q, region, sub);
+  // Amazon's own listing and price when this build's Creators API lookup matched the barcode (2026-11-05), else a search.
+  const live = placement.startsWith("quickview") ? null : amazonLive(f.ean, region);
+  const liveUrl = live && amazonItemUrl(live.asin, region, sub);
+  const amazonUrl = placement.startsWith("quickview") ? null : (liveUrl ?? amazonSearchUrl(q, region, sub));
+  const clock = AMAZON_CLOCK[region];
   const pinned: RowData[] = [];
   if (ebayUrl)
     pinned.push({
@@ -45,11 +50,12 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   if (amazonUrl)
     pinned.push({
       name: "Amazon",
-      sub: `${r.amazonHost?.replace("www.", "")} · check the seller`,
+      sub: liveUrl ? `${r.amazonHost?.replace("www.", "")} · new, this exact barcode` : `${r.amazonHost?.replace("www.", "")} · check the seller`,
       brand: "amazon",
-      price: null,
+      price: liveUrl && live ? money(live.p, region) : null,
       status: null,
       href: amazonUrl,
+      live: liveUrl && live && clock ? { at: live.at, timeZone: clock.timeZone, zoneLabel: clock.label } : undefined,
       paid: true,
       event: { source: "amazon", region, placement: `${placement}_pinned`, ean: f.ean },
     });
