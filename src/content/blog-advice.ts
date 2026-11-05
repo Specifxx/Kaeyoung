@@ -11,6 +11,83 @@ import type { Post } from "./blog";
 
 export const ADVICE_POSTS: Post[] = [
   {
+    slug: "pdrn-skincare-guide",
+    title: "PDRN skincare, explained: what it is, who sells it and where it is cheapest",
+    short: "PDRN skincare guide",
+    description: "PDRN went from Korean clinics to serums, creams and lip masks in two years. What the letters mean, what the products do and don't promise, and the most-stocked PDRN products priced at the cheapest store in your country.",
+    date: "2026-11-05",
+    sources: [
+      { title: "Polydeoxyribonucleotide (PDRN): a review of its use in dermatology", by: "National Library of Medicine (PubMed Central)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10006900/" },
+      { title: "How to test skin care products before use", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products" },
+    ],
+    art: "serums",
+    image: { src: "/blog/pdrn-skincare-guide.jpg", alt: "PDRN skincare, explained: serums, creams and masks priced at the cheapest store" },
+    sections: [
+      {
+        p: [
+          "PDRN stands for polydeoxyribonucleotide, a DNA fragment that in Korea started as an injectable used in clinics (the salmon-DNA \"skin booster\" you may have read about) and is now the most fashionable ingredient on K-beauty shelves. In our data it appears in the names of well over two hundred products, from serums and creams to eye patches, toner pads and overnight lip masks, across almost every brand that matters: medicube, Anua, Abib, VT, Tirtir and more.",
+          "What it is in a cream is a different thing from what it is in a clinic. Topical PDRN cannot do what an injection does, and no over-the-counter product should promise it. The published research on PDRN is mostly on the injectable and wound-healing use (see the review in the sources); for serums the honest claim is hydration, a smoother feel and, in the formulas that pair it with niacinamide or peptides, a brightening or firming routine you would get from those partners anyway. Our view: buy a PDRN product because you like the texture and the price, not for the letters. Patch test anything new and see a dermatologist for anything medical.",
+        ],
+      },
+      {
+        h: "PDRN serums and ampoules",
+        p: ["This is where the category started: thin, fast-absorbing serums, usually sold in 30 to 50 ml bottles and often paired with collagen, niacinamide or hyaluronic acid. The table shows the ones the most stores in your country stock, cheapest first; the price spread between stores for the same bottle is often wider than the difference between brands."],
+        picks: { title: "PDRN serums and ampoules {region}", match: "pdrn", cat: "serums", limit: 10 },
+      },
+      {
+        h: "PDRN creams and moisturisers",
+        p: ["The cream versions are the better value for a first try: a 50 to 80 ml tube lasts months and the texture is where the \"glass skin\" marketing actually comes from."],
+        picks: { title: "PDRN creams {region}", match: "pdrn", cat: "moisturisers", limit: 8 },
+      },
+      {
+        h: "PDRN toner pads, masks and eye patches",
+        p: ["The 2026 wave: pre-soaked pads and hydrogel patches that make the ingredient a two-minute step. These are the products most often on sale, so check the table before you pay full price anywhere."],
+        picks: { title: "PDRN pads, masks and patches {region}", match: "pdrn", cat: "masks", limit: 6 },
+      },
+      {
+        h: "PDRN lip and eye care",
+        p: ["Lip masks and eye patches were the quickest way for brands to add PDRN to a range. They are small, cheap and the easiest place to start if you are curious. Our [K-beauty price map](/blog/kbeauty-price-map-november-2026) shows how far the same PDRN barcode's price spreads between stores, and [is snail mucin worth it](/blog/is-snail-mucin-worth-it) is the same honest look at the ingredient that came before it."],
+        picks: { title: "PDRN lip and eye care {region}", match: "pdrn", cat: "lip-care", limit: 6 },
+      },
+    ],
+  },
+  {
+    slug: "korean-retinol-retinal-guide",
+    title: "Korean retinol and retinal: how to start, and where the gentle ones are cheapest",
+    short: "Korean retinol and retinal",
+    description: "Korean brands sell retinol and retinal in low, beginner-friendly strengths wrapped in soothing bases. How the two differ, how to start without a flaky week, and the most-stocked products at the cheapest store in your country.",
+    date: "2026-11-08",
+    sources: [
+      { title: "Retinoid or retinol?", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/retinoid-retinol" },
+      { title: "How to test skin care products before use", by: "American Academy of Dermatology", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products" },
+    ],
+    art: "serums",
+    image: { src: "/blog/korean-retinol-retinal-guide.jpg", alt: "Korean retinol and retinal: how to start, priced at the cheapest store" },
+    sections: [
+      {
+        p: [
+          "Retinol and retinal (retinaldehyde) are vitamin A derivatives, the over-the-counter cousins of the prescription retinoids that dermatologists have used for decades. Retinal is one conversion step closer to the active form than retinol, so a given percentage of retinal is generally stronger; Korean brands sell both in low strengths, often 0.1% or below, inside bases built around peptides, panthenol or heartleaf to soften the adjustment period. That gentleness is the reason to shop Korean for a first retinoid.",
+          "Our view: start with a retinol or a low retinal, two nights a week, a pea-sized amount after moisturiser (the \"sandwich\" method), and build up over a month. Use sunscreen every morning, do not combine it with strong acids on the same night, and skip it entirely if you are pregnant or breastfeeding. Dry, flaky skin in the first weeks is normal; stinging or a rash is not, so patch test first and see a dermatologist if it persists.",
+        ],
+      },
+      {
+        h: "Retinol serums and creams",
+        p: ["The starting point. Many of these list the strength in the name; if yours does not, assume it is low. The table shows the products the most stores stock in your country, cheapest first."],
+        picks: { title: "Retinol products {region}", match: "retinol", limit: 10 },
+      },
+      {
+        h: "Retinal serums and creams",
+        p: ["A step up for skin that has already tolerated retinol. Korean retinal products are a 2025 and 2026 arrival and are stocked by far fewer stores, so the spread between the cheapest and dearest store is wide: it is worth checking."],
+        picks: { title: "Retinal products {region}", match: "retinal", limit: 10 },
+      },
+      {
+        h: "Retinol and retinal eye care",
+        p: ["Eye creams and patches are the gentlest way in, because the concentration is lowest and the base richest. Pair any of them with the sunscreen step in [Korean sunscreen: where the favourites are cheapest](/blog/korean-sunscreen-where-cheapest), and if your skin is on the dry side read [our routine for dry skin](/blog/korean-skincare-routine-dry-skin) first."],
+        picks: { title: "Retinol and retinal eye care {region}", match: "retinol|retinal", cat: "eye-care", limit: 8 },
+      },
+    ],
+  },
+  {
     slug: "korean-skincare-routine-oily-skin",
     title: "A Korean skincare routine for oily skin, at the cheapest stores",
     short: "Routine for oily skin",
