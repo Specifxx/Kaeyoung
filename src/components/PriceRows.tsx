@@ -3,6 +3,7 @@
 // store row and labelled "Paid link"; they are never counted as a store or the best price.
 import type { Offer } from "@/lib/types";
 import { OutLink } from "./OutLink";
+import { AMAZON_PRICE_DISCLAIMER, AmazonPrice } from "./AmazonPrice";
 
 const STOCK: Record<Offer["st"], { label: string; cls: string }> = {
   in: { label: "In stock", cls: "bg-save-pale text-save" },
@@ -23,6 +24,8 @@ export interface RowData {
   from?: boolean;
   /** Stores: what delivery costs (lib/shipping.ts deliveryNote), when known. */
   ship?: string | null;
+  /** Amazon's own price from the Creators API (lib/amazon-live.ts): shown with its time, hidden after 24 hours. */
+  live?: { at: string; timeZone: string; zoneLabel: string };
   event: { source: string; region: string; placement: string; ean?: string };
 }
 
@@ -43,6 +46,7 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           {pinned.map((r) => (
             <Row key={r.name} {...r} />
           ))}
+          {pinned.some((r) => r.live) && <p className="px-1 text-[11px] text-soft">* Amazon price: {AMAZON_PRICE_DISCLAIMER}</p>}
         </div>
       )}
       {overseas.length > 0 && (
@@ -71,7 +75,7 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, event }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, event }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -90,7 +94,8 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
           {paid && <span>Paid link</span>}
         </p>
       </div>
-      {price && (
+      {price && live && <AmazonPrice price={price} at={live.at} timeZone={live.timeZone} zoneLabel={live.zoneLabel} />}
+      {price && !live && (
         <span className={`text-lg font-semibold tabular-nums ${highlight ? "text-accent-deep" : ""}`}>
           {from && <span className="mr-1 text-xs font-normal text-soft">from</span>}
           {price}

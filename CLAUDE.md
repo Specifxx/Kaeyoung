@@ -73,6 +73,11 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
   eBay approval, 2026-10-30), shared with CamCompare: 2,500 calls a day each, so `EBAY_DAILY_CAP` defaults to
   2,500 and the pass is a no-op until `EBAY_CLIENT_ID`/`EBAY_CLIENT_SECRET` exist. Never point it at a sister's
   keyset or raise the cap without the owner.
+- Amazon's own price on the Amazon row (owner, 2026-11-05): `scripts/fetch-amazon-prices.ts` runs first in every build
+  and asks the Creators API by EAN, in every region with a tag, into the git-ignored `data/amazon-live/`; the row shows
+  it with its time for 24 hours only (`lib/amazon-live.ts`, `AmazonPrice.tsx`). Never committed, never a sort, badge,
+  deal, feed or quick view. Credentials `AMAZON_CREATORS_AU_*` (Vercel only) serve every store; a store without API
+  access is skipped. `tests/amazon-api.test.ts` pins it.
 - No pop-ups, no interstitials, no sign-up or accounts (owner, 2026-10-30).
 
 ## Design
