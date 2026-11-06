@@ -35,7 +35,7 @@ class Cart {
   private jar = new Map<string, string>();
   calls = 0;
   backoffs = 0;
-  constructor(private base: string) {}
+  constructor(public base: string) {}
 
   async req(pathname: string, init: RequestInit = {}): Promise<unknown> {
     await sleep(1500);
@@ -47,6 +47,12 @@ class Cart {
       headers: { "User-Agent": UA, Accept: "application/json", "Content-Type": "application/json", ...(cookie ? { Cookie: cookie } : {}), ...(init.headers ?? {}) },
       signal: AbortSignal.timeout(30_000),
     });
+    // A store whose address redirects (bare domain → www, or to its own market's host) is asked at its final address
+    // from then on: a cookie sent across that redirect is dropped, and the cart would come back empty every time.
+    if (res.redirected && res.url) {
+      const origin = new URL(res.url).origin;
+      if (origin !== this.base) this.base = origin;
+    }
     for (const c of res.headers.getSetCookie?.() ?? []) {
       const [kv] = c.split(";");
       const i = kv.indexOf("=");
@@ -140,7 +146,7 @@ async function probe(cart: Cart, c: Candidate, currency: string): Promise<Produc
       r.gifts.forEach((g) => gifts.add(g));
     }
     const t = dealTiers(c.price, readings);
-    if (!t.length && !gifts.size) return note(`no discount (${readings.map((x) => `${x.q}:${x.total}`).join(" ")})`), null;
+    if (!t.length && !gifts.size) return note(readings.length ? "no discount" : "no reading"), null;
     const d: ProductDeal = { u: c.price, t };
     const l = [...labels][0];
     if (l) d.l = l;
