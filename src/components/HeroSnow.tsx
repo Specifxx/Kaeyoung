@@ -94,7 +94,7 @@ export function HeroSnow({ className = "" }: { className?: string }) {
       const z = Math.random(); // 0 far … 1 near
       const kindRoll = Math.random();
       const kind: 0 | 1 | 2 = kindRoll < 0.72 ? 0 : kindRoll < 0.9 ? 1 : 2;
-      const c = kind === 2 ? 2 : Math.random() < 0.5 ? 0 : Math.random() < 0.6 ? 1 : 2;
+      const c = kind === 2 ? 2 : Math.random() < 0.65 ? 0 : Math.random() < 0.5 ? 1 : 2;
       return {
         x: Math.random() * W,
         y: fresh ? Math.random() * H : -20 - Math.random() * 40,
