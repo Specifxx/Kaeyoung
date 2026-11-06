@@ -125,7 +125,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
     <div
       className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 ${check ? "border-accent/50 bg-accent/5" : "bg-card"} ${
         // eBay with a price: a green outline, like the cheapest store's (owner, 2026-11-06).
-        check ? "" : brand === "ebay" && price ? "border-save" : highlight ? "border-ink/70" : "border-line"
+        check ? "" : brand === "ebay" && price ? "border-save" : brand === "amazon" && price ? "border-[#f59e0b]" : highlight ? "border-ink/70" : "border-line"
       } ${status === "out" ? "opacity-60" : ""}`}
     >
       <div className="min-w-0 flex-1">
