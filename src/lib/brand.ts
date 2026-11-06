@@ -63,6 +63,10 @@ export function brandFromTitle(title: string): string | null {
   return null;
 }
 
+// A vendor that is a product category, not a maker (2026-11-06: "Face Mask" made /brands/face-mask). The title's own
+// brand, if known, is used instead.
+const NOT_A_BRAND = /^(face\s*masks?|sheet\s*masks?|masks?|skin\s*care|skincare|cosmetics?|beauty|serums?|toners?|cleansers?|sunscreens?|moisturi[sz]ers?)$/i;
+
 /**
  * The brand of one listing: the vendor, unless it is empty or the store's own
  * name (some shops put themselves there), then a known brand at the start of
@@ -71,7 +75,7 @@ export function brandFromTitle(title: string): string | null {
 export function listingBrand(vendor: string, title: string, storeName: string): string | null {
   const v = vendor.trim();
   const store = brandKey(storeName);
-  if (v && brandKey(v) && brandKey(v) !== store && !/^(default|vendor|unknown|k-?beauty|korean)/i.test(v)) return v;
+  if (v && brandKey(v) && brandKey(v) !== store && !/^(default|vendor|unknown|k-?beauty|korean)/i.test(v) && !NOT_A_BRAND.test(v)) return v;
   return brandFromTitle(title);
 }
 

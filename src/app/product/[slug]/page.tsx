@@ -201,7 +201,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               <div key={r.code} className={`rp rp-${r.code} mt-5`}>
                 {b ? (
                   <div className="card p-5">
-                    <p className="text-sm text-soft">Lowest price {r.phrase}</p>
+                    <p className="text-sm text-soft">Lowest store price {r.phrase}</p>
                     <p className="mt-0.5 text-4xl font-semibold tabular-nums tracking-tight text-ink">{money(b.offer.p, r.code)}</p>
                     <p className="mt-1 text-sm text-soft">
                       at <span className="font-medium text-ink">{storeName(b.offer.s)}</span> · {b.stores} store{b.stores === 1 ? "" : "s"} compared
