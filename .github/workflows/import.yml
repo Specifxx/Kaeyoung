@@ -53,6 +53,25 @@ jobs:
           EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
           EBAY_DAILY_CAP: ${{ vars.EBAY_DAILY_CAP }}
         run: npx tsx scripts/ebay-import.ts
+      - name: Amazon ASINs (by barcode; a no-op until a Creators API credential exists)
+        if: github.event_name != 'workflow_dispatch' || inputs.stores
+        env:
+          AMAZON_CREATORS_US_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_US_CLIENT_ID }}
+          AMAZON_CREATORS_US_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_US_CLIENT_SECRET }}
+          AMAZON_CREATORS_US_VERSION: ${{ secrets.AMAZON_CREATORS_US_VERSION }}
+          AMAZON_CREATORS_UK_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_UK_CLIENT_ID }}
+          AMAZON_CREATORS_UK_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_UK_CLIENT_SECRET }}
+          AMAZON_CREATORS_UK_VERSION: ${{ secrets.AMAZON_CREATORS_UK_VERSION }}
+          AMAZON_CREATORS_CA_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_CA_CLIENT_ID }}
+          AMAZON_CREATORS_CA_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_CA_CLIENT_SECRET }}
+          AMAZON_CREATORS_CA_VERSION: ${{ secrets.AMAZON_CREATORS_CA_VERSION }}
+          AMAZON_CREATORS_EU_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_EU_CLIENT_ID }}
+          AMAZON_CREATORS_EU_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_EU_CLIENT_SECRET }}
+          AMAZON_CREATORS_EU_VERSION: ${{ secrets.AMAZON_CREATORS_EU_VERSION }}
+          AMAZON_CREATORS_AU_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_AU_CLIENT_ID }}
+          AMAZON_CREATORS_AU_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_AU_CLIENT_SECRET }}
+          AMAZON_CREATORS_AU_VERSION: ${{ secrets.AMAZON_CREATORS_AU_VERSION }}
+        run: npx tsx scripts/amazon-asins.ts
       - name: Reviews (published ratings → data/public/reviews.json)
         env:
           # The reviews branch of this public repo, read with the job's own token (no secret).
