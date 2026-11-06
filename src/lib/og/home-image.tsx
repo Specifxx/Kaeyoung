@@ -87,7 +87,7 @@ export function homeImage(o: HomeImageOpts) {
           <div style={{ display: "flex", gap: 22, alignItems: "stretch" }}>
             {picks.map(({ pick, photo }) => (
               <div key={pick.f.ean} style={{ display: "flex", flexDirection: "column", width: 268, backgroundColor: "#ffffff", border: `2px solid ${LINE}`, borderRadius: 24, overflow: "hidden" }}>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 300, padding: 22, backgroundImage: "linear-gradient(#ffffff, #fff4f7)" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 300, padding: 22, backgroundImage: "linear-gradient(180deg, #ffffff, #fff4f7)" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
                   <img src={photo!} width={224} height={256} style={{ objectFit: "contain" }} />
                 </div>

@@ -875,3 +875,29 @@ permalink (the single-click checkout links), so Awin and partner stores, and row
 "manual" lines on their own tracked links; eBay, Amazon, TCGplayer and Cardmarket are never lines. Shared files, the
 same in every site (port fixes by hand): `src/lib/cart-list.ts`, `src/components/cart/*` (`cart-config.ts` is the
 one per-site file; styles imported once from the root layout), `tests/cart-list.test.ts`.
+
+## 2026-11-06 — Build only the top product pages; the rest render on first visit
+
+**Why:** every daily build wrote a page and a quick-view file for each of ~11,200 products: about 22,000 pages (ScentCompare, on the same engine, had reached 77,070 pages and 15–17 minutes). A build that
+long queues every other build behind it and loses the whole time when it fails.
+
+**Decision:** the build prerenders only `prebuiltProducts()` (`src/lib/index-tiers.ts`): the 500 most widely stocked
+products in the sitemap tier, page and `/q/<slug>` file. Every other product page has `dynamicParams = true`: it is
+rendered on its first visit, by the same code from the same deployment's data, and then kept as a static file until
+the next release. There is no revalidate timer, so it is rendered at most once per release (the 2026-10 lesson from
+RiftCompare was timers, not one-off writes). Build now: 1,619 pages and 51s locally. URLs, titles, metadata, prices and JSON-LD are the
+same as before; the sitemap still lists every page it did (it reads the data, not the prerendered list). Those two
+functions carry `data/public` and `data/amazon-live` (`outputFileTracingIncludes` in `next.config.js`): without them
+the data loader falls back to empty and every such page would be a 404. `tests/cost-rules.test.ts` pins all three.
+
+A slug the release does not know now draws the not-found page with `noindex` and a 200 status, not a 404: Next 14
+streams the page behind `loading.tsx`, so `notFound()` can no longer set the status (tried in the metadata and in a
+layout, neither works on 14.2). Google treats it as excluded either way.
+
+**Prices still ship with the daily build, on purpose.** Prices are written into each page's HTML, so the daily data
+commit (`[deploy]`) is the one release a day, and the 12-hour gate skips it when a release went out in the last 12
+hours. Reading prices at request time from a store would turn every page into a function on every visit, which is
+what this engine exists to avoid; with the build at a minute or two, one data build a day costs little.
+
+Also fixed: the home share image's `linear-gradient(#fff, …)` without a direction made satori throw "Missing comma
+before color stops" (`/opengraph-image`); it now says `180deg`.

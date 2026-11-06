@@ -5,12 +5,15 @@
 import { REGIONS } from "@/site";
 import { getEbay, getProduct, getProducts, regionsOf } from "@/lib/data";
 import { priceRows } from "@/components/PriceTable";
+import { prebuiltProducts } from "@/lib/index-tiers";
 import { shareTexts } from "@/lib/share-texts";
 
 export const dynamic = "force-static";
-export const dynamicParams = false;
+// Like the product page: the top products at build, any other on its first
+// request, then kept until the next release (DECISIONS.md 2026-11-06).
+export const dynamicParams = true;
 export function generateStaticParams() {
-  return getProducts().map((f) => ({ slug: f.slug }));
+  return prebuiltProducts(getProducts()).map((f) => ({ slug: f.slug }));
 }
 
 export function GET(_req: Request, { params }: { params: { slug: string } }) {
