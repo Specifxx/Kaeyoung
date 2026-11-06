@@ -4,6 +4,7 @@
 import type { Offer } from "@/lib/types";
 import { OutLink } from "./OutLink";
 import { AMAZON_PRICE_DISCLAIMER, AmazonPrice } from "./AmazonPrice";
+import { StoreVote } from "./StoreVote";
 
 const STOCK: Record<Offer["st"], { label: string; cls: string }> = {
   in: { label: "In stock", cls: "bg-save-pale text-save" },
@@ -29,6 +30,8 @@ export interface RowData {
   /** the link opens the store's checkout with the item in it (lib/affiliate.ts buyLink) */
   checkout?: boolean;
   event: { source: string; region: string; placement: string; ean?: string; to?: string };
+  /** Stores only: the store's own listing URL, for the shared thumbs up / down (StoreVote.tsx). */
+  vote?: string;
 }
 
 export interface RowsData {
@@ -80,7 +83,7 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, event }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, event, vote }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -89,8 +92,9 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
       } ${status === "out" ? "opacity-60" : ""}`}
     >
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 font-semibold">
-          <span className="truncate">{name}</span>
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 font-semibold">
+          <span className="min-w-0 max-w-full truncate">{name}</span>
+          {vote && <StoreVote url={vote} name={name} className="shrink-0 text-xs font-normal text-soft" />}
         </p>
         <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}

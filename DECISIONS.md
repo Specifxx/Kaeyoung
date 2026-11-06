@@ -817,3 +817,15 @@ the `motion:start`/`motion:end` block of `globals.css`); only `--snow`, the pale
 * **The hero** eases in on arrival, its two product cards float, the wash drifts, and "Pay less." catches a gold glint
   every few seconds. Buttons lift and press, buy buttons get a light sweep, step icons wiggle, price rows lift, the
   search glows when focused, the header gains a shadow once scrolled. No pop-ups, nothing that moves a price.
+
+## 2026-11-06 — Store thumbs up and down, one tally shared by every site
+
+**Decision (owner: "a little mini area where you can rate a shop … thumbs up a store or thumbs down a store … across all
+the sites you can now see that these stores are trusted"):** every store row carries two tiny thumbs beside the store's
+name (`src/components/StoreVote.tsx`, the same file on every Compare Empire site), with counts once a store has votes and
+a green "Trusted" mark from 3 thumbs up and 80% of the votes. RiftCompare keeps the votes and serves one public tally
+(`riftcompare.com/api/store-votes`, CDN six hours), keyed by the store's host without "www.", so a shop listed on several
+sites shares its thumbs; this site stores nothing and fetches the tally in the browser only (no function, no build
+step). One vote per browser per store, a few per network, marketplaces (eBay, Amazon, TCGplayer…) get none. Votes never
+order prices, hide a store or decide the cheapest. RiftCompare's DECISIONS.md, 2026-11-06, has the rules; change the
+component there first and copy it.
