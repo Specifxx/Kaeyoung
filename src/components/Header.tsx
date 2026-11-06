@@ -5,6 +5,7 @@ import { SearchBox } from "./SearchBox";
 import { ThemeToggle } from "./ThemeToggle";
 import { MobileMenu } from "./MobileMenu";
 import type { NavGroup } from "@/lib/nav";
+import { CartHeaderLink } from "@/components/cart/CartHeaderLink";
 
 export function Header({ groups }: { groups: NavGroup[] }) {
   return (
@@ -19,11 +20,16 @@ export function Header({ groups }: { groups: NavGroup[] }) {
         <div className="ml-auto flex items-center gap-2">
           <RegionPicker compact />
           <ThemeToggle />
-          <MobileMenu groups={groups} />
+          {/* The cart list (components/cart, owner 2026-11-06), with its count: here from md, beside the search on phones. */}
+        <CartHeaderLink className="hidden md:inline-flex" />
+        <MobileMenu groups={groups} />
         </div>
       </div>
-      <div className="px-4 pb-2.5 md:hidden">
-        <SearchBox />
+      <div className="flex items-center gap-2 px-4 pb-2.5 md:hidden">
+        <div className="min-w-0 flex-1">
+          <SearchBox />
+        </div>
+        <CartHeaderLink />
       </div>
     </header>
   );

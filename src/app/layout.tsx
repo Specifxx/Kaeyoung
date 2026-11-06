@@ -6,6 +6,8 @@ import { ShareArrival } from "@/components/ShareArrival";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/fraunces";
 import "./globals.css";
+// The cart list's styles (components/cart): imported here, never from a component, so node tests can load them.
+import "@/components/cart/cart.css";
 import "@/components/site-reviews/site-reviews.css";
 import { SITE } from "@/site";
 import { ACTIVE_REGIONS } from "@/lib/regions";

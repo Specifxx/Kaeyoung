@@ -115,6 +115,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       dealLabel: d ? (d.l ?? (d.t.length ? "Multi-buy" : "Free gift")) : null,
       offer: store ? offersNote(awinProgrammeFor(store.base)?.id ?? null, region) : null,
       event: { source: o.s, region, placement, ean: f.ean, to: link.to },
+      ...(o.st !== "out" ? { cart: { title: f.brand && !f.name.toLowerCase().startsWith(f.brand.toLowerCase()) ? `${f.brand} ${f.name}` : f.name, image: f.img, priceCents: o.p, currency: r.currency } } : {}),
     };
   });
   return { pinned, overseas, overseasTo: r.name, stores };

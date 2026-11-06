@@ -5,6 +5,7 @@ import type { Offer } from "@/lib/types";
 import { OutLink } from "./OutLink";
 import { AMAZON_PRICE_DISCLAIMER, AmazonPrice } from "./AmazonPrice";
 import { StoreVote } from "./StoreVote";
+import { CartAddButton } from "./cart/CartAddButton";
 
 const STOCK: Record<Offer["st"], { label: string; cls: string }> = {
   in: { label: "In stock", cls: "bg-save-pale text-save" },
@@ -38,6 +39,8 @@ export interface RowData {
   event: { source: string; region: string; placement: string; ean?: string; to?: string };
   /** Stores only: the store's own listing URL, for the shared thumbs up / down (StoreVote.tsx). */
   vote?: string;
+  /** In-stock stores only: the cart list's line (components/cart, owner 2026-11-06). */
+  cart?: { title: string; image: string | null; priceCents: number; currency: string };
 }
 
 export interface RowsData {
@@ -111,7 +114,7 @@ function Deals({ deal, dealLabel, offer }: Pick<RowData, "deal" | "dealLabel" | 
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -129,6 +132,10 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
           {ship && <span>{ship}</span>}
           {paid && <span>Paid link</span>}
+          {/* Phones: the cart list's add button as a word on this line, where the row has no width to spare. */}
+          {cart && vote && (
+            <CartAddButton inline href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="text-xs sm:hidden" />
+          )}
           <Deals deal={deal} dealLabel={dealLabel} offer={offer} />
         </p>
       </div>
@@ -138,6 +145,9 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
           {from && <span className="mr-1 text-xs font-normal text-soft">from</span>}
           {price}
         </span>
+      )}
+      {cart && vote && (
+        <CartAddButton href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="hidden text-soft sm:inline-flex" />
       )}
       <OutLink
         href={href}
