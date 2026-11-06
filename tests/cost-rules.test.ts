@@ -19,9 +19,25 @@ test("no page reads the request (cookies, headers, searchParams) or opts out of 
   }
 });
 
-test("every dynamic route is fully prerendered (dynamicParams = false)", () => {
-  for (const f of src.filter((f) => /src\/app\/.*\[[^\]]+\]\/page\.tsx$/.test(f))) {
+// Product pages and their quick-view files are the one exception (DECISIONS.md 2026-11-06): the build writes the top
+// 500, the rest render on first visit and are kept until the next release, never on a timer.
+const ON_FIRST_VISIT = ["src/app/product/[slug]/page.tsx", "src/app/q/[slug]/route.ts"];
+test("every dynamic route is fully prerendered (dynamicParams = false), except product pages", () => {
+  for (const f of src.filter((f) => /src\/app\/.*\[[^\]]+\]\/page\.tsx$/.test(f) && !ON_FIRST_VISIT.includes(f))) {
     assert.match(read(f), /export const dynamicParams = false/, f);
+  }
+});
+
+test("product pages: top products at build, the rest on first visit with their data traced in", () => {
+  for (const f of ON_FIRST_VISIT) {
+    const s = read(f);
+    assert.match(s, /export const dynamicParams = true/, f);
+    assert.match(s, /prebuiltProducts\(getProducts\(\)\)/, `${f}: prerender only the top products`);
+    assert.doesNotMatch(s, /export const revalidate/, f);
+  }
+  const cfg = read("next.config.js");
+  for (const r of ["/product/[slug]", "/q/[slug]"]) {
+    assert.ok(cfg.includes(`"${r}": ["./data/public/**", "./data/amazon-live/**"]`), `${r}: its function must carry data/`);
   }
 });
 

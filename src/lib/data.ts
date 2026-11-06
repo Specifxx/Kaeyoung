@@ -1,6 +1,6 @@
-// The committed data under data/public, read at BUILD time only: every page is
-// prerendered once per release (one [deploy] build a day), so a visit is a
-// static file from Vercel's CDN, never a function and never a database read.
+// The committed data under data/public, read at build and, for a product page
+// outside the prebuilt top 500, once on its first visit (DECISIONS.md 2026-11-06);
+// after that a visit is a static file from Vercel's CDN, never a database read.
 import fs from "node:fs";
 import path from "node:path";
 import { CATEGORIES, REGIONS, type CatKey, type RegionCode } from "@/site";

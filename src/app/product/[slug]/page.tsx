@@ -5,7 +5,7 @@ import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
 import { bestIn, brandKo, cheapestDelivered, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
-import { isIndexable } from "@/lib/index-tiers";
+import { isIndexable, prebuiltProducts } from "@/lib/index-tiers";
 import { buyLink } from "@/lib/affiliate";
 import { ProductImage } from "@/components/ProductImage";
 import { PriceTable } from "@/components/PriceTable";
@@ -24,11 +24,15 @@ import { ShareButton } from "@/components/ShareButton";
 import { shareTexts } from "@/lib/share-texts";
 import { JsonLd, breadcrumbLd } from "@/lib/seo";
 
-// Prerendered at build, one static file per product; a slug the release does
-// not know is a 404, never a render on request.
-export const dynamicParams = false;
+// The build prerenders only the top products (prebuiltProducts, 500 of ~11,000):
+// writing every page made the daily build slow (ScentCompare: 15+ minutes). Any other product renders
+// on its first visit, from the same data in the same deployment, and is kept as a
+// static file until the next release (no revalidate timer). A slug the release
+// does not know draws the not-found page, noindexed (Next 14 streams it behind
+// loading.tsx, so the status is 200, not 404). DECISIONS.md 2026-11-06.
+export const dynamicParams = true;
 export function generateStaticParams() {
-  return getProducts().map((f) => ({ slug: f.slug }));
+  return prebuiltProducts(getProducts()).map((f) => ({ slug: f.slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {

@@ -8,6 +8,16 @@ module.exports = {
   // Store photos are hotlinked from the stores' CDNs at the size we ask for;
   // Vercel image optimisation is billed per source image, so it stays off.
   images: { unoptimized: true },
+  // Product pages and quick-view files outside the prebuilt top 500 render on their
+  // first request (DECISIONS.md 2026-11-06), so those functions must carry the data
+  // they read: data.ts and ratings.ts read data/public, PriceTable data/amazon-live.
+  // Without it data.ts's loader falls back to empty and every such page is a 404.
+  experimental: {
+    outputFileTracingIncludes: {
+      "/product/[slug]": ["./data/public/**", "./data/amazon-live/**"],
+      "/q/[slug]": ["./data/public/**", "./data/amazon-live/**"],
+    },
+  },
   async headers() {
     return [
       {

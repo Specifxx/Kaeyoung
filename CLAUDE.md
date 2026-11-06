@@ -10,7 +10,8 @@ built on FigureCompare's static engine, but carrying **no Compare branding** (ow
 - The daily import (`.github/workflows/import.yml`: `scripts/import.ts`, then `scripts/ebay-import.ts`) writes
   `data/public/*.json` and commits it to `main` with `[deploy]` in the subject: the one production build a day.
 - Every page is prerendered at that build (`generateStaticParams` + `dynamicParams = false`): a visit is a static
-  file, never a function. No database, no middleware, no ISR timer, no page reads cookies, headers or `searchParams`,
+  file, never a function. Product pages and `/q/<slug>` are the one exception (2026-11-06): the build writes the top
+  500 (`prebuiltProducts`), the rest render once on first visit and are kept until the next release, never on a timer. No database, no middleware, no ISR timer, no page reads cookies, headers or `searchParams`,
   every `next/link` has `prefetch={false}`, image optimisation is off. `tests/cost-rules.test.ts` pins all of it.
 - The only function is eBay's account-deletion hook (`src/app/api/ebay/marketplace-deletion`); keep it while an eBay
   keyset exists.

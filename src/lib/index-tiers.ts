@@ -23,3 +23,16 @@ export function inSitemap(f: Product): boolean {
   const counts = Object.values(f.offers).map((o) => o?.length ?? 0);
   return counts.some((n) => n >= 3) || counts.filter((n) => n >= SITE.minStoresPerRegion).length >= 2;
 }
+
+/** How many product pages (and quick-view files) the daily build writes (DECISIONS.md 2026-11-06, "Build only the
+ *  top product pages"). The rest render on their first visit and are kept until the next release. */
+export const PREBUILT_PRODUCTS = 500;
+
+/** The products prerendered at build: the most widely stocked in the sitemap tier. */
+export function prebuiltProducts(all: Product[]): Product[] {
+  const stores = (f: Product) => Object.values(f.offers).reduce((n, o) => n + (o?.length ?? 0), 0);
+  return all
+    .filter(inSitemap)
+    .sort((a, b) => stores(b) - stores(a) || a.slug.localeCompare(b.slug))
+    .slice(0, PREBUILT_PRODUCTS);
+}
