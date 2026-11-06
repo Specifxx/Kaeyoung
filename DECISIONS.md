@@ -981,3 +981,16 @@ feed) or eBay could be cheaper: partners and eBay are never the best price (fami
 say "Lowest store price", which is exactly what they are. Sold-out store rows stay at the bottom but show no price (a
 stale price read as a deal). A Shopify vendor that is a category ("Face Mask", "Skincare") is not a brand; the title's
 known brand is used instead, so no /brands/face-mask page. "K Young" in Google is an old crawled title; the site has none.
+
+## 2026-11-06: The quick view carries the tagged Amazon link (owner)
+
+Since 2026-11-02 the quick view showed no Amazon link (or, on KaeYoung and ScentCompare, an "Amazon" row that opened our
+own product page), read as Amazon's ban on links in pop-ups. The owner noticed the quick view sends nobody to Amazon and
+chose (2026-11-06) to put the product page's own tagged Amazon link there. Amazon's Participation Requirements, item
+(o): "You will not post or serve any Special Links … within any pop-up or pop-under windows, transitional page ads, or
+layer ads, except for pop-up windows in conjunction with your Site promoting Products closely associated with the
+materials on your Site." A quick view the visitor opens for one product, showing that same product, fits the exception;
+the owner accepted the remaining risk. The quick view shows the link only (the item's own page where the ASIN is known,
+else the tagged search), never Amazon's price: that stays on the product page under the 24-hour licence. Uninvited
+overlays (a phone ad dock, a corner card, an exit pop-up) still never carry Amazon, and an Amazon page is never framed
+(item (n)).
