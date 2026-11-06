@@ -890,9 +890,10 @@ same as before; the sitemap still lists every page it did (it reads the data, no
 functions carry `data/public` and `data/amazon-live` (`outputFileTracingIncludes` in `next.config.js`): without them
 the data loader falls back to empty and every such page would be a 404. `tests/cost-rules.test.ts` pins all three.
 
-A slug the release does not know now draws the not-found page with `noindex` and a 200 status, not a 404: Next 14
-streams the page behind `loading.tsx`, so `notFound()` can no longer set the status (tried in the metadata and in a
-layout, neither works on 14.2). Google treats it as excluded either way.
+A slug the release does not know is still a real 404. Not from `notFound()` in the page: Next 14 streams the page
+behind `loading.tsx`, so a page-level `notFound()` answers 200 with the not-found page (a soft 404). The check lives
+in `src/app/product/[slug]/layout.tsx`, which renders outside that loading boundary, so the 404 status is set before
+anything is sent (`tests/cost-rules.test.ts`).
 
 **Prices still ship with the daily build, on purpose.** Prices are written into each page's HTML, so the daily data
 commit (`[deploy]`) is the one release a day, and the 12-hour gate skips it when a release went out in the last 12

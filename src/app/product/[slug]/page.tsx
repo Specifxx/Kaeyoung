@@ -28,8 +28,7 @@ import { JsonLd, breadcrumbLd } from "@/lib/seo";
 // writing every page made the daily build slow (ScentCompare: 15+ minutes). Any other product renders
 // on its first visit, from the same data in the same deployment, and is kept as a
 // static file until the next release (no revalidate timer). A slug the release
-// does not know draws the not-found page, noindexed (Next 14 streams it behind
-// loading.tsx, so the status is 200, not 404). DECISIONS.md 2026-11-06.
+// does not know is a real 404, answered by ./layout.tsx. DECISIONS.md 2026-11-06.
 export const dynamicParams = true;
 export function generateStaticParams() {
   return prebuiltProducts(getProducts()).map((f) => ({ slug: f.slug }));
