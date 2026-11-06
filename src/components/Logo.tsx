@@ -16,11 +16,13 @@ export function LogoMark({ size = 32 }: { size?: number }) {
   );
 }
 
-export function Logo() {
+/** `wordmark` sets when the name shows: the header hides it on the narrowest phones, where the region, theme and
+ *  menu buttons need the row (owner, 2026-11-06: header overflow); the link keeps its aria-label. */
+export function Logo({ wordmark = "flex" }: { wordmark?: string }) {
   return (
     <span className="flex items-center gap-2.5">
       <LogoMark />
-      <span className="flex flex-col leading-none">
+      <span className={`${wordmark} flex-col leading-none`}>
         <span className="font-display text-[22px] font-semibold tracking-tight text-ink">KaeYoung</span>
         <span className="mt-0.5 hidden text-[10px] font-medium uppercase tracking-[0.2em] text-soft sm:block">Stay young</span>
       </span>
