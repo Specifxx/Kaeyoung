@@ -5,14 +5,26 @@
 // beauty partners; all sit above the stores, labelled "Paid link", never counted
 // as a store and never the "best price" (family rule: commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
-import { amazonItemUrl, buyLink, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerProductUrl, partnersFor, storePays, subId } from "@/lib/affiliate";
-import { getPartnerPrices, getShipping, storeName } from "@/lib/data";
+import { amazonItemUrl, buyLink, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerAwinId, partnerProductUrl, partnersFor, storePays, subId } from "@/lib/affiliate";
+import { getPartnerPrices, getPromos, getShipping, storeName } from "@/lib/data";
+import { STORE_BY_ID } from "@/content/stores";
+import { awinProgrammeFor } from "@/lib/awin";
+import { awinOffers, bestPerItem, dealNote, liveDeal, offerNote, type AwinPromotion } from "@/lib/promos";
+import awinPromos from "@/lib/awin-promotions.json";
 import { partnerPriceIn } from "@/lib/partner-feed";
 import { AMAZON_CLOCK, amazonLive } from "@/lib/amazon-live";
 import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import type { EbayPick, Product } from "@/lib/types";
 import { PriceRows, type RowData, type RowsData } from "./PriceRows";
+
+const AWIN_OFFERS: AwinPromotion[] = Array.isArray((awinPromos as { promotions?: unknown }).promotions) ? ((awinPromos as { promotions: AwinPromotion[] }).promotions) : [];
+
+/** A retailer's live Awin offers in this region, as one note ("Code GLOW15: 15% off (ends 30 Nov)"), or null. */
+function offersNote(advertiserId: number | null, region: RegionCode): string | null {
+  const live = awinOffers(AWIN_OFFERS, advertiserId, region);
+  return live.length ? live.map(offerNote).join(" · ") : null;
+}
 
 export function searchQuery(f: Product): string {
   return f.name.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
@@ -71,15 +83,23 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     const event = { source: p.key, region, placement: `${placement}_overseas`, ean: f.ean };
     const fed = paid ? partnerPriceIn(feeds, p.key, region, f.ean) : null;
     const productHref = fed && partnerProductUrl(p, fed.u, sub);
+    const offer = paid ? offersNote(partnerAwinId(p), region) : null;
     if (fed && productHref) {
-      pinned.push({ name: p.name, sub: `${p.note}, this exact barcode`, price: money(fed.p, region), status: "in", href: productHref, paid: true, event: { ...event, placement: `${placement}_pinned` } });
+      pinned.push({ name: p.name, sub: `${p.note}, this exact barcode`, price: money(fed.p, region), status: "in", href: productHref, paid: true, offer, event: { ...event, placement: `${placement}_pinned` } });
       continue;
     }
-    overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, event });
+    overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, offer, event });
   }
   const ship = getShipping();
+  const promos = getPromos();
+  const fmt = (m: number) => money(m, region);
   const stores: RowData[] = offers.map((o) => {
     const link = buyLink(o);
+    // A multi-buy or free gift the store's own cart applied (lib/promos.ts): a note, never the row's price or its rank.
+    const d = o.st === "in" ? liveDeal(promos, o.s, f.ean, o.p) : null;
+    const per = d && bestPerItem(d);
+    const lowest = !!(per && best && per.q > 1 && per.each < best.p);
+    const store = STORE_BY_ID[o.s];
     return {
       name: storeName(o.s),
       sub: o === best ? "Lowest item price" : null,
@@ -90,7 +110,10 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       checkout: link.to === "checkout",
       paid: storePays(o.s),
       highlight: o === best,
-      ship: deliveryNote(ship[o.s], o.p, (m) => money(m, region)),
+      ship: deliveryNote(ship[o.s], o.p, fmt),
+      deal: d ? `${dealNote(d, fmt)}${lowest ? ` · lowest per item if you buy ${per!.q}` : ""}` : null,
+      dealLabel: d ? (d.l ?? (d.t.length ? "Multi-buy" : "Free gift")) : null,
+      offer: store ? offersNote(awinProgrammeFor(store.base)?.id ?? null, region) : null,
       event: { source: o.s, region, placement, ean: f.ean, to: link.to },
     };
   });

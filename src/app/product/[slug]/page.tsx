@@ -255,7 +255,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           <p className="mt-3 text-xs leading-relaxed text-soft">
             Prices are what each store&apos;s own site showed at our last daily check{meta ? ` (${niceDate(meta.updatedAt)})` : ""}, before delivery, and they can change at any time: the store&apos;s checkout is always the final price. Delivery
             costs are each store&apos;s own quote for a small order to one city in your region, checked weekly; they can differ for your address. Every store listing here carries this product&apos;s barcode ({f.ean}), so it is the same product and
-            size, not a look-alike.{" "}
+            size, not a look-alike. Multi-buys and free gifts are what the store&apos;s own cart charged for 1, 2 and 3 of this product in the last two days; stores stay in single-item price order.{" "}
             <Link prefetch={false} href="/basket" className="font-medium text-accent-deep hover:underline">Buying several products? Compare a whole basket →</Link>
           </p>
           <ReportPrice
