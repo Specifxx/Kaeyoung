@@ -130,7 +130,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
     >
       <div className="min-w-0 flex-1">
         <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 font-semibold">
-          <span className="min-w-0 max-w-full truncate">{name}</span>
+          <span className={check ? "min-w-0" : "min-w-0 max-w-full truncate"}>{name}</span>
           {vote && <StoreVote url={vote} name={name} className="shrink-0 text-xs font-normal text-soft" />}
         </p>
         <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
