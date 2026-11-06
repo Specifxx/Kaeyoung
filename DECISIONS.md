@@ -739,3 +739,12 @@ one store). Access is per marketplace and opens by itself once that store's acco
 (about 10 in 30 days); a refused store is skipped and the row keeps its search link, so the feature costs
 nothing until then and switches on without a code change. The ops monitor cannot see a Vercel build, so a
 failed fetch is silent by design: the fallback is the row as it was.
+
+## 2026-11-06 — US and UK need 10x and 5x Australia's stores (round 6 probe)
+
+Bill (2026-11-06) set every compare site the goal of about ten times Australia's stores and listings in the US and
+five times in the UK. KaeYoung had 43 US and 22 UK stores with listings against Australia's 17. Round 6 probed 90
+new US and UK shops (`probe/summary.md`); 19 readable Shopify shops with Korean barcodes in their variants were added
+(10 US, 8 UK, 1 CA). Left out: shops with almost no 880 barcodes (Glory of Seoul, Soonsu, Buy Beauty Korea, Korean
+Skin Care), a Hong Kong seller (Sungsinsa: counterfeit risk), likely mirrors of stores we already read (moidaus.com,
+skincupid.us, sukoshi.com, kiyoko.com) and shops charging AED, EGP or SEK.

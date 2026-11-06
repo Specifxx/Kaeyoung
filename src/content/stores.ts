@@ -194,6 +194,26 @@ export const STORES: Store[] = [
   { id: "refreshskincare", name: "Refresh Skincare", region: "UK", base: "https://refreshskincare.co.uk", platform: "shopify" },
   { id: "atelierdeglow", name: "Atelier De Glow", region: "UK", base: "https://atelierdeglow.com", platform: "shopify" },
   { id: "likeskincare", name: "Likeskin", region: "UK", base: "https://likeskincare.com", platform: "shopify" },
+  // Store probe 2026-11-06, round 6 (the US 10x / UK 5x store goal): readable shops with Korean barcodes.
+  { id: "kskinmall", name: "Korea Skin Mall", region: "US", base: "https://k-skinmall.com", platform: "shopify" },
+  { id: "keautiful", name: "Keautiful", region: "US", base: "https://keautiful.com", platform: "shopify" },
+  { id: "shopstarbeauty", name: "Shop Star Beauty", region: "US", base: "https://shopstarbeauty.com", platform: "shopify", mixed: true },
+  { id: "terglow", name: "T.E.R", region: "US", base: "https://terglow.com", platform: "shopify" },
+  { id: "vionine", name: "Vionine", region: "US", base: "https://vionine.us", platform: "shopify" },
+  { id: "vitacost", name: "Vitacost", region: "US", base: "https://vitacost.com", platform: "shopify", mixed: true },
+  { id: "wooltari", name: "Wooltari", region: "US", base: "https://wooltariusa.com", platform: "shopify", mixed: true },
+  { id: "vtcosmetics", name: "VT Cosmetics", region: "US", base: "https://globalvt-cosmetics.com", platform: "shopify", official: true },
+  { id: "numbuzin", name: "numbuzin US", region: "US", base: "https://us.numbuzin.com", platform: "shopify", official: true },
+  { id: "amorepacific", name: "AP Beauty (Amorepacific)", region: "US", base: "https://us.amorepacific.com", platform: "shopify", official: true },
+  { id: "koreanbeautify", name: "Korean Beautify", region: "UK", base: "https://koreanbeautify.com", platform: "shopify" },
+  { id: "kmiso", name: "K-Miso Beauty", region: "UK", base: "https://kmisobeauty.co.uk", platform: "shopify" },
+  { id: "seleneglow", name: "Selene Glow", region: "UK", base: "https://seleneglow.com", platform: "shopify" },
+  { id: "myhairandbeauty", name: "My Hair and Beauty", region: "UK", base: "https://myhairandbeauty.co.uk", platform: "shopify", mixed: true },
+  { id: "redlabeloutlet", name: "Red Label Outlet", region: "UK", base: "https://redlabeloutlet.co.uk", platform: "shopify", mixed: true },
+  { id: "hwsbeauty", name: "HWS Beauty", region: "UK", base: "https://hwsbeauty.co.uk", platform: "shopify", mixed: true },
+  { id: "thebeautystore", name: "The Beauty Store", region: "UK", base: "https://thebeautystore.com", platform: "shopify", mixed: true },
+  { id: "tuktukmart", name: "Tuk Tuk Mart", region: "UK", base: "https://tuktukmart.co.uk", platform: "shopify", mixed: true },
+  { id: "kbeautyexpress", name: "K-Beauty Express", region: "CA", base: "https://kbeautyexpress.com", platform: "shopify" },
 ];
 
 export const STORE_BY_ID: Record<string, Store> = Object.fromEntries(STORES.map((s) => [s.id, s]));
