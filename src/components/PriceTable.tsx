@@ -125,8 +125,9 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     const store = STORE_BY_ID[o.s];
     return {
       name: storeName(o.s),
-      sub: o === best ? "Lowest item price" : null,
-      price: money(o.p, region),
+      sub: o === best ? "Lowest store price" : null,
+      // A sold-out row keeps its place at the bottom with no price (2026-11-06): a stale price there read as a deal.
+      price: o.st === "out" ? null : money(o.p, region),
       status: o.st,
       href: link.href,
       vote: o.u,

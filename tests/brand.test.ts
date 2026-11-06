@@ -18,3 +18,10 @@ test("a vendor that is the store itself falls back to the title", () => {
   assert.equal(brandFromTitle("[NEW] SKIN1004 Madagascar Centella Ampoule"), "SKIN1004");
   assert.equal(brandFromTitle("Some Unknown Toner"), null);
 });
+
+// Real listing, 2026-11-06: a store files Purederm's under-eye patches under the vendor "Face Mask".
+test("a vendor that is a category is not a brand", () => {
+  assert.equal(listingBrand("Face Mask", "COSRX Advanced Snail Mask Sheet", "Shop"), "COSRX");
+  assert.equal(listingBrand("Face Mask", "Face Mask Purederm Vegan Under Eye Mask Collagen 30 Sheets", "Shop"), null);
+  assert.equal(listingBrand("Mediheal", "Mediheal Teatree Mask", "Shop"), "Mediheal");
+});

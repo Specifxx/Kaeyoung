@@ -973,3 +973,11 @@ see today's price on Amazon. With no Amazon price the row reads "Also check on A
 is counted as a store, "Best price", a deal, an alert price or the reference price; TCGplayer and Cardmarket stay
 references (no thumbs, no cart line); no Amazon link in a pop-up.
 Here (follow-up to the pinned-row redesign): a priced eBay row and Amazon's own listing get "In stock", thumbs and the cart list; eBay keeps the green border, Amazon's priced row takes the amber one, the unpriced "Also check" rows keep the accent tint, and the quick view's Amazon row stays an internal link to the product page.
+
+## 2026-11-06: "Lowest store price", sold-out rows without a price, category vendors are not brands
+
+Underperformer review (owner: "fix everything"). The headline said "Lowest price" while a pinned partner row (Stylevana's
+feed) or eBay could be cheaper: partners and eBay are never the best price (family rule), so the headline and its row now
+say "Lowest store price", which is exactly what they are. Sold-out store rows stay at the bottom but show no price (a
+stale price read as a deal). A Shopify vendor that is a category ("Face Mask", "Skincare") is not a brand; the title's
+known brand is used instead, so no /brands/face-mask page. "K Young" in Google is an old crawled title; the site has none.
