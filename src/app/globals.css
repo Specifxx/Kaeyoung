@@ -575,3 +575,28 @@ html[data-scrolled] header.sticky {
   [data-reveal], [data-reveal] > * { opacity: 1 !important; animation: none !important; }
 }
 /* motion:end */
+
+/* The side rails (components/SideRails.tsx; owner, 2026-11-06): eBay left of the page, Amazon right, from 1440px (the side panel
+   already takes 256px). Each column is reserved here, in the server HTML, so nothing moves when the tiles arrive; the rail is
+   sticky under the header, inside the page's row, so it stops above the footer and never covers content. */
+.side-rail-slot {
+  display: none;
+}
+@media (min-width: 1440px) {
+  .side-rail-slot {
+    display: block;
+    width: 160px;
+    padding: 12px 12px 0;
+  }
+}
+.side-rail {
+  position: sticky;
+  top: calc(4.25rem + 12px);
+  height: calc(100dvh - 4.25rem - 24px);
+  max-height: 1100px;
+}
+/* A rail's list scrolls inside it (up to ten tiles): a thin bar, and the page does not scroll on past the list's end. */
+.rail-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--line)) transparent;
+}

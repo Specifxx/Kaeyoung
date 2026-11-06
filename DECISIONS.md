@@ -915,3 +915,31 @@ a call, still within 60–160% of the store median. Credentials are per country 
 calls with 400 InvalidAssociate, found on Compare Empire), and InvalidAssociate / AssociateNotEligible now stop a
 region at once. Until each Amazon account has 10 qualifying sales in 30 days the rows keep their tagged searches.
 
+
+## 2026-11-06: Side rails (eBay left, Amazon right) and the phone dock
+
+Owner: "Can I get the eBay ads on KaeYoung as well? So the eBay and TCGplayer ads, but instead of the TCGplayer ad, we have
+the Amazon ad banner that's scrollable", like DexCompare, MTG Compare, RiftCompare and the card engine. This narrows the
+2026-10-30 "no banner ads" rule by one placement; the rest of it stands (no strips, AdSense or nav boxes).
+
+- **Rails** (`components/SideRails.tsx`): eBay down the left of the page, Amazon down the right, up to ten tiles each that
+  scroll inside the rail. From **1440px**, not the sisters' 1280px: the side panel already takes 256px on the left, and at
+  1440 the content keeps 864px. The columns are empty `<aside>`s in the server HTML that CSS widens from 1440px, so the page
+  never moves when the tiles arrive (CLS 0); the rails are sticky inside the page's row, so they stop above the footer and
+  never cover content. Tiles come from one static JSON per region (`/rails/<region>`, force-static, `lib/side-rails.ts`):
+  nothing in a page's HTML, no function, no SEO change.
+- **eBay tiles** are the daily import's own matches (photo + delivered price), the region's most-stocked products first;
+  New Zealand gets eBay Australia's. Where the eBay pass has too few listings (ScentCompare until its keyset is live), the
+  rest of the rail is tagged exact-name eBay searches with the store's photo and no price, like the Amazon tiles; the
+  dock takes only live listings. Tag `ky-<region>-side-ebay-<ean>`.
+- **Amazon tiles** have no price: the Creators API refuses us until the account has 10 qualifying sales in 30 days, and
+  Amazon's licence forbids keeping a price, so a file served for a day may not carry one. Each tile links to Amazon's own
+  page of the barcode when the import found its ASIN, else an exact product-name search (Associates rule: a specific
+  product), with the store's own photo and "See price". Tag `ky-<region>-side-amazon-<ean>`. No Amazon rail in NZ.
+- **Phone dock** (`components/AdDock.tsx`, ported from WargameCompare / DexCompare, 2026-11-06): below 1440px, the eBay tiles
+  in a 64px bar at the foot of the screen, after 60% of a screen is scrolled, hidden beside the footer, the rating card, a
+  dialog or the keyboard, never on a product page (`data-buybar`), ✕ for the visit. **Never Amazon:** the Operating
+  Agreement allows no Amazon link in an overlay. Tag `ky-<region>-dock-ebay-<ean>`.
+
+**Measure** with the sisters' ~11-10 / ~11-17 checks (EPN customid, Amazon ascsubtag, `buy_click` placements `side_ebay`,
+`side_amazon`, `dock_ebay`). If pages per visit drop, drop the dock first.

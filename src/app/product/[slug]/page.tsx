@@ -323,7 +323,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         const low = lowestOrderable(f.offers[r.code]);
         return (
           <div key={r.code} className={`rp rp-${r.code}`}>
-            <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-line bg-card/95 px-4 py-2.5 backdrop-blur md:hidden">
+            <div data-buybar className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-line bg-card/95 px-4 py-2.5 backdrop-blur md:hidden">
               <div className="min-w-0 flex-1">
                 {low ? (
                   <>
