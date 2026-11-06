@@ -64,7 +64,11 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
 - Affiliate tags are added at build (`src/lib/affiliate.ts`): `ky-<region>-<placement>-<ean>` in EPN `customid`,
   Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kaeyoung.com`.
 - **No banner ads** (owner, 2026-10-30: "cut down on the banner ads … a really nice website"): no eBay strips, no
-  AdSense, no nav ad boxes. Paid links live only in a product's price table, pinned above the stores, drawn like a store row (owner, 2026-11-01) and labelled:
+  AdSense, no nav ad boxes. **One exception (owner, 2026-11-06): the side rails** (`SideRails.tsx`, `lib/side-rails.ts`,
+  static `/rails/<region>`): eBay down the left of the page and Amazon down the right from 1440px, ten scrolling tiles each,
+  browser only, in CSS-reserved columns (CLS 0), Amazon tiles tagged links with NO price; below 1440px the eBay tiles only go
+  to the phone dock (`AdDock.tsx`: after a scroll, never on a product page, ✕ for the visit; never Amazon, an overlay).
+  Otherwise paid links live only in a product's price table, pinned above the stores, drawn like a store row (owner, 2026-11-01) and labelled:
   eBay, Amazon (hard-coded tags: US `riftcompare-20`, AU `compareempire-22`, UK `compareempi03-21`, CA `compareempire-20`, EU `compareempire-21`), and the beauty
   retailers in `PARTNERS` (YesStyle, Stylevana, Olive Young Global, iHerb, LOOKFANTASTIC, Cult Beauty), each shown
   only once its `AFF_*` tracking template is set in Vercel. Stylevana is the exception (Awin, 2026-11-06): its Awin

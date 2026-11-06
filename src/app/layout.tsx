@@ -15,6 +15,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SideNav } from "@/components/SideNav";
 import { QuickView } from "@/components/QuickView";
+import { RailDock, RailSlot } from "@/components/SideRails";
 import { RateCard } from "@/components/site-reviews/RateCard";
 import { navGroups } from "@/lib/nav";
 import { catCounts, getBrands, getMeta } from "@/lib/data";
@@ -68,14 +69,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header groups={groups} />
         <div className="flex">
           <SideNav groups={groups} />
+          {/* The side rails (components/SideRails.tsx): eBay left, Amazon right, from 1440px; empty in the server HTML. */}
+          <RailSlot side="left" />
           <main id="main" className="min-w-0 flex-1 pb-6">
             {children}
           </main>
+          <RailSlot side="right" />
         </div>
         <Footer updated={meta ? niceDate(meta.updatedAt) : null} />
         <QuickView />
         {/* Rate us (owner, 2026-11-03): the corner card, asking only after real use; the ratings are kept by the shared review service. */}
         <RateCard />
+        {/* Below the rails' width: their eBay tiles in the phone dock, after a scroll, never on a product page. */}
+        <RailDock />
         <Analytics />
         <ShareArrival />
         {/* Scroll reveals: shows what is on screen, then lets the rest ease in as it scrolls into view. */}
