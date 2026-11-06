@@ -5,6 +5,7 @@
 // Store links get utm_source so a store sees what we send it (the start of a
 // partner-code conversation).
 import { REGION_BY_CODE, SITE, type RegionCode } from "@/site";
+import { awinProgrammeFor, awinUrl, clickref } from "./awin";
 import { STORE_BY_ID } from "@/content/stores";
 
 /** One EPN campaign for every site in the family, hard-coded (owner,
@@ -80,6 +81,8 @@ export function storeUrl(storeId: string, url: string): string {
       u.searchParams.set("utm_source", SITE.domain);
       u.searchParams.set("utm_medium", "referral");
     }
+    // A store that accepted us on Awin (src/lib/awin.ts): the same page through its tracked deep link.
+    if (!(store?.affiliate && aff)) return awinUrl(u.toString(), clickref(SITE.key, storeId)) ?? u.toString();
     return u.toString();
   } catch {
     return url;
@@ -89,7 +92,7 @@ export function storeUrl(storeId: string, url: string): string {
 /** True when a click on this store's links can earn (shown as "Paid link"). */
 export function storePays(storeId: string): boolean {
   const store = STORE_BY_ID[storeId];
-  return !!(store?.affiliate && process.env[store.affiliate.envVar]);
+  return !!(store?.affiliate && process.env[store.affiliate.envVar]) || !!(store && awinProgrammeFor(store.base));
 }
 
 /** The eBay a region's visitors shop on: its own, or eBay Australia for New
@@ -173,7 +176,12 @@ export const PARTNERS: Partner[] = [
   { key: "cultbeauty", name: "Cult Beauty", envVar: "AFF_CULTBEAUTY", regions: ["UK"], search: (q) => `https://www.cultbeauty.co.uk/search?q=${q}`, note: "UK retailer" },
 ];
 
-const partnerTemplate = (p: Partner, env: Record<string, string | undefined>) => env[p.envVar] || p.template || null;
+/** A retailer in the family's joined Awin list (src/lib/awin.ts) earns with no template of its own. */
+const awinJoinedTemplate = (p: Partner) => {
+  const a = awinProgrammeFor(p.search("x"));
+  return a ? awinTemplate(String(a.id)) : null;
+};
+const partnerTemplate = (p: Partner, env: Record<string, string | undefined>) => env[p.envVar] || p.template || awinJoinedTemplate(p) || null;
 
 /** A partner's tracked search link for a query, or null while it has no template. */
 export function partnerUrl(p: Partner, query: string, sub: string, env: Record<string, string | undefined> = process.env): string | null {
