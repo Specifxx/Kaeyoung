@@ -943,3 +943,19 @@ the Amazon ad banner that's scrollable", like DexCompare, MTG Compare, RiftCompa
 
 **Measure** with the sisters' ~11-10 / ~11-17 checks (EPN customid, Amazon ascsubtag, `buy_click` placements `side_ebay`,
 `side_amazon`, `dock_ebay`). If pages per visit drop, drop the dock first.
+
+## 2026-11-06: Feature only products of about US$20+, eBay calls only on them, "Also check" rows
+
+Owner (Bill), for KaeYoung and ScentCompare together (Scentcompare #24): "the products we feature should be at least
+20 USD or the equivalent … on the homepage", eBay calls only on products over US$20, and with no eBay or Amazon price
+"say also check on eBay, also check on Amazon … it stands out".
+
+- `lib/featured.ts`: featured in a region when the cheapest in-stock price there is at least US$20, CA$28, A$31,
+  NZ$34, £16 or €19. The homepage hero picks (and the home share card), Popular, Biggest savings and New arrivals rows
+  read only featured products; everything else still lists every product.
+- `planEbay`'s `eligible` searches only featured (product, region) pairs (from the next quota day: 11-06's 2,500 calls
+  were spent at 11:41 UTC under the old plan).
+- The pinned eBay / Amazon row with no price reads "Also check on eBay" / "Also check on Amazon", tinted in the accent
+  with a "Check eBay →" button; order unchanged. This supersedes "drawn exactly like a store row" (2026-11-01) for
+  the price-less rows only.
+- Amazon: no Creators API credential in this repo yet (ASIN finder "off"); every Amazon row is a tagged search link.
