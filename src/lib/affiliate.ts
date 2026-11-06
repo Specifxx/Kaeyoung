@@ -229,6 +229,12 @@ export function partnerProductUrl(p: Partner, productUrl: string, sub: string, e
   return tpl.replace("{url}", encodeURIComponent(productUrl)).replace("{q}", "").replace("{sub}", encodeURIComponent(sub));
 }
 
+/** The Awin advertiser behind a partner's links (for its offers, src/lib/promos.ts), or null when it is not on Awin. */
+export function partnerAwinId(p: Partner, env: Record<string, string | undefined> = process.env): number | null {
+  const m = (partnerTemplate(p, env) ?? "").match(/awinmid=(\d+)/);
+  return m ? Number(m[1]) : null;
+}
+
 /** The retailer rows a region shows today: those whose tracking template is
  *  set (paid), plus the `always` ones as plain search links (unpaid). */
 export function partnersFor(region: RegionCode, query: string, sub: string, env: Record<string, string | undefined> = process.env): { p: Partner; href: string; paid: boolean }[] {

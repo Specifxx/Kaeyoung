@@ -100,6 +100,20 @@ export function judgeShipping(file: Record<string, { at: string }> | null, store
   return { status: "ok", detail: `${n} of ${stores} stores quoted` };
 }
 
+/** The daily store-deals check (scripts/promos.ts, promos.yml). Deals older than two days are hidden by the pages,
+ *  so a stopped check only means no deal notes: amber, never red. */
+export function judgePromos(file: Record<string, { at: string; deals: Record<string, unknown> }> | null, stores: number, now = Date.now()): Omit<Result, "name"> {
+  if (!file || !Object.keys(file).length) return { status: "warn", detail: "no store deals checked yet (data/public/promos.json empty): run the Store deals workflow" };
+  const ats = Object.values(file).map((s) => Date.parse(s.at));
+  const days = (now - Math.max(...ats)) / 86_400_000;
+  if (days > 3) return { status: "warn", detail: `store deals last checked ${days.toFixed(0)} days ago: deal notes are hidden until the Store deals workflow runs` };
+  const n = ats.length;
+  if (n < stores * 0.3) return { status: "warn", detail: `store deals checked at only ${n} of ${stores} stores` };
+  const withDeals = Object.values(file).filter((s) => Object.keys(s.deals).length).length;
+  const deals = Object.values(file).reduce((t, s) => t + Object.keys(s.deals).length, 0);
+  return { status: "ok", detail: `${n} of ${stores} stores checked; ${withDeals} run multi-buys or gifts on ${deals} products` };
+}
+
 async function main() {
   if (!fs.existsSync(path.join(DATA, "meta.json"))) {
     // Before the first import there is nothing to judge; a setup step, not an incident.
@@ -142,6 +156,10 @@ async function main() {
     check("Delivery quotes", () => {
       const f = path.join(DATA, "shipping.json");
       return judgeShipping(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null, STORES.length);
+    }),
+    check("Store deals", () => {
+      const f = path.join(DATA, "promos.json");
+      return judgePromos(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null, STORES.length);
     }),
     check("Partner feeds", () => {
       const f = path.join(DATA, "partners.json");

@@ -795,3 +795,35 @@ we show, and the UTM tags survived into the checkout URL, so the store still see
 * **Measured** by the `buy_click` event's new `to` property (`checkout` or `product`) in Vercel Analytics. Clicks are
   what we can see; a non-paying store's sale is not. If a store's checkout ever refuses the link (a variant gone since
   the import), the shopper sees the store's own "unavailable" page, which is the same risk a stale product link has.
+## 2026-11-06 — Store deals beside the price: multi-buys and free gifts from the store's own cart, Awin offers
+
+**The ask (owner):** "with Stylevana, when you purchase 2 cleansers you get a discount compared to just buying one … any
+promotions or discounts captured in our price comparison."
+
+**Where promotions can be read honestly.** A store's banner or promo page is free text that changes without notice
+and says nothing about which products qualify, so it is never read. Two sources say exactly what a shopper pays:
+
+* **The store's own cart** (`scripts/promos.ts`, `promos.yml`, daily at 03:23 UTC, before the import). Shopify applies
+  a store's automatic discounts (multi-buys, "3 for 2", spend-and-save, free gifts) in the cart. For each product the
+  cart is asked the price of 1, 2 and 3 (`/cart/add.js`, `/cart.js`, `/cart/change.js`, then `/cart/clear.js`: the
+  calls the store's own page makes, one every 1.5 s, the same 403/429/captcha stop as the import and delivery quotes,
+  nothing bought). A store is screened on its most compared in-stock product in each category; only a store whose
+  cart discounted one (or did yesterday) is asked about 60 more. A deal is recorded only when the cart charged at
+  least 1% (and 10 cents) less than that many times the shelf price, and not absurdly less (under 40%); a free gift
+  only when the cart added a free line itself. A discount's own name is shown only when it reads like words (never a
+  code). A cart in another currency, or pricing one item above our shelf price (another variant), is left alone.
+  **Never carried from one product to another**: "buy 2 cleansers" shows only on the cleansers the cart priced.
+* **Awin's Offers API** for a retailer that accepted us (Compare Empire publishes the family's live offers and vouchers
+  as `data/awin/promotions.json`; `scripts/fetch-awin.ts` copies it into `src/lib/awin-promotions.json` at build). The
+  advertiser's own title and code, with its end date, beside that retailer's row (Stylevana today, any Awin store as it
+  joins). Not shown before its start or within a day of its end (a static page lives until the next build).
+
+**How they show.** A line under the store's row: "Buy 2: A$36.00 (A$18.00 each) · applied in the store's cart", and
+"lowest per item if you buy 2" when that per-item price beats every single-item price. The row's price stays the
+single-item price, the rows stay in single-item order and the real cheapest keeps its badge: a deal that needs two
+items never outranks a store that sells one for less (`lib/promos.ts`; `tests/promos.test.ts` pins that only the price
+table reads deals). A deal is hidden after two days or as soon as the shelf price differs from the one the cart saw.
+Never in the alert feed, deals pages, history, metadata or the basket. The ops monitor shows "Store deals" (amber only).
+
+**Reuse.** The cart check needs only a Shopify store and a product's variant: ScentCompare gets the same code;
+FigureCompare's Shopify stores, CamCompare's Shopify shops and the card sites' Shopify importers could run it too.

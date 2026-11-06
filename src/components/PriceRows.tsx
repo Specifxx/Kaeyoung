@@ -24,6 +24,12 @@ export interface RowData {
   from?: boolean;
   /** Stores: what delivery costs (lib/shipping.ts deliveryNote), when known. */
   ship?: string | null;
+  /** A multi-buy or free gift the store's own cart applied today (lib/promos.ts dealNote): a note, never the price. */
+  deal?: string | null;
+  /** the store's own name for that discount ("Buy 2 save 10%") */
+  dealLabel?: string | null;
+  /** The retailer's live Awin offers and vouchers (lib/promos.ts offerNote), with their end dates. */
+  offer?: string | null;
   /** Amazon's own price from the Creators API (lib/amazon-live.ts): shown with its time, hidden after 24 hours. */
   live?: { at: string; timeZone: string; zoneLabel: string };
   /** the link opens the store's checkout with the item in it (lib/affiliate.ts buyLink) */
@@ -60,7 +66,8 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           <div className="mt-2.5 flex flex-wrap gap-2">
             {overseas.map((r) => (
               <OutLink key={r.name} href={r.href} paid={r.paid} event={r.event} className="btn-pop border border-line bg-card px-3.5 py-1.5 text-sm text-ink hover:border-soft">
-                {r.name} <span className="text-xs font-normal text-soft">· {r.sub}{r.paid ? " · Paid link" : ""}</span> <span aria-hidden>→</span>
+                {r.name} <span className="text-xs font-normal text-soft">· {r.sub}{r.paid ? " · Paid link" : ""}</span>
+                {r.offer && <span className="text-xs font-medium text-accent-deep">· {r.offer}</span>} <span aria-hidden>→</span>
               </OutLink>
             ))}
           </div>
@@ -80,7 +87,28 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, event }: RowData) {
+/** The deal and offer lines under a row, in the accent colour: the store's word, dated, never part of the price. */
+function Deals({ deal, dealLabel, offer }: Pick<RowData, "deal" | "dealLabel" | "offer">) {
+  if (!deal && !offer) return null;
+  return (
+    <>
+      {deal && (
+        <span className="block w-full text-xs font-medium text-accent-deep">
+          <span className="chip mr-1.5 bg-accent/10 text-accent-deep">{dealLabel ?? "Multi-buy"}</span>
+          {deal} <span className="font-normal text-soft">· applied in the store&apos;s cart</span>
+        </span>
+      )}
+      {offer && (
+        <span className="block w-full text-xs font-medium text-accent-deep">
+          <span className="chip mr-1.5 bg-accent/10 text-accent-deep">Offer</span>
+          {offer}
+        </span>
+      )}
+    </>
+  );
+}
+
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, deal, dealLabel, offer, event }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -97,6 +125,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
           {ship && <span>{ship}</span>}
           {paid && <span>Paid link</span>}
+          <Deals deal={deal} dealLabel={dealLabel} offer={offer} />
         </p>
       </div>
       {price && live && <AmazonPrice price={price} at={live.at} timeZone={live.timeZone} zoneLabel={live.zoneLabel} />}
