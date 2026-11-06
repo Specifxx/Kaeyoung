@@ -24,6 +24,8 @@ export interface RowData {
   brand?: "ebay" | "amazon";
   /** eBay or Amazon with no price to show: an "Also check on …" search row, tinted to stand out (owner, 2026-11-06). */
   check?: boolean;
+  /** A link to our own page (the quick view's Amazon row): same tab, never an outbound click. */
+  internal?: boolean;
   /** The price is the cheapest listing the last search found: shown as "from". */
   from?: boolean;
   /** Stores: what delivery costs (lib/shipping.ts deliveryNote), when known. */
@@ -65,6 +67,14 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           {pinned.some((r) => r.live) && <p className="px-1 text-[11px] text-soft">* Amazon price: {AMAZON_PRICE_DISCLAIMER}</p>}
         </div>
       )}
+      <ol data-reveal="stagger" className="space-y-2">
+        {stores.map((r) => (
+          <li key={r.event.source}>
+            <Row {...r} />
+          </li>
+        ))}
+      </ol>
+      {/* Below every store row (owner, 2026-11-06: the price rows run straight on from eBay and Amazon). */}
       {overseas.length > 0 && (
         <div className="rounded-xl border border-dashed border-line bg-card px-3.5 py-3" aria-label="Big retailers that deliver here">
           <p className="text-sm font-semibold">Big K-beauty retailers that deliver{overseasTo ? ` to ${overseasTo}` : ""}</p>
@@ -81,13 +91,6 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           </div>
         </div>
       )}
-      <ol data-reveal="stagger" className="space-y-2">
-        {stores.map((r) => (
-          <li key={r.event.source}>
-            <Row {...r} />
-          </li>
-        ))}
-      </ol>
       {stores.some((r) => r.checkout) && (
         <p className="px-1 text-[11px] text-soft">&ldquo;Buy&rdquo; opens that store&apos;s own checkout with this item in the bag. You pay the store directly.</p>
       )}
@@ -116,12 +119,13 @@ function Deals({ deal, dealLabel, offer }: Pick<RowData, "deal" | "dealLabel" | 
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, check = false, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, check = false, internal = false, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
       className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 ${check ? "border-accent/50 bg-accent/5" : "bg-card"} ${
-        check ? "" : highlight ? "border-ink/70" : "border-line"
+        // eBay with a price: a green outline, like the cheapest store's (owner, 2026-11-06).
+        check ? "" : brand === "ebay" && price ? "border-save" : highlight ? "border-ink/70" : "border-line"
       } ${status === "out" ? "opacity-60" : ""}`}
     >
       <div className="min-w-0 flex-1">
@@ -151,17 +155,23 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
       {cart && vote && (
         <CartAddButton href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="hidden text-soft sm:inline-flex" />
       )}
-      <OutLink
-        href={href}
-        paid={paid}
-        event={event}
-        title={checkout ? `Opens ${name}'s checkout with this item` : undefined}
-        className={`btn-pop shrink-0 px-4 py-1.5 ${
-          brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
-        }`}
-      >
-        {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
-      </OutLink>
+      {internal ? (
+        <a href={href} className="btn-pop btn-buy shrink-0 px-4 py-1.5">
+          {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        </a>
+      ) : (
+        <OutLink
+          href={href}
+          paid={paid}
+          event={event}
+          title={checkout ? `Opens ${name}'s checkout with this item` : undefined}
+          className={`btn-pop shrink-0 px-4 py-1.5 ${
+            brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
+          }`}
+        >
+          {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        </OutLink>
+      )}
     </div>
   );
 }

@@ -102,7 +102,11 @@ test("no banner ads (owner, 2026-10-30): paid links live in the price table only
   const table = fs.readFileSync("src/components/PriceTable.tsx", "utf8");
   const at = (x: string) => table.indexOf(x);
   assert.ok(at('source: "ebay"') < at('source: "amazon"') && at('source: "amazon"') < at("offers.map"), "eBay first, Amazon second, then the stores");
-  for (const row of table.match(/pinned\.push\([\s\S]*?\}\);?\n/g)!) assert.match(row, /paid: true/, "every marketplace row is a labelled paid link");
+  for (const row of table.match(/pinned\.push\([\s\S]*?\}\);?\n/g)!) {
+    // The quick view's Amazon row (owner, 2026-11-06) opens our own product page: no Amazon link in a pop-up.
+    if (/internal: true/.test(row)) assert.match(row, /href: `\/product\/\$\{f\.slug\}`/, "an internal row only opens the product page");
+    else assert.match(row, /paid: true/, "every marketplace row is a labelled paid link");
+  }
   // The quick view draws the same rows (from /q/<slug>), never its own order.
   assert.match(fs.readFileSync("src/app/q/[slug]/route.ts", "utf8"), /priceRows\(/);
   assert.match(fs.readFileSync("src/components/QuickView.tsx", "utf8"), /<PriceRows /);
