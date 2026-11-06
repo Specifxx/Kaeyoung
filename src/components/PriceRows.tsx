@@ -66,7 +66,7 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           </div>
         </div>
       )}
-      <ol className="space-y-2">
+      <ol data-reveal="stagger" className="space-y-2">
         {stores.map((r) => (
           <li key={r.event.source}>
             <Row {...r} />
@@ -84,7 +84,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
   const s = status ? STOCK[status] : null;
   return (
     <div
-      className={`flex items-center gap-3 rounded-xl border px-3.5 py-3 bg-card ${
+      className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 bg-card ${
         highlight ? "border-ink/70" : "border-line"
       } ${status === "out" ? "opacity-60" : ""}`}
     >

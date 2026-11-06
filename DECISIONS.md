@@ -795,3 +795,25 @@ we show, and the UTM tags survived into the checkout URL, so the store still see
 * **Measured** by the `buy_click` event's new `to` property (`checkout` or `product`) in Vercel Analytics. Clicks are
   what we can see; a non-paying store's sale is not. If a store's checkout ever refuses the link (a variant gone since
   the import), the shopper sees the store's own "unavailable" page, which is the same risk a stale product link has.
+
+## 2026-11-06: Motion: snowfall, scroll reveals and hover polish, with nothing hidden or shifted
+
+Owner: "I really want some animations, movements, make it dynamic … it's Christmas themed, so make it snowing; when
+you're scrolling down something moving in smoothly … very smooth, the shopping experience is really important", on
+KaeYoung and ScentCompare alike. The same layer is in both repos (`src/lib/motion.ts`, `src/components/HeroSnow.tsx`,
+the `motion:start`/`motion:end` block of `globals.css`); only `--snow`, the pale day-time flake colour, differs.
+
+* **No library.** Two inline scripts and CSS. `MOTION_BOOT` in `<head>` stamps `html[data-motion]` before paint unless
+  the visitor prefers reduced motion (or `?motion=off`); every animation is keyed on it. `MOTION_SCRIPT` at the end of
+  `<body>` marks every `[data-reveal]` element already on screen as shown and only then stamps `data-reveal-on`, the
+  one attribute under which CSS hides anything. So a first paint never loses content, a failed script hides nothing,
+  and the server HTML (every word, price and link a crawler reads) is unchanged. Off-screen sections rise in and tile
+  grids, price rows and FAQ items follow one another as they scroll into view (IntersectionObserver; MutationObserver
+  for client navigations and the quick view). Opacity and transform only: zero layout shift (measured CLS 0).
+* **Snow is a canvas, in the holiday window only** (`html[data-season="christmas"]`, unchanged dates). Soft flakes,
+  six-armed crystals and gold glints in three depths on a slow wind, parting around the pointer and nudged by scrolling.
+  It starts when the browser is idle, stops while the hero is off screen or the tab is hidden, caps its flakes (60 on a
+  phone) and device pixel ratio (2), and hands over from the CSS snow, which stays as the no-JavaScript look.
+* **The hero** eases in on arrival, its two product cards float, the wash drifts, and "Pay less." catches a gold glint
+  every few seconds. Buttons lift and press, buy buttons get a light sweep, step icons wiggle, price rows lift, the
+  search glows when focused, the header gains a shadow once scrolled. No pop-ups, nothing that moves a price.

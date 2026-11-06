@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export function Section({ title, href, more, sub, children }: { title: string; href?: string; more?: string; sub?: string; children: ReactNode }) {
   return (
-    <section className="mt-12">
+    <section data-reveal className="mt-12">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2 className="h-display text-2xl">{title}</h2>

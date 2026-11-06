@@ -168,6 +168,7 @@ html:not([data-region]) .rn-US { display: none; }
    --------------------------------------------------------------------------- */
 :root {
   --gold: 176 132 52; /* champagne gold: 4.6:1 on --card as text */
+  --snow: 214 170 196; /* the canvas snow's pale flakes by day (motion block); white at night */
 }
 [data-theme="night"] {
   --gold: 226 190 120;
@@ -202,7 +203,7 @@ html[data-season="christmas"] .ky-hero.wash {
     radial-gradient(60% 80% at 60% 100%, rgb(var(--accent-pale)) 0%, transparent 65%),
     rgb(var(--bg));
 }
-.ky-hero > :not(.ky-snow) {
+.ky-hero > :not(.ky-snow):not(.mo-bg) {
   position: relative;
   z-index: 1;
 }
@@ -293,6 +294,12 @@ html[data-season="christmas"] .ky-hero.wash {
 }
 [data-theme="night"] .ky-snow::before {
   --ky-a: rgb(255 255 255 / 0.35);
+}
+/* The canvas snow (HeroSnow.tsx, motion block) replaces this CSS snow once it is drawing. */
+html[data-snow-live] .ky-snow::before,
+html[data-snow-live] .ky-snow::after {
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
 /* Three gold snowflakes by the hero art, turning slowly. */
 .ky-flakes {
@@ -394,3 +401,177 @@ html[data-season="christmas"] .ky-hero.wash {
   --srv-accent-fg: rgb(var(--card));
   --srv-field: rgb(var(--bg));
 }
+
+/* motion:start ---------------------------------------------------------------
+   The motion layer (owner, 2026-11-06: "much more dynamic … very smooth"). Identical in KaeYoung and ScentCompare;
+   only --snow differs, set beside each site's tokens. Everything is keyed on `html[data-motion]` (lib/motion.ts: not
+   set for prefers-reduced-motion or `?motion=off`) and moves only opacity and transform, so nothing shifts layout and
+   the server HTML is unchanged. Reveals hide nothing until `data-reveal-on`, which the end-of-body script stamps only
+   after marking what is already on screen as shown.
+   --------------------------------------------------------------------------- */
+@keyframes mo-rise {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes mo-pop {
+  from { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes mo-float {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -6px, 0); }
+}
+@keyframes mo-drift-a {
+  from { transform: translate3d(-4%, -3%, 0) scale(1); }
+  to { transform: translate3d(6%, 5%, 0) scale(1.12); }
+}
+@keyframes mo-drift-b {
+  from { transform: translate3d(5%, 4%, 0) scale(1.08); }
+  to { transform: translate3d(-6%, -4%, 0) scale(0.95); }
+}
+@keyframes mo-shine {
+  0%, 55% { background-position: 120% 0; }
+  100% { background-position: -20% 0; }
+}
+@keyframes mo-wiggle {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-8deg) scale(1.06); }
+  65% { transform: rotate(6deg) scale(1.06); }
+}
+@keyframes mo-sweep {
+  from { transform: translateX(-130%) skewX(-18deg); }
+  to { transform: translateX(260%) skewX(-18deg); }
+}
+
+/* Scroll reveals: a section rises in; a stagger group's children follow one another. */
+html[data-reveal-on] [data-reveal]:not([data-reveal="stagger"]):not([data-in]),
+html[data-reveal-on] [data-reveal="stagger"]:not([data-in]) > * {
+  opacity: 0;
+}
+html[data-reveal-on] [data-reveal][data-in]:not([data-instant]):not([data-reveal="stagger"]) {
+  animation: mo-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+html[data-reveal-on] [data-reveal="stagger"][data-in]:not([data-instant]) > * {
+  animation: mo-pop 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: calc(var(--mo-i, 10) * 55ms);
+}
+[data-reveal="stagger"] > :nth-child(1) { --mo-i: 0; }
+[data-reveal="stagger"] > :nth-child(2) { --mo-i: 1; }
+[data-reveal="stagger"] > :nth-child(3) { --mo-i: 2; }
+[data-reveal="stagger"] > :nth-child(4) { --mo-i: 3; }
+[data-reveal="stagger"] > :nth-child(5) { --mo-i: 4; }
+[data-reveal="stagger"] > :nth-child(6) { --mo-i: 5; }
+[data-reveal="stagger"] > :nth-child(7) { --mo-i: 6; }
+[data-reveal="stagger"] > :nth-child(8) { --mo-i: 7; }
+[data-reveal="stagger"] > :nth-child(9) { --mo-i: 8; }
+
+/* The hero: its copy and product cards ease in on arrival, the cards then float gently, the wash drifts, and the
+   accent words catch a gold glint now and then. */
+html[data-motion] .mo-enter {
+  animation: mo-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: calc(var(--mo-d, 0) * 90ms + 60ms);
+}
+html[data-motion] .mo-floaty > li {
+  animation: mo-float 5.5s ease-in-out infinite alternate;
+}
+html[data-motion] .mo-floaty > li:nth-child(2) {
+  animation-delay: -2.75s;
+}
+.mo-aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.mo-aurora::before,
+.mo-aurora::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  opacity: 0.75;
+}
+.mo-aurora::before {
+  left: -12%;
+  top: -30%;
+  background: radial-gradient(closest-side, rgb(var(--lavender)), transparent);
+}
+.mo-aurora::after {
+  right: -10%;
+  bottom: -40%;
+  background: radial-gradient(closest-side, rgb(var(--accent-pale)), transparent);
+}
+html[data-motion] .mo-aurora::before { animation: mo-drift-a 16s ease-in-out infinite alternate; }
+html[data-motion] .mo-aurora::after { animation: mo-drift-b 20s ease-in-out infinite alternate; }
+.mo-snow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.mo-shine {
+  background-image: linear-gradient(100deg, rgb(var(--accent)) 0%, rgb(var(--accent)) 40%, rgb(var(--gold, var(--accent))) 50%, rgb(var(--accent)) 60%, rgb(var(--accent)) 100%);
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-right: 0.08em; /* the italic's last letter stays inside the clip */
+}
+html[data-motion] .mo-shine {
+  animation: mo-shine 7s ease-in-out 1.2s infinite;
+}
+
+/* Micro-interactions: things answer the hand. */
+.btn-pop {
+  transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 180ms ease, opacity 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+html[data-motion] .btn-pop:hover { transform: translateY(-1px); }
+html[data-motion] .btn-pop:active { transform: translateY(0) scale(0.97); }
+.btn-buy {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-buy::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+}
+html[data-motion] .btn-buy:hover::after { animation: mo-sweep 0.75s ease-out; }
+html[data-motion] .tile-hover:active { transform: translateY(0) scale(0.985); }
+html[data-motion] .tile-hover:hover .mo-wiggle { animation: mo-wiggle 0.6s ease-in-out; }
+.mo-row {
+  transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 200ms ease, border-color 200ms ease;
+}
+.mo-row:hover {
+  border-color: rgb(var(--accent) / 0.35);
+  box-shadow: 0 8px 22px -16px rgb(var(--accent) / 0.55);
+}
+html[data-motion] .mo-row:hover { transform: translateY(-1px); }
+.mo-search {
+  transition: box-shadow 250ms ease, border-color 250ms ease;
+}
+.mo-search:focus-within {
+  box-shadow: 0 0 0 4px rgb(var(--accent) / 0.12), 0 10px 30px -16px rgb(var(--accent) / 0.6);
+}
+header.sticky {
+  transition: box-shadow 300ms ease;
+}
+html[data-scrolled] header.sticky {
+  box-shadow: 0 10px 30px -22px rgb(var(--ink) / 0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mo-snow { display: none; }
+}
+@media print {
+  [data-reveal], [data-reveal] > * { opacity: 1 !important; animation: none !important; }
+}
+/* motion:end */
