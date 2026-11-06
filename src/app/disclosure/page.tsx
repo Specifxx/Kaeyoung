@@ -22,7 +22,7 @@ export default function Disclosure() {
         <ul>
           <li><strong>eBay</strong> (eBay Partner Network): the eBay row above the stores on a product page.</li>
           <li><strong>Amazon</strong> (Amazon Associates, US and Australia): the Amazon row above the stores. As an Amazon Associate we earn from qualifying purchases.</li>
-          <li><strong>Big beauty retailers</strong> such as YesStyle, Stylevana, Olive Young Global and iHerb, through their own programs or networks such as Awin, Impact, FlexOffers and Involve Asia, only once they accept us. Stylevana has (through Awin), so its links can earn; where its product feed lists the exact product, its row shows Stylevana's own price. The others&apos; links are plain searches that earn nothing until they accept us.</li>
+          <li><strong>Big beauty retailers</strong> such as YesStyle, Stylevana, Olive Young Global and iHerb, through their own programs or networks such as Awin, Impact, FlexOffers and Involve Asia, only once they accept us. Stylevana has (through Awin), so its links can earn; where its product feed lists the exact product, its row shows Stylevana&apos;s own price. The others&apos; links are plain searches that earn nothing until they accept us.</li>
           <li>
             <strong>Stores in the comparison:</strong> {paying ? `${paying} of the ${STORES.length} stores pay us a commission, and their rows say "Paid link".` : `none of the ${STORES.length} stores pays us today. If one ever does, its row will say "Paid link".`}
           </li>
