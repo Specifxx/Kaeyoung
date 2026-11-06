@@ -196,8 +196,8 @@ export function popularIn(region: RegionCode, limit = 24, list: Product[] = getP
 }
 
 /** Newest products orderable in a region. */
-export function newestIn(region: RegionCode, limit = 24): Product[] {
-  return orderableIn(region)
+export function newestIn(region: RegionCode, limit = 24, list: Product[] = getProducts()): Product[] {
+  return orderableIn(region, list)
     .sort((a, b) => b.first.localeCompare(a.first) || a.name.localeCompare(b.name))
     .slice(0, limit);
 }

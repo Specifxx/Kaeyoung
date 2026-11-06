@@ -10,6 +10,7 @@ import { REGIONS, type RegionCode } from "@/site";
 import { dealsIn, getProducts, newestIn } from "@/lib/data";
 import { ebayPick, ebayQuotaDay, planEbay, type EbayItem, type EbayPrio } from "@/lib/ebay";
 import { popularity, popularNow } from "@/lib/ratings";
+import { featuredIn, isFeatured } from "@/lib/featured";
 import type { EbayData, Meta } from "@/lib/types";
 
 const DATA = path.join(process.cwd(), "data");
@@ -72,8 +73,9 @@ async function main() {
   const home = new Set<string>();
   const hot = new Set<string>();
   for (const r of regions) {
-    for (const f of [...popularNow(r, 8), ...dealsIn(r, 8).map((d) => d.f), ...newestIn(r, 8)]) home.add(`${f.ean}:${r}`);
-    for (const f of popularNow(r, 300)) hot.add(`${f.ean}:${r}`);
+    const feat = featuredIn(r, products);
+    for (const f of [...popularNow(r, 8, feat), ...dealsIn(r, 8, feat).map((d) => d.f), ...newestIn(r, 8, feat)]) home.add(`${f.ean}:${r}`);
+    for (const f of popularNow(r, 300, feat)) hot.add(`${f.ean}:${r}`);
   }
   const launch = products.reduce((m, f) => (f.first < m ? f.first : m), "9999");
   const recent = new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10);
@@ -83,7 +85,8 @@ async function main() {
     score: popularity(f, r),
   });
   // A pair whose last search found nothing waits longer (EBAY_EMPTY_RECHECK_DAYS), so the calls reach every product.
-  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r]);
+  // Calls go only to products of about US$20 or more in the region (owner, 2026-11-06, lib/featured.ts).
+  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r], isFeatured);
   if (!plan.length) {
     console.log(`eBay: nothing to search (${spent} of ${cap} calls already spent on quota day ${qday}).`);
     return;

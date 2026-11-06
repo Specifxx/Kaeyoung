@@ -49,9 +49,11 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   const pinned: RowData[] = [];
   if (ebayUrl)
     pinned.push({
-      name: "eBay",
+      // No listing priced: a standout "Also check on eBay" search row instead (owner, 2026-11-06).
+      name: ebay ? "eBay" : "Also check on eBay",
       // The cheapest new local listing the last search found, delivered: listings come and go, so "from".
       sub: ebay ? `New, ${ebay.sh ? "incl. postage" : "free postage"}` : `New listings on ${ebayShopHost(region)?.replace("www.", "")}`,
+      check: !ebay,
       brand: "ebay",
       price: ebay ? money(ebay.p, region) : null,
       from: !!ebay,
@@ -62,8 +64,9 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     });
   if (amazonUrl)
     pinned.push({
-      name: "Amazon",
+      name: liveUrl ? "Amazon" : "Also check on Amazon",
       sub: liveUrl ? `${r.amazonHost?.replace("www.", "")} · new, this exact barcode` : `${r.amazonHost?.replace("www.", "")} · check the seller`,
+      check: !liveUrl,
       brand: "amazon",
       price: liveUrl && live ? money(live.p, region) : null,
       status: null,

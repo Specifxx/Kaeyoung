@@ -54,7 +54,7 @@ jobs:
           EBAY_DAILY_CAP: ${{ vars.EBAY_DAILY_CAP }}
         run: npx tsx scripts/ebay-import.ts
       - name: Amazon ASINs (by barcode; a no-op until a Creators API credential exists)
-        if: github.event_name != 'workflow_dispatch' || inputs.stores
+        # Also on an eBay-only run: it reads today's products and needs no store pass.
         env:
           AMAZON_CREATORS_US_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_US_CLIENT_ID }}
           AMAZON_CREATORS_US_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_US_CLIENT_SECRET }}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CAT_BY_KEY, REGIONS, SITE, type CatKey } from "@/site";
 import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn } from "@/lib/data";
 import { popularNow } from "@/lib/ratings";
+import { featuredIn } from "@/lib/featured";
 import { ago } from "@/lib/format";
 import { SearchBox } from "@/components/SearchBox";
 import { CreatorsCornerBadge } from "@/components/creators/CreatorsCornerBadge";
@@ -53,7 +54,8 @@ const FAQ: [string, string][] = [
 
 export default function Home() {
   const meta = getMeta();
-  const total = getProducts().length;
+  const all = getProducts();
+  const total = all.length;
   const stores = Object.keys(activeStores()).length;
   const counts = catCounts();
   const brands = getBrands().slice(0, 16);
@@ -133,9 +135,11 @@ export default function Home() {
         </section>
 
         {REGIONS.map((r) => {
-          const deals = dealsIn(r.code, 8).map((d) => d.f);
-          const pop = popularNow(r.code, 8);
-          const fresh = newestIn(r.code, 8);
+          // Only products of about US$20 or more are featured here (owner, 2026-11-06, lib/featured.ts).
+          const feat = featuredIn(r.code, all);
+          const deals = dealsIn(r.code, 8, feat).map((d) => d.f);
+          const pop = popularNow(r.code, 8, feat);
+          const fresh = newestIn(r.code, 8, feat);
           return (
             <div key={r.code} className={`rp rp-${r.code}`}>
               {pop.length > 0 && (
