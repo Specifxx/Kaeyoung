@@ -66,7 +66,9 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
   AdSense, no nav ad boxes. Paid links live only in a product's price table, pinned above the stores, drawn like a store row (owner, 2026-11-01) and labelled:
   eBay, Amazon (hard-coded tags: US `riftcompare-20`, AU `compareempire-22`, UK `compareempi03-21`, CA `compareempire-20`, EU `compareempire-21`), and the beauty
   retailers in `PARTNERS` (YesStyle, Stylevana, Olive Young Global, iHerb, LOOKFANTASTIC, Cult Beauty), each shown
-  only once its `AFF_*` tracking template is set in Vercel. None is ever counted as a store or "the cheapest";
+  only once its `AFF_*` tracking template is set in Vercel. Stylevana is the exception (Awin, 2026-11-06): its Awin
+  template is hard-coded (`awinTemplate`), and with the `AWIN_FEED_STYLEVANA` secret its row shows Stylevana's own price
+  for the exact barcode (`scripts/partner-feeds.ts`, `lib/partner-feed.ts`, 60–160% of the store median, never a store). None is ever counted as a store or "the cheapest";
   commission never decides order. `tests/site.test.ts` pins it.
 - eBay listings come only from `scripts/ebay-import.ts` in GitHub Actions (Browse API by GTIN, new, Buy It Now,
   never from CN/HK sellers, 60%–300% of the store median). KaeYoung's keyset is the owner's new third one (pending
