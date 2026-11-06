@@ -14,7 +14,7 @@ test("rails: eBay tiles are live listings, tagged side-ebay; Amazon tiles are ta
     const rails = railsFor(r.code);
     assert.ok(rails.ebay.tiles.length <= MAX_TILES);
     for (const t of rails.ebay.tiles) {
-      assert.ok(t.img && t.price, `${r.code}: an eBay tile has a photo and a delivered price`);
+      assert.ok(t.img && (t.price || /\/sch\/i\.html\?_nkw=/.test(t.href)), `${r.code}: an eBay tile is a live listing with its delivered price, or an exact-name search`);
       assert.match(t.href, /campid=5339155912/);
       assert.match(t.href, new RegExp(`customid=ky-${r.code.toLowerCase()}-side-ebay-`));
     }

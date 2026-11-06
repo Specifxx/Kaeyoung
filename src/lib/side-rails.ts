@@ -59,6 +59,17 @@ export function railsFor(region: RegionCode): Rails {
     ebayTiles.push({ id: f.ean, name: f.name, img: pick.img, price: money(pick.p, ebayRegion), href: ebayAffiliateUrl(pick.u, subId(region, "side-ebay", f.ean)) });
     if (ebayTiles.length >= MAX_TILES) break;
   }
+  // Too few live listings (a region the eBay pass has not reached yet, or no keyset yet): the rest of the rail is tagged
+  // eBay searches for the region's most-stocked products, by exact name with the store's photo and no price, like Amazon's.
+  if (ebayTiles.length < MAX_TILES && ebayShopHost(region)) {
+    const have = new Set(ebayTiles.map((t) => t.id));
+    for (const f of popular) {
+      if (ebayTiles.length >= MAX_TILES) break;
+      if (have.has(f.ean) || !f.img) continue;
+      const href = ebaySearchUrl(searchQuery(f), region, subId(region, "side-ebay", f.ean));
+      if (href) ebayTiles.push({ id: f.ean, name: f.name, img: f.img, price: null, href });
+    }
+  }
 
   let amazon: Rails["amazon"] = null;
   if (r.amazonHost) {

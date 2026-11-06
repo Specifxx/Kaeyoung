@@ -929,7 +929,9 @@ the Amazon ad banner that's scrollable", like DexCompare, MTG Compare, RiftCompa
   never cover content. Tiles come from one static JSON per region (`/rails/<region>`, force-static, `lib/side-rails.ts`):
   nothing in a page's HTML, no function, no SEO change.
 - **eBay tiles** are the daily import's own matches (photo + delivered price), the region's most-stocked products first;
-  New Zealand gets eBay Australia's. Tag `ky-<region>-side-ebay-<ean>`.
+  New Zealand gets eBay Australia's. Where the eBay pass has too few listings (ScentCompare until its keyset is live), the
+  rest of the rail is tagged exact-name eBay searches with the store's photo and no price, like the Amazon tiles; the
+  dock takes only live listings. Tag `ky-<region>-side-ebay-<ean>`.
 - **Amazon tiles** have no price: the Creators API refuses us until the account has 10 qualifying sales in 30 days, and
   Amazon's licence forbids keeping a price, so a file served for a day may not carry one. Each tile links to Amazon's own
   page of the barcode when the import found its ASIN, else an exact product-name search (Associates rule: a specific
