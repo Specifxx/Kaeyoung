@@ -902,3 +902,16 @@ what this engine exists to avoid; with the build at a minute or two, one data bu
 
 Also fixed: the home share image's `linear-gradient(#fff, …)` without a direction made satori throw "Missing comma
 before color stops" (`/opengraph-image`); it now says `180deg`.
+
+## 2026-11-06: Amazon prices find ASINs by barcode first (ported from ScentCompare #20)
+
+The 2026-11-05 build fetch asked getItems with `itemIdType: "EAN"`. The Creators API documents ASIN as the only
+itemIdType, so it could never have priced anything, even once Amazon opened access. Now `scripts/amazon-asins.ts`
+runs in the daily import: per region, products with the most stores first, one searchItems by the barcode and,
+failing that, one by brand + name + size, kept only when the result's own `externalIds` list our barcode (a wrong match is worse
+than none). Up to 300 calls a region a day (`AMAZON_SEARCH_BUDGET`), misses retried after 30 days,
+`data/amazon/asins-<REGION>.json` committed (ASINs may be stored, prices may not). The build prices those ASINs, ten
+a call, still within 60–160% of the store median. Credentials are per country (the AU credential answers US and UK
+calls with 400 InvalidAssociate, found on Compare Empire), and InvalidAssociate / AssociateNotEligible now stop a
+region at once. Until each Amazon account has 10 qualifying sales in 30 days the rows keep their tagged searches.
+

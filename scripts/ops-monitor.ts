@@ -6,6 +6,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { STORES } from "@/content/stores";
 import type { Meta } from "@/lib/types";
+import { readAsinStatus, type AsinStatus } from "@/lib/amazon-asins";
+import type { RegionCode } from "@/site";
 import type { ReviewsFile } from "@/lib/reviews";
 import { loadStore, reviewsConfigured } from "@/lib/reviews-store";
 import type { PartnerPricesFile } from "@/lib/partner-feed";
@@ -114,6 +116,21 @@ export function judgePromos(file: Record<string, { at: string; deals: Record<str
   return { status: "ok", detail: `${n} of ${stores} stores checked; ${withDeals} run multi-buys or gifts on ${deals} products` };
 }
 
+/** Amazon's ASIN finder (scripts/amazon-asins.ts) per store. Never red: without access the rows keep their
+ *  tagged search links. "refused" is Amazon's 10-sales gate and is expected for weeks, so it stays green with
+ *  its reason; only a finder that stopped reporting for two days is amber. */
+export function judgeAmazon(statuses: Partial<Record<RegionCode, AsinStatus | null>>, now = Date.now()): Omit<Result, "name"> {
+  const rows = Object.entries(statuses) as [RegionCode, AsinStatus | null][];
+  const seen = rows.filter(([, s]) => s);
+  if (!seen.length) return { status: "ok", detail: "no Amazon ASIN run recorded yet: the Amazon rows are tagged searches" };
+  const stale = seen.filter(([, s]) => (now - Date.parse(s!.at)) / 3_600_000 > 54).map(([r]) => r);
+  const parts = seen.map(([r, s]) =>
+    s!.state === "ok" ? `${r} ${s!.known ?? 0} ASINs (${s!.waiting ?? 0} waiting)` : s!.state === "refused" ? `${r} waiting for Amazon API access` : `${r} no credential`,
+  );
+  if (stale.length) return { status: "warn", detail: `Amazon ASIN finder last ran over two days ago for ${stale.join(", ")}: check the Import prices workflow. ${parts.join("; ")}` };
+  return { status: "ok", detail: parts.join("; ") };
+}
+
 async function main() {
   if (!fs.existsSync(path.join(DATA, "meta.json"))) {
     // Before the first import there is nothing to judge; a setup step, not an incident.
@@ -165,6 +182,7 @@ async function main() {
       const f = path.join(DATA, "partners.json");
       return judgePartnerFeeds(fs.existsSync(f) ? (JSON.parse(fs.readFileSync(f, "utf8")) as PartnerPricesFile) : null);
     }),
+    check("Amazon ASINs", () => judgeAmazon(Object.fromEntries((["US", "UK", "CA", "EU", "AU"] as RegionCode[]).map((r) => [r, readAsinStatus(r)])))),
     check("eBay listings", () => {
       if (!process.env.EBAY_CLIENT_ID) return { status: "warn", detail: "EBAY_CLIENT_ID not set in GitHub secrets: no eBay listings yet (search links still earn)" };
       if (!meta.ebay) return { status: "warn", detail: "no eBay run recorded yet" };
