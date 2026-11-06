@@ -22,6 +22,8 @@ export interface RowData {
   highlight?: boolean;
   /** eBay and Amazon: pinned first (owner, 2026-10-30), drawn exactly like a store row (owner, 2026-11-01). */
   brand?: "ebay" | "amazon";
+  /** eBay or Amazon with no price to show: an "Also check on …" search row, tinted to stand out (owner, 2026-11-06). */
+  check?: boolean;
   /** The price is the cheapest listing the last search found: shown as "from". */
   from?: boolean;
   /** Stores: what delivery costs (lib/shipping.ts deliveryNote), when known. */
@@ -114,12 +116,12 @@ function Deals({ deal, dealLabel, offer }: Pick<RowData, "deal" | "dealLabel" | 
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, check = false, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
-      className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 bg-card ${
-        highlight ? "border-ink/70" : "border-line"
+      className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 ${check ? "border-accent/50 bg-accent/5" : "bg-card"} ${
+        check ? "" : highlight ? "border-ink/70" : "border-line"
       } ${status === "out" ? "opacity-60" : ""}`}
     >
       <div className="min-w-0 flex-1">
@@ -158,7 +160,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
           brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
         }`}
       >
-        {brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
       </OutLink>
     </div>
   );

@@ -119,12 +119,15 @@ export function planEbay(
   prio?: (f: Product, region: RegionCode) => EbayPrio,
   today?: string,
   hasRow?: (ean: string, region: RegionCode) => boolean,
+  /** Only these pairs are searched (owner, 2026-11-06: products of about US$20 or more, lib/featured.ts). */
+  eligible?: (f: Product, region: RegionCode) => boolean,
 ): { f: Product; region: RegionCode }[] {
   const pairs: { f: Product; region: RegionCode; at: string; due: boolean; tier: number; score: number; first: number }[] = [];
   for (const f of products) {
     for (const region of regions) {
       const offers = f.offers[region];
       if (!offers?.length) continue;
+      if (eligible && !eligible(f, region)) continue;
       const { tier, score } = prio ? prio(f, region) : { tier: 2 as const, score: offers.length };
       const at = checked[`${f.ean}:${region}`] ?? "";
       const every = !hasRow || hasRow(f.ean, region) ? EBAY_REFRESH_DAYS[tier] : EBAY_EMPTY_RECHECK_DAYS[tier];
