@@ -25,12 +25,16 @@ const DEEP = Number(process.env.PROMO_DEEP ?? 60);
 const KEEP_DAYS = 2;
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const today = new Date().toISOString().slice(0, 10);
+/** Why a product said nothing, counted per store for the run's report ("no variant", "cart above shelf"…). */
+const why = new Map<string, number>();
+const note = (reason: string) => why.set(reason, (why.get(reason) ?? 0) + 1);
 
 class Stop extends Error {}
 
 class Cart {
   private jar = new Map<string, string>();
   calls = 0;
+  backoffs = 0;
   constructor(private base: string) {}
 
   async req(pathname: string, init: RequestInit = {}): Promise<unknown> {
@@ -48,7 +52,13 @@ class Cart {
       const i = kv.indexOf("=");
       if (i > 0) this.jar.set(kv.slice(0, i).trim(), kv.slice(i + 1).trim());
     }
-    if (res.status === 403 || res.status === 429) throw new Stop(`HTTP ${res.status}`);
+    if (res.status === 429 && this.backoffs < 3) {
+      // Shopify's cart rate limit: wait well past its window (three times at most), then the store is left for this run.
+      this.backoffs++;
+      await sleep(30_000 * this.backoffs);
+      return this.req(pathname, init);
+    }
+    if (res.status === 403 || res.status === 429) throw new Stop(`HTTP ${res.status} ${pathname.split("?")[0]}`);
     const text = await res.text();
     if (/captcha|challenge-platform|cf-chl/i.test(text.slice(0, 3000)) && !text.trimStart().startsWith("{")) throw new Stop("bot challenge");
     if (!res.ok) throw Object.assign(new Error(`HTTP ${res.status} ${pathname.split("?")[0]} ${text.slice(0, 160)}`), { status: res.status });
@@ -102,12 +112,12 @@ async function variantOf(cart: Cart, c: Candidate): Promise<number | null> {
 /** One product: the cart's totals for 1, 2 and 3, and what it added for free. Null when there is nothing to say. */
 async function probe(cart: Cart, c: Candidate, currency: string): Promise<ProductDeal | null> {
   const id = await variantOf(cart, c);
-  if (!id) return null;
+  if (!id) return note("no variant"), null;
   try {
     await cart.post("/cart/add.js", { items: [{ id, quantity: 1 }] });
   } catch (e) {
     if (e instanceof Stop) throw e;
-    return null;
+    return note(`add failed ${(e as Error).message.slice(0, 40)}`), null;
   }
   try {
     const readings: { q: number; total: number }[] = [];
@@ -118,15 +128,19 @@ async function probe(cart: Cart, c: Candidate, currency: string): Promise<Produc
     for (const q of [1, 2, 3]) {
       if (q > 1) cartJson = (await cart.post("/cart/change.js", { id: String(id), quantity: q })) as CartJson;
       const r = readCart(cartJson, id);
-      if (!r || r.qty !== q) break; // not enough stock for q: stop at what the store has
+      if (!r) {
+        note("line missing");
+        break;
+      }
+      if (r.qty !== q) break; // not enough stock for q: stop at what the store has
       // The cart's single-item price above our shelf price: another variant or a price change since the import.
-      if (q === 1 && r.total > c.price) return null;
+      if (q === 1 && r.total > c.price) return note(`cart above shelf (${r.total} > ${c.price})`), null;
       readings.push({ q, total: r.total });
       r.labels.forEach((l) => labels.add(l));
       r.gifts.forEach((g) => gifts.add(g));
     }
     const t = dealTiers(c.price, readings);
-    if (!t.length && !gifts.size) return null;
+    if (!t.length && !gifts.size) return note(`no discount (${readings.map((x) => `${x.q}:${x.total}`).join(" ")})`), null;
     const d: ProductDeal = { u: c.price, t };
     const l = [...labels][0];
     if (l) d.l = l;
@@ -144,7 +158,16 @@ export async function checkStore(store: Store, products: Product[], hadDeals: bo
   const cart = new Cart(store.base);
   const region = REGION_BY_CODE[store.region];
   // The visitor's country, as the import asks for it: Shopify Markets prices (and the cart's currency) follow it.
-  await cart.req(`/cart.js?country=${region.shopifyCountry}`);
+  // The storefront's own country picker posts to /localization; a store without Markets answers with its one currency.
+  await cart
+    .req("/localization", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "text/html" },
+      body: new URLSearchParams({ form_type: "localization", _method: "put", country_code: region.shopifyCountry, return_to: "/cart.js" }).toString(),
+    })
+    .catch((e) => {
+      if (e instanceof Stop) throw e;
+    });
   const { screen, rest } = candidatesFor(store, products);
   const deals: Record<string, ProductDeal> = {};
   let tested = 0;
@@ -213,6 +236,7 @@ async function main() {
     }
   }
   console.log(report.sort().join("\n"));
+  console.log("\nWhy products said nothing:\n" + [...why].sort((a, b) => b[1] - a[1]).slice(0, 40).map(([k, n]) => `${String(n).padStart(4)}  ${k}`).join("\n"));
   if (process.env.SHARD != null) fs.writeFileSync(path.resolve(`promos-out-${shard}.json`), JSON.stringify(out));
   else write(only ? { ...prev, ...out } : out);
 }
