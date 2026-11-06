@@ -149,7 +149,7 @@ export function mergeListings(listings: Listing[], state: MergeState, today: str
       // One offer per store: its orderable, cheapest listing.
       const perStore = new Map<string, Offer>();
       for (const l of inRegion) {
-        const o: Offer = { s: l.store, p: l.cents, st: l.st, u: l.url };
+        const o: Offer = { s: l.store, p: l.cents, st: l.st, u: l.url, ...(l.vid ? { v: l.vid } : {}) };
         const prev = perStore.get(l.store);
         if (!prev || STOCK_RANK[o.st] < STOCK_RANK[prev.st] || (STOCK_RANK[o.st] === STOCK_RANK[prev.st] && o.p < prev.p)) perStore.set(l.store, o);
       }

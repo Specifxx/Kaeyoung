@@ -6,7 +6,7 @@ import { bestIn, brandKo, cheapestDelivered, getMeta, brandPages, getEbay, getHi
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
 import { isIndexable } from "@/lib/index-tiers";
-import { storeUrl } from "@/lib/affiliate";
+import { buyLink } from "@/lib/affiliate";
 import { ProductImage } from "@/components/ProductImage";
 import { PriceTable } from "@/components/PriceTable";
 import { PriceHistory } from "@/components/Sparkline";
@@ -209,13 +209,21 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                       ) : null}
                     </p>
                     <DeliveredLine f={f} region={r.code} />
-                    <OutLink
-                      href={storeUrl(b.offer.s, b.offer.u)}
-                      event={{ source: b.offer.s, region: r.code, placement: "hero", ean: f.ean }}
-                      className="btn-pop btn-buy mt-4 px-7 py-2.5 text-[15px]"
-                    >
-                      Shop at {storeName(b.offer.s)} <span aria-hidden>→</span>
-                    </OutLink>
+                    {(() => {
+                      const link = buyLink(b.offer);
+                      return (
+                        <>
+                          <OutLink
+                            href={link.href}
+                            event={{ source: b.offer.s, region: r.code, placement: "hero", ean: f.ean, to: link.to }}
+                            className="btn-pop btn-buy mt-4 px-7 py-2.5 text-[15px]"
+                          >
+                            {link.to === "checkout" ? "Buy" : "Shop"} at {storeName(b.offer.s)} <span aria-hidden>→</span>
+                          </OutLink>
+                          {link.to === "checkout" && <p className="mt-1.5 text-xs text-soft">Straight to {storeName(b.offer.s)}&apos;s checkout with this item in the bag.</p>}
+                        </>
+                      );
+                    })()}
                     <div>
                       <AddToBasket slug={f.slug} />
                     </div>
@@ -324,8 +332,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 )}
               </div>
               {low && (
-                <OutLink href={storeUrl(low.s, low.u)} event={{ source: low.s, region: r.code, placement: "buybar", ean: f.ean }} className="btn-pop btn-buy px-6">
-                  Shop
+                <OutLink href={buyLink(low).href} event={{ source: low.s, region: r.code, placement: "buybar", ean: f.ean, to: buyLink(low).to }} className="btn-pop btn-buy px-6">
+                  {buyLink(low).to === "checkout" ? "Buy" : "Shop"}
                 </OutLink>
               )}
             </div>

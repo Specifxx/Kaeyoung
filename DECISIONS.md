@@ -774,3 +774,24 @@ into its Awin deep link to the same page (`clickref=<site>-<store>`), and `store
 own affiliate variable, when set, still wins. Order and prices never change; eBay and Amazon are never wrapped.
 A pinned retailer row (`PARTNERS`) with no template of its own uses the joined list too, so a beauty retailer Awin
 approves (LOOKFANTASTIC, Cult Beauty…) appears as a paid row the next morning. Stylevana keeps its hard-coded template.
+
+## 2026-11-06 — The buy button opens the store's checkout with the item in the bag
+
+**Decision (owner: "when you click a link it directly takes them to checkout … it eliminates friction"):** a store row's
+button, the product page's main button and the phone buy bar go to the store's Shopify cart permalink,
+`<base>/cart/<variant>:1?utm_source=kaeyoung.com&utm_medium=referral&utm_campaign=checkout` (`buyLink` in
+`lib/affiliate.ts`), and say "Buy" instead of "Shop", with one line saying it opens that store's own checkout. Tested on
+2026-11-06 on Glowiss (US), Beauty Diary (AU) and Moona (NZ): each opened its checkout with the one item at the price
+we show, and the UTM tags survived into the checkout URL, so the store still sees the sale came from us.
+
+* **Only where nothing is lost.** In stock, a variant the import read, a Shopify store, and a store that pays us
+  nothing. A store that pays through Awin or its own referral code records the click with a script on its storefront
+  pages, which a jump to checkout would skip; those keep the product page, because the commission is worth more than
+  the click saved. A sold-out row, the store directory, and the blog and guide tables keep the product page too.
+* **The variant id** is new in `products.json`: the importer keeps each listing's Shopify variant (`Listing.vid`,
+  `Offer.v`). Stored as a 5th tuple element in base 36 only for an in-stock offer whose URL does not already end in
+  `?variant=<id>` (multi-variant listings are read back from the URL), about +0.7 MB on 10.4 MB. Until the next import
+  only multi-variant listings (about 18,000 of 66,000 in-stock offers) can go to checkout; after it, all of them.
+* **Measured** by the `buy_click` event's new `to` property (`checkout` or `product`) in Vercel Analytics. Clicks are
+  what we can see; a non-paying store's sale is not. If a store's checkout ever refuses the link (a variant gone since
+  the import), the shopper sees the store's own "unavailable" page, which is the same risk a stale product link has.

@@ -11,6 +11,8 @@ export interface Offer {
   st: Stock;
   /** the listing's own URL (untagged; links are tagged at render) */
   u: string;
+  /** the Shopify variant id, when known: the buy button opens the store's checkout with it (lib/affiliate.ts buyLink) */
+  v?: string;
 }
 
 export interface Product {
@@ -64,6 +66,8 @@ export interface Listing {
   cents: number;
   st: Stock;
   url: string;
+  /** the Shopify variant id */
+  vid?: string;
   img: string | null;
 }
 

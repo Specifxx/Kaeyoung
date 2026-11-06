@@ -26,7 +26,9 @@ export interface RowData {
   ship?: string | null;
   /** Amazon's own price from the Creators API (lib/amazon-live.ts): shown with its time, hidden after 24 hours. */
   live?: { at: string; timeZone: string; zoneLabel: string };
-  event: { source: string; region: string; placement: string; ean?: string };
+  /** the link opens the store's checkout with the item in it (lib/affiliate.ts buyLink) */
+  checkout?: boolean;
+  event: { source: string; region: string; placement: string; ean?: string; to?: string };
 }
 
 export interface RowsData {
@@ -71,11 +73,14 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           </li>
         ))}
       </ol>
+      {stores.some((r) => r.checkout) && (
+        <p className="px-1 text-[11px] text-soft">&ldquo;Buy&rdquo; opens that store&apos;s own checkout with this item in the bag. You pay the store directly.</p>
+      )}
     </div>
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, event }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, event }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -105,11 +110,12 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
         href={href}
         paid={paid}
         event={event}
+        title={checkout ? `Opens ${name}'s checkout with this item` : undefined}
         className={`btn-pop shrink-0 px-4 py-1.5 ${
           brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
         }`}
       >
-        {brand ? "Shop" : status === "out" ? "View" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        {brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
       </OutLink>
     </div>
   );
