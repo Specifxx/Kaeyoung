@@ -132,7 +132,19 @@ export function amazonSearchUrl(query: string, region: RegionCode, sub: string):
  * take a search URL plus a code):
  *   AFF_YESSTYLE="https://www.yesstyle.com/en/list.html?q={q}&rco=OURCODE"
  *   AFF_OLIVEYOUNG="https://invol.co/aff_m?offer_id=…&aff_id=…&url={url}"
+ * A programme that has accepted us through Awin carries its template here,
+ * hard-coded like the Amazon tags (owner's own IDs, public in every link), so
+ * it earns from the next build with nothing to set; the env var still wins.
  */
+
+/** The owner's Awin publisher account "Compare Empire" (active 2026-11-04). */
+export const AWIN_PUBLISHER_ID = "3144410";
+
+/** An Awin tracked deep link: our click lands on `{url}`, `{sub}` comes back as the click reference. */
+export function awinTemplate(merchantId: string): string {
+  return `https://www.awin1.com/cread.php?awinmid=${merchantId}&awinaffid=${AWIN_PUBLISHER_ID}&clickref={sub}&ued={url}`;
+}
+
 export interface Partner {
   key: string;
   name: string;
@@ -144,26 +156,42 @@ export interface Partner {
    *  as a plain unpaid search link (a visitor's request, 2026-10-30: YesStyle
    *  and Stylevana are where K-beauty buyers check first). */
   always?: boolean;
+  /** Our tracking template once a programme accepted us (Awin: awinTemplate). */
+  template?: string;
+  /** The GitHub secret holding its affiliate product feed's download URL
+   *  (scripts/partner-feeds.ts): with it the row shows the retailer's own
+   *  price for the exact barcode and links to the product, not a search. */
+  feedEnv?: string;
 }
 
 export const PARTNERS: Partner[] = [
   { key: "yesstyle", name: "YesStyle", envVar: "AFF_YESSTYLE", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.yesstyle.com/en/list.html?q=${q}`, note: "ships from Hong Kong", always: true },
-  { key: "stylevana", name: "Stylevana", envVar: "AFF_STYLEVANA", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.stylevana.com/en_US/catalogsearch/result/?q=${q}`, note: "ships worldwide", always: true },
+  { key: "stylevana", name: "Stylevana", envVar: "AFF_STYLEVANA", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.stylevana.com/en_US/catalogsearch/result/?q=${q}`, note: "ships worldwide", always: true, template: awinTemplate("90791"), feedEnv: "AWIN_FEED_STYLEVANA" },
   { key: "oliveyoung", name: "Olive Young Global", envVar: "AFF_OLIVEYOUNG", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://global.oliveyoung.com/display/search?query=${q}`, note: "ships from Korea" },
   { key: "iherb", name: "iHerb", envVar: "AFF_IHERB", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.iherb.com/search?kw=${q}`, note: "ships worldwide" },
   { key: "lookfantastic", name: "LOOKFANTASTIC", envVar: "AFF_LOOKFANTASTIC", regions: ["UK"], search: (q) => `https://www.lookfantastic.com/search?q=${q}`, note: "UK retailer" },
   { key: "cultbeauty", name: "Cult Beauty", envVar: "AFF_CULTBEAUTY", regions: ["UK"], search: (q) => `https://www.cultbeauty.co.uk/search?q=${q}`, note: "UK retailer" },
 ];
 
-/** A partner's tracked search link for a query, or null while its template is unset. */
+const partnerTemplate = (p: Partner, env: Record<string, string | undefined>) => env[p.envVar] || p.template || null;
+
+/** A partner's tracked search link for a query, or null while it has no template. */
 export function partnerUrl(p: Partner, query: string, sub: string, env: Record<string, string | undefined> = process.env): string | null {
-  const tpl = env[p.envVar];
+  const tpl = partnerTemplate(p, env);
   if (!tpl) return null;
   const q = encodeURIComponent(query);
   return tpl
     .replace("{url}", encodeURIComponent(p.search(q)))
     .replace("{q}", q)
     .replace("{sub}", encodeURIComponent(sub));
+}
+
+/** A partner's tracked link to one of its own product pages (from its feed),
+ *  or null when its template cannot carry a URL (a search-only {q} template). */
+export function partnerProductUrl(p: Partner, productUrl: string, sub: string, env: Record<string, string | undefined> = process.env): string | null {
+  const tpl = partnerTemplate(p, env);
+  if (!tpl || !tpl.includes("{url}")) return null;
+  return tpl.replace("{url}", encodeURIComponent(productUrl)).replace("{q}", "").replace("{sub}", encodeURIComponent(sub));
 }
 
 /** The retailer rows a region shows today: those whose tracking template is

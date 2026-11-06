@@ -739,3 +739,26 @@ one store). Access is per marketplace and opens by itself once that store's acco
 (about 10 in 30 days); a refused store is skipped and the row keeps its search link, so the feature costs
 nothing until then and switches on without a code change. The ops monitor cannot see a Vercel build, so a
 failed fetch is silent by design: the fallback is the row as it was.
+
+## 2026-11-06: Stylevana pays through Awin, and its feed gives its row a real price
+
+Awin approved the owner's publisher account (Compare Empire, 3144410) for Stylevana (merchant 90791). Stylevana's
+row was already on every product page as an unpaid search ("YesStyle and Stylevana always show", above). Two changes:
+
+* **Its links earn from the next build, with nothing to set.** The tracked template is hard-coded in
+  `PARTNERS` (`awinTemplate("90791")`: `awin1.com/cread.php?awinmid=90791&awinaffid=3144410&clickref={sub}&ued={url}`),
+  like the Amazon tags: both IDs are public in every link, so a Vercel variable would only be one more step for the
+  owner. `AFF_STYLEVANA` still overrides it. The `ky-<region>-<placement>-<ean>` sub rides in Awin's `clickref`, so
+  Awin's reports split by market and placement as eBay's and Amazon's do.
+* **Its product feed, when the owner creates it.** Awin's Create-a-Feed gives a CSV download URL (it carries his
+  API key, so it is the GitHub secret `AWIN_FEED_STYLEVANA`, never committed or printed). The daily import streams
+  it after the stores (`scripts/partner-feeds.ts`) and keeps a row only when its barcode is a Korean 880 EAN we
+  compare, it is in stock, its currency is one region's own (never converted), and its price is 60–160% of that
+  region's in-stock store median (another size or a bundle otherwise). The result, `data/public/partners.json`, is
+  small (only products we already list). A product Stylevana lists gets a Stylevana row beside eBay and Amazon with
+  Stylevana's price and a tracked link to that product; everywhere else the row stays a tracked search. It is never
+  a store, the cheapest, a deal, the alert feed or history. A failed read keeps yesterday's prices for three days
+  and shows amber on the ops monitor ("Partner feeds"); no feed secret is quiet, not a warning.
+
+The reader is generic (`PARTNERS[].feedEnv`): the next beauty programme that approves us on Awin is one template
+and one secret.

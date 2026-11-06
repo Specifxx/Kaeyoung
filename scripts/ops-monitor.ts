@@ -8,6 +8,7 @@ import { STORES } from "@/content/stores";
 import type { Meta } from "@/lib/types";
 import type { ReviewsFile } from "@/lib/reviews";
 import { loadStore, reviewsConfigured } from "@/lib/reviews-store";
+import type { PartnerPricesFile } from "@/lib/partner-feed";
 
 type Status = "ok" | "warn" | "fail";
 type Result = { name: string; status: Status; detail: string };
@@ -71,6 +72,22 @@ export function judgeReviews(
   return { status: "ok", detail: `${rated} products rated${file.held ? `, ${file.held} held` : ""}` };
 }
 
+/** Partner product feeds (scripts/partner-feeds.ts): quiet until a feed secret exists, amber when its last
+ *  read failed or is two days old (the rows fall back to tracked searches after three). */
+export function judgePartnerFeeds(file: PartnerPricesFile | null, now = Date.now()): Omit<Result, "name"> {
+  const feeds = Object.entries(file?.feeds ?? {});
+  if (!feeds.length) return { status: "ok", detail: "no partner feed set up yet (Stylevana links still earn through Awin)" };
+  const bad: string[] = [];
+  const good: string[] = [];
+  for (const [k, r] of feeds) {
+    const h = r.at ? (now - Date.parse(r.at)) / 3_600_000 : Infinity;
+    if (r.error) bad.push(`${k}: ${r.error}`);
+    else if (h > 54) bad.push(`${k}: last read ${h.toFixed(0)}h ago`);
+    else good.push(`${k} ${r.kept}/${r.rows}`);
+  }
+  return bad.length ? { status: "warn", detail: bad.join("; ") } : { status: "ok", detail: `${good.join(", ")} prices kept` };
+}
+
 /** The weekly delivery quotes (scripts/shipping.ts, shipping.yml). */
 export function judgeShipping(file: Record<string, { at: string }> | null, stores: number, now = Date.now()): Omit<Result, "name"> {
   if (!file) return { status: "warn", detail: "no delivery quotes yet (data/public/shipping.json missing): run the Delivery quotes workflow" };
@@ -125,6 +142,10 @@ async function main() {
     check("Delivery quotes", () => {
       const f = path.join(DATA, "shipping.json");
       return judgeShipping(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null, STORES.length);
+    }),
+    check("Partner feeds", () => {
+      const f = path.join(DATA, "partners.json");
+      return judgePartnerFeeds(fs.existsSync(f) ? (JSON.parse(fs.readFileSync(f, "utf8")) as PartnerPricesFile) : null);
     }),
     check("eBay listings", () => {
       if (!process.env.EBAY_CLIENT_ID) return { status: "warn", detail: "EBAY_CLIENT_ID not set in GitHub secrets: no eBay listings yet (search links still earn)" };

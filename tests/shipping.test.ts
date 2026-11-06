@@ -60,7 +60,8 @@ test("basket: the store with everything and the lowest total with delivery first
 
 test("YesStyle and Stylevana always show, unpaid until their program accepts us; others only once paid", () => {
   const none = partnersFor("AU", "Anua Toner", "ky-au-t", {});
-  assert.deepEqual(none.map((x) => [x.p.key, x.paid]), [["yesstyle", false], ["stylevana", false]]);
+  // Stylevana accepted us through Awin (2026-11-06): its hard-coded template earns with no env var.
+  assert.deepEqual(none.map((x) => [x.p.key, x.paid]), [["yesstyle", false], ["stylevana", true]]);
   assert.match(none[0].href, /^https:\/\/www\.yesstyle\.com\/en\/list\.html\?q=Anua%20Toner$/);
   const paid = partnersFor("AU", "Anua", "s", { AFF_STYLEVANA: "https://n.example/?u={url}", AFF_IHERB: "https://n.example/?u={url}" });
   assert.deepEqual(paid.map((x) => [x.p.key, x.paid]), [["yesstyle", false], ["stylevana", true], ["iherb", true]]);

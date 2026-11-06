@@ -5,8 +5,9 @@
 // beauty partners; all sit above the stores, labelled "Paid link", never counted
 // as a store and never the "best price" (family rule: commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
-import { amazonItemUrl, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnersFor, storePays, storeUrl, subId } from "@/lib/affiliate";
-import { getShipping, storeName } from "@/lib/data";
+import { amazonItemUrl, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerProductUrl, partnersFor, storePays, storeUrl, subId } from "@/lib/affiliate";
+import { getPartnerPrices, getShipping, storeName } from "@/lib/data";
+import { partnerPriceIn } from "@/lib/partner-feed";
 import { AMAZON_CLOCK, amazonLive } from "@/lib/amazon-live";
 import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
@@ -59,17 +60,23 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       paid: true,
       event: { source: "amazon", region, placement: `${placement}_pinned`, ean: f.ean },
     });
-  // Big international retailers (YesStyle, Stylevana…): no price feed we can
-  // read, so a search link each, in their own labelled group, never ranked.
-  const overseas: RowData[] = partnersFor(region, q, sub).map(({ p, href, paid }) => ({
-    name: p.name,
-    sub: p.note,
-    price: null,
-    status: null,
-    href,
-    paid,
-    event: { source: p.key, region, placement: `${placement}_overseas`, ean: f.ean },
-  }));
+  // Big international retailers (YesStyle, Stylevana…). One whose affiliate
+  // product feed lists this exact barcode (lib/partner-feed.ts, 2026-11-06) gets
+  // a row like eBay's and Amazon's, with its own price and a tracked link to the
+  // product: pinned, labelled, never a store and never the best price. The rest
+  // are a search link each, in their own labelled group, never ranked.
+  const overseas: RowData[] = [];
+  const feeds = getPartnerPrices();
+  for (const { p, href, paid } of partnersFor(region, q, sub)) {
+    const event = { source: p.key, region, placement: `${placement}_overseas`, ean: f.ean };
+    const fed = paid ? partnerPriceIn(feeds, p.key, region, f.ean) : null;
+    const productHref = fed && partnerProductUrl(p, fed.u, sub);
+    if (fed && productHref) {
+      pinned.push({ name: p.name, sub: `${p.note}, this exact barcode`, price: money(fed.p, region), status: "in", href: productHref, paid: true, event: { ...event, placement: `${placement}_pinned` } });
+      continue;
+    }
+    overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, event });
+  }
   const ship = getShipping();
   const stores: RowData[] = offers.map((o) => ({
     name: storeName(o.s),
