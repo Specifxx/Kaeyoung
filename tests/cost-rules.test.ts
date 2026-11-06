@@ -35,6 +35,8 @@ test("product pages: top products at build, the rest on first visit with their d
     assert.match(s, /prebuiltProducts\(getProducts\(\)\)/, `${f}: prerender only the top products`);
     assert.doesNotMatch(s, /export const revalidate/, f);
   }
+  // A missing product must stay a real 404: the page streams behind loading.tsx, so only the layout can set the status.
+  assert.match(read("src/app/product/[slug]/layout.tsx"), /if \(!getProduct\(params\.slug\)\) notFound\(\);/);
   const cfg = read("next.config.js");
   for (const r of ["/product/[slug]", "/q/[slug]"]) {
     assert.ok(cfg.includes(`"${r}": ["./data/public/**", "./data/amazon-live/**"]`), `${r}: its function must carry data/`);
