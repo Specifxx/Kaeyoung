@@ -7,6 +7,12 @@
 // the parts every row repeats:
 //   offer  [store, cents, url]       in stock
 //          [store, cents, url, 0]    out of stock
+//          [store, cents, url, 1, v] in stock, with its Shopify variant id `v`
+//                                    in base 36 (2026-11-06: the buy button
+//                                    opens the store's checkout with it). Left
+//                                    out when the url already ends in
+//                                    ?variant=<id> (read back from there), and
+//                                    for an out-of-stock offer (no checkout).
 //   url    the part after `<store base>/products/` when the listing is there
 //          (all of them today), else the full URL
 //   img    the part after `https://cdn.shopify.com/s/files/`, else the full URL
@@ -18,7 +24,7 @@ import type { Offer, Product } from "./types";
 const SHOPIFY_FILES = "https://cdn.shopify.com/s/files/";
 const FULL = /^https?:\/\//;
 
-export type PackedOffer = [string, number, string] | [string, number, string, 0];
+export type PackedOffer = [string, number, string] | [string, number, string, 0] | [string, number, string, 1, string];
 export type PackedProduct = Omit<Product, "offers"> & { offers: Partial<Record<RegionCode, PackedOffer[]>> };
 export interface ProductsFileV2 {
   v: 2;
@@ -31,10 +37,15 @@ const listingBase = (store: string): string | null => {
   return s ? `${s.base.replace(/\/+$/, "")}/products/` : null;
 };
 
+const VARIANT_IN_URL = /[?&]variant=(\d{1,20})(?:&|$)/;
+const isVariant = (v: string | undefined): v is string => !!v && /^\d{1,20}$/.test(v);
+
 export function packOffer(o: Offer): PackedOffer {
   const base = listingBase(o.s);
   const u = base && o.u.startsWith(base) && o.u.length > base.length ? o.u.slice(base.length) : o.u;
-  return o.st === "out" ? [o.s, o.p, u, 0] : [o.s, o.p, u];
+  if (o.st === "out") return [o.s, o.p, u, 0];
+  if (isVariant(o.v) && VARIANT_IN_URL.exec(o.u)?.[1] !== o.v) return [o.s, o.p, u, 1, BigInt(o.v).toString(36)];
+  return [o.s, o.p, u];
 }
 
 /** null when the URL was stored short and its store is no longer listed (nothing to link to). */
@@ -46,7 +57,13 @@ export function unpackOffer(t: PackedOffer): Offer | null {
     if (!base) return null;
     u = base + short;
   }
-  return { s, p, st: t.length > 3 ? "out" : "in", u };
+  const st = t.length === 4 ? "out" : "in";
+  let v: string | undefined;
+  if (st === "in") {
+    if (t.length === 5 && /^[0-9a-z]{1,14}$/.test(t[4])) v = [...t[4]].reduce((n, c) => n * 36n + BigInt(parseInt(c, 36)), 0n).toString();
+    else v = VARIANT_IN_URL.exec(u)?.[1];
+  }
+  return v ? { s, p, st, u, v } : { s, p, st, u };
 }
 
 export const packImg = (img: string | null): string | null => (img && img.startsWith(SHOPIFY_FILES) ? img.slice(SHOPIFY_FILES.length) : img);

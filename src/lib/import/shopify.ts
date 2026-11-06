@@ -138,6 +138,7 @@ export function listingsFromProduct(
       cents: Math.round(Number(v.price) * 100),
       st: stockOf(v.available),
       url: `${store.base}/products/${p.handle}${variants.length > 1 ? `?variant=${v.id}` : ""}`,
+      vid: String(v.id),
       img: sizedImage(v.featured_image?.src ?? p.images?.[0]?.src),
     });
   }

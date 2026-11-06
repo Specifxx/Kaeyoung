@@ -9,6 +9,7 @@ export function OutLink({
   children,
   className = "",
   paid = false,
+  title,
   event,
 }: {
   href: string;
@@ -16,7 +17,8 @@ export function OutLink({
   className?: string;
   /** a link that can earn us a commission: rel sponsored */
   paid?: boolean;
-  event: { source: string; region: string; placement: string; ean?: string };
+  title?: string;
+  event: { source: string; region: string; placement: string; ean?: string; /** "checkout" or "product": where a store link lands */ to?: string };
 }) {
   return (
     <a
@@ -24,6 +26,7 @@ export function OutLink({
       target="_blank"
       rel={paid ? "sponsored noopener" : "nofollow noopener"}
       className={className}
+      title={title}
       onClick={() => {
         try {
           track("buy_click", event);

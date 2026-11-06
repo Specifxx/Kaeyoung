@@ -21,7 +21,7 @@ export function HeroPicks({ list }: { list?: Product[] }) {
         return (
           <div key={r.code} className={`rp rp-${r.code}`}>
             <p className="eyebrow mb-2.5 text-soft">Popular {r.phrase} · cheapest store first</p>
-            <ul className="grid grid-cols-2 gap-3">
+            <ul className="mo-floaty grid grid-cols-2 gap-3">
               {picks.map(({ f, lo, loStore, stores, save }) => {
                 const short = f.brand && f.name.startsWith(f.brand) ? f.name.slice(f.brand.length).trim() : f.name;
                 return (

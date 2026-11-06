@@ -27,7 +27,9 @@ export interface RowData {
   ship?: string | null;
   /** Amazon's own price from the Creators API (lib/amazon-live.ts): shown with its time, hidden after 24 hours. */
   live?: { at: string; timeZone: string; zoneLabel: string };
-  event: { source: string; region: string; placement: string; ean?: string };
+  /** the link opens the store's checkout with the item in it (lib/affiliate.ts buyLink) */
+  checkout?: boolean;
+  event: { source: string; region: string; placement: string; ean?: string; to?: string };
   /** Stores only: the store's own listing URL, for the shared thumbs up / down (StoreVote.tsx). */
   vote?: string;
 }
@@ -67,22 +69,25 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           </div>
         </div>
       )}
-      <ol className="space-y-2">
+      <ol data-reveal="stagger" className="space-y-2">
         {stores.map((r) => (
           <li key={r.event.source}>
             <Row {...r} />
           </li>
         ))}
       </ol>
+      {stores.some((r) => r.checkout) && (
+        <p className="px-1 text-[11px] text-soft">&ldquo;Buy&rdquo; opens that store&apos;s own checkout with this item in the bag. You pay the store directly.</p>
+      )}
     </div>
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, event, vote }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, brand, from = false, ship, live, checkout = false, event, vote }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
-      className={`flex items-center gap-3 rounded-xl border px-3.5 py-3 bg-card ${
+      className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 bg-card ${
         highlight ? "border-ink/70" : "border-line"
       } ${status === "out" ? "opacity-60" : ""}`}
     >
@@ -109,11 +114,12 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, f
         href={href}
         paid={paid}
         event={event}
+        title={checkout ? `Opens ${name}'s checkout with this item` : undefined}
         className={`btn-pop shrink-0 px-4 py-1.5 ${
           brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
         }`}
       >
-        {brand ? "Shop" : status === "out" ? "View" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
+        {brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
       </OutLink>
     </div>
   );

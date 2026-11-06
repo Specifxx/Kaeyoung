@@ -775,6 +775,49 @@ own affiliate variable, when set, still wins. Order and prices never change; eBa
 A pinned retailer row (`PARTNERS`) with no template of its own uses the joined list too, so a beauty retailer Awin
 approves (LOOKFANTASTIC, Cult Beauty…) appears as a paid row the next morning. Stylevana keeps its hard-coded template.
 
+## 2026-11-06 — The buy button opens the store's checkout with the item in the bag
+
+**Decision (owner: "when you click a link it directly takes them to checkout … it eliminates friction"):** a store row's
+button, the product page's main button and the phone buy bar go to the store's Shopify cart permalink,
+`<base>/cart/<variant>:1?utm_source=kaeyoung.com&utm_medium=referral&utm_campaign=checkout` (`buyLink` in
+`lib/affiliate.ts`), and say "Buy" instead of "Shop", with one line saying it opens that store's own checkout. Tested on
+2026-11-06 on Glowiss (US), Beauty Diary (AU) and Moona (NZ): each opened its checkout with the one item at the price
+we show, and the UTM tags survived into the checkout URL, so the store still sees the sale came from us.
+
+* **Only where nothing is lost.** In stock, a variant the import read, a Shopify store, and a store that pays us
+  nothing. A store that pays through Awin or its own referral code records the click with a script on its storefront
+  pages, which a jump to checkout would skip; those keep the product page, because the commission is worth more than
+  the click saved. A sold-out row, the store directory, and the blog and guide tables keep the product page too.
+* **The variant id** is new in `products.json`: the importer keeps each listing's Shopify variant (`Listing.vid`,
+  `Offer.v`). Stored as a 5th tuple element in base 36 only for an in-stock offer whose URL does not already end in
+  `?variant=<id>` (multi-variant listings are read back from the URL), about +0.7 MB on 10.4 MB. Until the next import
+  only multi-variant listings (about 18,000 of 66,000 in-stock offers) can go to checkout; after it, all of them.
+* **Measured** by the `buy_click` event's new `to` property (`checkout` or `product`) in Vercel Analytics. Clicks are
+  what we can see; a non-paying store's sale is not. If a store's checkout ever refuses the link (a variant gone since
+  the import), the shopper sees the store's own "unavailable" page, which is the same risk a stale product link has.
+
+## 2026-11-06: Motion: snowfall, scroll reveals and hover polish, with nothing hidden or shifted
+
+Owner: "I really want some animations, movements, make it dynamic … it's Christmas themed, so make it snowing; when
+you're scrolling down something moving in smoothly … very smooth, the shopping experience is really important", on
+KaeYoung and ScentCompare alike. The same layer is in both repos (`src/lib/motion.ts`, `src/components/HeroSnow.tsx`,
+the `motion:start`/`motion:end` block of `globals.css`); only `--snow`, the pale day-time flake colour, differs.
+
+* **No library.** Two inline scripts and CSS. `MOTION_BOOT` in `<head>` stamps `html[data-motion]` before paint unless
+  the visitor prefers reduced motion (or `?motion=off`); every animation is keyed on it. `MOTION_SCRIPT` at the end of
+  `<body>` marks every `[data-reveal]` element already on screen as shown and only then stamps `data-reveal-on`, the
+  one attribute under which CSS hides anything. So a first paint never loses content, a failed script hides nothing,
+  and the server HTML (every word, price and link a crawler reads) is unchanged. Off-screen sections rise in and tile
+  grids, price rows and FAQ items follow one another as they scroll into view (IntersectionObserver; MutationObserver
+  for client navigations and the quick view). Opacity and transform only: zero layout shift (measured CLS 0).
+* **Snow is a canvas, in the holiday window only** (`html[data-season="christmas"]`, unchanged dates). Soft flakes,
+  six-armed crystals and gold glints in three depths on a slow wind, parting around the pointer and nudged by scrolling.
+  It starts when the browser is idle, stops while the hero is off screen or the tab is hidden, caps its flakes (60 on a
+  phone) and device pixel ratio (2), and hands over from the CSS snow, which stays as the no-JavaScript look.
+* **The hero** eases in on arrival, its two product cards float, the wash drifts, and "Pay less." catches a gold glint
+  every few seconds. Buttons lift and press, buy buttons get a light sweep, step icons wiggle, price rows lift, the
+  search glows when focused, the header gains a shadow once scrolled. No pop-ups, nothing that moves a price.
+
 ## 2026-11-06 — Store thumbs up and down, one tally shared by every site
 
 **Decision (owner: "a little mini area where you can rate a shop … thumbs up a store or thumbs down a store … across all
