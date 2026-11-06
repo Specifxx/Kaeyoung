@@ -103,9 +103,7 @@ test("no banner ads (owner, 2026-10-30): paid links live in the price table only
   const at = (x: string) => table.indexOf(x);
   assert.ok(at('source: "ebay"') < at('source: "amazon"') && at('source: "amazon"') < at("offers.map"), "eBay first, Amazon second, then the stores");
   for (const row of table.match(/pinned\.push\([\s\S]*?\}\);?\n/g)!) {
-    // The quick view's Amazon row (owner, 2026-11-06) opens our own product page: no Amazon link in a pop-up.
-    if (/internal: true/.test(row)) assert.match(row, /href: `\/product\/\$\{f\.slug\}`/, "an internal row only opens the product page");
-    else assert.match(row, /paid: true/, "every marketplace row is a labelled paid link");
+    assert.match(row, /paid: true/, "every marketplace row is a labelled paid link");
   }
   // The quick view draws the same rows (from /q/<slug>), never its own order.
   assert.match(fs.readFileSync("src/app/q/[slug]/route.ts", "utf8"), /priceRows\(/);
@@ -123,4 +121,12 @@ test("the homepage's step tiles leave out toners and pads (owner, 2026-11-01)", 
   assert.ok(steps, "HOME_STEPS is listed in the homepage");
   assert.ok(!steps[1].includes('"toners"'));
   assert.ok(!/CATEGORIES\.(filter|map)/.test(src), "the homepage lists its own tiles, not every category");
+});
+
+test("the quick view's Amazon row is the tagged Amazon link itself, never Amazon's price (owner, 2026-11-06)", () => {
+  const table = fs.readFileSync("src/components/PriceTable.tsx", "utf8");
+  // The link is built for every placement; only the price and the live clock are the product page's.
+  assert.match(table, /const amazonUrl = liveUrl \?\? amazonSearchUrl\(q, region, sub\);/);
+  assert.match(table, /const live = quick \? null : found;/);
+  assert.doesNotMatch(table, /internal: true/, "no quick view row sends an Amazon click to our own page");
 });

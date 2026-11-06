@@ -40,11 +40,15 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   const q = searchQuery(f);
   const sub = subId(region, `${placement}_pinned`, f.ean);
   const ebayUrl = ebay ? ebayAffiliateUrl(ebay.u, sub) : ebaySearchUrl(q, region, sub);
-  // Never in the quick view (2026-11-02): Amazon's Operating Agreement allows no Amazon link in a pop-up window.
   // Amazon's own listing and price when this build's Creators API lookup matched the barcode (2026-11-05), else a search.
-  const live = placement.startsWith("quickview") ? null : amazonLive(f.ean, region);
-  const liveUrl = live && amazonItemUrl(live.asin, region, sub);
-  const amazonUrl = placement.startsWith("quickview") ? null : (liveUrl ?? amazonSearchUrl(q, region, sub));
+  // The quick view carries the same tagged link (owner, 2026-11-06: a visitor-opened view of this one product is the
+  // Associates policy's "pop-up windows in conjunction with your Site promoting Products closely associated with the
+  // materials on your Site"), but never Amazon's price: that stays on the product page (24-hour licence, CLAUDE.md).
+  const quick = placement.startsWith("quickview");
+  const found = amazonLive(f.ean, region);
+  const liveUrl = found && amazonItemUrl(found.asin, region, sub);
+  const live = quick ? null : found;
+  const amazonUrl = liveUrl ?? amazonSearchUrl(q, region, sub);
   const clock = AMAZON_CLOCK[region];
   const pinned: RowData[] = [];
   const cartTitle = f.brand && !f.name.toLowerCase().startsWith(f.brand.toLowerCase()) ? `${f.brand} ${f.name}` : f.name;
@@ -67,9 +71,9 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     });
   if (amazonUrl)
     pinned.push({
-      name: liveUrl ? "Amazon" : "Also check on Amazon",
+      name: live ? "Amazon" : "Also check on Amazon",
       sub: liveUrl ? `${r.amazonHost?.replace("www.", "")} · new, this exact barcode` : `${r.amazonHost?.replace("www.", "")} · check the seller`,
-      check: !liveUrl,
+      check: !live,
       brand: "amazon",
       price: liveUrl && live ? money(live.p, region) : null,
       // Amazon's own listing works like a store row too; the cart list drops its price after 24 hours (lib/cart-list.ts).
@@ -85,21 +89,6 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   // a row like eBay's and Amazon's, with its own price and a tracked link to the
   // product: pinned, labelled, never a store and never the best price. The rest
   // are a search link each, in their own labelled group, never ranked.
-  // The quick view may not link to Amazon (Operating Agreement: no Amazon link in a pop-up), but the Amazon row is
-  // always second (owner, 2026-11-06): there it opens this product's own page, whose Amazon row is the tagged link.
-  if (!amazonUrl && placement.startsWith("quickview") && r.amazonHost)
-    pinned.push({
-      name: "Also check on Amazon",
-      sub: `${r.amazonHost.replace("www.", "")} · on the product page`,
-      brand: "amazon",
-      check: true,
-      price: null,
-      status: null,
-      href: `/product/${f.slug}`,
-      internal: true,
-      paid: false,
-      event: { source: "amazon", region, placement: `${placement}_pinned`, ean: f.ean },
-    });
   const overseas: RowData[] = [];
   const feeds = getPartnerPrices();
   for (const { p, href, paid } of partnersFor(region, q, sub)) {
