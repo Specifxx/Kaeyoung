@@ -14,7 +14,7 @@ export function Header({ groups }: { groups: NavGroup[] }) {
         <Link href="/" prefetch={false} className="shrink-0" aria-label="KaeYoung home">
           <Logo wordmark="hidden min-[360px]:flex" />
         </Link>
-        <div className="hidden max-w-xl flex-1 md:block lg:ml-[4.5rem]">
+        <div className="hidden min-w-0 max-w-xl flex-1 md:block lg:ml-[4.5rem]">
           <SearchBox />
         </div>
         <div className="ml-auto flex items-center gap-2">
