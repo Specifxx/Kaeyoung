@@ -80,6 +80,21 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   // a row like eBay's and Amazon's, with its own price and a tracked link to the
   // product: pinned, labelled, never a store and never the best price. The rest
   // are a search link each, in their own labelled group, never ranked.
+  // The quick view may not link to Amazon (Operating Agreement: no Amazon link in a pop-up), but the Amazon row is
+  // always second (owner, 2026-11-06): there it opens this product's own page, whose Amazon row is the tagged link.
+  if (!amazonUrl && placement.startsWith("quickview") && r.amazonHost)
+    pinned.push({
+      name: "Also check on Amazon",
+      sub: `${r.amazonHost.replace("www.", "")} · on the product page`,
+      brand: "amazon",
+      check: true,
+      price: null,
+      status: null,
+      href: `/product/${f.slug}`,
+      internal: true,
+      paid: false,
+      event: { source: "amazon", region, placement: `${placement}_pinned`, ean: f.ean },
+    });
   const overseas: RowData[] = [];
   const feeds = getPartnerPrices();
   for (const { p, href, paid } of partnersFor(region, q, sub)) {
