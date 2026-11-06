@@ -72,7 +72,7 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
 
 export function TileGrid({ products, region }: { products: Product[]; region?: RegionCode }) {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+    <div data-reveal="stagger" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
       {products.map((f) => (
         <ProductTile key={f.ean} f={f} region={region} />
       ))}

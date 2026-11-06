@@ -98,7 +98,7 @@ export function SearchBox({ big = false }: { big?: boolean }) {
             window.location.href = it.href;
           }
         }}
-        className={`flex items-center gap-2 rounded-full border border-line bg-card pl-4 pr-1.5 focus-within:border-soft ${big ? "py-2" : "py-1"}`}
+        className={`mo-search flex items-center gap-2 rounded-full border border-line bg-card pl-4 pr-1.5 focus-within:border-soft ${big ? "py-2" : "py-1"}`}
       >
         <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="shrink-0 text-soft"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
         <input
