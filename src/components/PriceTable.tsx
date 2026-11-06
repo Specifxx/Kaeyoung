@@ -84,6 +84,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     price: money(o.p, region),
     status: o.st,
     href: storeUrl(o.s, o.u),
+    vote: o.u,
     paid: storePays(o.s),
     highlight: o === best,
     ship: deliveryNote(ship[o.s], o.p, (m) => money(m, region)),
