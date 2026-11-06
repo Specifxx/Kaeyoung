@@ -1,4 +1,5 @@
 import { SEASON_BOOT_SCRIPT } from "@/lib/season";
+import { MOTION_BOOT, MOTION_SCRIPT } from "@/lib/motion";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { ShareArrival } from "@/components/ShareArrival";
@@ -51,6 +52,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         {/* The holiday look (1 November to Boxing Day): data-season on <html> from the visitor's own date. lib/season.ts. */}
         <script dangerouslySetInnerHTML={{ __html: SEASON_BOOT_SCRIPT }} />
+        {/* The motion layer (lib/motion.ts): data-motion before paint, unless the visitor prefers reduced motion. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT }} />
         {/* Impact (affiliate network) site check, in the exact form Impact gives: a `value` attribute. */}
         <meta {...({ name: "impact-site-verification", value: "59ec5beb-7403-4ebf-8dc5-d42ff5b432ce" } as object)} />
         {/* Pinterest domain claim (owner, 2026-10-30). */}
@@ -73,6 +76,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RateCard />
         <Analytics />
         <ShareArrival />
+        {/* Scroll reveals: shows what is on screen, then lets the rest ease in as it scrolls into view. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_SCRIPT }} />
       </body>
     </html>
   );
