@@ -5,7 +5,7 @@
 // beauty partners; all sit above the stores, labelled "Paid link", never counted
 // as a store and never the "best price" (family rule: commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
-import { amazonItemUrl, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerProductUrl, partnersFor, storePays, storeUrl, subId } from "@/lib/affiliate";
+import { amazonItemUrl, buyLink, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerProductUrl, partnersFor, storePays, subId } from "@/lib/affiliate";
 import { getPartnerPrices, getShipping, storeName } from "@/lib/data";
 import { partnerPriceIn } from "@/lib/partner-feed";
 import { AMAZON_CLOCK, amazonLive } from "@/lib/amazon-live";
@@ -78,17 +78,21 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, event });
   }
   const ship = getShipping();
-  const stores: RowData[] = offers.map((o) => ({
-    name: storeName(o.s),
-    sub: o === best ? "Lowest item price" : null,
-    price: money(o.p, region),
-    status: o.st,
-    href: storeUrl(o.s, o.u),
-    paid: storePays(o.s),
-    highlight: o === best,
-    ship: deliveryNote(ship[o.s], o.p, (m) => money(m, region)),
-    event: { source: o.s, region, placement, ean: f.ean },
-  }));
+  const stores: RowData[] = offers.map((o) => {
+    const link = buyLink(o);
+    return {
+      name: storeName(o.s),
+      sub: o === best ? "Lowest item price" : null,
+      price: money(o.p, region),
+      status: o.st,
+      href: link.href,
+      checkout: link.to === "checkout",
+      paid: storePays(o.s),
+      highlight: o === best,
+      ship: deliveryNote(ship[o.s], o.p, (m) => money(m, region)),
+      event: { source: o.s, region, placement, ean: f.ean, to: link.to },
+    };
+  });
   return { pinned, overseas, overseasTo: r.name, stores };
 }
 

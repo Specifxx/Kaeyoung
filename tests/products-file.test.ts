@@ -18,7 +18,8 @@ const sample: Product[] = [
     first: "2026-10-30",
     offers: {
       [store.region]: [
-        { s: store.id, p: 1800, st: "in", u: `${store.base}/products/a-mask?variant=123` },
+        { s: store.id, p: 1800, st: "in", u: `${store.base}/products/a-mask?variant=123`, v: "123" },
+        { s: store.id, p: 1850, st: "in", u: `${store.base}/products/a-mask-solo`, v: "44876543210987" },
         { s: store.id, p: 1900, st: "out", u: `${store.base}/products/a-mask-2` },
         { s: "gone-store", p: 2000, st: "in", u: "https://elsewhere.example/p/1" },
       ],
@@ -30,7 +31,8 @@ test("products.json packs losslessly and short", () => {
   const packed = JSON.parse(JSON.stringify(packProducts(sample)));
   assert.equal(packed.v, 2);
   assert.deepEqual(packed.products[0].offers[store.region][0], [store.id, 1800, "a-mask?variant=123"]);
-  assert.deepEqual(packed.products[0].offers[store.region][1], [store.id, 1900, "a-mask-2", 0]);
+  assert.deepEqual(packed.products[0].offers[store.region][1], [store.id, 1850, "a-mask-solo", 1, (44876543210987).toString(36)]);
+  assert.deepEqual(packed.products[0].offers[store.region][2], [store.id, 1900, "a-mask-2", 0]);
   assert.equal(packed.products[0].img, "1/0800/9883/files/a.webp?v=1&width=600");
   assert.deepEqual(unpackProducts(packed), sample);
 });
@@ -38,4 +40,12 @@ test("products.json packs losslessly and short", () => {
 test("the old one-object-per-offer file still reads", () => {
   assert.deepEqual(unpackProducts({ products: sample }), sample);
   assert.deepEqual(unpackProducts(null), []);
+});
+
+test("a file from before variant ids reads the variant back from the url, in stock only", () => {
+  const [p] = unpackProducts({ v: 2, products: [{ ...sample[0], offers: { [store.region]: [[store.id, 1, "x?variant=987"], [store.id, 2, "y?variant=654", 0], [store.id, 3, "z"]] } }] } as never);
+  const os = p.offers[store.region]!;
+  assert.equal(os[0].v, "987");
+  assert.equal(os[1].v, undefined);
+  assert.equal(os[2].v, undefined);
 });

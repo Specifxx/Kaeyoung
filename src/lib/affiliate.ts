@@ -7,6 +7,7 @@
 import { REGION_BY_CODE, SITE, type RegionCode } from "@/site";
 import { awinProgrammeFor, awinUrl, clickref } from "./awin";
 import { STORE_BY_ID } from "@/content/stores";
+import type { Offer } from "./types";
 
 /** One EPN campaign for every site in the family, hard-coded (owner,
  *  2026-10-30); no variable overrides it. The customid tag (`ky-…`) tells the
@@ -87,6 +88,32 @@ export function storeUrl(storeId: string, url: string): string {
   } catch {
     return url;
   }
+}
+
+/**
+ * The buy button's link (owner, 2026-11-06: "when you click a link it directly
+ * takes them to checkout"): a Shopify cart permalink, `<base>/cart/<variant>:1`,
+ * opens the store's own checkout with this one item in it, nothing else to
+ * click. Only for an in-stock offer whose variant the import read, and only
+ * for a store that pays us nothing: a store that pays through Awin or its own
+ * referral code tracks the click with a script on its storefront pages, which
+ * a jump straight to checkout would skip, so those keep the product page (the
+ * commission is worth more than the click it saves). Everything else, and any
+ * link we cannot build, is the product page as before (`storeUrl`).
+ * `to` says which, for the click event, so the test can be read.
+ */
+export function buyLink(o: Offer): { href: string; to: "checkout" | "product" } {
+  const store = STORE_BY_ID[o.s];
+  if (o.st === "in" && o.v && /^\d{1,20}$/.test(o.v) && store?.platform === "shopify" && !storePays(o.s)) {
+    try {
+      const u = new URL(`/cart/${o.v}:1`, store.base);
+      u.searchParams.set("utm_source", SITE.domain);
+      u.searchParams.set("utm_medium", "referral");
+      u.searchParams.set("utm_campaign", "checkout");
+      return { href: u.toString(), to: "checkout" };
+    } catch {}
+  }
+  return { href: storeUrl(o.s, o.u), to: "product" };
 }
 
 /** True when a click on this store's links can earn (shown as "Paid link"). */
