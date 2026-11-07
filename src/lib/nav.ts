@@ -4,10 +4,16 @@
 // like DexCompare") and the phone menu (components/MobileMenu.tsx) draw this
 // one list, so the two never disagree. Static links to pages that exist.
 // No data import here: the client menus import isActive from this file.
+import { saleStrip } from "@/lib/black-friday";
 import { CAT_BY_KEY, STEP_MENU_ORDER, type CatKey } from "@/site";
 
 export type NavItem = { href: string; label: string; count?: number; cat?: CatKey };
 export type NavGroup = { title: string; links: NavItem[] };
+
+function saleLinks(): NavItem[] {
+  const s = saleStrip(new Date().toISOString().slice(0, 10));
+  return s ? [{ href: s.href, label: `${s.name} deals` }] : [];
+}
 
 export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: string; name: string }[] = []): NavGroup[] {
   return [
@@ -18,6 +24,8 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
     {
       title: "Save",
       links: [
+        // Black Friday, then Cyber Monday, while the strip shows (lib/black-friday.ts saleStrip).
+        ...saleLinks(),
         { href: "/popular", label: "Popular" },
         { href: "/deals", label: "Deals today" },
         { href: "/basket", label: "Basket compare" },

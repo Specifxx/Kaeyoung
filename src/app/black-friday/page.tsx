@@ -4,7 +4,7 @@ import { REGIONS } from "@/site";
 import { dealsIn } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
 import { PageHead } from "@/components/Section";
-import { blackFriday, cyberMonday, longDate, seasonYear } from "@/lib/black-friday";
+import { blackFriday, cyberMonday, holidayFaq, longDate, seasonYear } from "@/lib/black-friday";
 
 // The Black Friday page (DECISIONS.md, "Black Friday page", 2026-11-02): today's deals at one URL kept every year,
 // prerendered at the daily build like every page.
@@ -45,9 +45,19 @@ export default function BlackFriday() {
         );
       })}
       <p className="mt-8 text-sm text-soft">
+        <Link prefetch={false} href="/cyber-monday" className="underline">Cyber Monday deals</Link> ·{" "}
         <Link prefetch={false} href="/deals" className="underline">K-beauty deals today</Link> · <Link prefetch={false} href="/popular" className="underline">Popular products</Link> ·{" "}
         <Link prefetch={false} href="/stores" className="underline">Stores we compare</Link>
       </p>
+      <section className="mt-10 max-w-3xl">
+        <h2 className="font-display text-xl font-semibold">Black Friday {y}: questions</h2>
+        {holidayFaq("black-friday", y, "K-beauty").map((f) => (
+          <div key={f.q} className="mt-3 text-sm">
+            <h3 className="font-semibold">{f.q}</h3>
+            <p className="text-soft">{f.a}</p>
+          </div>
+        ))}
+      </section>
     </div>
   );
 }

@@ -39,6 +39,7 @@ export function Footer({ updated }: { updated?: string | null }) {
           <ul className="space-y-1.5">
             <li><Link prefetch={false} href="/deals" className="text-soft hover:text-ink">K-beauty deals today</Link></li>
             <li><Link prefetch={false} href="/black-friday" className="text-soft hover:text-ink">Black Friday K-beauty deals</Link></li>
+            <li><Link prefetch={false} href="/cyber-monday" className="text-soft hover:text-ink">Cyber Monday K-beauty deals</Link></li>
             <li><Link prefetch={false} href="/boxing-day" className="text-soft hover:text-ink">Boxing Day K-beauty deals</Link></li>
             <li><Link prefetch={false} href="/january-sales" className="text-soft hover:text-ink">January sales</Link></li>
             <li><Link prefetch={false} href="/lunar-new-year" className="text-soft hover:text-ink">Lunar New Year deals</Link></li>
