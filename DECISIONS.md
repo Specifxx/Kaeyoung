@@ -1018,3 +1018,16 @@ Black Friday is 27 November 2026 and Cyber Monday 30 November. Three additions, 
 - **More on both pages, nothing taken away**: the URL, title and h1 of `/black-friday` are unchanged; below the
   existing tiles come four visible questions (the dates, whether stores have sales, shipping, how often it updates). No FAQ rich-result markup:
   Google shows those only for government and health sites since 2023, so the text is what ranks.
+## 2026-11-07 — The low-traction cull: a product must be widely stocked today, or found through search
+
+Owner, 2026-11-07: apply Compare Empire's focus cull to every site ("any products that are not trendy, or very low traction or
+conversion, we probably want to get rid of"). The merge's two-stores-in-one-region rule counts stores that list a product sold out,
+so most pages compared nothing anyone could buy. `lib/focus.ts`, applied by `scripts/import.ts` after the merge, lists a product
+only when, counting stores that can sell it today, one region has three or more or two regions have two or more (the sitemap's
+first tier from 2026-11-03, now the existence rule), or when Search Console shows a click or 10+ impressions on its page in 56 days
+(the `demand` branch, written daily by RiftCompare's sister-demand job). ≈11,290 → 4,790 products (32 of them kept only by search demand).
+
+- products.json, the eBay pass, search, lists and the sitemap see only listed products. history.json keeps every merged product,
+  so one that qualifies again returns at the same URL (slugs are kept forever) with its chart.
+- `data/public/culled.json` (slug → category): a culled product page 301s to its category (`lib/culled.ts`).
+- The import's half-size guard compares the merge's count before the cull (`meta.merged`).
