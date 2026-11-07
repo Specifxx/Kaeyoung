@@ -61,6 +61,7 @@ function pageUrls(): SitemapUrl[] {
     u("/popular", 0.8),
     u("/deals", 0.8),
     u("/black-friday", 0.8),
+    u("/cyber-monday", 0.8),
     ...["/boxing-day", "/january-sales", "/lunar-new-year", "/valentines-day"].map((p) => u(p, 0.7)),
     u("/basket", 0.5),
     u("/new", 0.7),

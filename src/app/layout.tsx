@@ -12,6 +12,7 @@ import "@/components/site-reviews/site-reviews.css";
 import { SITE } from "@/site";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { Header } from "@/components/Header";
+import { HolidayStrip } from "@/components/HolidayStrip";
 import { Footer } from "@/components/Footer";
 import { SideNav } from "@/components/SideNav";
 import { QuickView } from "@/components/QuickView";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Header groups={groups} />
+        <HolidayStrip />
         <div className="flex">
           <SideNav groups={groups} />
           {/* The side rails (components/SideRails.tsx): eBay left, Amazon right, from 1440px; empty in the server HTML. */}
