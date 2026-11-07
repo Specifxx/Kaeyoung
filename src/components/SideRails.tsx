@@ -99,16 +99,16 @@ function amazonRail(r: Rails): RailProps | null {
     : null;
 }
 
-const TILE = "group flex flex-col rounded-xl border border-line bg-card p-2 transition-colors hover:border-accent/50";
+const TILE = "group flex flex-col border-b border-line bg-card p-2 transition-colors hover:bg-subtle";
 
 function Rail({ brand, heading, label, tiles, placement, more, note, region }: RailProps & { region: string }) {
   return (
-    <div role="group" data-ad={placement} aria-label={`Sponsored: ${label}`} className="side-rail flex flex-col rounded-2xl border border-line bg-card/80 p-2 shadow-card">
-      <div className="mb-2 flex h-[22px] shrink-0 items-center justify-between px-1">
+    <div role="group" data-ad={placement} aria-label={`Sponsored: ${label}`} className="side-rail flex flex-col border-line bg-card">
+      <div className="flex h-[30px] shrink-0 items-center justify-between px-2">
         <span className="truncate text-[13px] font-semibold text-ink">{heading}</span>
         <span className="rounded bg-subtle px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide text-soft">Ad</span>
       </div>
-      <ul role="list" className="rail-scroll grid min-h-0 flex-1 content-start gap-2 overflow-y-auto overscroll-contain">
+      <ul role="list" className="rail-scroll grid min-h-0 flex-1 content-start overflow-y-auto overscroll-contain border-t border-line">
         {tiles.map((t) => (
           <li key={t.id}>
             <OutLink href={t.href} paid className={TILE} event={{ source: brand, region, placement, ean: t.id }}>
@@ -126,7 +126,7 @@ function Rail({ brand, heading, label, tiles, placement, more, note, region }: R
           </li>
         ))}
       </ul>
-      <p className="mt-2 flex shrink-0 flex-col px-1 text-[10px] leading-[13px] text-soft">
+      <p className="flex shrink-0 flex-col px-2 py-2 text-[10px] leading-[13px] text-soft">
         {more && (
           <OutLink href={more} paid className="truncate font-semibold text-accent-deep" event={{ source: brand, region, placement }}>
             More on {label} →

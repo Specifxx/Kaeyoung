@@ -586,14 +586,21 @@ html[data-scrolled] header.sticky {
   .side-rail-slot {
     display: block;
     width: 160px;
-    padding: 12px 12px 0;
+    padding: 0;
   }
 }
+/* Flush (owner, 2026-11-07: "I don't like how it's floating … no gap"): the rail fills its column from the header to the
+   window's foot, square, one hairline facing the page; its tiles stack edge to edge with hairline dividers. */
 .side-rail {
   position: sticky;
-  top: calc(4.25rem + 12px);
-  height: calc(100dvh - 4.25rem - 24px);
-  max-height: 1100px;
+  top: 4.25rem;
+  height: calc(100dvh - 4.25rem);
+}
+.side-rail-slot[data-rail="left"] .side-rail {
+  border-width: 0 1px 0 0;
+}
+.side-rail-slot[data-rail="right"] .side-rail {
+  border-width: 0 0 0 1px;
 }
 /* A rail's list scrolls inside it (up to ten tiles): a thin bar, and the page does not scroll on past the list's end. */
 .rail-scroll {
