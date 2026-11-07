@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { POST_BY_SLUG } from "@/content/blog";
 import { REGIONS } from "@/site";
 import { dealsIn } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
@@ -20,6 +21,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function BlackFriday() {
+  const guide = POST_BY_SLUG["kbeauty-black-friday-2026"]; // only once the post is live (its date)
   const y = year();
   const bf = blackFriday(y);
   const before = new Date().toISOString().slice(0, 10) < bf;
@@ -48,6 +50,7 @@ export default function BlackFriday() {
         <Link prefetch={false} href="/cyber-monday" className="underline">Cyber Monday deals</Link> ·{" "}
         <Link prefetch={false} href="/deals" className="underline">K-beauty deals today</Link> · <Link prefetch={false} href="/popular" className="underline">Popular products</Link> ·{" "}
         <Link prefetch={false} href="/stores" className="underline">Stores we compare</Link>
+        {guide ? <> · <Link prefetch={false} href={`/blog/${guide.slug}`} className="underline">{guide.short}: how to tell a real deal</Link></> : null}
       </p>
       <section className="mt-10 max-w-3xl">
         <h2 className="font-display text-xl font-semibold">Black Friday {y}: questions</h2>

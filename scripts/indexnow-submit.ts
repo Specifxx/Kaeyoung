@@ -4,15 +4,17 @@
 import { CATEGORIES, SITE } from "@/site";
 import { getProducts } from "@/lib/data";
 import { isIndexable } from "@/lib/index-tiers";
+import { LIVE_POSTS } from "@/content/blog";
 
 async function main() {
   const key = process.env.INDEXNOW_KEY;
   if (!key) return console.log("[indexnow] INDEXNOW_KEY not set: skipped");
   const site = SITE.url;
   const week = new Date(Date.now() - 7 * 86_400_000).toISOString().slice(0, 10);
-  const hubs = ["", "/deals", "/new", "/brands", "/guides", ...CATEGORIES.map((c) => `/${c.key}`)].map((p) => `${site}${p}`);
+  const hubs = ["", "/deals", "/black-friday", "/cyber-monday", "/boxing-day", "/january-sales", "/lunar-new-year", "/valentines-day", "/new", "/brands", "/guides", ...CATEGORIES.map((c) => `/${c.key}`)].map((p) => `${site}${p}`);
   const fresh = getProducts().filter((f) => f.first >= week && isIndexable(f)).map((f) => `${site}/product/${f.slug}`);
-  const urls = [...new Set([...hubs, ...fresh])].slice(0, 1000);
+  const posts = ["/blog", ...LIVE_POSTS.map((p) => `/blog/${p.slug}`)].map((p) => `${site}${p}`);
+  const urls = [...new Set([...hubs, ...posts, ...fresh])].slice(0, 1000);
   const res = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

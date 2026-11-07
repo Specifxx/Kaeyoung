@@ -11,6 +11,44 @@ import type { Post } from "./blog";
 
 export const ADVICE_POSTS: Post[] = [
   {
+    slug: "kbeauty-black-friday-2026",
+    title: "K-beauty Black Friday 2026: how to tell a real deal, and the prices to beat",
+    short: "K-beauty Black Friday",
+    description: "Black Friday and Cyber Monday 2026 for Korean skincare: why site-wide codes matter more than stickers, how to read a product's price history, and today's cheapest store for the bestsellers in your country.",
+    date: "2026-11-08",
+    art: "moisturisers",
+    sections: [
+      {
+        p: [
+          "Black Friday is 27 November 2026 and Cyber Monday 30 November, and for K-beauty the season starts earlier, on 11 November (Singles' Day). Most K-beauty shops run these weeks as site-wide percentage codes rather than cutting single products, so the store that is cheapest for a product today is usually still the cheapest once everyone's code is applied.",
+          "KaeYoung reads every store every day and keeps each product's price history, so a product page shows two things a sale banner does not: the cheapest store for that exact barcode today, and what it has cost over the past weeks. A real Black Friday price is one under the product's own history, not just under the number printed beside it.",
+          "Our advice: find the cheapest store for the exact product and size now, then wait for that store's code. Buy the full sizes of what you already use, where a code saves the most, and the brands' own gift sets, which are made for this season. Our [Black Friday deals](/black-friday) page lists today's products at least 10% under the dearest store, every day through the sales, and [Cyber Monday deals](/cyber-monday) does the same that weekend.",
+        ],
+      },
+      {
+        h: "The bestsellers: today's prices to beat",
+        p: ["The products the most stores stock in your country, cheapest store first. Open a row for its price history before the sales start, so you know its real price."],
+        picks: { title: "K-beauty bestsellers {region}", match: ".", limit: 12 },
+      },
+      {
+        h: "Sunscreen and moisturisers to stock up on",
+        p: ["The two steps you finish fastest, and so the ones where a code on a big tube or a two-pack saves the most over a year."],
+        picks: { title: "Sunscreen {region}", match: ".", cat: "sunscreen", limit: 8 },
+      },
+      {
+        p: [],
+        picks: { title: "Moisturisers {region}", match: ".", cat: "moisturisers", limit: 8 },
+      },
+      {
+        h: "Five checks before you pay",
+        p: [
+          "Check the size: a 30 ml and a 100 ml share a name, and a \"deal\" on the small one can cost more per ml. Check the barcode or the store's listing is the same product, not an older packaging or a refill. Add the delivery: a few dollars off with paid shipping can lose to a dearer store with free shipping over a threshold. Buy from real stores, not marketplace sellers, where counterfeits are common (see [how to avoid fake K-beauty](/blog/avoid-fake-kbeauty)). And read the code's terms: some brands are left out of site-wide codes.",
+          "Prices here are each store's own, in your own currency, never converted and never including delivery. For presents, [K-beauty gift sets](/blog/kbeauty-gift-sets) prices the brands' own sets.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "pdrn-skincare-guide",
     title: "PDRN skincare, explained: what it is, who sells it and where it is cheapest",
     short: "PDRN skincare guide",
