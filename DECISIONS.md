@@ -994,3 +994,14 @@ the owner accepted the remaining risk. The quick view shows the link only (the i
 else the tagged search), never Amazon's price: that stays on the product page under the 24-hour licence. Uninvited
 overlays (a phone ad dock, a corner card, an exit pop-up) still never carry Amazon, and an Amazon page is never framed
 (item (n)).
+
+## 2026-11-07: The sitemap lists a lean core
+
+The owner's Search Console and Bing audit (2026-11-07) found the family's young domains stuck in "Discovered – currently
+not indexed": Google knows thousands of templated product URLs and, with few links pointing at the site, samples a few
+instead of indexing them. The sitemap now lists ~400 URLs instead of thousands: the hubs and guides as before, the 300
+most widely stocked products (`SITEMAP_PRODUCTS`, the head of `prebuiltProducts`, so every listed page is a prerendered
+static file), and only the brands that carry one of them. Category page 2+ left it too. Nothing was noindexed, removed
+or moved: every other product, brand and hub page stays live, indexable and linked from its category and brand pages,
+and IndexNow submits the same core. Widen `SITEMAP_PRODUCTS` once Search Console shows the core mostly indexed
+(recheck ~25 Nov). `tests/seo.test.ts`.
