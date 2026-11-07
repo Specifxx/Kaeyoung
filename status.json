@@ -1,0 +1,68 @@
+{
+ "v": 1,
+ "site": "kaeyoung.com",
+ "at": "2026-11-07T10:53:01.082Z",
+ "overall": "warn",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "HTTP 200"
+  },
+  {
+   "name": "Search index",
+   "status": "ok",
+   "detail": "11292 products live"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "19.9h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "warn",
+   "detail": "seoulbeautystore: https://seoulbeautystore.com/products.json?limit=250&page=1&country=GB: fetch failed"
+  },
+  {
+   "name": "Catalogue",
+   "status": "ok",
+   "detail": "11292 products"
+  },
+  {
+   "name": "Data size",
+   "status": "ok",
+   "detail": "11.3 MB"
+  },
+  {
+   "name": "Ratings and reviews",
+   "status": "ok",
+   "detail": "0 products rated"
+  },
+  {
+   "name": "Delivery quotes",
+   "status": "ok",
+   "detail": "111 of 159 stores quoted"
+  },
+  {
+   "name": "Store deals",
+   "status": "ok",
+   "detail": "91 of 159 stores checked; 0 run multi-buys or gifts on 0 products"
+  },
+  {
+   "name": "Partner feeds",
+   "status": "ok",
+   "detail": "stylevana 2073/43257 prices kept"
+  },
+  {
+   "name": "Amazon ASINs",
+   "status": "ok",
+   "detail": "US no credential; UK no credential; CA no credential; EU no credential; AU no credential"
+  },
+  {
+   "name": "eBay listings",
+   "status": "ok",
+   "detail": "2500/2500 calls on 2026-11-06"
+  }
+ ]
+}
