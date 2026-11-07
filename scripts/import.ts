@@ -2,6 +2,8 @@
 // meta.json and history.json. Two stores at a time (Shopify 429s a runner that
 // pages many shops at once). A store that fails keeps nothing from this run and
 // shows in meta.json, where the ops monitor reads it.
+import { execFileSync } from "node:child_process";
+import { demandSlugs, focusCatalog } from "@/lib/focus";
 import fs from "node:fs";
 import path from "node:path";
 import { STORES, type Store } from "@/content/stores";
@@ -32,6 +34,20 @@ async function readStore(store: Store, cache: BarcodeCache): Promise<ReadResult>
   const own = await shopifyOwnCurrency(store);
   if (own && own !== want) throw new Error(`prices in ${own}, region needs ${want}`);
   return readShopify(store, cache, budget);
+}
+
+/** Search Console page demand from this repo's `demand` branch (RiftCompare's sister-demand job); none when unreadable. */
+function readDemand(): Set<string> {
+  try {
+    execFileSync("git", ["fetch", "--quiet", "--depth=1", "origin", "demand"], { stdio: "ignore", timeout: 60_000 });
+    const raw = execFileSync("git", ["show", "FETCH_HEAD:gsc-pages.json"], { encoding: "utf8", timeout: 30_000 });
+    const s = demandSlugs((JSON.parse(raw) as { pages?: Record<string, number[]> }).pages ?? {});
+    console.log(`focus: ${s.size} product pages with search demand`);
+    return s;
+  } catch {
+    console.log("focus: no demand branch, the stocking rule alone decides");
+    return new Set();
+  }
 }
 
 async function main() {
@@ -82,16 +98,22 @@ async function main() {
   }
 
   const today = new Date().toISOString().slice(0, 10);
-  const products = mergeListings(mirrored.listings, state, today);
-  // Refuse to publish an empty catalogue over a good one.
-  if (prevProducts.length > 50 && products.length < prevProducts.length * 0.5) {
-    console.error(`Products fell from ${prevProducts.length} to ${products.length}; not publishing.`);
+  const merged = mergeListings(mirrored.listings, state, today);
+  // Refuse to publish an empty catalogue over a good one. Compared before the cull, against the last run's merged count.
+  const prevMerged = prevMeta?.merged ?? prevProducts.length;
+  if (prevMerged > 50 && merged.length < prevMerged * 0.5) {
+    console.error(`Products fell from ${prevMerged} to ${merged.length}; not publishing.`);
     process.exit(1);
   }
-  const history = recordHistory(read<History>("public/history.json", {}), products, today);
+  // The low-traction cull (lib/focus.ts): only widely stocked products, or ones people find through search, are listed.
+  const { listed: products, culled } = focusCatalog(merged, readDemand());
+  console.log(`focus: ${products.length} of ${merged.length} products listed`);
+  // History keeps every merged product, so a product that is listed again returns with its chart.
+  const history = recordHistory(read<History>("public/history.json", {}), merged, today);
 
-  const meta: Meta = { updatedAt: new Date().toISOString(), products: products.length, stores: runs, ebay: prevMeta?.ebay };
+  const meta: Meta = { updatedAt: new Date().toISOString(), products: products.length, merged: merged.length, stores: runs, ebay: prevMeta?.ebay };
   write("public/products.json", packProducts(products));
+  write("public/culled.json", Object.fromEntries(Object.entries(culled).sort(([a], [b]) => (a < b ? -1 : 1))));
   write("public/history.json", history);
   write("public/meta.json", meta, true);
   write("state/barcodes.json", cache);

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
+import { culledTarget } from "@/lib/culled";
 import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
 import { bestIn, brandKo, cheapestDelivered, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
@@ -56,7 +57,12 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const f = getProduct(params.slug);
-  if (!f) notFound();
+  if (!f) {
+    // Culled by the low-traction rule (lib/focus.ts): its category lists what is left.
+    const to = culledTarget(params.slug);
+    if (to) permanentRedirect(to);
+    notFound();
+  }
   const cat = CAT_BY_KEY[f.cat];
   const regions = regionsOf(f);
   const ebay = getEbay()[f.ean] ?? {};
