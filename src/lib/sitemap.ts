@@ -1,12 +1,13 @@
 import { CATEGORIES, SITE } from "@/site";
-import { getBrands, getMeta, getProducts, productsOfCat } from "@/lib/data";
-import { inSitemap } from "@/lib/index-tiers";
+import { getBrands, getMeta, getProducts } from "@/lib/data";
+import { sitemapProducts } from "@/lib/index-tiers";
 import { GUIDES } from "@/lib/guides";
 import { LIVE_POSTS } from "@/content/blog";
 
-// Only pages worth landing on (src/lib/index-tiers.ts): hubs, brands, guides,
-// and products someone can order with 2+ stores compared, stocked widely
-// (inSitemap). Sold-out products stay reachable but noindex, and out of here.
+// A lean core (SEO audit 2026-11-07, src/lib/index-tiers.ts sitemapProducts): hubs, guides, the
+// SITEMAP_PRODUCTS most widely stocked products and the brands that carry one of them. Every other
+// indexable product, brand and hub page (/<category>/page/N) stays live and linked; it just isn't
+// advertised here. Sold-out products stay reachable but noindex, and out of here.
 // Split into an index of parts (SEO audit 2026-11-03: one 10,405-URL file): `pages`, then products in chunks of
 // PRODUCTS_PER_FILE, widely stocked first. Served by the static routes /sitemap.xml and /sitemaps/<part>.xml.
 export interface SitemapUrl {
@@ -17,12 +18,12 @@ export interface SitemapUrl {
 export const PRODUCTS_PER_FILE = 5000;
 /** Products on one category hub page (CatHub's PER_PAGE). */
 export const HUB_PER_PAGE = 48;
-const pageCount = (cat: (typeof CATEGORIES)[number]["key"]) => Math.max(1, Math.ceil(productsOfCat(cat).length / HUB_PER_PAGE));
 
 const updated = () => getMeta()?.updatedAt ?? new Date().toISOString();
 const u = (p: string, priority: number): SitemapUrl => ({ url: `${SITE.url}${p}`, lastModified: updated(), priority });
 
-const productUrls = () => getProducts().filter(inSitemap).map((f) => u(`/product/${f.slug}`, 0.7));
+const coreProducts = () => sitemapProducts(getProducts());
+const productUrls = () => coreProducts().map((f) => u(`/product/${f.slug}`, 0.7));
 
 export function sitemapParts(): string[] {
   const n = Math.max(1, Math.ceil(productUrls().length / PRODUCTS_PER_FILE));
@@ -57,7 +58,6 @@ function pageUrls(): SitemapUrl[] {
   return [
     u("/", 1),
     ...CATEGORIES.map((c) => u(`/${c.key}`, 0.9)),
-    ...CATEGORIES.flatMap((c) => Array.from({ length: pageCount(c.key) - 1 }, (_, i) => u(`/${c.key}/page/${i + 2}`, 0.4))),
     u("/popular", 0.8),
     u("/deals", 0.8),
     u("/black-friday", 0.8),
@@ -66,7 +66,7 @@ function pageUrls(): SitemapUrl[] {
     u("/basket", 0.5),
     u("/new", 0.7),
     u("/brands", 0.8),
-    ...getBrands().map((b) => u(`/brands/${b.slug}`, 0.8)),
+    ...((core) => getBrands().filter((b) => b.products.some((f) => core.has(f.slug))))(new Set(coreProducts().map((f) => f.slug))).map((b) => u(`/brands/${b.slug}`, 0.8)),
     u("/guides", 0.7),
     ...GUIDES.map((g) => u(`/guides/${g.slug}`, 0.8)),
     u("/blog", 0.6),

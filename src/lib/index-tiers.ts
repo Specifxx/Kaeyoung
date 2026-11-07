@@ -36,3 +36,13 @@ export function prebuiltProducts(all: Product[]): Product[] {
     .sort((a, b) => stores(b) - stores(a) || a.slug.localeCompare(b.slug))
     .slice(0, PREBUILT_PRODUCTS);
 }
+
+/** Product pages the sitemap lists (SEO audit 2026-11-07, DECISIONS.md "The sitemap lists a lean core"): the most
+ *  widely stocked of the prebuilt pages. The rest stay indexable and linked from their category and brand pages; only
+ *  the sitemap leaves them out, so a young domain's crawl goes to pages worth ranking. Widen once Search Console shows
+ *  the core mostly indexed. */
+export const SITEMAP_PRODUCTS = 300;
+
+export function sitemapProducts(all: Product[]): Product[] {
+  return prebuiltProducts(all).slice(0, SITEMAP_PRODUCTS);
+}

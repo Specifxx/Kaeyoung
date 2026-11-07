@@ -51,3 +51,11 @@ test("no product photo has empty alt text", () => {
 test("llms.txt is a static route", () => {
   assert.match(read("src/app/llms.txt/route.ts"), /force-static/);
 });
+
+test("the sitemap is a lean core: at most SITEMAP_PRODUCTS products, no hub page 2+, only brands with a core product", async () => {
+  const { SITEMAP_PRODUCTS } = await import("../src/lib/index-tiers");
+  const urls = allSitemapUrls().map((x) => x.url);
+  assert.ok(urls.filter((x) => x.includes("/product/")).length <= SITEMAP_PRODUCTS);
+  assert.ok(!urls.some((x) => /\/page\/\d+$/.test(x)));
+  assert.ok(urls.length < 600, `${urls.length} URLs`);
+});
