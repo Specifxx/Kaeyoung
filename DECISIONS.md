@@ -1039,3 +1039,12 @@ Owner: get every Black Friday page indexed. The daily IndexNow ping sent only th
 (the sitemap already listed them). A Black Friday blog post goes live on 8 November (on 7 November for Figure; Scent's,
 written for the 14th, moved up because it is only useful before the sales) and the two sale pages link to it once it is live. Every price in it is a live table of
 the day's prices; no countdown, no "was" price.
+
+## 2026-11-08 — Christmas is one quiet line, not a costume
+
+Owner: "some of the christmas themes on our websites are a bit too much - the theme must match the domain". The
+2026-11-01 Christmas look (falling snow, a strand of lights, trees, presents, candy canes, stockings, a Santa hat on the
+logo, candy-cane stripes and seasonal palette swaps) is gone, with its art in `public/xmas/`. The season keeps at most ONE
+touch, drawn in the site's own colours: "The Holiday Edit" line above the hero (`.ky-holiday-pill`), a plain pill on the site's own hairline. The snow canvas (`HeroSnow`), gold snowflakes, pastel tree, cane and stockings, header hairline and warm wash are gone. It still starts and ends by itself (`lib/season.ts`, 1 November to
+Boxing Day), and the tests pin that nothing else comes back. Black Friday and Cyber Monday (strip, pages, nav) are
+unchanged. The same rule went to every sister site: the site's own identity first.

@@ -13,7 +13,6 @@ import { Section } from "@/components/Section";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { CAT_TINT, CatIcon } from "@/components/Art";
 import { HeroPicks } from "@/components/HeroPicks";
-import { HeroSnow } from "@/components/HeroSnow";
 import { POST_BY_SLUG } from "@/content/blog";
 import { GUIDES } from "@/lib/guides";
 import { JsonLd, faqLd, siteLd } from "@/lib/seo";
@@ -64,19 +63,14 @@ export default function Home() {
   return (
     <>
       <section className="ky-hero wash relative overflow-hidden border-b border-line">
-        {/* The holiday look (1 November to Boxing Day, src/lib/season.ts): quiet snow in rose and gold. Hidden otherwise. */}
-        <span className="ky-snow" aria-hidden="true" />
-        {/* The motion layer (owner, 2026-11-06): a slowly drifting wash, and in the holiday window a canvas snowfall
-            that takes over from the CSS snow above. Both decoration only; globals.css "motion" block. */}
+        {/* The motion layer (owner, 2026-11-06): a slowly drifting wash. Decoration only; globals.css "motion" block. */}
         <span className="mo-bg mo-aurora" aria-hidden="true" />
-        <HeroSnow />
         <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-10 pt-10 md:grid-cols-[1.15fr_1fr] md:pb-12 md:pt-14">
           <div className="min-w-0">
             {/* The creators hub, above the fold (owner, 2026-11-03): top-right corner of the hero from sm, a pill above the holiday line on a phone. */}
             <CreatorsCornerBadge />
             <p className="ky-holiday mb-4">
               <Link prefetch={false} href={giftHref} className="ky-holiday-pill">
-                <span className="ky-flake" aria-hidden="true" />
                 <b>The Holiday Edit</b>
                 <span className="hidden sm:inline">· K-beauty gift sets, cheapest store first →</span>
               </Link>
@@ -103,15 +97,6 @@ export default function Home() {
               (owner, 2026-11-05): the site's job shown, not described. The hero art it replaces stays in Art.tsx. */}
           <div className="mo-enter relative mx-auto w-full max-w-md md:max-w-none" style={{ ["--mo-d" as string]: 3 }}>
             <HeroPicks />
-            <span className="ky-flakes" aria-hidden="true">
-              <span className="ky-flake" />
-              <span className="ky-flake" />
-              <span className="ky-flake" />
-              <span className="ky-deco ky-tree" />
-              <span className="ky-deco ky-cane" />
-              <span className="ky-deco ky-stocking ky-stocking-1" />
-              <span className="ky-deco ky-stocking ky-stocking-2" />
-            </span>
           </div>
         </div>
       </section>
