@@ -1,7 +1,8 @@
 import { CATEGORIES, SITE } from "@/site";
-import { getBrands, getMeta, getProducts } from "@/lib/data";
+import { getBrands, getMeta, getProducts, needHubs } from "@/lib/data";
 import { sitemapProducts } from "@/lib/index-tiers";
 import { GUIDES } from "@/lib/guides";
+import { needPath, needIndexable } from "@/lib/needs";
 import { LIVE_POSTS } from "@/content/blog";
 
 // A lean core (SEO audit 2026-11-07, src/lib/index-tiers.ts sitemapProducts): hubs, guides, the
@@ -67,6 +68,10 @@ function pageUrls(): SitemapUrl[] {
     u("/new", 0.7),
     u("/brands", 0.8),
     ...((core) => getBrands().filter((b) => b.products.some((f) => core.has(f.slug))))(new Set(coreProducts().map((f) => f.slug))).map((b) => u(`/brands/${b.slug}`, 0.8)),
+    // Shop by need (lib/needs.ts): a hub is listed once it has NEED_INDEX_MIN products.
+    u("/ingredients", 0.7),
+    u("/skin-concerns", 0.7),
+    ...needHubs().filter((h) => needIndexable(h.count)).map((h) => u(needPath(h.need), 0.8)),
     u("/guides", 0.7),
     ...GUIDES.map((g) => u(`/guides/${g.slug}`, 0.8)),
     u("/blog", 0.6),
