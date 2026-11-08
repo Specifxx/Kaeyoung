@@ -22,6 +22,14 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
       links: STEP_MENU_ORDER.map((k) => CAT_BY_KEY[k]).filter((c) => counts[c.key] > 0).map((c) => ({ href: `/${c.key}`, label: c.name, count: counts[c.key], cat: c.key })),
     },
     {
+      // Shop by need (lib/needs.ts, owner 2026-11-08).
+      title: "Shop by need",
+      links: [
+        { href: "/skin-concerns", label: "By skin concern" },
+        { href: "/ingredients", label: "By ingredient" },
+      ],
+    },
+    {
       title: "Save",
       links: [
         // Black Friday, then Cyber Monday, while the strip shows (lib/black-friday.ts saleStrip).
