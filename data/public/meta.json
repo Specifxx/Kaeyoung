@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-11-07T13:29:47.022Z",
- "products": 4839,
- "merged": 11327,
+ "updatedAt": "2026-11-08T13:52:54.047Z",
+ "products": 4864,
+ "merged": 11414,
  "stores": {
   "bemusedkorea": {
    "ok": true,
@@ -11,7 +11,7 @@
     "not-beauty": 4
    },
    "noEan": 20,
-   "ms": 430
+   "ms": 472
   },
   "beautywithin": {
    "ok": true,
@@ -21,7 +21,7 @@
     "not-beauty": 7
    },
    "noEan": 153,
-   "ms": 505
+   "ms": 362
   },
   "althea": {
    "ok": true,
@@ -34,7 +34,7 @@
     "bundle": 6
    },
    "noEan": 115,
-   "ms": 2030
+   "ms": 2199
   },
   "cupidrop": {
    "ok": true,
@@ -45,7 +45,7 @@
     "bundle": 3
    },
    "noEan": 64,
-   "ms": 4495
+   "ms": 2213
   },
   "stylekorean": {
    "ok": true,
@@ -57,20 +57,20 @@
     "bundle": 22
    },
    "noEan": 210,
-   "ms": 14481
+   "ms": 14448
   },
   "dodoskin": {
    "ok": true,
    "listings": 3749,
-   "matched": 1481,
+   "matched": 1483,
    "refused": {
     "short-dated": 49,
     "damaged": 14,
     "not-beauty": 1,
     "bundle": 62
    },
-   "noEan": 2982,
-   "ms": 21683
+   "noEan": 2986,
+   "ms": 22686
   },
   "ohlolly": {
    "ok": true,
@@ -81,7 +81,7 @@
     "bundle": 1
    },
    "noEan": 34,
-   "ms": 7472
+   "ms": 1936
   },
   "moida": {
    "ok": true,
@@ -94,44 +94,19 @@
     "tester": 9
    },
    "noEan": 212,
-   "ms": 15177
+   "ms": 12985
   },
   "sokoglam": {
    "ok": true,
-   "listings": 527,
+   "listings": 528,
    "matched": 441,
    "refused": {
     "no-price": 1,
     "bundle": 2,
     "not-beauty": 10
    },
-   "noEan": 148,
-   "ms": 3211
-  },
-  "songofskin": {
-   "ok": true,
-   "listings": 910,
-   "matched": 686,
-   "refused": {
-    "mystery": 2,
-    "bundle": 16,
-    "tester": 4,
-    "not-beauty": 8,
-    "damaged": 1
-   },
-   "noEan": 324,
-   "ms": 5896
-  },
-  "wishtrend": {
-   "ok": true,
-   "listings": 31,
-   "matched": 12,
-   "refused": {
-    "no-price": 7,
-    "bundle": 2
-   },
-   "noEan": 15,
-   "ms": 262
+   "noEan": 149,
+   "ms": 4444
   },
   "sentisenti": {
    "ok": true,
@@ -147,7 +122,32 @@
     "tester": 2
    },
    "noEan": 1038,
-   "ms": 14139
+   "ms": 11115
+  },
+  "wishtrend": {
+   "ok": true,
+   "listings": 31,
+   "matched": 12,
+   "refused": {
+    "no-price": 7,
+    "bundle": 2
+   },
+   "noEan": 15,
+   "ms": 324
+  },
+  "songofskin": {
+   "ok": true,
+   "listings": 908,
+   "matched": 686,
+   "refused": {
+    "mystery": 2,
+    "bundle": 16,
+    "tester": 4,
+    "not-beauty": 8,
+    "damaged": 1
+   },
+   "noEan": 322,
+   "ms": 5598
   },
   "glamtouch": {
    "ok": true,
@@ -160,7 +160,7 @@
     "damaged": 2
    },
    "noEan": 280,
-   "ms": 5669
+   "ms": 5623
   },
   "pureseoul": {
    "ok": true,
@@ -174,7 +174,7 @@
     "not-beauty": 31
    },
    "noEan": 432,
-   "ms": 6299
+   "ms": 6810
   },
   "skincupid": {
    "ok": true,
@@ -187,7 +187,7 @@
     "not-beauty": 3
    },
    "noEan": 130,
-   "ms": 1295
+   "ms": 1072
   },
   "skin2seoul": {
    "ok": true,
@@ -200,17 +200,17 @@
     "not-beauty": 5
    },
    "noEan": 23,
-   "ms": 5743
+   "ms": 5629
   },
   "innerbeauty": {
    "ok": true,
-   "listings": 349,
-   "matched": 328,
+   "listings": 336,
+   "matched": 315,
    "refused": {
     "bundle": 1
    },
    "noEan": 20,
-   "ms": 2105
+   "ms": 2069
   },
   "kbeautyoutlet": {
    "ok": true,
@@ -222,30 +222,30 @@
     "not-beauty": 5
    },
    "noEan": 115,
-   "ms": 9556
+   "ms": 9531
   },
   "kiokii": {
    "ok": true,
-   "listings": 2608,
-   "matched": 2673,
+   "listings": 2603,
+   "matched": 2669,
    "refused": {
     "bundle": 19,
     "damaged": 13,
     "mystery": 10,
     "not-beauty": 18
    },
-   "noEan": 1685,
-   "ms": 22304
+   "noEan": 1676,
+   "ms": 14325
   },
   "kiyoko": {
    "ok": true,
    "listings": 244,
-   "matched": 351,
+   "matched": 349,
    "refused": {
     "bundle": 19
    },
-   "noEan": 71,
-   "ms": 643
+   "noEan": 77,
+   "ms": 2756
   },
   "koreanskincare-ca": {
    "ok": true,
@@ -257,7 +257,7 @@
     "mystery": 2
    },
    "noEan": 193,
-   "ms": 12662
+   "ms": 12759
   },
   "lakinza": {
    "ok": true,
@@ -269,7 +269,7 @@
     "not-beauty": 4
    },
    "noEan": 109,
-   "ms": 11140
+   "ms": 11066
   },
   "lamour": {
    "ok": true,
@@ -283,7 +283,7 @@
     "no-price": 1
    },
    "noEan": 1440,
-   "ms": 15094
+   "ms": 14358
   },
   "moonmoon": {
    "ok": true,
@@ -298,7 +298,21 @@
     "short-dated": 2
    },
    "noEan": 656,
-   "ms": 8226
+   "ms": 8240
+  },
+  "onesplus": {
+   "ok": true,
+   "listings": 1468,
+   "matched": 329,
+   "refused": {
+    "tester": 8,
+    "bundle": 10,
+    "mystery": 2,
+    "damaged": 9,
+    "short-dated": 4
+   },
+   "noEan": 1349,
+   "ms": 7770
   },
   "justmylook": {
    "ok": true,
@@ -313,21 +327,7 @@
     "not-beauty": 7
    },
    "noEan": 19003,
-   "ms": 102668
-  },
-  "onesplus": {
-   "ok": true,
-   "listings": 1469,
-   "matched": 330,
-   "refused": {
-    "tester": 8,
-    "bundle": 10,
-    "mystery": 2,
-    "damaged": 9,
-    "short-dated": 4
-   },
-   "noEan": 1349,
-   "ms": 7760
+   "ms": 104382
   },
   "oomomo": {
    "ok": true,
@@ -341,22 +341,22 @@
     "pre-owned": 2
    },
    "noEan": 5727,
-   "ms": 23221
+   "ms": 23241
   },
   "sukoshi": {
    "ok": true,
    "listings": 2499,
    "matched": 1556,
    "refused": {
-    "no-price": 21,
+    "no-price": 20,
     "damaged": 9,
     "tester": 19,
     "not-beauty": 14,
     "bundle": 4,
     "mystery": 18
    },
-   "noEan": 2344,
-   "ms": 19932
+   "noEan": 2349,
+   "ms": 20338
   },
   "uniquebunny": {
    "ok": true,
@@ -368,35 +368,7 @@
     "not-beauty": 1
    },
    "noEan": 2020,
-   "ms": 15398
-  },
-  "thekshop": {
-   "ok": true,
-   "listings": 2471,
-   "matched": 1451,
-   "refused": {
-    "no-price": 1,
-    "bundle": 16,
-    "damaged": 18,
-    "not-beauty": 6,
-    "mystery": 22,
-    "tester": 3
-   },
-   "noEan": 1894,
-   "ms": 21937
-  },
-  "heartdrops": {
-   "ok": true,
-   "listings": 541,
-   "matched": 109,
-   "refused": {
-    "no-price": 1,
-    "damaged": 3,
-    "not-beauty": 2,
-    "bundle": 2
-   },
-   "noEan": 466,
-   "ms": 3253
+   "ms": 11041
   },
   "boniik": {
    "ok": true,
@@ -409,7 +381,35 @@
     "not-beauty": 12
    },
    "noEan": 7,
-   "ms": 8822
+   "ms": 9066
+  },
+  "heartdrops": {
+   "ok": true,
+   "listings": 541,
+   "matched": 109,
+   "refused": {
+    "no-price": 1,
+    "damaged": 3,
+    "not-beauty": 2,
+    "bundle": 2
+   },
+   "noEan": 466,
+   "ms": 3092
+  },
+  "thekshop": {
+   "ok": true,
+   "listings": 2483,
+   "matched": 1451,
+   "refused": {
+    "no-price": 1,
+    "bundle": 16,
+    "damaged": 18,
+    "not-beauty": 6,
+    "mystery": 22,
+    "tester": 3
+   },
+   "noEan": 1906,
+   "ms": 29260
   },
   "kanvas": {
    "ok": true,
@@ -422,7 +422,7 @@
     "not-beauty": 3
    },
    "noEan": 536,
-   "ms": 5127
+   "ms": 5297
   },
   "makeup2beauty": {
    "ok": true,
@@ -435,7 +435,7 @@
     "tester": 1
    },
    "noEan": 60,
-   "ms": 6960
+   "ms": 6670
   },
   "nudieglow": {
    "ok": true,
@@ -449,7 +449,7 @@
     "short-dated": 75
    },
    "noEan": 276,
-   "ms": 21130
+   "ms": 22130
   },
   "wcosmetics": {
    "ok": true,
@@ -459,7 +459,7 @@
     "bundle": 2
    },
    "noEan": 209,
-   "ms": 679
+   "ms": 831
   },
   "hikoco": {
    "ok": true,
@@ -471,7 +471,7 @@
     "not-beauty": 12
    },
    "noEan": 947,
-   "ms": 12178
+   "ms": 12753
   },
   "lila": {
    "ok": true,
@@ -486,13 +486,13 @@
     "mystery": 18,
     "tester": 5
    },
-   "noEan": 2253,
-   "ms": 45935
+   "noEan": 2254,
+   "ms": 46249
   },
   "cosmeticstore-nz": {
    "ok": true,
-   "listings": 1416,
-   "matched": 679,
+   "listings": 1419,
+   "matched": 682,
    "refused": {
     "bundle": 27,
     "not-beauty": 18,
@@ -502,7 +502,7 @@
     "no-price": 1
    },
    "noEan": 2156,
-   "ms": 9315
+   "ms": 9486
   },
   "glowstation": {
    "ok": true,
@@ -514,7 +514,7 @@
     "damaged": 9
    },
    "noEan": 557,
-   "ms": 13938
+   "ms": 13876
   },
   "korean-skincare-nl": {
    "ok": true,
@@ -529,7 +529,7 @@
     "mystery": 3
    },
    "noEan": 194,
-   "ms": 23820
+   "ms": 24544
   },
   "lovemycosmetic": {
    "ok": true,
@@ -541,7 +541,7 @@
     "damaged": 3
    },
    "noEan": 69,
-   "ms": 5997
+   "ms": 6105
   },
   "mimomimo": {
    "ok": true,
@@ -552,12 +552,12 @@
     "not-beauty": 30
    },
    "noEan": 33,
-   "ms": 14075
+   "ms": 5131
   },
   "yeppo": {
    "ok": true,
-   "listings": 2707,
-   "matched": 4253,
+   "listings": 2710,
+   "matched": 4256,
    "refused": {
     "short-dated": 205,
     "damaged": 15,
@@ -565,7 +565,7 @@
     "not-beauty": 27
    },
    "noEan": 274,
-   "ms": 16950
+   "ms": 17615
   },
   "anua": {
    "ok": true,
@@ -576,7 +576,7 @@
     "bundle": 3
    },
    "noEan": 90,
-   "ms": 35775
+   "ms": 36400
   },
   "axisy": {
    "ok": true,
@@ -586,21 +586,21 @@
     "bundle": 2
    },
    "noEan": 6,
-   "ms": 428
+   "ms": 460
   },
   "boozyshop": {
    "ok": true,
-   "listings": 15607,
-   "matched": 1700,
+   "listings": 15581,
+   "matched": 1699,
    "refused": {
-    "mystery": 215,
+    "mystery": 214,
     "bundle": 120,
     "not-beauty": 44,
     "damaged": 29,
     "tester": 5
    },
-   "noEan": 13957,
-   "ms": 120270
+   "noEan": 13933,
+   "ms": 119601
   },
   "celimax": {
    "ok": true,
@@ -610,7 +610,7 @@
     "no-price": 2
    },
    "noEan": 15,
-   "ms": 282
+   "ms": 321
   },
   "cosrx": {
    "ok": true,
@@ -622,7 +622,7 @@
     "short-dated": 1
    },
    "noEan": 127,
-   "ms": 14572
+   "ms": 14905
   },
   "fwee": {
    "ok": true,
@@ -632,7 +632,7 @@
     "bundle": 24
    },
    "noEan": 55,
-   "ms": 365
+   "ms": 482
   },
   "heimish": {
    "ok": true,
@@ -643,7 +643,7 @@
     "bundle": 1
    },
    "noEan": 24,
-   "ms": 329
+   "ms": 436
   },
   "jumiso": {
    "ok": true,
@@ -654,11 +654,11 @@
     "bundle": 7
    },
    "noEan": 20,
-   "ms": 364
+   "ms": 445
   },
   "klairs": {
    "ok": true,
-   "listings": 150,
+   "listings": 158,
    "matched": 52,
    "refused": {
     "no-price": 6,
@@ -666,8 +666,8 @@
     "short-dated": 1,
     "mystery": 1
    },
-   "noEan": 152,
-   "ms": 577
+   "noEan": 160,
+   "ms": 9552
   },
   "koreanbeauty": {
    "ok": true,
@@ -677,7 +677,7 @@
     "bundle": 3
    },
    "noEan": 50,
-   "ms": 4256
+   "ms": 4440
   },
   "koreanskincareuk": {
    "ok": true,
@@ -692,7 +692,7 @@
     "mystery": 3
    },
    "noEan": 1195,
-   "ms": 20386
+   "ms": 20390
   },
   "manyo": {
    "ok": true,
@@ -702,7 +702,7 @@
     "bundle": 3
    },
    "noEan": 51,
-   "ms": 899
+   "ms": 272
   },
   "mixsoon": {
    "ok": true,
@@ -715,7 +715,7 @@
     "no-price": 2
    },
    "noEan": 116,
-   "ms": 515
+   "ms": 621
   },
   "neogenlab": {
    "ok": true,
@@ -727,7 +727,7 @@
     "not-beauty": 4
    },
    "noEan": 152,
-   "ms": 976
+   "ms": 773
   },
   "rovectin": {
    "ok": true,
@@ -738,7 +738,7 @@
     "not-beauty": 7
    },
    "noEan": 9,
-   "ms": 473
+   "ms": 506
   },
   "skin1004": {
    "ok": true,
@@ -748,7 +748,7 @@
     "bundle": 3
    },
    "noEan": 22,
-   "ms": 518
+   "ms": 433
   },
   "tirtir": {
    "ok": true,
@@ -761,7 +761,7 @@
     "not-beauty": 6
    },
    "noEan": 586,
-   "ms": 8053
+   "ms": 8049
   },
   "tocobo": {
    "ok": true,
@@ -772,7 +772,7 @@
     "no-price": 10
    },
    "noEan": 17,
-   "ms": 396
+   "ms": 488
   },
   "tonymoly": {
    "ok": true,
@@ -785,7 +785,7 @@
     "not-beauty": 3
    },
    "noEan": 120,
-   "ms": 790
+   "ms": 545
   },
   "torriden": {
    "ok": true,
@@ -796,17 +796,7 @@
     "bundle": 5
    },
    "noEan": 1,
-   "ms": 411
-  },
-  "aurak": {
-   "ok": true,
-   "listings": 284,
-   "matched": 208,
-   "refused": {
-    "damaged": 3
-   },
-   "noEan": 160,
-   "ms": 2480
+   "ms": 490
   },
   "beautyofjoseon": {
    "ok": true,
@@ -816,18 +806,17 @@
     "bundle": 3
    },
    "noEan": 170,
-   "ms": 71223
+   "ms": 72585
   },
-  "beyondrx": {
+  "aurak": {
    "ok": true,
-   "listings": 2694,
-   "matched": 292,
+   "listings": 284,
+   "matched": 208,
    "refused": {
-    "bundle": 60,
-    "not-beauty": 2
+    "damaged": 3
    },
-   "noEan": 2356,
-   "ms": 15219
+   "noEan": 160,
+   "ms": 2676
   },
   "cosmadic": {
    "ok": true,
@@ -838,7 +827,18 @@
     "damaged": 2
    },
    "noEan": 82,
-   "ms": 6957
+   "ms": 7011
+  },
+  "beyondrx": {
+   "ok": true,
+   "listings": 2694,
+   "matched": 292,
+   "refused": {
+    "bundle": 60,
+    "not-beauty": 2
+   },
+   "noEan": 2356,
+   "ms": 15557
   },
   "dramabeauty": {
    "ok": true,
@@ -848,19 +848,29 @@
     "not-beauty": 5
    },
    "noEan": 17,
-   "ms": 427
+   "ms": 538
   },
   "deiji": {
    "ok": true,
-   "listings": 1496,
-   "matched": 785,
+   "listings": 1500,
+   "matched": 789,
    "refused": {
     "bundle": 11,
     "not-beauty": 12,
     "damaged": 3
    },
    "noEan": 809,
-   "ms": 8386
+   "ms": 9620
+  },
+  "helloseoul": {
+   "ok": true,
+   "listings": 209,
+   "matched": 72,
+   "refused": {
+    "bundle": 9
+   },
+   "noEan": 149,
+   "ms": 763
   },
   "glowiss": {
    "ok": true,
@@ -872,19 +882,7 @@
     "no-price": 1
    },
    "noEan": 3,
-   "ms": 3594
-  },
-  "helloseoul": {
-   "ok": true,
-   "listings": 499,
-   "matched": 199,
-   "refused": {
-    "bundle": 11,
-    "damaged": 1,
-    "mystery": 12
-   },
-   "noEan": 307,
-   "ms": 2699
+   "ms": 3805
   },
   "itsglowy": {
    "ok": true,
@@ -894,7 +892,7 @@
     "bundle": 1
    },
    "noEan": 2,
-   "ms": 529
+   "ms": 461
   },
   "holyskin": {
    "ok": true,
@@ -906,7 +904,7 @@
     "bundle": 6
    },
    "noEan": 60,
-   "ms": 5299
+   "ms": 3972
   },
   "kbeautyave": {
    "ok": true,
@@ -918,7 +916,7 @@
     "tester": 1
    },
    "noEan": 43,
-   "ms": 9973
+   "ms": 10445
   },
   "kbeautyshop": {
    "ok": true,
@@ -930,7 +928,7 @@
     "bundle": 3
    },
    "noEan": 119,
-   "ms": 3125
+   "ms": 2963
   },
   "korean": {
    "ok": true,
@@ -941,7 +939,7 @@
     "bundle": 1
    },
    "noEan": 247,
-   "ms": 2218
+   "ms": 2341
   },
   "koreancare": {
    "ok": true,
@@ -952,7 +950,20 @@
     "bundle": 1
    },
    "noEan": 606,
-   "ms": 5120
+   "ms": 5169
+  },
+  "kosbeauty": {
+   "ok": true,
+   "listings": 511,
+   "matched": 540,
+   "refused": {
+    "short-dated": 5,
+    "damaged": 2,
+    "bundle": 19,
+    "mystery": 14
+   },
+   "noEan": 100,
+   "ms": 3528
   },
   "jessicanailsupply": {
    "ok": true,
@@ -966,20 +977,7 @@
     "mystery": 1
    },
    "noEan": 8219,
-   "ms": 27783
-  },
-  "kosbeauty": {
-   "ok": true,
-   "listings": 511,
-   "matched": 540,
-   "refused": {
-    "short-dated": 5,
-    "damaged": 2,
-    "bundle": 19,
-    "mystery": 14
-   },
-   "noEan": 100,
-   "ms": 4373
+   "ms": 27953
   },
   "kskinaura": {
    "ok": true,
@@ -990,7 +988,7 @@
     "bundle": 1
    },
    "noEan": 26,
-   "ms": 1246
+   "ms": 836
   },
   "kosmosbeauty": {
    "ok": true,
@@ -1003,7 +1001,7 @@
     "not-beauty": 11
    },
    "noEan": 32,
-   "ms": 6102
+   "ms": 6282
   },
   "mcgorisks": {
    "ok": true,
@@ -1017,7 +1015,7 @@
     "tester": 21
    },
    "noEan": 7882,
-   "ms": 28444
+   "ms": 29471
   },
   "purida": {
    "ok": true,
@@ -1028,20 +1026,20 @@
     "bundle": 4
    },
    "noEan": 21,
-   "ms": 4797
+   "ms": 3710
   },
   "sk1ntro": {
    "ok": true,
-   "listings": 452,
-   "matched": 320,
+   "listings": 439,
+   "matched": 304,
    "refused": {
-    "short-dated": 46,
+    "short-dated": 43,
     "bundle": 3,
     "not-beauty": 10,
     "damaged": 4
    },
-   "noEan": 174,
-   "ms": 2707
+   "noEan": 172,
+   "ms": 2591
   },
   "skinorea": {
    "ok": true,
@@ -1053,7 +1051,7 @@
     "not-beauty": 1
    },
    "noEan": 103,
-   "ms": 4875
+   "ms": 4533
   },
   "skinshop": {
    "ok": true,
@@ -1066,7 +1064,7 @@
     "not-beauty": 8
    },
    "noEan": 1225,
-   "ms": 9979
+   "ms": 10054
   },
   "usinnisfree": {
    "ok": true,
@@ -1076,7 +1074,7 @@
     "no-price": 3
    },
    "noEan": 44,
-   "ms": 355
+   "ms": 332
   },
   "aiyabeauty": {
    "ok": true,
@@ -1089,7 +1087,7 @@
     "not-beauty": 7
    },
    "noEan": 1038,
-   "ms": 6031
+   "ms": 5915
   },
   "aurynskin": {
    "ok": true,
@@ -1101,7 +1099,7 @@
     "bundle": 3
    },
    "noEan": 526,
-   "ms": 5966
+   "ms": 4809
   },
   "baqueen": {
    "ok": true,
@@ -1111,12 +1109,12 @@
     "not-beauty": 6
    },
    "noEan": 114,
-   "ms": 2320
+   "ms": 2572
   },
   "beautyaffairs": {
    "ok": true,
-   "listings": 2507,
-   "matched": 103,
+   "listings": 2506,
+   "matched": 102,
    "refused": {
     "bundle": 62,
     "tester": 100,
@@ -1125,7 +1123,7 @@
     "damaged": 7
    },
    "noEan": 3993,
-   "ms": 14136
+   "ms": 14266
   },
   "beautyandseoul": {
    "ok": true,
@@ -1135,12 +1133,12 @@
     "bundle": 4
    },
    "noEan": 7,
-   "ms": 1802
+   "ms": 1784
   },
   "beautydiary": {
    "ok": true,
-   "listings": 2558,
-   "matched": 1087,
+   "listings": 2556,
+   "matched": 1084,
    "refused": {
     "bundle": 30,
     "no-price": 30,
@@ -1150,8 +1148,8 @@
     "mystery": 2,
     "not-beauty": 4
    },
-   "noEan": 2367,
-   "ms": 16816
+   "noEan": 2366,
+   "ms": 16457
   },
   "bellubeauty": {
    "ok": true,
@@ -1164,23 +1162,23 @@
     "bundle": 3
    },
    "noEan": 8,
-   "ms": 7035
+   "ms": 7261
   },
   "pasteurpharmacy": {
    "ok": true,
    "listings": 20000,
    "matched": 122,
    "refused": {
-    "not-beauty": 84,
-    "bundle": 2142,
-    "tester": 37,
+    "tester": 38,
+    "bundle": 2141,
+    "not-beauty": 83,
     "no-price": 76,
     "damaged": 27,
     "short-dated": 3,
     "mystery": 17
    },
-   "noEan": 31164,
-   "ms": 129820
+   "noEan": 31161,
+   "ms": 131088
   },
   "cloud10beauty": {
    "ok": true,
@@ -1193,7 +1191,7 @@
     "damaged": 37
    },
    "noEan": 5584,
-   "ms": 21685
+   "ms": 22103
   },
   "cosmehut": {
    "ok": true,
@@ -1208,7 +1206,7 @@
     "short-dated": 1
    },
    "noEan": 722,
-   "ms": 3859
+   "ms": 4116
   },
   "belvera": {
    "ok": true,
@@ -1222,7 +1220,7 @@
     "mystery": 5
    },
    "noEan": 18712,
-   "ms": 104458
+   "ms": 106356
   },
   "elikoglow": {
    "ok": true,
@@ -1234,7 +1232,7 @@
     "not-beauty": 7
    },
    "noEan": 123,
-   "ms": 8538
+   "ms": 8842
   },
   "eyurs": {
    "ok": true,
@@ -1245,7 +1243,7 @@
     "bundle": 5
    },
    "noEan": 17,
-   "ms": 2382
+   "ms": 2241
   },
   "glassskinrituals": {
    "ok": true,
@@ -1255,7 +1253,7 @@
     "bundle": 3
    },
    "noEan": 8,
-   "ms": 744
+   "ms": 832
   },
   "happyandpretty": {
    "ok": true,
@@ -1266,7 +1264,7 @@
     "damaged": 1
    },
    "noEan": 6,
-   "ms": 5196
+   "ms": 5355
   },
   "haruharuusa": {
    "ok": true,
@@ -1274,7 +1272,7 @@
    "matched": 41,
    "refused": {},
    "noEan": 16,
-   "ms": 399
+   "ms": 435
   },
   "inishpharmacy": {
    "ok": true,
@@ -1285,7 +1283,7 @@
     "bundle": 2
    },
    "noEan": 259,
-   "ms": 1170
+   "ms": 1047
   },
   "irelkglow": {
    "ok": true,
@@ -1297,7 +1295,7 @@
     "damaged": 3
    },
    "noEan": 17,
-   "ms": 471
+   "ms": 527
   },
   "jejuskin": {
    "ok": true,
@@ -1310,7 +1308,7 @@
     "not-beauty": 1
    },
    "noEan": 69,
-   "ms": 3261
+   "ms": 3619
   },
   "k-beauty4you": {
    "ok": true,
@@ -1320,7 +1318,7 @@
     "bundle": 1
    },
    "noEan": 54,
-   "ms": 493
+   "ms": 519
   },
   "kbeauty-cosmetics": {
    "ok": true,
@@ -1331,7 +1329,7 @@
     "no-price": 1
    },
    "noEan": 229,
-   "ms": 1806
+   "ms": 1913
   },
   "kbeauty": {
    "ok": true,
@@ -1344,7 +1342,7 @@
     "damaged": 10
    },
    "noEan": 129,
-   "ms": 4858
+   "ms": 5532
   },
   "kbeauty-us": {
    "ok": true,
@@ -1356,7 +1354,7 @@
     "not-beauty": 4
    },
    "noEan": 1096,
-   "ms": 10020
+   "ms": 10609
   },
   "cosmeticsonline": {
    "ok": true,
@@ -1370,7 +1368,7 @@
     "not-beauty": 15
    },
    "noEan": 18562,
-   "ms": 95598
+   "ms": 96541
   },
   "kbeautystore": {
    "ok": true,
@@ -1382,7 +1380,7 @@
     "not-beauty": 20
    },
    "noEan": 57,
-   "ms": 4650
+   "ms": 4851
   },
   "kbeautyworld": {
    "ok": true,
@@ -1394,21 +1392,21 @@
     "not-beauty": 7
    },
    "noEan": 60,
-   "ms": 4682
+   "ms": 5540
   },
   "kiyobeauty": {
    "ok": true,
-   "listings": 9695,
+   "listings": 9737,
    "matched": 510,
    "refused": {
+    "bundle": 817,
     "no-price": 8,
     "damaged": 76,
-    "bundle": 816,
     "tester": 48,
     "not-beauty": 72
    },
-   "noEan": 18228,
-   "ms": 67798
+   "noEan": 18275,
+   "ms": 68142
   },
   "kosmobox": {
    "ok": true,
@@ -1419,7 +1417,7 @@
     "not-beauty": 5
    },
    "noEan": 5,
-   "ms": 2313
+   "ms": 1768
   },
   "lacosmetique": {
    "ok": true,
@@ -1433,7 +1431,7 @@
     "tester": 1
    },
    "noEan": 529,
-   "ms": 20331
+   "ms": 20677
   },
   "misshaus": {
    "ok": true,
@@ -1444,7 +1442,7 @@
     "bundle": 15
    },
    "noEan": 32,
-   "ms": 495
+   "ms": 504
   },
   "momokocosmetic": {
    "ok": true,
@@ -1457,19 +1455,19 @@
     "not-beauty": 1
    },
    "noEan": 1289,
-   "ms": 6529
+   "ms": 6995
   },
   "moona": {
    "ok": true,
-   "listings": 857,
-   "matched": 1134,
+   "listings": 856,
+   "matched": 1133,
    "refused": {
     "bundle": 4,
     "damaged": 8,
     "not-beauty": 15
    },
    "noEan": 2387,
-   "ms": 5203
+   "ms": 5493
   },
   "myqt": {
    "ok": true,
@@ -1482,12 +1480,12 @@
     "mystery": 1
    },
    "noEan": 3292,
-   "ms": 13162
+   "ms": 12990
   },
   "kbeautyoutletusa": {
    "ok": true,
-   "listings": 1152,
-   "matched": 683,
+   "listings": 1151,
+   "matched": 682,
    "refused": {
     "not-beauty": 4,
     "no-price": 1,
@@ -1495,19 +1493,19 @@
     "bundle": 7
    },
    "noEan": 451,
-   "ms": 132975
+   "ms": 135133
   },
   "reiwatakiya": {
    "ok": true,
-   "listings": 762,
+   "listings": 760,
    "matched": 48,
    "refused": {
     "bundle": 7,
     "not-beauty": 1,
     "damaged": 3
    },
-   "noEan": 704,
-   "ms": 4352
+   "noEan": 702,
+   "ms": 4302
   },
   "rossi": {
    "ok": true,
@@ -1518,8 +1516,8 @@
     "damaged": 8,
     "not-beauty": 13
    },
-   "noEan": 105,
-   "ms": 32841
+   "noEan": 103,
+   "ms": 38484
   },
   "saranghae": {
    "ok": true,
@@ -1530,20 +1528,11 @@
     "not-beauty": 5
    },
    "noEan": 92,
-   "ms": 4335
-  },
-  "seoulbeautystore": {
-   "ok": false,
-   "error": "https://seoulbeautystore.com/products.json?limit=250&page=1&country=GB: fetch failed",
-   "listings": 0,
-   "matched": 0,
-   "refused": {},
-   "noEan": 0,
-   "ms": 8166
+   "ms": 5120
   },
   "ry": {
    "ok": true,
-   "listings": 8162,
+   "listings": 8160,
    "matched": 228,
    "refused": {
     "no-price": 116,
@@ -1552,8 +1541,17 @@
     "not-beauty": 16,
     "tester": 5
    },
-   "noEan": 9208,
-   "ms": 45352
+   "noEan": 9206,
+   "ms": 46691
+  },
+  "seoulbeautystore": {
+   "ok": false,
+   "error": "https://seoulbeautystore.com/products.json?limit=250&page=1&country=GB: fetch failed",
+   "listings": 0,
+   "matched": 0,
+   "refused": {},
+   "noEan": 0,
+   "ms": 8127
   },
   "skindays": {
    "ok": true,
@@ -1567,15 +1565,16 @@
     "damaged": 1
    },
    "noEan": 628,
-   "ms": 3129
+   "ms": 3225
   },
   "skinseoul": {
-   "ok": true,
-   "listings": 438,
-   "matched": 426,
+   "ok": false,
+   "error": "https://skinseoul.co.uk/products.json?limit=250&page=1&country=GB: fetch failed",
+   "listings": 0,
+   "matched": 0,
    "refused": {},
-   "noEan": 12,
-   "ms": 2109
+   "noEan": 0,
+   "ms": 8067
   },
   "thekbeautyedit": {
    "ok": true,
@@ -1585,20 +1584,20 @@
     "bundle": 13
    },
    "noEan": 5,
-   "ms": 2162
+   "ms": 2177
   },
   "shoppalacebeauty": {
    "ok": true,
-   "listings": 2580,
-   "matched": 998,
+   "listings": 2575,
+   "matched": 993,
    "refused": {
     "bundle": 38,
     "damaged": 16,
     "mystery": 3,
     "not-beauty": 99
    },
-   "noEan": 3373,
-   "ms": 15821
+   "noEan": 3374,
+   "ms": 16449
   },
   "toktokbeauty": {
    "ok": true,
@@ -1611,7 +1610,7 @@
     "not-beauty": 15
    },
    "noEan": 1969,
-   "ms": 11186
+   "ms": 11327
   },
   "laneige": {
    "ok": true,
@@ -1622,7 +1621,7 @@
     "no-price": 5
    },
    "noEan": 40,
-   "ms": 342
+   "ms": 318
   },
   "sulwhasoo": {
    "ok": true,
@@ -1633,7 +1632,7 @@
     "bundle": 2
    },
    "noEan": 6,
-   "ms": 339
+   "ms": 367
   },
   "velvetvanity": {
    "ok": true,
@@ -1647,7 +1646,7 @@
     "not-beauty": 6
    },
    "noEan": 48,
-   "ms": 4518
+   "ms": 4359
   },
   "yok-beauty": {
    "ok": true,
@@ -1655,7 +1654,7 @@
    "matched": 86,
    "refused": {},
    "noEan": 75,
-   "ms": 650
+   "ms": 565
   },
   "yukiobeauty": {
    "ok": true,
@@ -1667,7 +1666,7 @@
     "bundle": 1
    },
    "noEan": 220,
-   "ms": 1981
+   "ms": 2022
   },
   "mikaelabeauty": {
    "ok": true,
@@ -1679,7 +1678,7 @@
     "mystery": 2
    },
    "noEan": 193,
-   "ms": 11865,
+   "ms": 11866,
    "mirrorOf": "koreanskincare-ca"
   },
   "vglebeauty": {
@@ -1691,7 +1690,7 @@
     "bundle": 26
    },
    "noEan": 190,
-   "ms": 11322
+   "ms": 11484
   },
   "esmea": {
    "ok": true,
@@ -1704,7 +1703,7 @@
     "not-beauty": 4
    },
    "noEan": 185,
-   "ms": 2195
+   "ms": 2074
   },
   "ladybonita": {
    "ok": true,
@@ -1717,19 +1716,19 @@
     "mystery": 3
    },
    "noEan": 2027,
-   "ms": 10138
+   "ms": 10097
   },
   "7hada": {
    "ok": true,
-   "listings": 524,
+   "listings": 523,
    "matched": 1204,
    "refused": {
-    "short-dated": 33,
+    "short-dated": 32,
     "not-beauty": 6,
     "bundle": 1
    },
    "noEan": 260,
-   "ms": 3924
+   "ms": 3812
   },
   "pboo": {
    "ok": true,
@@ -1740,7 +1739,7 @@
     "damaged": 1
    },
    "noEan": 382,
-   "ms": 3202
+   "ms": 3550
   },
   "umall": {
    "ok": true,
@@ -1754,7 +1753,7 @@
     "tester": 22
    },
    "noEan": 19300,
-   "ms": 103033
+   "ms": 106826
   },
   "sulskin": {
    "ok": true,
@@ -1769,97 +1768,33 @@
     "not-beauty": 6
    },
    "noEan": 433,
-   "ms": 8177,
+   "ms": 7834,
    "mirrorOf": "beautydiary"
   },
   "bloomandshine": {
    "ok": true,
-   "listings": 1134,
+   "listings": 1148,
    "matched": 912,
    "refused": {
     "no-price": 3,
     "mystery": 6,
     "bundle": 6
    },
-   "noEan": 227,
-   "ms": 952198
+   "noEan": 241,
+   "ms": 23048
   },
   "aubeautybazaar": {
    "ok": true,
    "listings": 2352,
-   "matched": 1432,
+   "matched": 1909,
    "refused": {
     "not-beauty": 5,
     "bundle": 25,
     "damaged": 7,
     "tester": 1
    },
-   "noEan": 984,
-   "ms": 1157620
-  },
-  "joobeauty": {
-   "ok": true,
-   "listings": 1253,
-   "matched": 180,
-   "refused": {
-    "bundle": 9,
-    "damaged": 11,
-    "mystery": 1
-   },
-   "noEan": 1287,
-   "ms": 155145
-  },
-  "mykare": {
-   "ok": true,
-   "listings": 269,
-   "matched": 0,
-   "refused": {},
-   "noEan": 345,
-   "ms": 2140
-  },
-  "keeobeauty": {
-   "ok": true,
-   "listings": 149,
-   "matched": 0,
-   "refused": {
-    "bundle": 4
-   },
-   "noEan": 146,
-   "ms": 855
-  },
-  "minkibeauty": {
-   "ok": true,
-   "listings": 171,
-   "matched": 0,
-   "refused": {
-    "bundle": 8,
-    "no-price": 1
-   },
-   "noEan": 162,
-   "ms": 1125
-  },
-  "skincation": {
-   "ok": true,
-   "listings": 246,
-   "matched": 0,
-   "refused": {
-    "damaged": 2,
-    "bundle": 1
-   },
-   "noEan": 243,
-   "ms": 867
-  },
-  "kbeautystudio": {
-   "ok": true,
-   "listings": 127,
-   "matched": 29,
-   "refused": {
-    "bundle": 3,
-    "damaged": 2,
-    "not-beauty": 4
-   },
-   "noEan": 94,
-   "ms": 914
+   "noEan": 507,
+   "ms": 467644
   },
   "planetskin": {
    "ok": true,
@@ -1871,7 +1806,71 @@
     "not-beauty": 3
    },
    "noEan": 28,
-   "ms": 11893
+   "ms": 29726
+  },
+  "mykare": {
+   "ok": true,
+   "listings": 269,
+   "matched": 337,
+   "refused": {},
+   "noEan": 8,
+   "ms": 296785
+  },
+  "keeobeauty": {
+   "ok": true,
+   "listings": 149,
+   "matched": 99,
+   "refused": {
+    "bundle": 4
+   },
+   "noEan": 47,
+   "ms": 160271
+  },
+  "minkibeauty": {
+   "ok": true,
+   "listings": 171,
+   "matched": 138,
+   "refused": {
+    "bundle": 8,
+    "no-price": 1
+   },
+   "noEan": 24,
+   "ms": 179457
+  },
+  "skincation": {
+   "ok": true,
+   "listings": 246,
+   "matched": 36,
+   "refused": {
+    "damaged": 2,
+    "bundle": 1
+   },
+   "noEan": 207,
+   "ms": 65022
+  },
+  "kbeautystudio": {
+   "ok": true,
+   "listings": 127,
+   "matched": 29,
+   "refused": {
+    "bundle": 3,
+    "damaged": 2,
+    "not-beauty": 4
+   },
+   "noEan": 94,
+   "ms": 1174
+  },
+  "joobeauty": {
+   "ok": true,
+   "listings": 1253,
+   "matched": 1304,
+   "refused": {
+    "bundle": 9,
+    "damaged": 11,
+    "mystery": 1
+   },
+   "noEan": 163,
+   "ms": 1123119
   },
   "ciamane": {
    "ok": true,
@@ -1879,7 +1878,7 @@
    "matched": 0,
    "refused": {},
    "noEan": 293,
-   "ms": 2316
+   "ms": 2304
   },
   "moidauk": {
    "ok": true,
@@ -1890,7 +1889,7 @@
     "damaged": 5
    },
    "noEan": 715,
-   "ms": 4132
+   "ms": 4262
   },
   "refreshskincare": {
    "ok": true,
@@ -1901,7 +1900,19 @@
     "not-beauty": 3
    },
    "noEan": 521,
-   "ms": 3604
+   "ms": 3668
+  },
+  "atelierdeglow": {
+   "ok": true,
+   "listings": 626,
+   "matched": 658,
+   "refused": {
+    "bundle": 7,
+    "damaged": 4,
+    "not-beauty": 4
+   },
+   "noEan": 21,
+   "ms": 3271
   },
   "likeskincare": {
    "ok": true,
@@ -1915,28 +1926,16 @@
     "mystery": 1
    },
    "noEan": 503,
-   "ms": 2249
-  },
-  "atelierdeglow": {
-   "ok": true,
-   "listings": 626,
-   "matched": 658,
-   "refused": {
-    "bundle": 7,
-    "damaged": 4,
-    "not-beauty": 4
-   },
-   "noEan": 21,
-   "ms": 3290
+   "ms": 2189
   }
  },
  "ebay": {
-  "at": "2026-11-07T13:47:35.826Z",
-  "day": "2026-11-07",
+  "at": "2026-11-08T14:07:18.507Z",
+  "day": "2026-11-08",
   "calls": 2500,
   "budget": 2500,
-  "listings": 1104,
-  "qday": "2026-11-07",
+  "listings": 1100,
+  "qday": "2026-11-08",
   "qcalls": 2500
  }
 }

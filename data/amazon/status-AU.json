@@ -1,1 +1,1 @@
-{"at":"2026-11-07T13:47:36.695Z","state":"off"}
+{"at":"2026-11-08T14:14:36.134Z","state":"refused","searched":0,"found":0,"known":0,"waiting":4186,"note":"searchItems 403 {\"message\":\"Your account does not currently meet the eligibility requirements.\",\"reason\":\"AssociateNotEligible\",\"type\":\"AccessDeniedException\"}"}
