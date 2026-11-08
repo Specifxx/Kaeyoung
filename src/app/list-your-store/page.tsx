@@ -4,6 +4,7 @@ import { STORES } from "@/content/stores";
 import { PageHead } from "@/components/Section";
 import { Prose } from "@/components/Prose";
 import { ListYourStore } from "@/components/ListYourStore";
+import { storeBadge } from "@/lib/store-badge";
 
 // The store-owner page every site in the family shares (owner, 2026-11-04).
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function Page() {
       <PageHead title="List your store on KaeYoung" />
       <Prose>
         <ListYourStore
+          badge={storeBadge(`${SITE.url}/stores`, "K-beauty prices compared on KaeYoung")}
           showTitle={false}
           site="KaeYoung"
           what="Korean skincare"
