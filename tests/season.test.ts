@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import vm from "node:vm";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { CHRISTMAS_FROM, CHRISTMAS_TO, isChristmas, SEASON_BOOT_SCRIPT } from "../src/lib/season";
 
 // The holiday look (owner, 2026-11-01): 1 November to Boxing Day by the visitor's own date, quiet and professional.
@@ -35,17 +35,15 @@ test("the boot script agrees with isChristmas(), takes ?season=, and never throw
   assert.doesNotThrow(() => vm.runInNewContext(SEASON_BOOT_SCRIPT, { Date }));
 });
 
-test("the layout stamps the season before paint, and the holiday pieces are quiet decoration", () => {
+test("the layout stamps the season before paint, and the holiday is one quiet line (owner, 2026-11-08)", () => {
   const layout = readFileSync("src/app/layout.tsx", "utf8");
   assert.match(layout, /__html: SEASON_BOOT_SCRIPT/);
   const css = readFileSync("src/app/globals.css", "utf8");
-  assert.match(css, /\.ky-holiday,\s*\.ky-snow,\s*\.ky-flakes \{\s*display: none;/);
-  assert.match(css, /\.ky-snow \{[^}]*pointer-events: none;/);
-  assert.match(css, /prefers-reduced-motion: reduce\) \{\s*\.ky-stocking,\s*\.ky-snow::before/);
+  assert.match(css, /\.ky-holiday \{\s*display: none;/);
+  assert.match(css, /html\[data-season="christmas"\] \.ky-holiday \{\s*display: flex;/);
   const home = readFileSync("src/app/page.tsx", "utf8");
-  assert.match(home, /<span className="ky-snow" aria-hidden="true" \/>/);
-  // Professional, not gamified (owner): no Santa hats or light strands, and none of the sister sites' cartoon art; the
-  // tree, cane and stockings (owner, 2026-11-01: "a little more festive") are KaeYoung's own pastel drawings.
-  assert.doesNotMatch(css + home, /santa-hat|xmas-lights|xmas-tree|candy-cane\.svg|xmas-hat/);
-  for (const f of ["ky-tree", "ky-cane", "ky-stocking"]) assert.match(css, new RegExp(`/xmas/${f}\\.svg`), f);
+  assert.match(home, /className="ky-holiday-pill"/);
+  // "The theme must match the domain": no snow, glints, snowflakes, tree, cane, stockings or hats, in CSS or markup.
+  assert.doesNotMatch(css + home, /ky-snow|ky-flake|ky-deco|ky-tree|ky-stocking|HeroSnow|mo-snow|\/xmas\/|santa-hat|xmas-lights/);
+  assert.ok(!existsSync("src/components/HeroSnow.tsx"));
 });

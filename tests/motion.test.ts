@@ -1,4 +1,4 @@
-// The motion layer (src/lib/motion.ts, globals.css "motion" block, HeroSnow.tsx; owner, 2026-11-06): it must never
+// The motion layer (src/lib/motion.ts, globals.css "motion" block; owner, 2026-11-06): it must never
 // hide what is on screen, never run for prefers-reduced-motion, and never change the server HTML's words or layout.
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -45,15 +45,4 @@ test("the layout runs the boot in <head> and the reveal script at the end of <bo
   const layout = readFileSync("src/app/layout.tsx", "utf8");
   assert.ok(layout.indexOf("__html: MOTION_BOOT") < layout.indexOf("<body"));
   assert.ok(layout.indexOf("__html: MOTION_SCRIPT") > layout.indexOf("<ShareArrival"));
-});
-
-test("the snow is decoration that waits for the season, motion and an idle browser", () => {
-  const snow = readFileSync("src/components/HeroSnow.tsx", "utf8");
-  assert.match(snow, /aria-hidden="true"/);
-  assert.match(snow, /dataset\.season !== "christmas"/);
-  assert.match(snow, /hasAttribute\("data-motion"\)/);
-  assert.match(snow, /requestIdleCallback/);
-  assert.match(snow, /visibilitychange/);
-  const css = readFileSync("src/app/globals.css", "utf8");
-  assert.match(css, /\.mo-snow \{[^}]*pointer-events: none;/);
 });
