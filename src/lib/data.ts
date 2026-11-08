@@ -14,6 +14,8 @@ import { unpackProducts } from "./products-file";
 import { deliveryFor, MAX_SMALL_ORDER_FEE, type ShippingData } from "./shipping";
 import type { PartnerPricesFile } from "./partner-feed";
 import type { PromoData } from "./promos";
+import { NEEDS, inNeed, needOf, type Need, type NeedKind } from "./needs";
+import { popularity as needPopularity } from "./ratings";
 
 // KY_DATA_DIR points local development and tests at a fixture; production
 // always reads the committed files.
@@ -285,4 +287,27 @@ export function cheapestDelivered(f: Product, region: RegionCode): { offer: Offe
   const cheapest = orderable.reduce((a, b) => (b.p < a.p ? b : a));
   if (!best || best.offer.s === cheapest.s || known < 2) return null;
   return { ...best, known, of: orderable.length };
+}
+
+// Shop by need (lib/needs.ts, DECISIONS.md 2026-11-08): the products whose own name puts them in a hub, most popular first.
+
+function needIndex(): Map<Need, Product[]> {
+  return once("needs", () => {
+    const m = new Map<Need, Product[]>(NEEDS.map((n) => [n, []]));
+    for (const f of getProducts()) for (const n of NEEDS) if (inNeed(n, f.name)) m.get(n)!.push(f);
+    for (const list of m.values()) list.sort((a, b) => needPopularity(b) - needPopularity(a) || a.name.localeCompare(b.name));
+    return m;
+  });
+}
+
+export function productsForNeed(kind: NeedKind, slug: string): Product[] {
+  const n = needOf(kind, slug);
+  return n ? [...(needIndex().get(n) ?? [])] : [];
+}
+
+/** Hubs with at least one product, in NEEDS order, with their counts. */
+export function needHubs(kind?: NeedKind): { need: Need; count: number }[] {
+  return NEEDS.filter((n) => !kind || n.kind === kind)
+    .map((need) => ({ need, count: needIndex().get(need)?.length ?? 0 }))
+    .filter((x) => x.count > 0);
 }

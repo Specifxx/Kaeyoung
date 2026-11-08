@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
+import { needIndexable, needPath, needsOfName } from "@/lib/needs";
 import { culledTarget } from "@/lib/culled";
 import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
-import { bestIn, brandKo, cheapestDelivered, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
+import { bestIn, brandKo, cheapestDelivered, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, productsForNeed, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
 import { isIndexable, prebuiltProducts } from "@/lib/index-tiers";
@@ -163,6 +164,15 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             <span className="chip bg-subtle text-ink">{cat.name}</span>
             {f.size && <span className="chip bg-subtle text-ink">{f.size}</span>}
             <span className="chip bg-subtle text-soft">Barcode {f.ean}</span>
+            {/* Shop by need (lib/needs.ts): the hubs this product's own name puts it in, once they are indexed. */}
+            {needsOfName(f.name)
+              .filter((n) => needIndexable(productsForNeed(n.kind, n.slug).length))
+              .slice(0, 4)
+              .map((n) => (
+                <Link key={`${n.kind}:${n.slug}`} prefetch={false} href={needPath(n)} className="chip border border-line bg-card text-ink hover:border-soft">
+                  {n.name}
+                </Link>
+              ))}
           </div>
           {rated && rated.n > 0 && (
             <a href="#reviews" className="mt-3 inline-flex items-center gap-2 text-sm text-soft hover:text-ink">

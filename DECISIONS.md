@@ -1049,6 +1049,21 @@ touch, drawn in the site's own colours: "The Holiday Edit" line above the hero (
 Boxing Day), and the tests pin that nothing else comes back. Black Friday and Cyber Monday (strip, pages, nav) are
 unchanged. The same rule went to every sister site: the site's own identity first.
 
+## 2026-11-08 — Shop by need: ingredient and skin-concern hubs
+
+Owner approved the competitor scan's search-by-need hubs (2026-11-08): shoppers search "centella toner" or "skincare for
+dry skin", not a brand. `/ingredients/<slug>` (25 hubs: centella, snail mucin, niacinamide, PDRN, retinol…) and
+`/skin-concerns/<slug>` (7: acne, dry skin, dark spots, redness, fine lines, pores, barrier), with an index page each,
+prerendered at the release build like the brand pages (`components/NeedHub.tsx`).
+
+- A product is in a hub only when its OWN NAME says so (`lib/needs.ts`, word-boundary patterns, `tests/needs.test.ts`):
+  we hold no ingredient lists, and never claim a product treats anything. The copy says we go by the name on the bottle
+  and that nothing is medical advice. A concern hub links the ingredient hubs shoppers look at for it.
+- A hub is indexed and in the sitemap only with 3+ products (`NEED_INDEX_MIN`); fewer is `noindex, follow`.
+- Product pages link the indexed hubs their name puts them in (up to four chips), and the side panel and phone menu
+  have a "Shop by need" group.
+- ScentCompare's equivalent is not ingredients but its notes pages and the new "smells like" hubs (its DECISIONS.md).
+
 ## 2026-11-08 — Store badges, free price data and My collection (competitor scan)
 
 The owner approved the competitor scan's ideas (Collectr and PriceCharting keep people coming back with "what is my
