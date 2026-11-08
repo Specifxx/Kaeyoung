@@ -92,6 +92,12 @@ export function SearchBox({ big = false }: { big?: boolean }) {
         role="search"
         action="/search"
         onSubmit={(e) => {
+          // A pasted store link goes to the "Is this a good price?" checker (lib/link-check.ts), in the fragment.
+          if (/^\s*(https?:\/\/|[a-z0-9-]+(\.[a-z0-9-]+)+\/)/i.test(q)) {
+            e.preventDefault();
+            window.location.href = `/is-this-a-good-price#link=${encodeURIComponent(q.trim())}`;
+            return;
+          }
           const it = items[active];
           if (it) {
             e.preventDefault();
