@@ -14,11 +14,11 @@ import { ACTIVE_REGIONS } from "@/lib/regions";
 import { Header } from "@/components/Header";
 import { HolidayStrip } from "@/components/HolidayStrip";
 import { Footer } from "@/components/Footer";
-import { SideNav } from "@/components/SideNav";
 import { QuickView } from "@/components/QuickView";
 import { RailDock, RailSlot } from "@/components/SideRails";
 import { RateCard } from "@/components/site-reviews/RateCard";
-import { navGroups, quickLinks } from "@/lib/nav";
+import { headerMenus, navGroups, quickLinks } from "@/lib/nav";
+import { menuFacts } from "@/lib/menu-facts";
 import { CategoryStrip } from "@/components/CategoryStrip";
 import { catCounts, getBrands, getMeta } from "@/lib/data";
 import { niceDate } from "@/lib/format";
@@ -68,12 +68,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-1">
           Skip to content
         </a>
-        <Header groups={groups} />
+        <Header groups={groups} menus={headerMenus(groups, menuFacts())} />
         {/* Below lg: the sections one swipe away (the side panel carries them from lg). */}
         <CategoryStrip links={quickLinks(groups)} />
         <HolidayStrip />
         <div className="flex">
-          <SideNav groups={groups} />
           {/* The side rails (components/SideRails.tsx): eBay left, Amazon right, from 1440px; empty in the server HTML. */}
           <RailSlot side="left" />
           <main id="main" className="min-w-0 flex-1 pb-6">

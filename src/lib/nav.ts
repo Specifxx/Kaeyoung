@@ -1,13 +1,24 @@
 // Every place the site goes, grouped the way a shopper looks: the routine
-// step, where the value is, brands and guides, and the rest. The desktop
-// sidebar (components/SideNav.tsx, lg and up; owner, 2026-10-30: "a side panel
-// like DexCompare") and the phone menu (components/MobileMenu.tsx) draw this
-// one list, so the two never disagree. Static links to pages that exist.
+// step, where the value is, brands and guides, and the rest. The header mega
+// menus (components/HeaderMenus.tsx, lg up; they replaced the side panel, Bill
+// 2026-11-09) and the phone menu (components/MobileMenu.tsx) draw this list,
+// so they never disagree. Static links to pages that exist.
 // No data import here: the client menus import isActive from this file.
 import { saleStrip } from "@/lib/black-friday";
 import { CAT_BY_KEY, STEP_MENU_ORDER, type CatKey } from "@/site";
 
 export type NavItem = { href: string; label: string; count?: number; cat?: CatKey };
+/** A header menu link; `regions` = the markets it has products in (absent: every market), drawn with the engine's rp-XX classes. */
+export type MenuLink = { href: string; label: string; regions?: string[] };
+export type HeaderMenu = { label: string; all: { href: string; label: string }; columns: { title?: string; links: MenuLink[] }[] };
+
+/** What the header menus list beyond the groups: each already filtered to products and tagged with the markets that have them. */
+export interface MenuFacts {
+  catRegions: Partial<Record<CatKey, string[]>>;
+  brands: MenuLink[];
+  concerns: MenuLink[];
+  ingredients: MenuLink[];
+}
 export type NavGroup = { title: string; links: NavItem[] };
 
 function saleLinks(): NavItem[] {
@@ -54,6 +65,37 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
         { href: "/stores", label: "Stores we compare" },
         { href: "/about", label: "How it works" },
         { href: "/disclosure", label: "How we make money" },
+      ],
+    },
+  ];
+}
+
+/**
+ * The header's mega menus (components/HeaderMenus.tsx, lg up). The steps and the Save / site groups ARE the groups the side panel
+ * and phone menu draw; concerns, ingredients and brands are the longer lists those link to, so a menu never names a place the
+ * groups' own "All ..." links do not reach. A link with no products in any market is left out (regions: []).
+ */
+export function headerMenus(groups: NavGroup[], f: MenuFacts): HeaderMenu[] {
+  const live = (l: MenuLink) => !l.regions || l.regions.length > 0;
+  const steps: MenuLink[] = (groups[0]?.links ?? []).map((l) => ({ href: l.href, label: l.label, regions: l.cat ? f.catRegions[l.cat] : undefined })).filter(live);
+  const group = (title: string) => groups.find((g) => g.title === title)?.links ?? [];
+  return [
+    { label: "Shop", all: { href: "/popular", label: "Popular right now" }, columns: [{ title: "By routine step", links: steps }] },
+    {
+      label: "Skin concern",
+      all: { href: "/skin-concerns", label: "All skin concerns" },
+      columns: [
+        { title: "Concern", links: f.concerns.filter(live) },
+        { title: "Ingredient", links: [...f.ingredients.filter(live), { href: "/ingredients", label: "All ingredients" }] },
+      ],
+    },
+    { label: "Brands", all: { href: "/brands", label: "All brands" }, columns: [{ links: f.brands.filter(live) }] },
+    {
+      label: "Deals & more",
+      all: { href: "/deals", label: "Deals today" },
+      columns: [
+        { title: "Save", links: group("Save") },
+        { title: "KaeYoung", links: group("KaeYoung") },
       ],
     },
   ];
