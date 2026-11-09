@@ -6,7 +6,8 @@
 // function, and nothing is written to the URL of a static page.
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CATEGORIES } from "@/site";
-import { applyFilters, imageUrl, loadImages, loadIndex, NO_FILTERS, SORTS, type Filters, type IndexRow, type SortKey } from "@/lib/browse";
+import { FACETS } from "@/content/facets";
+import { applyFilters, facetValues, imageUrl, loadImages, loadIndex, NO_FILTERS, SORTS, type Filters, type IndexRow, type SortKey } from "@/lib/browse";
 import { money } from "@/lib/format";
 import { useRegion } from "./RegionPicker";
 import { Stars } from "./reviews/Stars";
@@ -50,6 +51,20 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
     for (const r of scope) if (r[5]) c.set(r[5], (c.get(r[5]) ?? 0) + 1);
     return [...c.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   }, [scope]);
+  // Each niche facet's options, with how many products in this scope carry them (most first, or the facet's own order).
+  const facetOptions = useMemo(
+    () =>
+      FACETS.map((facet) => {
+        const c = new Map<string, number>();
+        // A facet with a fixed list (sizes, concentrations) shows it before the index has loaded, so the control is never empty.
+        if (!rows) for (const v of facet.values ?? []) c.set(v, 0);
+        for (const r of scope) for (const v of facetValues(facet, r)) c.set(v, (c.get(v) ?? 0) + 1);
+        const order = facet.order;
+        const list = [...c.entries()].sort((a, b) => (order ? order.indexOf(a[0]) - order.indexOf(b[0]) : 0) || b[1] - a[1] || a[0].localeCompare(b[0]));
+        return { facet, list: list.slice(0, facet.max ?? 40) };
+      }).filter((x) => x.list.length > 1),
+    [scope, rows],
+  );
   const result = useMemo(() => (rows ? applyFilters(scope, f, region) : []), [rows, scope, f, region]);
   const pos = useMemo(() => new Map(rows?.map((r, i) => [r[0], i]) ?? []), [rows]);
   const rated = useMemo(() => scope.some((r) => r[8] > 0), [scope]);
@@ -88,6 +103,14 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
             ))}
           </select>
         )}
+        {facetOptions.map(({ facet, list }) => (
+          <select key={facet.key} value={f.facets[facet.key] ?? ""} onChange={(e) => set({ facets: { ...f.facets, [facet.key]: e.target.value } })} onFocus={need} aria-label={facet.label} className={`${sel} max-w-[12rem]`}>
+            <option value="">{facet.any}</option>
+            {list.map(([v, n]) => (
+              <option key={v} value={v}>{n ? `${v} (${n})` : v}</option>
+            ))}
+          </select>
+        ))}
         <select value={f.minStars} onChange={(e) => set({ minStars: Number(e.target.value) })} aria-label="Rating" className={sel} disabled={!!rows && !rated}>
           <option value={0}>Any rating</option>
           <option value={4}>4★ and up</option>
