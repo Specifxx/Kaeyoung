@@ -18,7 +18,8 @@ import { SideNav } from "@/components/SideNav";
 import { QuickView } from "@/components/QuickView";
 import { RailDock, RailSlot } from "@/components/SideRails";
 import { RateCard } from "@/components/site-reviews/RateCard";
-import { navGroups } from "@/lib/nav";
+import { navGroups, quickLinks } from "@/lib/nav";
+import { CategoryStrip } from "@/components/CategoryStrip";
 import { catCounts, getBrands, getMeta } from "@/lib/data";
 import { niceDate } from "@/lib/format";
 
@@ -68,6 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Header groups={groups} />
+        {/* Below lg: the sections one swipe away (the side panel carries them from lg). */}
+        <CategoryStrip links={quickLinks(groups)} />
         <HolidayStrip />
         <div className="flex">
           <SideNav groups={groups} />

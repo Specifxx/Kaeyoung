@@ -127,7 +127,7 @@ export function SearchBox({ big = false }: { big?: boolean }) {
             }
             if (e.key === "Escape") setOpen(false);
           }}
-          placeholder={big ? "Search a brand, product or ingredient…" : "Search K-beauty…"}
+          placeholder={big ? "Search a brand, product or ingredient…" : "Search brand, product, ingredient…"}
           aria-label="Search Korean skincare"
           aria-expanded={open}
           aria-controls={listId}

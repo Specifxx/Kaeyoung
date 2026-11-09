@@ -1089,3 +1089,20 @@ card sites): a visitor pastes a store's product link at `/is-this-a-good-price` 
   above it "you can pay less", with the saving. A listing that was out of stock says so instead. Amazon, eBay, marketplaces, stores
   we don't read and unmatched pages offer a search with the link's words.
 - A link pasted into the header search opens the checker (`#link=` in the fragment). Linked from the footer and the sitemap.
+
+## 2026-11-09 — Navigation audit (Bill): sections one swipe away, brands on a section, the niche's own filters
+
+Bill: a collector or someone deep in a space must reach it fast. Here a K-beauty shopper goes by routine step, then skin concern or ingredient, then brand, then size. One change for the KaeYoung / ScentCompare / MotorCompare
+engine (FigureCompare's variant has its own entry), made in step in the three repos.
+
+- **Quick row** (`components/CategoryStrip.tsx`, `quickLinks` in `lib/nav.ts`): below lg, where the side panel is not drawn, a swipeable row
+  of the sections, this niche's second way in and Brands sits under the header on every page, in the server's HTML, the current one
+  marked. It is a subset of the sidebar's own list, so the two never disagree (`tests/nav.test.ts`).
+- **Brands on a section** (`CatHub`): "Shop <section> by brand", the twelve brands with the most products there (only brands that have
+  a page), each a link to `/brands/<slug>`, and "All brands".
+- **The niche's filters** (`content/facets.ts`, `lib/browse.ts`, `components/Browse.tsx`): beside brand and rating, Skin concern (the lib/needs.ts hubs, read from the product's own name) and Size (ml/g). Each reads only the
+  product's name that /search-index.json already holds, so nothing is fetched and nothing is guessed: a name that does not say has no
+  value. Fixed lists show before the index loads; the counts appear once it has.
+- The header search's short placeholder now names what it finds (brand, product, barcode / part code).
+- Unchanged: every URL, title, description, canonical, h1 and JSON-LD. Not done: brand-within-section hub pages (a new indexable
+  page per pair needs its own thin-page rule), and the side rails and corner rating card (owner, 2026-11-06 / 2026-11-03).

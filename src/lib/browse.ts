@@ -6,6 +6,7 @@
 //   /search-images.json  the products' photo paths, in the same order
 // Client-safe: no node imports.
 import type { RegionCode } from "@/site";
+import { FACETS } from "@/content/facets";
 import { SEARCH_SYNONYMS } from "@/content/brands-ko";
 
 export type IndexRow = [
@@ -112,9 +113,16 @@ export interface Filters {
   inStock: boolean;
   /** price cap in the region's minor units, 0 for none */
   maxPrice: number;
+  /** the niche's own facets (content/facets.ts), by key: the chosen value, "" for any */
+  facets: Record<string, string>;
   sort: SortKey;
 }
-export const NO_FILTERS: Filters = { q: "", cat: "", brand: "", minStars: 0, inStock: false, maxPrice: 0, sort: "popular" };
+export const NO_FILTERS: Filters = { q: "", cat: "", brand: "", minStars: 0, inStock: false, maxPrice: 0, facets: {}, sort: "popular" };
+
+/** The values a row has for one facet (a name can match several: a serum for dryness and dullness). */
+export function facetValues(facet: (typeof FACETS)[number], r: IndexRow): string[] {
+  return facet.of(r[1], r[2]);
+}
 
 export function applyFilters(rows: IndexRow[], f: Filters, region: RegionCode): IndexRow[] {
   const nq = norm(f.q);
@@ -122,6 +130,10 @@ export function applyFilters(rows: IndexRow[], f: Filters, region: RegionCode): 
   list = list.filter((r) => {
     if (f.cat && r[2] !== f.cat) return false;
     if (f.brand && r[5] !== f.brand) return false;
+    for (const facet of FACETS) {
+      const want = f.facets[facet.key];
+      if (want && !facetValues(facet, r).includes(want)) return false;
+    }
     if (f.minStars && (r[7] ?? 0) < f.minStars * 10) return false;
     const p = r[4][region];
     if (f.inStock && p == null) return false;

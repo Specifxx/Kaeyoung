@@ -59,6 +59,14 @@ export function navGroups(counts: Record<CatKey, number>, topBrands: { slug: str
   ];
 }
 
+/**
+ * The quick row under the header below lg (components/CategoryStrip.tsx): the sections as the first group lists them, this niche's
+ * second way in, then Brands. A subset of the groups above, so the strip never names a place the menus do not.
+ */
+export function quickLinks(groups: NavGroup[]): NavItem[] {
+  return [...(groups[0]?.links ?? []).map(({ href, label }) => ({ href, label })), { href: "/skin-concerns", label: "Skin concern" }, { href: "/brands", label: "Brands" }];
+}
+
 /** The current page is this link, or inside it ("/serums/page/2" is in Serums). */
 export function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
