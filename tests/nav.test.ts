@@ -43,3 +43,26 @@ test("every niche facet is pure on a name, and a filter by it keeps only the row
   assert.deepEqual(out.map((r) => r[0]), ["a"]);
   assert.equal(applyFilters(rows, NO_FILTERS, "US").length, 2);
 });
+
+test("header mega menus: built from the nav groups, every link a place the groups reach, empty markets dropped, no side panel", async () => {
+  const { headerMenus } = await import("../src/lib/nav");
+  const groups = navGroups(counts, [{ slug: "x", name: "X" }]);
+  const menus = headerMenus(groups, {
+    catRegions: { serums: ["US"], toners: [] },
+    brands: [{ href: "/brands/x", label: "X" }, { href: "/brands/none", label: "None", regions: [] }],
+    concerns: [{ href: "/skin-concerns/dry-skin", label: "Dry", regions: ["US", "UK"] }],
+    ingredients: [],
+  });
+  assert.ok(menus.length <= 7);
+  const flat = menus.flatMap((m) => m.columns.flatMap((c) => c.links));
+  assert.ok(!flat.some((l) => l.href === "/brands/none" || l.href === "/toners"), "a link with no products anywhere is left out");
+  assert.ok(flat.find((l) => l.href === "/serums")!.regions?.[0] === "US");
+  for (const m of menus) assert.ok(m.all.href.startsWith("/"), `${m.label} has its All link`);
+  const dest = new Set(groups.flatMap((g) => g.links.map((l) => l.href)));
+  for (const m of menus) assert.ok(m.all.href === "/popular" || dest.has(m.all.href) || m.all.href === "/deals", m.all.href);
+  const comp = read("src/components/HeaderMenus.tsx");
+  assert.match(comp, /Escape/);
+  assert.match(comp, /aria-expanded/);
+  assert.match(comp, /rp-\$\{r\}/);
+  assert.ok(!read("src/app/layout.tsx").includes("SideNav"), "the side panel is gone");
+});

@@ -4,17 +4,19 @@ import { RegionPicker } from "./RegionPicker";
 import { SearchBox } from "./SearchBox";
 import { ThemeToggle } from "./ThemeToggle";
 import { MobileMenu } from "./MobileMenu";
-import type { NavGroup } from "@/lib/nav";
+import { HeaderMenus } from "./HeaderMenus";
+import type { HeaderMenu, NavGroup } from "@/lib/nav";
 import { CartHeaderLink } from "@/components/cart/CartHeaderLink";
 
-export function Header({ groups }: { groups: NavGroup[] }) {
+export function Header({ groups, menus }: { groups: NavGroup[]; menus: HeaderMenu[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-card/90 backdrop-blur">
       <div className="flex h-[4.25rem] items-center gap-2 px-4 sm:gap-4 lg:px-5">
         <Link href="/" prefetch={false} className="shrink-0" aria-label="KaeYoung home">
           <Logo wordmark="hidden min-[360px]:flex" />
         </Link>
-        <div className="hidden min-w-0 max-w-xl flex-1 md:block lg:ml-[4.5rem]">
+        <HeaderMenus menus={menus} />
+        <div className="hidden min-w-0 max-w-xl flex-1 md:block">
           <SearchBox />
         </div>
         <div className="ml-auto flex items-center gap-2">
