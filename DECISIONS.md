@@ -1158,3 +1158,16 @@ is a word `listingBrand` refuses.
 ScentCompare's half of the task (trim products.json, 19.9 MB) was measured and left: no field in it is unused (offers
 are 15.9 MB of it and every part of an offer is drawn or linked), and folding repeated store handles saved 270 KB. The
 real lever is the cull threshold in `lib/focus.ts` or a gzipped file, both noted for the owner.
+
+## 2026-11-10: The nearest paid price under the cheapest store (hero and phone buy bar)
+
+The zero-earnings diagnosis (10 Nov) found 42 buy clicks in 30 days, 9 of them to a link that can earn:
+the hero and the phone buy bar name only the cheapest store, which usually pays nothing. RiftCompare's rule
+(`lib/paid-alternative.ts`, owner 2026-10-27) is ported: when the cheapest orderable store is not a paid link, a second
+line names the cheapest paid row of the same table (eBay's delivered listing, Amazon's own listing, a partner's feed
+price for this barcode, or a store on a joined programme) when it is within 20% of that store's price: "or US$19.95 on
+Stylevana +11% (ships worldwide) →", labelled "Paid link". It is the row's real price, never called cheaper, never the
+best price, and nothing is reordered; when the cheapest store already pays, nothing is added. Amazon's price follows its
+24-hour licence in the browser too (`PaidAlt`), so `tests/amazon-api.test.ts` now lets `lib/paid-alternative.ts` read
+`amazon-live` beside the price table. Clicks are `buy_click` with placement `hero_alt` / `buybar_alt` (and the same in
+the sub id). On the day's data it shows on 1,610 of 20,924 product-region pairs (eBay 463, Stylevana 1,147). Every KaeYoung change also goes to ScentCompare: same files there.
