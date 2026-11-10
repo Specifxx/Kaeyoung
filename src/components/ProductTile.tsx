@@ -1,81 +1,39 @@
-import Link from "next/link";
 import { REGIONS, type RegionCode } from "@/site";
 import { bestIn, spreadIn } from "@/lib/data";
-import { money, pct } from "@/lib/format";
 import type { Product } from "@/lib/types";
-import { ProductImage } from "./ProductImage";
-import { Stars } from "./reviews/Stars";
 import { reviewsOf } from "@/lib/ratings";
+import { Tiles, type TileRow } from "./Tiles";
 
-/** A product card. With `region` it shows that region's price only (lists
- *  already split by region); without, every region's, switched by CSS. */
-export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) {
-  const regions = region ? REGIONS.filter((r) => r.code === region) : REGIONS;
-  const cls = (code: RegionCode) => (region ? "" : `rp rp-${code}`);
-  const short = f.brand && f.name.startsWith(f.brand) ? f.name.slice(f.brand.length).trim() : f.name;
+// A product card grid. With `region` it shows that region's price only (lists already split by region); without,
+// every region's, switched by CSS (.rp-XX). The tiles are drawn by the client component Tiles from compact rows, so
+// the page's RSC payload carries a few numbers per product instead of a second copy of every tile's markup, and the
+// tile markup itself uses short classes (globals.css, .pt-*). Same look, same server HTML text, about a fifth of the
+// bytes (DECISIONS.md 2026-11-10, "Hub pages under 300 KB").
+
+/** One product as the client grid needs it: everything precomputed on the server at build. */
+export function tileRow(f: Product, codes: RegionCode[]): TileRow {
   const rated = reviewsOf(f);
-  return (
-    <Link
-      prefetch={false}
-      href={`/product/${f.slug}`}
-      // A plain click opens the quick view (QuickView.tsx); the link itself stays for crawlers and new tabs.
-      data-qv={f.slug}
-      data-qv-name={f.name}
-      data-qv-brand={f.brand || undefined}
-      data-qv-img={f.img || undefined}
-      className="card tile-hover group flex flex-col overflow-hidden"
-    >
-      <div className="relative aspect-square bg-gradient-to-b from-white to-subtle">
-        <ProductImage src={f.img} alt={f.name} label={f.brand || "K-beauty"} className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]" />
-        {regions.map((r) => {
-          const s = spreadIn(f, r.code);
-          return s != null && s >= 0.1 ? (
-            <span key={r.code} className={`${cls(r.code)} absolute left-2 top-2`}>
-              <span className="chip bg-save-pale text-save">Save {pct(s)}</span>
-            </span>
-          ) : null;
-        })}
-      </div>
-      <div className="flex flex-1 flex-col gap-1 border-t border-line p-3">
-        {f.brand && <p className="eyebrow truncate">{f.brand}</p>}
-        <h3 className="line-clamp-2 text-[13.5px] font-medium leading-snug text-ink">{short}</h3>
-        {rated && rated.n > 0 && (
-          <p className="flex items-center gap-1 text-xs text-soft">
-            <Stars value={rated.avg} size={12} /> {rated.n}
-          </p>
-        )}
-        <div className="mt-auto pt-1 text-sm">
-          {regions.map((r) => {
-            const b = bestIn(f, r.code);
-            return (
-              <p key={r.code} className={cls(r.code)}>
-                {b ? (
-                  <>
-                    <span className="text-[15px] font-semibold tabular-nums text-accent-deep">{money(b.offer.p, r.code)}</span>
-                    <span className="ml-1.5 text-xs text-soft">
-                      {b.stores} store{b.stores === 1 ? "" : "s"}
-                    </span>
-                  </>
-                ) : f.offers[r.code]?.length ? (
-                  <span className="text-xs text-soft">Sold out {r.phrase}</span>
-                ) : (
-                  <span className="text-xs text-soft">Not sold {r.phrase} yet</span>
-                )}
-              </p>
-            );
-          })}
-        </div>
-      </div>
-    </Link>
-  );
+  return [
+    f.slug,
+    f.name,
+    f.brand || "",
+    f.img || "",
+    rated && rated.n > 0 ? Math.round(rated.avg * 10) : 0,
+    rated?.n ?? 0,
+    codes.map((code) => {
+      const b = bestIn(f, code);
+      const s = spreadIn(f, code);
+      // [price in minor units, stores, save %]; price -1 sold out here, -2 not sold here yet.
+      return [b ? b.offer.p : f.offers[code]?.length ? -1 : -2, b ? b.stores : 0, s != null && s >= 0.1 ? Math.round(s * 100) : 0];
+    }),
+  ];
 }
 
 export function TileGrid({ products, region }: { products: Product[]; region?: RegionCode }) {
+  const codes = region ? [region] : REGIONS.map((r) => r.code);
   return (
     <div data-reveal="stagger" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
-      {products.map((f) => (
-        <ProductTile key={f.ean} f={f} region={region} />
-      ))}
+      <Tiles rows={products.map((f) => tileRow(f, codes))} codes={codes} one={!!region} />
     </div>
   );
 }

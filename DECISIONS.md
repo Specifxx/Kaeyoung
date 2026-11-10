@@ -1158,3 +1158,25 @@ is a word `listingBrand` refuses.
 ScentCompare's half of the task (trim products.json, 19.9 MB) was measured and left: no field in it is unused (offers
 are 15.9 MB of it and every part of an offer is drawn or linked), and folding repeated store handles saved 270 KB. The
 real lever is the cull threshold in `lib/focus.ts` or a gzipped file, both noted for the owner.
+
+## 2026-11-10: Hub pages under 300 KB (zero-earnings diagnosis, fix 3)
+
+The skin-concern hubs were 0.96 to 1.52 MB of HTML each (dark-spots-dullness 1,481 KB), the heaviest pages we run,
+and the pages Google ranks on page two. Measured on a build: 223 product tiles, each drawn twice (once as HTML, once
+again as the RSC payload that hydrates the page), with all six regions' prices and "Save" chips in each, under long
+Tailwind class strings. About 2.9 KB of HTML plus 4 KB of payload per tile.
+
+- `TileGrid` (every product grid on the site) now hands the client component `Tiles` one compact row per product
+  (slug, name, brand, photo, rating, and per region [price, stores, save %], all computed on the server at build), so
+  the payload carries numbers, not a second copy of the markup. The HTML still holds every tile, name, price and link
+  (client components are server-rendered), with every region's price switched by `.rp-XX` as before.
+- The tile's markup uses short classes (`.pt-*` in `globals.css`, the same Tailwind values through `@apply`) and
+  single text nodes; the link carries an empty `data-qv` and the quick view reads the slug from its href and the
+  name, brand and photo from the tile. Same look (compared side by side, desktop and phone).
+- A hub shows the 12 most popular products per step instead of 24 ("Showing the 12 most popular of N. Search for
+  more", as before). Markup alone got the biggest hub to 408 KB; 223 tiles cannot fit 300 KB with six regions each.
+
+Result: skin-concern hubs 196 to 256 KB, ingredient hubs 88 to 238 KB. URLs, titles, descriptions, canonicals,
+robots, breadcrumbs JSON-LD, the h1 and h2 outline and the intro text are unchanged. Brand pages, the home page and
+the deals lists use the same grid and shrink too (TIRTIR 1,545 to 408 KB, home 708 to 356 KB) without losing a tile.
+ScentCompare got the same change.
