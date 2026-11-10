@@ -18,6 +18,19 @@ module.exports = {
       "/q/[slug]": ["./data/public/**", "./data/amazon-live/**"],
     },
   },
+  // Category words a store once put in the Shopify vendor field made brand pages (2026-11-06: /brands/face-mask had
+  // 325 Google impressions at position 3.8). src/lib/brand.ts NOT_A_BRAND stops new ones; these send the old URLs to
+  // the category they meant, permanently, so Google moves the ranking to a real page (DECISIONS.md 2026-11-10).
+  async redirects() {
+    const to = {
+      "face-mask": "masks", "face-masks": "masks", "sheet-mask": "masks", "sheet-masks": "masks", mask: "masks", masks: "masks",
+      "skin-care": "", skincare: "", cosmetic: "", cosmetics: "", beauty: "",
+      serum: "serums", serums: "serums", toner: "toners", toners: "toners", cleanser: "cleansers", cleansers: "cleansers",
+      sunscreen: "sunscreen", sunscreens: "sunscreen", moisturiser: "moisturisers", moisturisers: "moisturisers",
+      moisturizer: "moisturisers", moisturizers: "moisturisers",
+    };
+    return Object.entries(to).map(([slug, cat]) => ({ source: `/brands/${slug}`, destination: `/${cat}`, permanent: true }));
+  },
   async headers() {
     return [
       {
