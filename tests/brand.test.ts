@@ -25,3 +25,19 @@ test("a vendor that is a category is not a brand", () => {
   assert.equal(listingBrand("Face Mask", "Face Mask Purederm Vegan Under Eye Mask Collagen 30 Sheets", "Shop"), null);
   assert.equal(listingBrand("Mediheal", "Mediheal Teatree Mask", "Shop"), "Mediheal");
 });
+
+test("a category-named brand page redirects to its category, never a 404 (2026-11-10)", async () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const cfg = require("../next.config.js");
+  const { CATEGORIES } = await import("@/site");
+  const cats = new Set(CATEGORIES.map((c: { key: string }) => c.key));
+  const list: { source: string; destination: string; permanent: boolean }[] = await cfg.redirects();
+  const face = list.find((r) => r.source === "/brands/face-mask");
+  assert.equal(face?.destination, "/masks");
+  for (const r of list) {
+    assert.equal(r.permanent, true);
+    const to = r.destination.slice(1);
+    assert.ok(to === "" || cats.has(to as never), r.destination);
+    assert.ok(listingBrand(r.source.replace("/brands/", "").replace(/-/g, " "), "", "Shop") === null, r.source);
+  }
+});

@@ -1145,3 +1145,16 @@ and /serums/page/11 had 262 in 56 days, both with 0 clicks. Page 2+ was self-can
 `robots: { index: false, follow: true }`: the page and its links stay crawlable, so every product it lists is still
 found, but only the hub (page 1) competes for the category's searches. Page 2+ was already out of the sitemap. The
 canonical stays self (pointing page 23 at page 1 would claim they are the same content). Pinned in `tests/seo.test.ts`.
+## 2026-11-10: Category-named brand pages redirect to their category (site review KY-1)
+
+`/brands/face-mask` had 325 Google impressions at position 3.8 and no clicks: "Face Mask" was a store's Shopify vendor,
+not a maker. `NOT_A_BRAND` in `lib/brand.ts` has kept such vendors from making brand pages since 2026-11-06, which left
+the ranked URL a 404. `next.config.js` `redirects()` now sends every category word that page could have come from
+(face mask, sheet mask, serum, toner, cleanser, sunscreen, moisturiser, skincare, cosmetics, beauty) to its category
+with a permanent redirect (the generic words to the home page), so the ranking moves to a real page. A static redirect
+is served by Vercel's router, not a function. `tests/brand.test.ts` checks every target is a category and every source
+is a word `listingBrand` refuses.
+
+ScentCompare's half of the task (trim products.json, 19.9 MB) was measured and left: no field in it is unused (offers
+are 15.9 MB of it and every part of an offer is drawn or linked), and folding repeated store handles saved 270 KB. The
+real lever is the cull threshold in `lib/focus.ts` or a gzipped file, both noted for the owner.
