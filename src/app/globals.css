@@ -427,3 +427,10 @@ html[data-scrolled] header.sticky {
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--line)) transparent;
 }
+
+/* Explore layer (2026-11-10, PriceRunner-style redesign): category photo tiles, the
+   recently viewed row. components/explore/. Same block in ScentCompare. */
+.ex-scroll { scrollbar-width: thin; scroll-snap-type: x proximity; }
+.ex-scroll > li { scroll-snap-align: start; }
+.ex-mosaic-1 { transform: translateY(-8px); }
+.ex-mosaic > span { box-shadow: 0 1px 2px rgb(0 0 0 / 0.06); }
