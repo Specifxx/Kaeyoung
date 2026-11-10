@@ -3,12 +3,12 @@
 // key). Off until EBAY_CLIENT_ID / EBAY_CLIENT_SECRET exist (a green no-op).
 // One call per (product, region), home-page, popular and new products first,
 // the US first among equals, the rest weekly and empty searches every three weeks
-// (planEbay), capped at 2,500 per eBay quota day however many runs there are.
+// (planEbay), each region under its own daily ceiling (EBAY_REGION_DAILY_CAP), capped at 2,500 per eBay quota day however many runs there are.
 import fs from "node:fs";
 import path from "node:path";
 import { REGIONS, type RegionCode } from "@/site";
 import { dealsIn, getProducts, newestIn } from "@/lib/data";
-import { ebayPick, ebayQuotaDay, planEbay, type EbayItem, type EbayPrio } from "@/lib/ebay";
+import { ebayPick, ebayQuotaDay, planEbay, regionAllowance, type EbayItem, type EbayPrio } from "@/lib/ebay";
 import { popularity, popularNow } from "@/lib/ratings";
 import { featuredIn, isFeatured } from "@/lib/featured";
 import type { EbayData, Meta } from "@/lib/types";
@@ -58,7 +58,10 @@ async function main() {
   // A second run on the same quota day (a manual dispatch) gets only what is left.
   const cap = Math.min(2500, Number(process.env.EBAY_DAILY_CAP || 2500));
   const qday = ebayQuotaDay();
-  const spent = meta?.ebay?.qday === qday ? meta.ebay.qcalls ?? 0 : 0;
+  const sameDay = meta?.ebay?.qday === qday;
+  const spent = sameDay ? meta?.ebay?.qcalls ?? 0 : 0;
+  // Calls per region on this quota day, so a second run keeps each region under its ceiling (EBAY_REGION_DAILY_CAP).
+  const byRegion: Partial<Record<RegionCode, number>> = sameDay ? { ...(meta?.ebay?.qregions ?? {}) } : {};
   const budget = Math.max(0, cap - spent);
   const checked = read<Record<string, string>>("state/ebay-checked.json", {});
   const data = read<EbayData>("public/ebay.json", {});
@@ -86,7 +89,7 @@ async function main() {
   });
   // A pair whose last search found nothing waits longer (EBAY_EMPTY_RECHECK_DAYS), so the calls reach every product.
   // Calls go only to products of about US$20 or more in the region (owner, 2026-11-06, lib/featured.ts).
-  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r], isFeatured);
+  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r], isFeatured, regionAllowance(byRegion));
   if (!plan.length) {
     console.log(`eBay: nothing to search (${spent} of ${cap} calls already spent on quota day ${qday}).`);
     return;
@@ -99,6 +102,7 @@ async function main() {
     const cur = REGIONS.find((r) => r.code === region)!.currency;
     const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?gtin=${f.ean}&limit=25&sort=price&filter=${encodeURIComponent(`buyingOptions:{FIXED_PRICE},conditionIds:{1000},deliveryCountry:${m.country},priceCurrency:${cur}`)}`;
     calls++;
+    byRegion[region] = (byRegion[region] ?? 0) + 1;
     const r = await fetch(url, {
       headers: {
         Authorization: `Bearer ${tok}`,
@@ -130,9 +134,10 @@ async function main() {
   fs.writeFileSync(path.join(DATA, "public/ebay.json"), JSON.stringify(data) + "\n");
   fs.writeFileSync(path.join(DATA, "state/ebay-checked.json"), JSON.stringify(checked) + "\n");
   if (meta) {
-    meta.ebay = { at: new Date().toISOString(), day: today, calls, budget, listings: Object.keys(data).length, qday, qcalls: spent + calls };
+    meta.ebay = { at: new Date().toISOString(), day: today, calls, budget, listings: Object.keys(data).length, qday, qcalls: spent + calls, qregions: byRegion };
     fs.writeFileSync(metaPath, JSON.stringify(meta, null, 1) + "\n");
   }
+  console.log(`eBay calls by region: ${Object.entries(byRegion).map(([r, n]) => `${r} ${n}`).join(", ")}`);
   console.log(`eBay: ${calls} calls of ${budget}; ${Object.keys(data).length} products with an eBay listing.`);
 }
 

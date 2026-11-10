@@ -79,7 +79,9 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
   never from CN/HK sellers, 60%–300% of the store median). KaeYoung's keyset is the owner's new third one (pending
   eBay approval, 2026-10-30), shared with CamCompare: 2,500 calls a day each, so `EBAY_DAILY_CAP` defaults to
   2,500 and the pass is a no-op until `EBAY_CLIENT_ID`/`EBAY_CLIENT_SECRET` exist. Never point it at a sister's
-  keyset or raise the cap without the owner.
+  keyset or raise the cap without the owner. Per region (owner, 2026-11-10): `EBAY_REGION_DAILY_CAP` holds UK 480,
+  CA 320 and EU 160 a quota day; the US (first) and Australia take the rest. Move a ceiling only with the measured
+  calls, listings and visitors per region, and keep the US uncapped.
 - Amazon's own price on the Amazon row (owner, 2026-11-05; ASINs 2026-11-06): the Creators API's getItems takes
   ASINs only, so `scripts/amazon-asins.ts` (daily import) finds each product's ASIN with searchItems (the barcode,
   then brand + name + size) and keeps it only when Amazon's own externalIds carry our barcode; ASINs and misses are committed in

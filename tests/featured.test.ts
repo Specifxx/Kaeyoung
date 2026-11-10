@@ -27,7 +27,7 @@ test("eBay calls go only to featured products", () => {
   const plan = planEbay(list, {}, ["US"], 10, undefined, "2026-11-06", undefined, isFeatured);
   assert.deepEqual(plan.map((p) => p.f.ean), ["dear"]);
   const src = fs.readFileSync("scripts/ebay-import.ts", "utf8");
-  assert.match(src, /isFeatured\)/);
+  assert.match(src, /isFeatured[,)]/);
 });
 
 test("the homepage rows read the featured list", () => {
