@@ -1,3 +1,6 @@
+"use client";
+// A client component (2026-11-10, "Heavy pages"): the product page sends each region's rows once as data, not as
+// a server tree whose cart, vote and link islands each carried their own copy of the row in the RSC payload.
 // The rows of a price table, shared by the product page and the quick view.
 // Pinned rows (eBay first, Amazon second) sit above the stores, drawn like a
 // store row and labelled "Paid link"; they are never counted as a store or the best price.
@@ -123,18 +126,18 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
   const s = status ? STOCK[status] : null;
   return (
     <div
-      className={`mo-row flex items-center gap-3 rounded-xl border px-3.5 py-3 ${check ? "border-accent/50 bg-accent/5" : "bg-card"} ${
+      className={`mo-row pr ${check ? "border-accent/50 bg-accent/5" : "bg-card"} ${
         // eBay with a price: a green outline (owner, 2026-11-06); the cheapest store a sky-blue one, so it never reads as eBay's
         // green or Amazon's amber (owner, 2026-11-07: "the cheapest listing should also have an outline too").
         check ? "" : brand === "ebay" && price ? "border-save" : brand === "amazon" && price ? "border-[#f59e0b]" : highlight ? "border-[#0ea5e9]" : "border-line"
       } ${status === "out" ? "opacity-60" : ""}`}
     >
-      <div className="min-w-0 flex-1">
-        <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 font-semibold">
-          <span className={check ? "min-w-0" : "min-w-0 max-w-full truncate"}>{name}</span>
-          {vote && <StoreVote url={vote} name={name} className="shrink-0 text-xs font-normal text-soft" />}
+      <div className="pr-m">
+        <p className="pr-n">
+          <span className={check ? "min-w-0" : "pr-t"}>{name}</span>
+          {vote && <StoreVote url={vote} name={name} className="pr-v" />}
         </p>
-        <p className="flex flex-wrap items-center gap-1.5 text-xs text-soft">
+        <p className="pr-s">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
           {ship && <span>{ship}</span>}
@@ -148,7 +151,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
       </div>
       {price && live && <AmazonPrice price={price} at={live.at} timeZone={live.timeZone} zoneLabel={live.zoneLabel} />}
       {price && !live && (
-        <span className={`text-lg font-semibold tabular-nums ${highlight ? "text-accent-deep" : ""}`}>
+        <span className={highlight ? "pr-p text-accent-deep" : "pr-p"}>
           {from && <span className="mr-1 text-xs font-normal text-soft">from</span>}
           {price}
         </span>
@@ -157,7 +160,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
         <CartAddButton href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="hidden text-soft sm:inline-flex" />
       )}
       {internal ? (
-        <a href={href} className="btn-pop btn-buy shrink-0 px-4 py-1.5">
+        <a href={href} className="btn-pop pr-b btn-buy">
           {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
         </a>
       ) : (
@@ -166,7 +169,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
           paid={paid}
           event={event}
           title={checkout ? `Opens ${name}'s checkout with this item` : undefined}
-          className={`btn-pop shrink-0 px-4 py-1.5 ${
+          className={`btn-pop pr-b ${
             brand || (price && status !== "out") ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
           }`}
         >

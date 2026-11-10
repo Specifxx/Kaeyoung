@@ -19,7 +19,7 @@
 //   browser after the page renders, once per page view (sessionStorage keeps it
 //   an hour), so no page gains a function, a database read or a build step.
 
-import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 
 export const STORE_VOTES_API = "https://riftcompare.com/api/store-votes";
 export const TRUSTED_MIN_UP = 3;
@@ -112,32 +112,18 @@ function browserId(): string {
   return id;
 }
 
-const UP = "M2 10h3v10H2zM7 20h9.3a2 2 0 0 0 2-1.6l1.6-7A2 2 0 0 0 18 9h-5V5a2 2 0 0 0-2-2l-4 7z";
-const DOWN = "M2 4h3v10H2zM7 4h9.3a2 2 0 0 1 2 1.6l1.6 7A2 2 0 0 1 18 15h-5v4a2 2 0 0 1-2 2l-4-7z";
 
-function Thumb({ d, on, color }: { d: string; on: boolean; color: string }) {
+// The look lives in globals.css (.sv, .sv-b, .sv-u, .sv-d) and the thumbs in IconSprite.tsx, not inline: a product page draws these thumbs on
+// every store row of six regions, and inline styles made them a fifth of its HTML (DECISIONS.md 2026-11-10).
+// A pressed button (aria-pressed) is full opacity in its colour, with the thumb filled.
+function Thumb({ d }: { d: "up" | "down" }) {
   return (
-    <svg width="12" height="12" viewBox="0 0 22 24" aria-hidden="true" style={{ display: "block" }}>
-      <path d={d} fill={on ? color : "none"} stroke={on ? color : "currentColor"} strokeWidth="1.8" strokeLinejoin="round" />
+    <svg width="12" height="12" aria-hidden="true">
+      <use href={`#i-${d}`} />
     </svg>
   );
 }
 
-const btn: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 3,
-  padding: "2px 4px",
-  margin: 0,
-  border: 0,
-  borderRadius: 6,
-  background: "transparent",
-  color: "inherit",
-  font: "inherit",
-  fontSize: 11,
-  lineHeight: 1,
-  cursor: "pointer",
-};
 
 /**
  * The tiny thumbs for one store. `url` is any URL on the store's own site (a
@@ -197,8 +183,7 @@ export function StoreVote({ url, name, className }: { url: string | null | undef
 
   return (
     <span
-      className={className}
-      style={{ display: "inline-flex", alignItems: "center", gap: 2, verticalAlign: "middle", whiteSpace: "nowrap", fontSize: 11, lineHeight: 1 }}
+      className={className ? `sv ${className}` : "sv"}
       data-store-vote={key}
     >
       {trusted && (
@@ -215,25 +200,25 @@ export function StoreVote({ url, name, className }: { url: string | null | undef
       )}
       <button
         type="button"
-        style={{ ...btn, opacity: mine?.v === 1 ? 1 : 0.6, color: mine?.v === 1 ? "#15803d" : "inherit" }}
+        className="sv-b sv-u"
         aria-pressed={mine?.v === 1}
         aria-label={`Thumbs up for ${label}${up ? ` (${up})` : ""}`}
         title={mine?.v === 1 ? "You gave this store a thumbs up (click to take it back)" : `Bought from ${label} and it went well? Thumbs up`}
         onClick={(e) => vote(e, 1)}
       >
-        <Thumb d={UP} on={mine?.v === 1} color="#15803d" />
-        {up > 0 && <span style={{ fontVariantNumeric: "tabular-nums" }}>{up}</span>}
+        <Thumb d="up" />
+        {up > 0 && <span className="tabular-nums">{up}</span>}
       </button>
       <button
         type="button"
-        style={{ ...btn, opacity: mine?.v === -1 ? 1 : 0.6, color: mine?.v === -1 ? "#b91c1c" : "inherit" }}
+        className="sv-b sv-d"
         aria-pressed={mine?.v === -1}
         aria-label={`Thumbs down for ${label}${down ? ` (${down})` : ""}`}
         title={mine?.v === -1 ? "You gave this store a thumbs down (click to take it back)" : `Problem with ${label} (fake, late, never arrived)? Thumbs down`}
         onClick={(e) => vote(e, -1)}
       >
-        <Thumb d={DOWN} on={mine?.v === -1} color="#b91c1c" />
-        {down > 0 && <span style={{ fontVariantNumeric: "tabular-nums" }}>{down}</span>}
+        <Thumb d="down" />
+        {down > 0 && <span className="tabular-nums">{down}</span>}
       </button>
       {thanks && <span style={{ marginLeft: 2, opacity: 0.7 }} role="status">Thanks</span>}
     </span>

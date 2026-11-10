@@ -14,6 +14,7 @@ import { ACTIVE_REGIONS } from "@/lib/regions";
 import { Header } from "@/components/Header";
 import { HolidayStrip } from "@/components/HolidayStrip";
 import { Footer } from "@/components/Footer";
+import { IconSprite } from "@/components/IconSprite";
 import { QuickView } from "@/components/QuickView";
 import { RailDock, RailSlot } from "@/components/SideRails";
 import { RateCard } from "@/components/site-reviews/RateCard";
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="p:domain_verify" content="c38a5bd57e1125d042a13aff9cee0d97" />
       </head>
       <body className="min-h-screen font-sans antialiased">
+        <IconSprite />
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-1">
           Skip to content
         </a>
