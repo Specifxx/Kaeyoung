@@ -10,7 +10,7 @@ import { Crumbs } from "@/lib/seo";
 // Shop by need (lib/needs.ts, DECISIONS.md 2026-11-08): one hub per ingredient or skin concern, from the words in each
 // product's own name. Prerendered at the release build like the brand pages; noindex until NEED_INDEX_MIN products.
 
-const PER_SECTION = 24;
+const PER_SECTION = 12;
 const ROOT: Record<NeedKind, { path: string; name: string; eyebrow: string }> = {
   ingredient: { path: "/ingredients", name: "Ingredients", eyebrow: "Shop by ingredient" },
   concern: { path: "/skin-concerns", name: "Skin concerns", eyebrow: "Shop by skin concern" },
