@@ -126,7 +126,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       ship: deliveryNote(ship[o.s], o.p, fmt),
       deal: d ? `${dealNote(d, fmt)}${lowest ? ` · lowest per item if you buy ${per!.q}` : ""}` : null,
       dealLabel: d ? (d.l ?? (d.t.length ? "Multi-buy" : "Free gift")) : null,
-      offer: store ? offersNote(awinProgrammeFor(store.base)?.id ?? null, region) : null,
+      offer: store ? offersNote((p => (p && !p.link ? p.id : null))(awinProgrammeFor(store.base)), region) : null,
       event: { source: o.s, region, placement, ean: f.ean, to: link.to },
       ...(o.st !== "out" ? { cart: { title: cartTitle, image: f.img, priceCents: o.p, currency: r.currency } } : {}),
     };
