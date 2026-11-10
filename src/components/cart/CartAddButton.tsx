@@ -5,7 +5,6 @@
 // else (an affiliate or partner link) stays a manual line with that link.
 import { useEffect, useState } from "react";
 import { CART_ADDED_EVENT, addLine, makeLine, onCartChange, readCart, setQty, writeCart, type CartAddInput } from "@/lib/cart-list";
-import { CartIcon } from "./CartIcon";
 
 export function CartAddButton({
   className = "",
@@ -73,7 +72,10 @@ export function CartAddButton({
           <path d="M5 12.5l4.5 4.5L19 7.5" />
         </svg>
       ) : (
-        <CartIcon plus />
+        // The icon is drawn once per page (IconSprite.tsx) and placed here: one per store row adds up.
+        <svg width="18" height="18" aria-hidden="true">
+          <use href="#i-cart-add" />
+        </svg>
       )}
       {label && <span>{inList ? "In cart" : "Add to cart"}</span>}
     </button>

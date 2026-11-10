@@ -1193,3 +1193,21 @@ Result: skin-concern hubs 196 to 256 KB, ingredient hubs 88 to 238 KB. URLs, tit
 robots, breadcrumbs JSON-LD, the h1 and h2 outline and the intro text are unchanged. Brand pages, the home page and
 the deals lists use the same grid and shrink too (TIRTIR 1,545 to 408 KB, home 708 to 356 KB) without losing a tile.
 ScentCompare got the same change.
+
+## 2026-11-10: Heavy pages: lighter price rows on product pages
+
+After the hub change of the same day, product pages were the heaviest left (ScentCompare up to 556 KB, KaeYoung up to
+816 KB): the price table is drawn for six regions, and every store row carried two inline-styled thumbs buttons with
+full SVG paths (StoreVote), a full cart SVG, long class strings, and its own copy of the row in the RSC payload for
+each of its client islands (cart button twice, thumbs, link).
+
+- `PriceRows` is a client component: each region's rows reach the page once as data instead of as a server tree.
+  The quick view already drew it on the client.
+- The thumbs and the cart icon are defined once per page (`IconSprite`, in the layout) and placed with `<use>`; the
+  thumbs' inline styles are classes in `globals.css` (`.sv`, `.sv-b`, pressed state from `aria-pressed`).
+- The row's repeated class strings are short component classes (`.pr-*`, the same Tailwind values).
+
+Same look, compared side by side on desktop and phone, including a pressed thumb and a cart add. Same URLs, text,
+links, titles, meta and JSON-LD. Result: ScentCompare product pages 556 to 372 KB at most, KaeYoung 816 to 481 KB.
+Brand pages were left: they list every product of the house (Lattafa 345 tiles, 552 KB; TIRTIR 408 KB), already a
+quarter of what they were this morning, and going lower would mean listing fewer products, which is a content change.
