@@ -59,3 +59,8 @@ test("the sitemap is a lean core: at most SITEMAP_PRODUCTS products, no hub page
   assert.ok(!urls.some((x) => /\/page\/\d+$/.test(x)));
   assert.ok(urls.length < 600, `${urls.length} URLs`);
 });
+
+test("category page 2+ is noindex, follow (site review X4, 2026-11-10)", () => {
+  const s = read("src/app/[cat]/page/[n]/page.tsx");
+  assert.match(s, /robots: \{ index: false, follow: true \}/);
+});
