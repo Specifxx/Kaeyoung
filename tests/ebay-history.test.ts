@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { ebayPick, ebayQuotaDay, planEbay, type EbayItem, type EbayPrio } from "@/lib/ebay";
+import { EBAY_REGION_DAILY_CAP, ebayPick, ebayQuotaDay, planEbay, regionAllowance, type EbayItem, type EbayPrio } from "@/lib/ebay";
 import { dayNumber, priceOn, recordHistory } from "@/lib/history";
 import type { Offer, Product } from "@/lib/types";
 
@@ -95,4 +95,30 @@ test("history records only changes and reads back by day", () => {
 
 test("sold-out everywhere records nothing", () => {
   assert.deepEqual(recordHistory({}, [P("k", { US: [{ ...offers[0], st: "out" }] })], "2026-10-01"), { k: {} });
+});
+
+test("eBay plan: a region at its daily ceiling gives its calls to the next pairs, the US first (owner, 2026-11-10)", () => {
+  const ps = ["a", "b", "c", "d"].map((e) => P(e, { US: offers, EU: offers, AU: offers }));
+  const plan = planEbay(ps, {}, ["US", "EU", "AU"], 8, undefined, "2026-11-10", undefined, undefined, { EU: 1 });
+  const by = (r: string) => plan.filter((p) => p.region === r).length;
+  assert.equal(plan.length, 8, "no call of the budget is lost");
+  assert.equal(by("EU"), 1, "EU held to its ceiling");
+  assert.equal(by("US"), 4, "every US pair searched");
+  assert.equal(by("AU"), 3);
+  const spare = planEbay(ps, {}, ["US", "EU"], 6, undefined, "2026-11-10", undefined, undefined, { EU: 1 });
+  assert.deepEqual(spare.map((p) => p.region), ["US", "US", "US", "US", "EU", "EU"], "calls no other region can use still go to the capped region, last");
+});
+
+test("eBay plan: the region ceilings move EU's calls to the US and Australia and keep the site total", () => {
+  assert.equal(EBAY_REGION_DAILY_CAP.US, undefined, "the US is never capped below the site cap");
+  assert.equal(EBAY_REGION_DAILY_CAP.AU, undefined);
+  assert.deepEqual(EBAY_REGION_DAILY_CAP, { UK: 480, CA: 320, EU: 160 });
+  assert.deepEqual(regionAllowance({ EU: 100, UK: 600 }), { UK: 0, CA: 320, EU: 60 }, "a second run on the quota day gets only what is left");
+});
+
+test("eBay plan: an EU pair whose search found nothing waits three times longer", () => {
+  const p = [P("e", { US: offers, EU: offers })];
+  const checked = { "e:US": "2026-10-20", "e:EU": "2026-10-20" };
+  // Tier 2, found nothing, 21 days ago: due in the US (21), not yet in the EU (63); spare budget still reaches EU.
+  assert.deepEqual(planEbay(p, checked, ["US", "EU"], 1, undefined, "2026-11-10", () => false).map((x) => `${x.f.ean}:${x.region}`), ["e:US"]);
 });

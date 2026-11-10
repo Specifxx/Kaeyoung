@@ -1193,3 +1193,19 @@ Result: skin-concern hubs 196 to 256 KB, ingredient hubs 88 to 238 KB. URLs, tit
 robots, breadcrumbs JSON-LD, the h1 and h2 outline and the intro text are unchanged. Brand pages, the home page and
 the deals lists use the same grid and shrink too (TIRTIR 1,545 to 408 KB, home 708 to 356 KB) without losing a tile.
 ScentCompare got the same change.
+## 2026-11-10: eBay calls follow visitors: EU held to 160 a day, the US and Australia take the rest (owner)
+
+Measured 8-10 Nov, the coverage planner gave the regions US 721 / EU 642 / UK 478 / AU 347 / CA 312 of the 2,500 calls a
+day, but the EU's 642 found 92 listings for 17 visitors. The owner approved the split brief
+(`strategy/ebay-region-split-brief-2026-11-10.md`): about US 900 / AU 650 / UK 478 / CA 312 / EU 160, site cap unchanged.
+
+`EBAY_REGION_DAILY_CAP` in `lib/ebay.ts` (UK 480, CA 320, EU 160; the US and Australia have none) is a per-quota-day
+ceiling: `planEbay` skips a region at its ceiling and its calls go to the next pairs in order (the US first), and
+`meta.ebay.qregions` counts each region's calls so a second run on the same quota day stays under it. The ceiling
+binds only while another region has a pair to search: calls no one else can use still go to the skipped pairs, so no
+call of the day is wasted. An EU search that found nothing also waits three times longer (`EBAY_EMPTY_RECHECK_SCALE`),
+so the EU's 160 go to products never searched there.
+
+Dry run on today's data: US 860 / AU 545 / UK 480 / CA 320 / EU 295. 860 and 545 are every US and Australian product
+the US$20 rule (`lib/featured.ts`) lets eBay search, so both are now searched every day; the EU gets the 135 calls
+nothing else can use. ScentCompare carries the same code with no ceilings (its EU is not over-served).

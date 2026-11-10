@@ -51,7 +51,7 @@ export interface Meta {
   /** Products the merge produced before the low-traction cull (lib/focus.ts); the import's half-size guard compares this. */
   merged?: number;
   stores: Record<string, StoreRun>;
-  ebay?: { at: string; day: string; calls: number; budget: number; listings: number; skipped?: string; /** eBay's (Pacific) quota day and the calls spent on it so far */ qday?: string; qcalls?: number };
+  ebay?: { at: string; day: string; calls: number; budget: number; listings: number; skipped?: string; /** eBay's (Pacific) quota day and the calls spent on it so far */ qday?: string; qcalls?: number; /** calls per region on that quota day */ qregions?: Partial<Record<RegionCode, number>> };
 }
 
 /** The importer's raw reading of one store listing (one variant). */
