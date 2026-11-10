@@ -15,6 +15,8 @@ import { PriceHistory } from "@/components/Sparkline";
 import { RegionTabs } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
 import { OutLink } from "@/components/OutLink";
+import { PaidAlt } from "@/components/PaidAlt";
+import { paidAlternativeFor } from "@/lib/paid-alternative";
 import { AddToBasket } from "@/components/Basket";
 import { ReportPrice } from "@/components/ReportForms";
 import type { Product } from "@/lib/types";
@@ -257,6 +259,22 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                             {link.to === "checkout" ? "Buy" : "Shop"} at {storeName(b.offer.s)} <span aria-hidden>→</span>
                           </OutLink>
                           {link.to === "checkout" && <p className="mt-1.5 text-xs text-soft">Straight to {storeName(b.offer.s)}&apos;s checkout with this item in the bag.</p>}
+                          {(() => {
+                            // The cheapest paid row within 20% when the cheapest store pays nothing (lib/paid-alternative.ts).
+                            const alt = paidAlternativeFor(f, r.code, ebay[r.code], "hero_alt");
+                            return alt ? (
+                              <PaidAlt
+                                className="mt-2"
+                                price={money(alt.c.p, r.code)}
+                                name={alt.c.name}
+                                note={alt.c.note}
+                                pctMore={alt.pctMore}
+                                href={alt.c.href}
+                                at={alt.c.at}
+                                event={{ source: alt.c.source, region: r.code, placement: "hero_alt", ean: f.ean }}
+                              />
+                            ) : null;
+                          })()}
                         </>
                       );
                     })()}
@@ -358,6 +376,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       {/* Phone buy bar: the region's cheapest orderable store, always in reach. */}
       {REGIONS.map((r) => {
         const low = lowestOrderable(f.offers[r.code]);
+        const alt = low ? paidAlternativeFor(f, r.code, ebay[r.code], "buybar_alt") : null;
         return (
           <div key={r.code} className={`rp rp-${r.code}`}>
             <div data-buybar className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-line bg-card/95 px-4 py-2.5 backdrop-blur md:hidden">
@@ -366,6 +385,17 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                   <>
                     <p className="truncate text-xs text-soft">Lowest {r.phrase}: {storeName(low.s)}</p>
                     <p className="text-xl font-semibold tabular-nums">{money(low.p, r.code)}</p>
+                    {alt && (
+                      <PaidAlt
+                        className="text-xs"
+                        price={money(alt.c.p, r.code)}
+                        name={alt.c.name}
+                        pctMore={alt.pctMore}
+                        href={alt.c.href}
+                        at={alt.c.at}
+                        event={{ source: alt.c.source, region: r.code, placement: "buybar_alt", ean: f.ean }}
+                      />
+                    )}
                   </>
                 ) : (
                   <p className="text-sm text-soft">No store {r.phrase} has it in stock</p>
