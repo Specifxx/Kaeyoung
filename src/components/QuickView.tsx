@@ -58,7 +58,14 @@ export function QuickView() {
       const a = (e.target as Element | null)?.closest?.("a[data-qv]") as HTMLAnchorElement | null;
       if (!a) return;
       e.preventDefault();
-      const h: Head = { slug: a.dataset.qv!, name: a.dataset.qvName || "", brand: a.dataset.qvBrand || "", img: a.dataset.qvImg || null };
+      // A tile (Tiles.tsx) carries an empty data-qv: the slug comes from its href, the photo, name and brand from the tile.
+      const pic = a.querySelector("img");
+      const h: Head = {
+        slug: qvSlug(a),
+        name: a.dataset.qvName || pic?.alt || a.querySelector("h3")?.textContent || "",
+        brand: a.dataset.qvBrand || a.querySelector(".eyebrow")?.textContent || "",
+        img: a.dataset.qvImg || pic?.getAttribute("src") || null,
+      };
       show(h);
       // The product's own link in the address bar while it is open (owner, 2026-11-03), so it can be copied, shared or bookmarked.
       openQuickViewUrl(`/product/${h.slug}`, h);
@@ -74,7 +81,7 @@ export function QuickView() {
     // Warm the file when a pointer rests on a tile, so most opens are instant.
     function onOver(e: PointerEvent) {
       const a = (e.target as Element | null)?.closest?.("a[data-qv]") as HTMLAnchorElement | null;
-      if (a && e.pointerType === "mouse") load(a.dataset.qv!);
+      if (a && e.pointerType === "mouse") load(qvSlug(a));
     }
     document.addEventListener("click", onClick, true);
     document.addEventListener("pointerover", onOver, { passive: true });
@@ -162,4 +169,9 @@ function Skeleton() {
       ))}
     </div>
   );
+}
+
+/** A tile's product slug: its data-qv, or (Tiles.tsx, which leaves data-qv empty) its /product/<slug> href. */
+function qvSlug(a: HTMLAnchorElement): string {
+  return a.dataset.qv || (a.getAttribute("href") ?? "").replace(/^\/product\//, "");
 }

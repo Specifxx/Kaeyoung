@@ -1171,3 +1171,25 @@ best price, and nothing is reordered; when the cheapest store already pays, noth
 24-hour licence in the browser too (`PaidAlt`), so `tests/amazon-api.test.ts` now lets `lib/paid-alternative.ts` read
 `amazon-live` beside the price table. Clicks are `buy_click` with placement `hero_alt` / `buybar_alt` (and the same in
 the sub id). On the day's data it shows on 1,610 of 20,924 product-region pairs (eBay 463, Stylevana 1,147). Every KaeYoung change also goes to ScentCompare: same files there.
+
+## 2026-11-10: Hub pages under 300 KB (zero-earnings diagnosis, fix 3)
+
+The skin-concern hubs were 0.96 to 1.52 MB of HTML each (dark-spots-dullness 1,481 KB), the heaviest pages we run,
+and the pages Google ranks on page two. Measured on a build: 223 product tiles, each drawn twice (once as HTML, once
+again as the RSC payload that hydrates the page), with all six regions' prices and "Save" chips in each, under long
+Tailwind class strings. About 2.9 KB of HTML plus 4 KB of payload per tile.
+
+- `TileGrid` (every product grid on the site) now hands the client component `Tiles` one compact row per product
+  (slug, name, brand, photo, rating, and per region [price, stores, save %], all computed on the server at build), so
+  the payload carries numbers, not a second copy of the markup. The HTML still holds every tile, name, price and link
+  (client components are server-rendered), with every region's price switched by `.rp-XX` as before.
+- The tile's markup uses short classes (`.pt-*` in `globals.css`, the same Tailwind values through `@apply`) and
+  single text nodes; the link carries an empty `data-qv` and the quick view reads the slug from its href and the
+  name, brand and photo from the tile. Same look (compared side by side, desktop and phone).
+- A hub shows the 12 most popular products per step instead of 24 ("Showing the 12 most popular of N. Search for
+  more", as before). Markup alone got the biggest hub to 408 KB; 223 tiles cannot fit 300 KB with six regions each.
+
+Result: skin-concern hubs 196 to 256 KB, ingredient hubs 88 to 238 KB. URLs, titles, descriptions, canonicals,
+robots, breadcrumbs JSON-LD, the h1 and h2 outline and the intro text are unchanged. Brand pages, the home page and
+the deals lists use the same grid and shrink too (TIRTIR 1,545 to 408 KB, home 708 to 356 KB) without losing a tile.
+ScentCompare got the same change.
