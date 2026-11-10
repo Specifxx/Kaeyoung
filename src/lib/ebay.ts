@@ -97,6 +97,17 @@ export const EBAY_REFRESH_DAYS = [1, 3, 7] as const;
  *  coverage, so every product has an eBay price where eBay sells it). */
 export const EBAY_EMPTY_RECHECK_DAYS = [2, 7, 21] as const;
 
+/**
+ * Most calls a region may take in one eBay quota day; a region not listed has no ceiling of its own (owner, 2026-11-10:
+ * calls follow visitors). Measured 8-10 Nov: EU took 642 of 2,500 calls for 92 listings and 17 visitors, so it is held
+ * to 160, UK and CA stay where they were, and the freed calls go to the US (first) and Australia: about US 900 / AU 650 /
+ * UK 478 / CA 312 / EU 160.
+ */
+export const EBAY_REGION_DAILY_CAP: Partial<Record<RegionCode, number>> = { UK: 480, CA: 320, EU: 160 };
+
+/** A region whose empty searches wait this many times longer (EU: few local sellers list Korean barcodes). */
+export const EBAY_EMPTY_RECHECK_SCALE: Partial<Record<RegionCode, number>> = { EU: 3 };
+
 /** The region searched first when everything else ties (owner, 2026-11-01: "prioritise the US"). */
 export const EBAY_FIRST_REGION: RegionCode = "US";
 
@@ -108,7 +119,7 @@ const dayDiff = (a: string, b: string) => Math.round((Date.parse(b) - Date.parse
  * EBAY_REFRESH_DAYS when the last search found a listing, EBAY_EMPTY_RECHECK_DAYS
  * when it found none), by tier, never-searched first (coverage), US before other
  * regions, then oldest check, then score; budget left over goes to pairs not yet due, oldest
- * first, so no call of the day is wasted. Without `prio` every pair is tier 2,
+ * first, so no call of the day is wasted. A region at its daily ceiling (regionLeft) is skipped. Without `prio` every pair is tier 2,
  * scored by its store count; without `hasRow` every pair counts as found.
  */
 export function planEbay(
@@ -121,6 +132,8 @@ export function planEbay(
   hasRow?: (ean: string, region: RegionCode) => boolean,
   /** Only these pairs are searched (owner, 2026-11-06: products of about US$20 or more, lib/featured.ts). */
   eligible?: (f: Product, region: RegionCode) => boolean,
+  /** Calls each region may still take today (EBAY_REGION_DAILY_CAP less what it spent); a region not listed has no limit. */
+  regionLeft?: Partial<Record<RegionCode, number>>,
 ): { f: Product; region: RegionCode }[] {
   const pairs: { f: Product; region: RegionCode; at: string; due: boolean; tier: number; score: number; first: number }[] = [];
   for (const f of products) {
@@ -130,13 +143,12 @@ export function planEbay(
       if (eligible && !eligible(f, region)) continue;
       const { tier, score } = prio ? prio(f, region) : { tier: 2 as const, score: offers.length };
       const at = checked[`${f.ean}:${region}`] ?? "";
-      const every = !hasRow || hasRow(f.ean, region) ? EBAY_REFRESH_DAYS[tier] : EBAY_EMPTY_RECHECK_DAYS[tier];
+      const every = !hasRow || hasRow(f.ean, region) ? EBAY_REFRESH_DAYS[tier] : EBAY_EMPTY_RECHECK_DAYS[tier] * (EBAY_EMPTY_RECHECK_SCALE[region] ?? 1);
       const due = !at || !today || dayDiff(at, today) >= every;
       pairs.push({ f, region, at, due, tier, score, first: region === EBAY_FIRST_REGION ? 0 : 1 });
     }
   }
-  return pairs
-    .sort(
+  const sorted = pairs.sort(
       (a, b) =>
         Number(b.due) - Number(a.due) ||
         (a.due ? a.tier - b.tier || Number(!!a.at) - Number(!!b.at) || a.first - b.first : 0) ||
@@ -146,9 +158,30 @@ export function planEbay(
         b.score - a.score ||
         a.f.ean.localeCompare(b.f.ean) ||
         a.region.localeCompare(b.region),
-    )
-    .slice(0, Math.max(0, budget))
-    .map(({ f, region }) => ({ f, region }));
+  );
+  // A region at its ceiling is skipped; its calls go to the next pairs in order (the US first). The ceiling binds only
+  // while another region has a pair to search: calls no other region can use still go to the skipped pairs, in order.
+  const out: { f: Product; region: RegionCode }[] = [];
+  const over: { f: Product; region: RegionCode }[] = [];
+  const used: Partial<Record<RegionCode, number>> = {};
+  for (const { f, region } of sorted) {
+    if (out.length >= budget) break;
+    const left = regionLeft?.[region];
+    if (left != null && (used[region] ?? 0) >= left) {
+      over.push({ f, region });
+      continue;
+    }
+    used[region] = (used[region] ?? 0) + 1;
+    out.push({ f, region });
+  }
+  return out.concat(over.slice(0, Math.max(0, budget - out.length)));
+}
+
+/** What each capped region may still spend today, given what it spent so far on this quota day. */
+export function regionAllowance(spent: Partial<Record<RegionCode, number>> = {}): Partial<Record<RegionCode, number>> {
+  const left: Partial<Record<RegionCode, number>> = {};
+  for (const [r, cap] of Object.entries(EBAY_REGION_DAILY_CAP) as [RegionCode, number][]) left[r] = Math.max(0, cap - (spent[r] ?? 0));
+  return left;
 }
 
 /** eBay's call quota resets at midnight Pacific time: the day calls count against. */
