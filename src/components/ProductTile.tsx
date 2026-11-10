@@ -29,6 +29,12 @@ export function tileRow(f: Product, codes: RegionCode[]): TileRow {
   ];
 }
 
+/** One tile on its own (a page that places a single product, e.g. a "smells like" page's original). */
+export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) {
+  const codes = region ? [region] : REGIONS.map((r) => r.code);
+  return <Tiles rows={[tileRow(f, codes)]} codes={codes} one={!!region} />;
+}
+
 export function TileGrid({ products, region }: { products: Product[]; region?: RegionCode }) {
   const codes = region ? [region] : REGIONS.map((r) => r.code);
   return (
