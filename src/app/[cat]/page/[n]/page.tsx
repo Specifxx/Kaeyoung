@@ -14,6 +14,9 @@ export function generateMetadata({ params }: { params: { cat: string; n: string 
   return {
     title: `${c.plural.replace(/^./, (x) => x.toUpperCase())} prices, page ${params.n}`,
     alternates: { canonical: `/${c.key}/page/${params.n}` },
+    // Page 2+ competes with its hub in Google (KaeYoung /serums/page/23: 806 impressions, 0 clicks;
+    // site review X4, 2026-11-10): noindex, but links stay followed so every product is still crawled.
+    robots: { index: false, follow: true },
   };
 }
 
