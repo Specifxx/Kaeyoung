@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CAT_BY_KEY, REGIONS, SITE, type CatKey } from "@/site";
-import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn } from "@/lib/data";
+import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn, productsOfCat } from "@/lib/data";
 import { popularNow } from "@/lib/ratings";
 import { featuredIn } from "@/lib/featured";
 import { ago } from "@/lib/format";
@@ -13,6 +13,9 @@ import { Section } from "@/components/Section";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { CAT_TINT, CatIcon } from "@/components/Art";
 import { HeroPicks } from "@/components/HeroPicks";
+import { CategoryGrid } from "@/components/explore/CategoryGrid";
+import { RecentlyViewed } from "@/components/explore/RecentlyViewed";
+import { topPhotos } from "@/lib/explore";
 import { POST_BY_SLUG } from "@/content/blog";
 import { GUIDES } from "@/lib/guides";
 import { JsonLd, faqLd, siteLd } from "@/lib/seo";
@@ -65,7 +68,7 @@ export default function Home() {
       <section className="ky-hero wash relative overflow-hidden border-b border-line">
         {/* The motion layer (owner, 2026-11-06): a slowly drifting wash. Decoration only; globals.css "motion" block. */}
         <span className="mo-bg mo-aurora" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-10 pt-10 md:grid-cols-[1.15fr_1fr] md:pb-12 md:pt-14">
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-8 pt-7 md:grid-cols-[1.15fr_1fr] md:pb-10 md:pt-10">
           <div className="min-w-0">
             {/* The creators hub, above the fold (owner, 2026-11-03): top-right corner of the hero from sm, a pill above the holiday line on a phone. */}
             <CreatorsCornerBadge />
@@ -102,22 +105,28 @@ export default function Home() {
       </section>
 
       <div className="mx-auto max-w-6xl px-4">
-        <section className="mt-10">
-          <h2 data-reveal className="h-display mb-4 text-2xl">Shop by step</h2>
-          <div data-reveal="stagger" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {HOME_STEPS.map((k) => CAT_BY_KEY[k]).filter((c) => counts[c.key] > 0).map((c) => (
-              <Link prefetch={false} key={c.key} href={`/${c.key}`} className={`tile-hover flex items-center gap-3 rounded-2xl px-3.5 py-3.5 ${CAT_TINT[c.key]}`}>
-                <span className="mo-wiggle grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-card/80">
-                  <CatIcon cat={c.key} size={36} />
-                </span>
-                <span className="min-w-0">
-                  <span className="block font-display text-[15.5px] font-medium sm:text-[17px] leading-tight">{c.name}</span>
-                  <span className="mt-0.5 block text-xs tabular-nums text-soft">{counts[c.key].toLocaleString("en-US")} compared</span>
-                </span>
-              </Link>
-            ))}
+        {/* Category first (2026-11-10, PriceRunner-style): every step as a photo tile of its own most popular products. */}
+        <section className="mt-8">
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
+            <h2 data-reveal className="h-display text-2xl">Shop by step</h2>
+            <Link prefetch={false} href="/skin-concerns" className="text-sm font-semibold text-accent-deep underline-offset-4 hover:underline">Shop by skin concern →</Link>
           </div>
+          <CategoryGrid
+            cards={HOME_STEPS.map((k) => CAT_BY_KEY[k])
+              .filter((c) => counts[c.key] > 0)
+              .map((c) => ({
+                href: `/${c.key}`,
+                name: c.name,
+                count: counts[c.key],
+                imgs: topPhotos(productsOfCat(c.key)),
+                icon: <CatIcon cat={c.key} size={56} />,
+                tint: CAT_TINT[c.key],
+              }))}
+          />
         </section>
+
+        {/* The visitor's own last product pages (their browser only): a return visit starts where the last one ended. */}
+        <RecentlyViewed prefix="ky" />
 
         {REGIONS.map((r) => {
           // Only products of about US$20 or more are featured here (owner, 2026-11-06, lib/featured.ts).

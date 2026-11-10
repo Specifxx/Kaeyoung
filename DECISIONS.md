@@ -1120,3 +1120,20 @@ Bill: navigation is very important, prefers dropdown menus, wants the best moder
 - **Side panel removed** (it replaced the 2026-10-30 owner choice, at Bill's 2026-11-09 direction): the menus carry every destination it
   had; the page is flush. Below lg the quick row and the phone menu are unchanged.
 - Unchanged: every URL, title, canonical, h1, JSON-LD. No new fetch, no revalidate change.
+
+## 2026-11-10: Explore layer, PriceRunner-style (owner: "same treatment as Compare Empire", lower bounce, return visits)
+
+Diagnosis from the 9 Nov weekly report and the 8 Nov traffic check: KaeYoung 237 visitors a week with a 70% bounce
+(the family's main sites sit at 50-57%), 70 Google clicks, A$1.47 earned in four weeks against A$5.25 of Vercel. The
+money gap is structural, not the design: almost every click goes to a store row that pays nothing (no store carries a
+programme; the only paid rows are eBay, Amazon and Stylevana). The design gap was that a visitor landing from Google on
+a product page had nowhere obvious to go next but the bottom of the page. So, without touching a URL, title, meta
+description or price order (`components/explore/`, identical in ScentCompare):
+- The home page's steps are photo tiles of each step's own most popular products (`CategoryGrid`, `lib/explore.ts`),
+  under a shorter hero, so the first screen shows what is behind each door.
+- "Recently viewed": the visitor's own last product pages, kept in THEIR browser only (localStorage `ky-recent`),
+  shown on the home page and under a product's prices with the lowest price they saw. Nothing is sent anywhere.
+- "Similar <step>" beside the price table: five products of the same step from other families, sharing a skin need
+  when the name says one, other brands first, each with its lowest store price and store count.
+Price-drop email alerts (RiftCompare's shared service) would be the strongest return-visit tool, but KaeYoung was left
+out of that service by the owner on 2026-11-02: asked again, not done.
