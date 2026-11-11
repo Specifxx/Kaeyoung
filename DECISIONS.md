@@ -1227,3 +1227,16 @@ Same look, compared side by side on desktop and phone, including a pressed thumb
 links, titles, meta and JSON-LD. Result: ScentCompare product pages 556 to 372 KB at most, KaeYoung 816 to 481 KB.
 Brand pages were left: they list every product of the house (Lattafa 345 tiles, 552 KB; TIRTIR 408 KB), already a
 quarter of what they were this morning, and going lower would mean listing fewer products, which is a content change.
+
+## 2026-11-12: Paid rows easier to see, hubs and brands submitted to Bing (owner approved the site verdicts)
+
+The 11-11 verdicts (KaeYoung RETHINK, ScentCompare pause) asked for slimmer hubs, a Bing submission and more visible
+partner rows. Hubs were already cut on 2026-11-10 (196 to 256 KB skin-concern hubs, 88 to 238 KB ingredient hubs), so
+that part stands; brand pages with 300+ tiles stay as they are (listing fewer would be a content change).
+
+- Pinned eBay and Amazon rows with a price get a faint green or amber wash behind their existing outline and an
+  "Ad · Paid link" chip; the partner buttons under "Big retailers that deliver" are filled (`btn-buy`) when paid.
+  The "or A$X on eBay" line is a bordered pill, not a bare link. Same labels, same order, never counted as a store,
+  the cheapest or a deal; commission still never sets the order. No pop-ups, no floating rails.
+- The daily IndexNow ping now also sends the ingredient and skin-concern hubs, the guides, /popular and the 100 largest
+  brand pages (it sent only categories, posts and new products), still at most 1,000 URLs.

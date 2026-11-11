@@ -86,9 +86,9 @@ export function PriceRows({ pinned, overseas = [], overseasTo, stores }: RowsDat
           </p>
           <div className="mt-2.5 flex flex-wrap gap-2">
             {overseas.map((r) => (
-              <OutLink key={r.name} href={r.href} paid={r.paid} event={r.event} className="btn-pop border border-line bg-card px-3.5 py-1.5 text-sm text-ink hover:border-soft">
-                {r.name} <span className="text-xs font-normal text-soft">· {r.sub}{r.paid ? " · Paid link" : ""}</span>
-                {r.offer && <span className="text-xs font-medium text-accent-deep">· {r.offer}</span>} <span aria-hidden>→</span>
+              <OutLink key={r.name} href={r.href} paid={r.paid} event={r.event} className={`btn-pop px-3.5 py-1.5 text-sm ${r.paid ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"}`}>
+                {r.name} <span className={`text-xs font-normal ${r.paid ? "opacity-90" : "text-soft"}`}>· {r.sub}{r.paid ? " · Paid link" : ""}</span>
+                {r.offer && <span className={`text-xs font-medium ${r.paid ? "" : "text-accent-deep"}`}>· {r.offer}</span>} <span aria-hidden>→</span>
               </OutLink>
             ))}
           </div>
@@ -126,7 +126,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
   const s = status ? STOCK[status] : null;
   return (
     <div
-      className={`mo-row pr ${check ? "border-accent/50 bg-accent/5" : "bg-card"} ${
+      className={`mo-row pr ${check ? "border-accent/50 bg-accent/5" : brand === "ebay" && price ? "bg-save/5" : brand === "amazon" && price ? "bg-[#f59e0b]/5" : "bg-card"} ${
         // eBay with a price: a green outline (owner, 2026-11-06); the cheapest store a sky-blue one, so it never reads as eBay's
         // green or Amazon's amber (owner, 2026-11-07: "the cheapest listing should also have an outline too").
         check ? "" : brand === "ebay" && price ? "border-save" : brand === "amazon" && price ? "border-[#f59e0b]" : highlight ? "border-[#0ea5e9]" : "border-line"
@@ -141,7 +141,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
           {ship && <span>{ship}</span>}
-          {paid && <span>Paid link</span>}
+          {paid && (brand ? <span className="chip bg-subtle text-soft">Ad · Paid link</span> : <span>Paid link</span>)}
           {/* Phones: the cart list's add button as a word on this line, where the row has no width to spare. */}
           {cart && vote && (
             <CartAddButton inline href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="text-xs sm:hidden" />
