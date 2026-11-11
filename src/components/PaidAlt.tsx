@@ -30,9 +30,9 @@ export function PaidAlt({
   useEffect(() => setFresh(!at || Date.now() - Date.parse(at) < MAX_AGE_MS), [at]);
   if (!fresh) return null;
   return (
-    <p className={`flex items-baseline gap-2 text-sm ${className}`}>
+    <p className={`flex items-center gap-2 text-sm ${className}`}>
       {/* One line in the phone buy bar (no note there); the hero's line may wrap. */}
-      <OutLink href={href} paid event={event} className={`min-w-0 font-medium text-accent-deep hover:underline ${note ? "" : "truncate"}`}>
+      <OutLink href={href} paid event={event} className={`min-w-0 rounded-lg border border-accent/40 bg-accent/10 px-2.5 py-1 font-semibold text-accent-deep hover:bg-accent/15 ${note ? "" : "truncate"}`}>
         or <span className="tabular-nums">{price}</span> on {name}
         {pctMore > 0 ? <span className="font-normal text-soft"> +{pctMore}%</span> : null}
         {note ? <span className="font-normal text-soft"> ({note})</span> : null} <span aria-hidden>→</span>
