@@ -5,6 +5,7 @@ import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newe
 import { popularNow } from "@/lib/ratings";
 import { homeFeaturedIn } from "@/lib/featured";
 import { ago } from "@/lib/format";
+import { CHRISTMAS_FESTIVE_LAYER } from "@/lib/season";
 import { SearchBox } from "@/components/SearchBox";
 import { CreatorsCornerBadge } from "@/components/creators/CreatorsCornerBadge";
 import { RegionChips } from "@/components/RegionPicker";
@@ -73,10 +74,18 @@ export default function Home() {
             {/* The creators hub, above the fold (owner, 2026-11-03): top-right corner of the hero from sm, a pill above the holiday line on a phone. */}
             <CreatorsCornerBadge />
             <p className="ky-holiday mb-4">
-              <Link prefetch={false} href={giftHref} className="ky-holiday-pill">
-                <b>The Holiday Edit</b>
-                <span className="hidden sm:inline">· K-beauty gift sets, cheapest store first →</span>
-              </Link>
+              {CHRISTMAS_FESTIVE_LAYER ? (
+                <Link prefetch={false} href={giftHref} className="ky-holiday-pill ky-gift-banner">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M5 12v8h14v-8M12 8v12M12 8c-2.5 0-4-1-4-2.5S9 3 10.5 4 12 8 12 8zm0 0c2.5 0 4-1 4-2.5S15 3 13.5 4 12 8 12 8z" /></svg>
+                  <span className="ky-gb-text"><b>Christmas gift guide</b><span className="hidden sm:inline"> · K-beauty gift sets, cheapest store first</span></span>
+                  <span className="ky-gb-go" aria-hidden="true">→</span>
+                </Link>
+              ) : (
+                <Link prefetch={false} href={giftHref} className="ky-holiday-pill">
+                  <b>The Holiday Edit</b>
+                  <span className="hidden sm:inline">· K-beauty gift sets, cheapest store first →</span>
+                </Link>
+              )}
             </p>
             <p className="mo-enter eyebrow mb-4 text-accent-deep" style={{ ["--mo-d" as string]: 0 }}>Korean skincare price comparison</p>
             <h1 className="mo-enter h-display max-w-3xl [--mo-d:1] text-[2.4rem] leading-[1.05] sm:text-6xl">

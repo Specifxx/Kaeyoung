@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import vm from "node:vm";
 import { existsSync, readFileSync } from "node:fs";
-import { CHRISTMAS_FROM, CHRISTMAS_TO, isChristmas, SEASON_BOOT_SCRIPT } from "../src/lib/season";
+import { CHRISTMAS_FESTIVE_LAYER, CHRISTMAS_FROM, CHRISTMAS_TO, isChristmas, SEASON_BOOT_SCRIPT } from "../src/lib/season";
 
 // The holiday look (owner, 2026-11-01): 1 November to Boxing Day by the visitor's own date, quiet and professional.
 
@@ -46,4 +46,32 @@ test("the layout stamps the season before paint, and the holiday is one quiet li
   // "The theme must match the domain": no snow, glints, snowflakes, tree, cane, stockings or hats, in CSS or markup.
   assert.doesNotMatch(css + home, /ky-snow|ky-flake|ky-deco|ky-tree|ky-stocking|HeroSnow|mo-snow|\/xmas\/|santa-hat|xmas-lights/);
   assert.ok(!existsSync("src/components/HeroSnow.tsx"));
+});
+
+test("the festive layer (owner, 2026-11-12): tasteful accents behind one switch, still no snow, stripes or motion", () => {
+  assert.equal(CHRISTMAS_FESTIVE_LAYER, true);
+  // One switch gates the banner markup and the data attribute the CSS keys on.
+  const festive = (d: Date) => {
+    const attrs: Record<string, string> = {};
+    vm.runInNewContext(SEASON_BOOT_SCRIPT, { Date, location: { search: "?season=christmas" }, document: { documentElement: { setAttribute: (k: string, v: string) => (attrs[k] = v) } } });
+    return attrs["data-festive"] ?? null;
+  };
+  assert.equal(festive(new Date()), "1");
+  assert.equal(run(new Date(2026, 10, 20), "?season=off"), null);
+  const home = readFileSync("src/app/page.tsx", "utf8");
+  assert.match(home, /CHRISTMAS_FESTIVE_LAYER \? \(/);
+  assert.match(home, /className="ky-holiday-pill ky-gift-banner"/);
+  assert.match(home, /<b>Christmas gift guide<\/b>/);
+  assert.doesNotMatch(home, /<h[1-6][^>]*>\s*Christmas gift guide/);
+  const css = readFileSync("src/app/globals.css", "utf8");
+  const layer = css.slice(css.indexOf("/* The festive layer (owner, 2026-11-12"), css.indexOf("The beta forum")).replace(/\/\*[\s\S]*?\*\//g, "");
+  assert.ok(layer.length > 200 && layer.startsWith("\n:root"));
+  // A 3px two-tone hairline, from the attribute alone, and the two colours as tokens on the pill, banner and strip.
+  assert.match(layer, /html\[data-festive\] body::before \{[^}]*height: 3px;[^}]*linear-gradient\(90deg, rgb\(var\(--xmas-red\)\) 0 50%, rgb\(var\(--xmas-green\)\) 50% 100%\)/);
+  assert.match(layer, /html\[data-festive\] \.ky-holiday-pill \{/);
+  assert.match(layer, /html\[data-festive\] \[data-holiday-strip\] \{/);
+  assert.match(layer, /\[data-theme="night"\] \{\s*--xmas-red/);
+  // Still gone: motion, flakes, canvas, candy stripes, palette swaps.
+  assert.doesNotMatch(layer, /@keyframes|animation|transition|snow|flake|canvas|candy|repeating-|url\(|--accent:|--bg:|--card:/i);
+  assert.doesNotMatch(home, /canvas|snow|flake|candy/i);
 });

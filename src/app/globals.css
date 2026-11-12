@@ -270,6 +270,63 @@ html[data-season="christmas"] .ky-holiday {
   color: rgb(var(--ink));
 }
 
+/* The festive layer (owner, 2026-11-12; lib/season.ts CHRISTMAS_FESTIVE_LAYER is its one off switch). Tasteful accents
+   only, in colour tokens: a cranberry and a pine, never a palette swap. A 3px two-tone hairline at the top of the page,
+   the home page's gift-guide banner (a left border and a gift icon) and the same two colours on the Black Friday strip.
+   Nothing moves; no stripes, snow, lights or images. Contrast: the text tokens are 4.5:1 or better on the card. */
+:root {
+  --xmas-red: 158 34 56; /* cranberry */
+  --xmas-green: 38 92 66; /* pine */
+}
+[data-theme="night"] {
+  --xmas-red: 226 100 124;
+  --xmas-green: 96 176 138;
+}
+html[data-festive] body::before {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, rgb(var(--xmas-red)) 0 50%, rgb(var(--xmas-green)) 50% 100%);
+}
+html[data-festive] .ky-holiday-pill {
+  border-left: 3px solid rgb(var(--xmas-red));
+}
+html[data-festive] .ky-holiday-pill b {
+  color: rgb(var(--xmas-red));
+}
+html[data-festive] .ky-gift-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 34rem;
+  border-radius: 0.75rem;
+  background: rgb(var(--card));
+  padding: 0.6rem 0.9rem;
+}
+.ky-gift-banner svg {
+  flex: none;
+  color: rgb(var(--xmas-green));
+}
+.ky-gift-banner .ky-gb-text {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ky-gift-banner .ky-gb-go {
+  flex: none;
+  font-weight: 600;
+  color: rgb(var(--xmas-green));
+}
+html[data-festive] [data-holiday-strip] {
+  border-bottom-color: rgb(var(--xmas-green) / 0.45);
+}
+html[data-festive] [data-holiday-strip] b {
+  color: rgb(var(--xmas-red));
+}
+
 /* The beta forum (src/components/forum/forum.css) in this site's colours. */
 .fm {
   --fm-card: rgb(var(--card));

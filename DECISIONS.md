@@ -1251,3 +1251,21 @@ price in the region, per currency, about US$30 (fixed minor-unit table, never co
 eBay pass's own US$20 floor (`isFeatured`) is unchanged. `/deals`, `/popular`, `/new`, sections, brands, search, blog
 blocks and every product page still list everything. Store rows stay in price order, commission never ranks; URLs,
 titles, meta and JSON-LD are unchanged.
+
+## 2026-11-12: A tasteful festive layer on the holiday window (owner: "more festive again")
+
+On 2026-11-08 the owner had the snow, glints, tree, candy cane, stockings and warm wash stripped ("the theme must match
+the domain"); on 2026-11-12 he asked for it to be more festive again. Decision: accents only, inside the same window
+(`lib/season.ts`, 1 November to 26 December by the visitor's date, `data-season="christmas"`), nothing from the list that
+was removed.
+
+- The home page's "The Holiday Edit" pill becomes a one-line gift-guide banner: a gift icon in `currentColor`, "Christmas
+  gift guide" (a `<b>`, not a heading, so the h1/h2 outline is unchanged), a short subline from `sm` up, a 3px cranberry
+  left border. Same link as before (the gift-sets post, else `/deals`); no URL, title or meta changed.
+- A 3px two-tone hairline (cranberry then pine, a hard stop, no stripes) at the top of every page, from
+  `html[data-festive] body::before`; the Black Friday strip and the pill take the same two colours through the
+  `--xmas-red` / `--xmas-green` tokens (lighter pair under `data-theme="night"`). The site's own palette is untouched.
+- ONE off switch: `CHRISTMAS_FESTIVE_LAYER` in `lib/season.ts` gates the banner markup and the `data-festive` attribute the
+  CSS keys on. False, or 27 December, removes it all. `data-festive` is set by the existing boot script before first paint,
+  so no layout shift. CSS only: no animation, image, font, request or client script beyond a few characters.
+- `tests/season.test.ts` pins the layer and that motion, flakes, canvas, candy stripes, `url()` and palette overrides stay out.
