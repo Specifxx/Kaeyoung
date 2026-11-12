@@ -1274,3 +1274,15 @@ was removed.
 ## 2026-11-12: the festive layer is released urgently (owner)
 
 The owner said to deploy the festive layer urgently once every site had it, so this merge carries `[deploy] [urgent]` in its subject: one production build now, instead of waiting for the next release. No other change.
+
+
+## 2026-11-12: a calmer price table (owner)
+
+The owner opened DexCompare and its quick view and said there was too much going on: too many colours, a colour per row. DexCompare's
+rule now applies here too: the accent is for the one thing to press, green is for money (the best price), everything else is neutral.
+
+`PriceRows.tsx`: the eBay, Amazon and "check" rows lose their tinted backgrounds and coloured borders; only the best in-stock store row is tinted (the savings green). The pinned marketplace rows keep their place above the stores, their "Ad" / "Paid link" label and a filled button; the best store row keeps its filled button; every other store button is a neutral outline.
+
+Order, labels, links, tags, URLs, titles, metadata and headings are unchanged; commission still never decides order. Measure outbound
+clicks per placement on 19 November against the week before: if the pinned eBay row's clicks fall, strengthen its button before
+bringing any outline back.
