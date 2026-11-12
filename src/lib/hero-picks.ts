@@ -5,7 +5,7 @@
 import type { RegionCode } from "@/site";
 import { getProducts, orderableIn } from "./data";
 import { popularity } from "./ratings";
-import { isFeatured } from "./featured";
+import { isHomeFeatured } from "./featured";
 import type { Product } from "./types";
 
 /** A hero product needs a photo and a real comparison: at least this many stores with it in stock. */
@@ -30,8 +30,8 @@ export interface HeroPick {
  */
 export function heroPicks(region: RegionCode, list: Product[] = getProducts(), n = 2, minStores = HERO_MIN_STORES): HeroPick[] {
   const ranked = orderableIn(region, list)
-    // Featured only at about US$20 or more (owner, 2026-11-06, lib/featured.ts).
-    .filter((f) => f.img && isFeatured(f, region))
+    // Featured only at the higher homepage floor (owner, 2026-11-12, lib/featured.ts).
+    .filter((f) => f.img && isHomeFeatured(f, region))
     .map((f) => ({ f, p: popularity(f, region) }))
     .sort((a, b) => b.p - a.p || a.f.name.localeCompare(b.f.name));
   const brands = new Set<string>();

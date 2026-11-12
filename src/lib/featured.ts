@@ -19,3 +19,22 @@ export function isFeatured(f: Product, region: RegionCode): boolean {
 }
 
 export const featuredIn = (region: RegionCode, list: Product[]): Product[] => list.filter((f) => isFeatured(f, region));
+
+/**
+ * The homepage and hero feature higher-ticket products (owner, 2026-11-12: "promote the more expensive items" so a
+ * buyer's click earns more commission). Floors are about US$30, in each currency's minor units (rounded up), taken from the
+ * real price spread (see DECISIONS.md, 2026-11-12). The eBay pass keeps the lower US$20 floor above. Cheaper products
+ * stay in sections, brands, search, /deals, /popular, /new and their own pages. Never used to order prices.
+ */
+export const HOME_MIN_MINOR: Record<string, number> = { USD: 3000, CAD: 4200, AUD: 4600, NZD: 5000, GBP: 2300, EUR: 2800 };
+
+export const homeMin = (region: RegionCode): number => HOME_MIN_MINOR[REGION_BY_CODE[region].currency] ?? 2000;
+
+/** The cheapest in-stock price in the region clears the homepage floor. */
+export function isHomeFeatured(f: Product, region: RegionCode): boolean {
+  const open = (f.offers[region] ?? []).filter((o) => o.st !== "out");
+  if (!open.length) return false;
+  return Math.min(...open.map((o) => o.p)) >= homeMin(region);
+}
+
+export const homeFeaturedIn = (region: RegionCode, list: Product[]): Product[] => list.filter((f) => isHomeFeatured(f, region));

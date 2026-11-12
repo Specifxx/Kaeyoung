@@ -1240,3 +1240,14 @@ that part stands; brand pages with 300+ tiles stay as they are (listing fewer wo
   the cheapest or a deal; commission still never sets the order. No pop-ups, no floating rails.
 - The daily IndexNow ping now also sends the ingredient and skin-concern hubs, the guides, /popular and the 100 largest
   brand pages (it sent only categories, posts and new products), still at most 1,000 URLs.
+
+## 2026-11-12: The homepage and hero feature higher-priced products
+
+Owner: promote the pricier items so a click earns more commission; cheap ones stay findable but are not featured.
+The 2026-11-06 US$20 floor already kept the cheapest items off the front page, but on the real data it was too low: US 850 of 3,482 products clear US$20 but only 121 clear US$30 (UK 59, EU 59, CA 342, AU 609, NZ 890 at the local equivalents), and the median is US$16.
+`HOME_MIN_MINOR` / `isHomeFeatured` / `homeFeaturedIn` (`lib/featured.ts`) set a higher floor on the cheapest in-stock
+price in the region, per currency, about US$30 (fixed minor-unit table, never converted at runtime): the homepage rows
+(Popular, Biggest savings, New arrivals), the hero pair, the share card and the eBay pass's homepage set read it. The
+eBay pass's own US$20 floor (`isFeatured`) is unchanged. `/deals`, `/popular`, `/new`, sections, brands, search, blog
+blocks and every product page still list everything. Store rows stay in price order, commission never ranks; URLs,
+titles, meta and JSON-LD are unchanged.

@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { featureMin, featuredIn, isFeatured } from "../src/lib/featured";
+import { featureMin, featuredIn, isFeatured, isHomeFeatured, homeMin } from "../src/lib/featured";
 import { planEbay } from "../src/lib/ebay";
 import type { Product } from "../src/lib/types";
 
@@ -32,6 +32,12 @@ test("eBay calls go only to featured products", () => {
 
 test("the homepage rows read the featured list", () => {
   const src = fs.readFileSync("src/app/page.tsx", "utf8");
-  assert.match(src, /featuredIn\(r\.code/);
+  assert.match(src, /homeFeaturedIn\(r\.code/);
   assert.match(src, /popularNow\(r\.code, 8, feat\)/);
+});
+
+test("the homepage floor is higher than the featured floor in every region", () => {
+  for (const r of ["US", "UK", "CA", "AU", "NZ", "EU"] as const) if (homeMin(r) > 0) assert.ok(homeMin(r) >= featureMin(r), r);
+  assert.ok(isHomeFeatured(prod("h", "US", [3000, 3500]), "US"));
+  assert.ok(!isHomeFeatured(prod("l", "US", [2999, 3500]), "US"));
 });
