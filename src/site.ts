@@ -9,7 +9,7 @@ export const SITE = {
   slogan: "Stay young.",
   tagline: "Compare Korean skincare prices across real K-beauty stores",
   description:
-    "Compare Korean skincare and K-beauty prices across real K-beauty stores in the US, UK, Canada, Australia, New Zealand and Europe. Matched by the barcode on the box, updated daily.",
+    "Compare Korean skincare prices at real K-beauty stores in the US, UK, Canada, Australia, NZ and Europe, matched by the barcode on the box, updated daily.",
   /** Every contact address on the site (owner, 2026-10-30: the family inbox). */
   email: "compareempire@gmail.com",
   /** A product gets a page only when this many stores in one region sell it
