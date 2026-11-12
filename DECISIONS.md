@@ -1269,3 +1269,8 @@ was removed.
   CSS keys on. False, or 27 December, removes it all. `data-festive` is set by the existing boot script before first paint,
   so no layout shift. CSS only: no animation, image, font, request or client script beyond a few characters.
 - `tests/season.test.ts` pins the layer and that motion, flakes, canvas, candy stripes, `url()` and palette overrides stay out.
+
+
+## 2026-11-12: the festive layer is released urgently (owner)
+
+The owner said to deploy the festive layer urgently once every site had it, so this merge carries `[deploy] [urgent]` in its subject: one production build now, instead of waiting for the next release. No other change.
