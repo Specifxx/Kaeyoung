@@ -1286,3 +1286,9 @@ rule now applies here too: the accent is for the one thing to press, green is fo
 Order, labels, links, tags, URLs, titles, metadata and headings are unchanged; commission still never decides order. Measure outbound
 clicks per placement on 19 November against the week before: if the pinned eBay row's clicks fall, strengthen its button before
 bringing any outline back.
+
+## 2026-11-12: Amazon's row only with a real price
+
+Owner: "we just want eBay and TCGplayer as the paid links at the top. That is why our revenue is declining." The pinned Amazon row is
+drawn only when this build's Creators API lookup found the product's price (never the "Also check on Amazon" search row, never in
+the quick view). `tests/paid-rows.test.ts` pins it.

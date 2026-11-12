@@ -69,9 +69,10 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       paid: true,
       event: { source: "ebay", region, placement: `${placement}_pinned`, ean: f.ean },
     });
-  if (amazonUrl)
+  // Amazon only with a real price (owner, 2026-11-12): no price, no row, and never in the quick view.
+  if (amazonUrl && live)
     pinned.push({
-      name: live ? "Amazon" : "Also check on Amazon",
+      name: "Amazon",
       sub: liveUrl ? `${r.amazonHost?.replace("www.", "")} · new, this exact barcode` : `${r.amazonHost?.replace("www.", "")} · check the seller`,
       check: !live,
       brand: "amazon",
