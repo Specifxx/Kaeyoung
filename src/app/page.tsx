@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CAT_BY_KEY, REGIONS, SITE, type CatKey } from "@/site";
 import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn, productsOfCat } from "@/lib/data";
 import { popularNow } from "@/lib/ratings";
-import { featuredIn } from "@/lib/featured";
+import { homeFeaturedIn } from "@/lib/featured";
 import { ago } from "@/lib/format";
 import { SearchBox } from "@/components/SearchBox";
 import { CreatorsCornerBadge } from "@/components/creators/CreatorsCornerBadge";
@@ -130,7 +130,7 @@ export default function Home() {
 
         {REGIONS.map((r) => {
           // Only products of about US$20 or more are featured here (owner, 2026-11-06, lib/featured.ts).
-          const feat = featuredIn(r.code, all);
+          const feat = homeFeaturedIn(r.code, all);
           const deals = dealsIn(r.code, 8, feat).map((d) => d.f);
           const pop = popularNow(r.code, 8, feat);
           const fresh = newestIn(r.code, 8, feat);
