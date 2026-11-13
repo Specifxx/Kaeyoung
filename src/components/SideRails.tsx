@@ -54,7 +54,7 @@ function useWide(): boolean {
   const [wide, setWide] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia(`(min-width: ${MIN_WIDTH}px)`);
-    const update = () => setWide(mq.matches && window.innerHeight >= MIN_HEIGHT);
+    const update = () => setWide(SIDE_RAILS && mq.matches && window.innerHeight >= MIN_HEIGHT);
     update();
     mq.addEventListener("change", update);
     window.addEventListener("resize", update, { passive: true });
@@ -67,9 +67,13 @@ function useWide(): boolean {
 }
 
 /** One rail's column: always in the server HTML as an empty <aside> (CSS gives it its width from MIN_WIDTH), filled in the browser. */
+/** The side rails are OFF (owner, 2026-11-13: "banner ads on the side … doesn't look as good … fill in that space on the side again"): the ads are the strips inside the page and the phone dock. The rail code stays; nothing renders or fetches it while this is false. */
+export const SIDE_RAILS = false;
+
 export function RailSlot({ side }: { side: "left" | "right" }) {
   const wide = useWide();
   const rails = useRails(wide);
+  if (!SIDE_RAILS) return null;
   const rail = rails && (side === "left" ? ebayRail(rails) : amazonRail(rails));
   return (
     <aside className="side-rail-slot shrink-0" data-rail={side}>
