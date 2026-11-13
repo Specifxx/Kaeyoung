@@ -6,6 +6,7 @@ import { TileGrid } from "./ProductTile";
 import { PageHead, Pager } from "./Section";
 import { CatIcon } from "./Art";
 import { Browse } from "./Browse";
+import { InlineAds } from "./InlineAds";
 import { Crumbs } from "@/lib/seo";
 import { HUB_PER_PAGE } from "@/lib/sitemap";
 
@@ -78,6 +79,7 @@ export function CatHub({ cat, page }: { cat: CatKey; page: number }) {
         {list.length ? <TileGrid products={list} /> : <p className="card p-6 text-center text-soft">Nothing in stock anywhere yet.</p>}
         <Pager pages={pages} page={page} href={href} />
       </Browse>
+      <InlineAds page="list" />
     </div>
   );
 }

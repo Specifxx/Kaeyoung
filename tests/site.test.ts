@@ -96,7 +96,7 @@ test("one contact address everywhere", () => {
   }
 });
 
-test("no banner ads (owner, 2026-10-30): paid links live in the price table only", () => {
+test("no banner ads (owner, 2026-10-30): paid links live in the price table and the one in-content block (2026-11-13)", () => {
   assert.ok(!fs.existsSync("src/components/EbayStrip.tsx"));
   for (const f of walk("src").filter((f) => f.endsWith(".tsx"))) assert.doesNotMatch(fs.readFileSync(f, "utf8"), /EbayStrip|EbayNavBox|AdSlot|adsbygoogle/, f);
   const table = fs.readFileSync("src/components/PriceTable.tsx", "utf8");

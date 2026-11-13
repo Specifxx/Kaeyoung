@@ -1,3 +1,4 @@
+import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import { REGIONS } from "@/site";
 import { dealsIn } from "@/lib/data";
@@ -26,6 +27,7 @@ export default function Deals() {
           </div>
         );
       })}
+      <InlineAds page="deals" />
     </div>
   );
 }

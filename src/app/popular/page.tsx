@@ -1,3 +1,4 @@
+import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES, REGIONS } from "@/site";
@@ -52,6 +53,7 @@ export default function Popular() {
           ))}
         </ul>
       </Section>
+      <InlineAds page="popular" />
     </div>
   );
 }

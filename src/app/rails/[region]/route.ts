@@ -1,5 +1,5 @@
-// The side rails' tiles for one region (lib/side-rails.ts): one static JSON per region and release (force-static, every region
-// prerendered), fetched by components/SideRails.tsx only on a screen wide enough for the rails or once the phone dock may show.
+// The ad block's tiles for one region (lib/side-rails.ts): one static JSON per region and release (force-static, every region
+// prerendered), fetched by components/InlineAds.tsx, after hydration.
 import { REGIONS } from "@/site";
 import { railsFor } from "@/lib/side-rails";
 

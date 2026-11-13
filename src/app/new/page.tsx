@@ -1,3 +1,4 @@
+import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import { REGIONS } from "@/site";
 import { newestIn } from "@/lib/data";
@@ -22,6 +23,7 @@ export default function NewProducts() {
           </div>
         );
       })}
+      <InlineAds page="new" />
     </div>
   );
 }

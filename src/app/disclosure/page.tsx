@@ -17,7 +17,7 @@ export default function Disclosure() {
     <div className="mx-auto max-w-3xl px-4">
       <PageHead title="How we make money" sub="The short version: some links can earn us a commission. They are labelled, and they never change which store is shown as cheapest." />
       <Prose>
-        <p>KaeYoung is free to use, with no sign-up and no banner ads. It is paid for by affiliate links: if you buy after following one, the retailer may pay us a commission. You pay the same price.</p>
+        <p>KaeYoung is free to use, with no sign-up, no pop-ups and no floating ads. Below the page&apos;s content a small block labelled &ldquo;Ad&rdquo; shows eBay and Amazon listings. It is paid for by affiliate links: if you buy after following one, the retailer may pay us a commission. You pay the same price.</p>
         <h2>Which links can earn us money</h2>
         <ul>
           <li><strong>eBay</strong> (eBay Partner Network): the eBay row above the stores on a product page.</li>

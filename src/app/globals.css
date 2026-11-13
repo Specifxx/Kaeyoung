@@ -518,36 +518,17 @@ html[data-scrolled] header.sticky {
 }
 /* motion:end */
 
-/* The side rails (components/SideRails.tsx; owner, 2026-11-06): eBay left of the page, Amazon right, from 1440px (the side panel
-   already takes 256px). Each column is reserved here, in the server HTML, so nothing moves when the tiles arrive; the rail is
-   sticky under the header, inside the page's row, so it stops above the footer and never covers content. */
-.side-rail-slot {
-  display: none;
+/* The in-content ad block (components/InlineAds.tsx; owner, 2026-11-13, in place of the side rails): its height is reserved here, in
+   the server HTML, so nothing moves when the tiles arrive. Two rows of larger tiles: header, label, picture, two title lines, price. */
+.inline-ad-empty {
+  min-height: 600px;
+  border-color: transparent;
+  background: transparent;
 }
-@media (min-width: 1440px) {
-  .side-rail-slot {
-    display: block;
-    width: 160px;
-    padding: 0;
+@media (min-width: 1024px) {
+  .inline-ad-empty {
+    min-height: 620px;
   }
-}
-/* Flush (owner, 2026-11-07: "I don't like how it's floating … no gap"): the rail fills its column from the header to the
-   window's foot, square, one hairline facing the page; its tiles stack edge to edge with hairline dividers. */
-.side-rail {
-  position: sticky;
-  top: 4.25rem;
-  height: calc(100dvh - 4.25rem);
-}
-.side-rail-slot[data-rail="left"] .side-rail {
-  border-width: 0 1px 0 0;
-}
-.side-rail-slot[data-rail="right"] .side-rail {
-  border-width: 0 0 0 1px;
-}
-/* A rail's list scrolls inside it (up to ten tiles): a thin bar, and the page does not scroll on past the list's end. */
-.rail-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgb(var(--line)) transparent;
 }
 
 /* Explore layer (2026-11-10, PriceRunner-style redesign): category photo tiles, the
