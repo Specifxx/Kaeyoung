@@ -64,12 +64,16 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
 - Affiliate tags are added at build (`src/lib/affiliate.ts`): `ky-<region>-<placement>-<ean>` in EPN `customid`,
   Amazon `ascsubtag` and the retailers' `{sub}`; stores get `utm_source=kaeyoung.com`.
 - **No banner ads** (owner, 2026-10-30: "cut down on the banner ads … a really nice website"): no eBay strips, no
-  AdSense, no nav ad boxes. **One exception (owner, 2026-11-06): the side rails** (`SideRails.tsx`, `lib/side-rails.ts`,
-  static `/rails/<region>`): eBay down the left of the page and Amazon down the right from 1440px, ten scrolling tiles each,
-  browser only, in CSS-reserved columns (CLS 0), Amazon tiles tagged links with NO price; below 1440px the eBay tiles only go
-  to the phone dock (`AdDock.tsx`: after a scroll, never on a product page, ✕ for the visit; never Amazon, an overlay).
+  AdSense, no nav ad boxes, no side rails (owner, 2026-11-13: off, and replaced). **One exception, which the owner asked for
+  explicitly on 2026-11-13: ONE native in-content block per page** (`InlineAds.tsx`, `lib/side-rails.ts`, static
+  `/rails/<region>`): a full-column-width section in the site's own card, hairline and text tokens with a small "Ad" label, an
+  eBay row first and an Amazon row second, up to ten larger tiles each, scrolling sideways (about six show on a desktop). It
+  sits BELOW the main content (home: between sections, never the hero; product page: under the price table; lists: after the
+  grid), never beside a buy button or above a price, never fixed or floating, no side space, no pop-up. Browser only, its
+  height reserved in CSS (CLS 0); Amazon tiles are tagged links with NO price; every link rel sponsored under the tags
+  `inline-ebay` / `inline-amazon`. On phones (below 768px) the eBay tiles also go to the phone dock (`AdDock.tsx`: after a
+  scroll, never on a product page, ✕ for the visit; never Amazon, an overlay). Never re-add rails or a second block.
   Otherwise paid links live only in a product's price table, pinned above the stores, drawn like a store row (owner, 2026-11-01) and labelled:
-  eBay, Amazon (hard-coded tags: US `riftcompare-20`, AU `compareempire-22`, UK `compareempi03-21`, CA `compareempire-20`, EU `compareempire-21`), and the beauty
   retailers in `PARTNERS` (YesStyle, Stylevana, Olive Young Global, iHerb, LOOKFANTASTIC, Cult Beauty), each shown
   only once its `AFF_*` tracking template is set in Vercel. Stylevana is the exception (Awin, 2026-11-06): its Awin
   template is hard-coded (`awinTemplate`), and with the `AWIN_FEED_STYLEVANA` secret its row shows Stylevana's own price

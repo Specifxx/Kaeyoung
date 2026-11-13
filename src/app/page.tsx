@@ -1,3 +1,4 @@
+import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CAT_BY_KEY, REGIONS, SITE, type CatKey } from "@/site";
@@ -166,6 +167,9 @@ export default function Home() {
             </div>
           );
         })}
+
+        {/* The one ad block (owner, 2026-11-13): between sections, below the hero and the product grids. */}
+        <InlineAds page="home" />
 
         {brands.length > 0 && (
           <Section title="Popular brands" href="/brands" more="All brands">

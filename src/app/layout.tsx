@@ -16,7 +16,7 @@ import { HolidayStrip } from "@/components/HolidayStrip";
 import { Footer } from "@/components/Footer";
 import { IconSprite } from "@/components/IconSprite";
 import { QuickView } from "@/components/QuickView";
-import { RailDock, RailSlot } from "@/components/SideRails";
+import { RailDock } from "@/components/InlineAds";
 import { RateCard } from "@/components/site-reviews/RateCard";
 import { headerMenus, navGroups, quickLinks } from "@/lib/nav";
 import { menuFacts } from "@/lib/menu-facts";
@@ -75,18 +75,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CategoryStrip links={quickLinks(groups)} />
         <HolidayStrip />
         <div className="flex">
-          {/* The side rails (components/SideRails.tsx): eBay left, Amazon right, from 1440px; empty in the server HTML. */}
-          <RailSlot side="left" />
           <main id="main" className="min-w-0 flex-1 pb-6">
             {children}
           </main>
-          <RailSlot side="right" />
         </div>
         <Footer updated={meta ? niceDate(meta.updatedAt) : null} />
         <QuickView />
         {/* Rate us (owner, 2026-11-03): the corner card, asking only after real use; the ratings are kept by the shared review service. */}
         <RateCard />
-        {/* Below the rails' width: their eBay tiles in the phone dock, after a scroll, never on a product page. */}
+        {/* Phones: the eBay tiles in the phone dock, after a scroll, never on a product page. */}
         <RailDock />
         <Analytics />
         <ShareArrival />

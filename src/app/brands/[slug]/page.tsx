@@ -1,3 +1,4 @@
+import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -55,6 +56,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         );
       })}
       </Browse>
+      <InlineAds page="brand" />
     </div>
   );
 }

@@ -1,13 +1,14 @@
-// The side rails' tiles (components/SideRails.tsx draws them; owner, 2026-11-06: "the eBay ads … and instead of the TCGplayer ad,
+// The tiles of the in-content ad block (components/InlineAds.tsx draws them; the side rails they first fed were replaced on
+// 2026-11-13). Written for the rails (owner, 2026-11-06: "the eBay ads … and instead of the TCGplayer ad,
 // the Amazon ad banner that's scrollable"), computed once per region at build and served as one static file per region
 // (/rails/<region>, force-static): a page carries none of it and a visit never runs a function.
 //
-//   • Left, eBay: the daily import's own matches (data/public/ebay.json), the region's most-stocked products first, live
-//     Buy It Now listings only (a photo and a delivered price), tagged `ky-<region>-side-ebay-<ean>`.
-//   • Right, Amazon: the region's most-stocked products as tagged links to Amazon's own page of that barcode when the import
+//   • eBay, first: the daily import's own matches (data/public/ebay.json), the region's most-stocked products first, live
+//     Buy It Now listings only (a photo and a delivered price), tagged `ky-<region>-inline-ebay-<ean>`.
+//   • Amazon, second: the region's most-stocked products as tagged links to Amazon's own page of that barcode when the import
 //     found its ASIN (data/amazon/), else an exact product-name search (Associates rule 4: a specific product, never a
 //     category). NO price: Amazon's API refuses us until the account has 10 qualifying sales, and its licence forbids
-//     storing a price, so a rail served for a day never shows one. The photo is the store's own, as on our tiles.
+//     storing a price, so a block served for a day never shows one. The photo is the store's own, as on our tiles.
 //   • Never in the phone dock (an overlay: Associates rule 5), never in an email, never counted as a store.
 // Server-only: reads data/ through lib/data.ts.
 import { REGIONS, REGION_BY_CODE, type RegionCode } from "@/site";
@@ -17,9 +18,9 @@ import { getEbay, popularIn } from "./data";
 import { money } from "./format";
 import type { Product } from "./types";
 
-/** Up to ten tiles a rail, popular first; the list scrolls inside the rail (the sister sites' rule, owner 2026-11-06). */
+/** Up to ten tiles a row, popular first; the row scrolls sideways (about six show on a desktop). */
 export const MAX_TILES = 10;
-/** A rail with fewer live tiles than this is not drawn: a rail of one is noise. */
+/** A row with fewer live tiles than this is not drawn. */
 export const MIN_TILES = 2;
 
 export interface RailTile {
@@ -56,7 +57,7 @@ export function railsFor(region: RegionCode): Rails {
   for (const f of region === "NZ" ? popularIn("AU", 400) : popular) {
     const pick = ebay[f.ean]?.[ebayRegion];
     if (!pick?.img || pick.p == null) continue;
-    ebayTiles.push({ id: f.ean, name: f.name, img: pick.img, price: money(pick.p, ebayRegion), href: ebayAffiliateUrl(pick.u, subId(region, "side-ebay", f.ean)) });
+    ebayTiles.push({ id: f.ean, name: f.name, img: pick.img, price: money(pick.p, ebayRegion), href: ebayAffiliateUrl(pick.u, subId(region, "inline-ebay", f.ean)) });
     if (ebayTiles.length >= MAX_TILES) break;
   }
   // Too few live listings (a region the eBay pass has not reached yet, or no keyset yet): the rest of the rail is tagged
@@ -66,7 +67,7 @@ export function railsFor(region: RegionCode): Rails {
     for (const f of popular) {
       if (ebayTiles.length >= MAX_TILES) break;
       if (have.has(f.ean) || !f.img) continue;
-      const href = ebaySearchUrl(searchQuery(f), region, subId(region, "side-ebay", f.ean));
+      const href = ebaySearchUrl(searchQuery(f), region, subId(region, "inline-ebay", f.ean));
       if (href) ebayTiles.push({ id: f.ean, name: f.name, img: f.img, price: null, href });
     }
   }
@@ -79,7 +80,7 @@ export function railsFor(region: RegionCode): Rails {
     const ranked = popular.filter((f) => f.img).sort((a, b) => Number(!!asins[b.ean]?.[0]) - Number(!!asins[a.ean]?.[0]));
     const tiles: RailTile[] = [];
     for (const f of [...ranked.filter((f) => !seen.has(f.ean)), ...ranked.filter((f) => seen.has(f.ean))]) {
-      const sub = subId(region, "side-amazon", f.ean);
+      const sub = subId(region, "inline-amazon", f.ean);
       const asin = asins[f.ean]?.[0];
       const href = (asin && amazonItemUrl(asin, region, sub)) || amazonSearchUrl(searchQuery(f), region, sub);
       if (!href) continue;
@@ -92,7 +93,7 @@ export function railsFor(region: RegionCode): Rails {
   const host = ebayShopHost(region);
   const rails: Rails = {
     region,
-    ebay: { label: host ? host.replace(/^www\./, "") : "eBay", more: ebaySearchUrl("korean skincare", region, subId(region, "side-ebay")), tiles: ebayTiles },
+    ebay: { label: host ? host.replace(/^www\./, "") : "eBay", more: ebaySearchUrl("korean skincare", region, subId(region, "inline-ebay")), tiles: ebayTiles },
     amazon,
   };
   cache.set(region, rails);

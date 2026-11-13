@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 // The phone dock, ported from the sister sites (WargameCompare, DexCompare; owner 2026-11-06: the side rails' ads "on mobile … in
-// the best way that doesn't interrupt user experience"): the left rail's eBay tiles in a slim bar along the foot of a screen too
-// narrow for the rails. Its rules (DECISIONS.md, 2026-11-06 "Side rails and the phone dock"):
+// the best way that doesn't interrupt user experience"): the eBay tiles in a slim bar along the foot of a phone screen (the side rails it
+// first served were replaced by the in-content block, InlineAds.tsx, on 2026-11-13). Its rules (DECISIONS.md, 2026-11-06 "Side rails and the phone dock"):
 //
-//   • Browser only, narrow screens only (below the rails' MIN_WIDTH). Nothing is in the server HTML, and nothing is asked for until
+//   • Browser only, phones only (below DOCK_MIN_WIDTH in InlineAds.tsx). Nothing is in the server HTML, and nothing is asked for until
 //     the visitor has scrolled a third of a screen (DockGate).
 //   • Never on the first screen: it shows only once the visitor has scrolled DOCK_ARM of a screen.
 //   • Never beside another unit: hidden while the footer, the rating card, a price table or anything marked [data-dock-yield] is
