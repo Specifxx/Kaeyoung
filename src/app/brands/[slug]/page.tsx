@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CATEGORIES } from "@/site";
-import { brandKo, getBrand, getBrands, storeCount } from "@/lib/data";
+import { brandKo, getBrand, getBrands, getMeta, storeCount } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
 import { PageHead } from "@/components/Section";
 import { Browse } from "@/components/Browse";
 import { JsonLd, breadcrumbLd } from "@/lib/seo";
+import { brandSentences } from "@/lib/brand-facts";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -56,6 +57,11 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         );
       })}
       </Browse>
+      {/* The brand's prices in words, from the day's data (lib/brand-facts.ts): server HTML, below the products. */}
+      <section className="mt-10 max-w-3xl">
+        <h2 className="h-display mb-3 text-xl">{b.name} prices at a glance</h2>
+        <p className="text-sm leading-relaxed text-ink">{brandSentences(b.name, b.products, getMeta()?.updatedAt).join(" ")}</p>
+      </section>
       <InlineAds page="brand" />
     </div>
   );

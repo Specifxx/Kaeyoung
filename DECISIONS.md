@@ -1311,3 +1311,44 @@ Owner: the side rails are off, so replace them with ONE bigger, subtler ad block
 - New tags: `ky-<region>-inline-ebay-<ean>` and `ascsubtag=ky-<region>-inline-amazon-<ean>` (were side-ebay / side-amazon); the click event placements are `inline_ebay_<page>` and `inline_amazon_<page>`. Every link rel sponsored. Amazon tiles still carry no price and are never in an overlay. Never a store row, best price, deal or alert.
 - The phone dock stays (eBay only), now phones only (below 768px; it showed under 1440px while the rails existed), and it yields while the block is on screen. Its tag is `dock-ebay`, derived from `inline-ebay`.
 - Measure clicks per placement (`inline_*` against `dock_ebay` and the price table's pinned rows) a week after the next release, before changing the block. Never re-add rails or a second block without the owner.
+
+
+## 2026-11-14: Product and brand pages say their prices in words; one offer in the Product block
+
+Why. Search Console on 10 November showed ScentCompare with 333 pages "Crawled, currently not indexed", 298 of them
+product pages: Google read them and passed. Measured on a build of the real data, a product page's only text of its
+own was the answers inside the closed Questions list (about 1,400 characters on the Abib Heartleaf foam page, none of it visible without opening a question); everything else a visitor could read was either on
+every product page or a table of prices. A brand page had one sentence. KaeYoung runs the same engine, so both sites
+get the same change.
+
+What, all of it server HTML computed from `products.json`, `history.json` and `meta.json` (no script, no fetch, no
+new page, nothing typed in, no currency converted):
+
+- **Price summary** on every product page, under the price table (`components/ProductFacts.tsx`,
+  `lib/product-facts.ts`): a paragraph (how many K-beauty stores list it and where, the lowest in-stock price and store per
+  region with the date of the check, the price per 100 ml / 100 g / oz, where stores disagree most, and what the
+  lowest price has done since we first recorded it), then one row per region (lowest, highest, stores in stock, per
+  unit). Where the same product comes in several sizes, "Sizes compared" lists each size's lowest price and price per
+  unit for the visitor's region, links the other sizes and marks the best value when one size stands alone.
+- **Computed questions** join the Questions list and its FAQPage block: how far stores' prices differ, the price per
+  unit, the best-value size, and the last price change. Each appears only when the data answers it.
+- **A price per unit is refused rather than guessed** (`unitOf`): volumes and weights only, never a set, a multi-pack,
+  a refill, a name with two amounts or a count ("30 sheets": one store title that says 30 for one sheet would print a
+  price thirty times too low).
+- **The Product block carries one AggregateOffer in one currency**: the first region, US first, where a store can sell
+  it today (`schemaRegion`). It listed one per region, up to six currencies in one block, which a results page cannot
+  show as one price range. A barcode that starts with 0 is written as `gtin12`. The block also gains `sku` and `size`, and both blocks on the page are written through `JsonLd`, which escapes `<` (reviews in the block are visitors' own text), as on ScentCompare since 2026-11-06.
+- **Brand pages** end with "<brand> prices at a glance" (`lib/brand-facts.ts`): the most widely stocked product, the
+  in-stock price range in the brand's three biggest regions, and the product its stores disagree on most (three or
+  more stores in stock, a gap of 10% or more).
+
+Result on the same build: the Abib Heartleaf foam page goes from 1,372 to 3,767 characters of its own text (about 1,000 of them visible in the summary), 311 to 328 KB of HTML; COSRX's brand page gains about 970 characters, 294 to 297 KB. URLs, titles, descriptions, canonicals, robots and the sitemap are unchanged; no
+ad or paid link was added; the new text is not region-switched except the sizes table, which uses the price table's
+own CSS classes, so nothing moves after load. `tests/product-facts.test.ts`, `tests/brand-facts.test.ts`.
+
+Looked at and left alone: the sitemap tier (already a lean core of 300 products since 2026-11-07, and since the
+2026-11-07 cull only 17 of 4,956 listed products have fewer than three stores); the product page's links (20 to 36 followed internal
+links each); ratings in the Product block (already only from our own reviews file, which is empty today).
+KaeYoung's product titles (99% run past 60 characters with the site name, median 83) and descriptions (about 190)
+were also left as they are: the name, size and "price" already lead every title, the site ranks at positions 11 to 30
+and is rising, and a title change across 4,956 pages is not worth that risk for a display-only gain.
