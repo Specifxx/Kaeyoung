@@ -13,20 +13,21 @@
   --ink: 45 31 46;
   --soft: 120 102 118;
   --line: 243 225 232;
-  --accent: 222 72 126;
+  --accent: 208 56 114; /* 4.7:1 under white button words (was 222 72 126, 3.9:1) */
   --accent-deep: 178 40 92;
   --accent-pale: 255 236 243;
   --subtle: 253 243 247;
   --save: 22 125 80;
   --save-pale: 228 245 236;
   --ad: 255 248 250;
-  --buy: 222 72 126;
+  --buy: 208 56 114;
   --peach: 255 228 214;
   --lavender: 236 230 255;
   --mint: 220 245 235;
   --butter: 255 245 205;
   --sky: 222 238 255;
   --star: 232 150 38;
+  --plate-end: 253 243 247;
   color-scheme: light;
 }
 
@@ -50,6 +51,7 @@
   --butter: 66 58 34;
   --sky: 34 48 70;
   --star: 247 186 84;
+  --plate-end: 244 238 242;
   color-scheme: dark;
 }
 
@@ -137,8 +139,9 @@ html:not([data-region]) .rn-US { display: none; }
   .pr-n {
     @apply flex flex-wrap items-center gap-x-2 gap-y-0.5 font-semibold;
   }
+  /* A store's name wraps to a second line rather than being cut ("Pasteur Pharm…" on a phone). */
   .pr-t {
-    @apply min-w-0 max-w-full truncate;
+    @apply min-w-0 max-w-full break-words leading-snug;
   }
   .pr-v {
     @apply shrink-0 font-normal text-soft;
@@ -157,7 +160,7 @@ html:not([data-region]) .rn-US { display: none; }
     @apply flex flex-col overflow-hidden;
   }
   .pt-i {
-    @apply relative aspect-square bg-gradient-to-b from-white to-subtle;
+    @apply plate relative aspect-square;
   }
   .pt-im {
     @apply h-full w-full object-contain p-4 text-transparent transition-transform duration-300;
@@ -191,6 +194,64 @@ html:not([data-region]) .rn-US { display: none; }
   }
   .pt-x {
     @apply text-xs text-soft;
+  }
+  /* The light plate under every product photo (store photos are shot on white). A near-white fade in both themes:
+     on the night theme the old white-to-subtle gradient ended in the page's dark grey and read as a smudge. */
+  .plate {
+    background: linear-gradient(to bottom, #fff, rgb(var(--plate-end)));
+  }
+  /* Long-form text (about, terms, guides' and posts' prose): one measure, one heading scale, one list style.
+     Only unclassed elements are touched, so a component inside an article keeps its own look. */
+  .article-body {
+    @apply text-[16px] leading-[1.7] text-ink;
+  }
+  .article-body > :where(p, ul, ol, blockquote, h2, h3):not([class]) {
+    max-width: 68ch;
+  }
+  .article-body > p:not([class]) {
+    @apply mb-4;
+  }
+  .article-body > h2:not([class]) {
+    @apply h-display mb-3 mt-10 text-[1.6rem] leading-tight first:mt-0;
+  }
+  .article-body > h3:not([class]) {
+    @apply mb-2 mt-7 text-lg font-semibold leading-snug;
+  }
+  .article-body > ul:not([class]),
+  .article-body > ol:not([class]) {
+    @apply mb-4 space-y-1.5 pl-6;
+  }
+  .article-body > ul:not([class]) {
+    @apply list-disc;
+  }
+  .article-body > ol:not([class]) {
+    @apply list-decimal;
+  }
+  .article-body > :where(ul, ol) > li::marker {
+    color: rgb(var(--soft));
+  }
+  .article-body a:not([class]) {
+    @apply font-medium text-accent-deep underline decoration-accent-deep/30 underline-offset-4 transition-colors hover:decoration-accent-deep;
+  }
+  .article-body strong {
+    @apply font-semibold;
+  }
+  .article-body > table:not([class]) {
+    @apply mb-4 block max-w-full overflow-x-auto text-sm;
+  }
+  /* Fine print folded into a native <details> (product page method note): a quiet, 40px-tall summary line. */
+  .fine > summary {
+    @apply inline-flex min-h-10 cursor-pointer list-none items-center gap-1.5 font-medium text-soft transition-colors hover:text-ink;
+  }
+  .fine > summary::-webkit-details-marker {
+    display: none;
+  }
+  .fine > summary::after {
+    content: "";
+    @apply h-1.5 w-1.5 -translate-y-px rotate-45 border-b-[1.5px] border-r-[1.5px] border-current transition-transform duration-150;
+  }
+  .fine[open] > summary::after {
+    @apply translate-y-px -rotate-[135deg];
   }
   /* The pastel wash behind the hero, page heads and the side panel. */
   .wash {

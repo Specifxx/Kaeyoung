@@ -42,7 +42,7 @@ export function RecentlyViewed({ prefix, exclude, className = "mt-12" }: { prefi
           return (
             <li key={x.s} className="w-[9.5rem] shrink-0 sm:w-44">
               <Link prefetch={false} href={`/product/${x.s}`} className="card tile-hover flex h-full flex-col overflow-hidden">
-                <div className="aspect-square bg-gradient-to-b from-white to-subtle">
+                <div className="aspect-square plate">
                   {x.i ? (
                     <img src={x.i} alt={x.n} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-contain p-3 text-transparent" />
                   ) : (

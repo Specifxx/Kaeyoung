@@ -69,17 +69,22 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
   const pos = useMemo(() => new Map(rows?.map((r, i) => [r[0], i]) ?? []), [rows]);
   const rated = useMemo(() => scope.some((r) => r[8] > 0), [scope]);
 
-  const sel = "rounded-full border border-line bg-card px-3 py-1.5 text-sm focus:border-accent focus:outline-none";
+  // One control height (40px, a full tap target) and one shape; on a phone the controls sit in an even two-column grid.
+  const sel = "h-10 w-full min-w-0 rounded-full border border-line bg-card px-3.5 text-sm text-ink transition-colors hover:border-soft focus:border-accent focus:outline-none disabled:opacity-60 sm:w-auto";
+  const clear = () => {
+    setF({ ...NO_FILTERS, cat });
+    setTouched(search);
+  };
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-center gap-2" role="group" aria-label="Filter and sort">
+      <div className="mb-5 grid grid-cols-2 items-center gap-2 sm:flex sm:flex-wrap" role="group" aria-label="Filter and sort">
         <input
           value={f.q}
           onChange={(e) => set({ q: e.target.value })}
           onFocus={need}
           placeholder={search ? "Search K-beauty…" : "Filter by name…"}
           aria-label="Filter by name"
-          className={`${sel} min-w-0 flex-1 basis-48 px-4`}
+          className={`${sel} col-span-2 h-11 px-4 text-[15px] sm:flex-1 sm:basis-48`}
           autoFocus={search}
         />
         <select value={f.sort} onChange={(e) => set({ sort: e.target.value as SortKey })} aria-label="Sort" className={sel}>
@@ -96,7 +101,7 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
           </select>
         )}
         {!brand && (
-          <select value={f.brand} onChange={(e) => set({ brand: e.target.value })} onFocus={need} aria-label="Brand" className={`${sel} max-w-[12rem]`}>
+          <select value={f.brand} onChange={(e) => set({ brand: e.target.value })} onFocus={need} aria-label="Brand" className={`${sel} sm:max-w-[12rem]`}>
             <option value="">Every brand</option>
             {brands.map(([b, n]) => (
               <option key={b} value={b}>{b} ({n})</option>
@@ -104,7 +109,7 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
           </select>
         )}
         {facetOptions.map(({ facet, list }) => (
-          <select key={facet.key} value={f.facets[facet.key] ?? ""} onChange={(e) => set({ facets: { ...f.facets, [facet.key]: e.target.value } })} onFocus={need} aria-label={facet.label} className={`${sel} max-w-[12rem]`}>
+          <select key={facet.key} value={f.facets[facet.key] ?? ""} onChange={(e) => set({ facets: { ...f.facets, [facet.key]: e.target.value } })} onFocus={need} aria-label={facet.label} className={`${sel} sm:max-w-[12rem]`}>
             <option value="">{facet.any}</option>
             {list.map(([v, n]) => (
               <option key={v} value={v}>{n ? `${v} (${n})` : v}</option>
@@ -116,24 +121,19 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
           <option value={4}>4★ and up</option>
           <option value={3}>3★ and up</option>
         </select>
-        <label className={`${sel} flex cursor-pointer items-center gap-2`}>
+        <label className={`${sel} flex cursor-pointer items-center gap-2 whitespace-nowrap`}>
           <input type="checkbox" checked={f.inStock} onChange={(e) => set({ inStock: e.target.checked })} className="accent-[rgb(var(--accent))]" />
           In stock near me
         </label>
         {touched && (
-          <button
-            type="button"
-            onClick={() => {
-              setF({ ...NO_FILTERS, cat });
-              setTouched(search);
-            }}
-            className="px-2 text-sm font-semibold text-accent-deep"
-          >
+          <button type="button" onClick={clear} className="h-10 rounded-full px-3 text-left text-sm font-semibold text-accent-deep hover:underline sm:text-center">
             Clear
           </button>
         )}
       </div>
 
+      {/* The search page holds its results' room from the first paint, so the footer does not jump when they arrive. */}
+      <div className={search ? "min-h-[70vh]" : undefined}>
       {!touched ? (
         children
       ) : !rows ? (
@@ -151,7 +151,19 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
               ))}
             </div>
           ) : (
-            <p className="card p-6 text-center text-soft">Nothing matches. Try fewer filters.</p>
+            <div className="card px-5 py-8 text-center">
+              <p className="font-semibold text-ink">{f.q.trim() ? `Nothing matches “${f.q.trim()}” here.` : "Nothing matches these filters."}</p>
+              <p className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-soft">Check the spelling, try a brand or a product type, or start again with fewer filters.</p>
+              <div className="mt-5 flex flex-wrap justify-center gap-2">
+                <button type="button" onClick={clear} className="btn-pop btn-buy">Clear filters</button>
+                {!brand && brands.slice(0, 5).map(([b]) => (
+                  <button key={b} type="button" onClick={() => set({ q: "", brand: b, facets: {}, minStars: 0, inStock: false, maxPrice: 0 })} className="h-10 rounded-full border border-line bg-card px-4 text-sm font-medium text-ink transition-colors hover:border-soft">
+                    {b}
+                  </button>
+                ))}
+                <a href="/popular" className="inline-flex h-10 items-center rounded-full border border-line bg-card px-4 text-sm font-medium text-ink transition-colors hover:border-soft">Popular now</a>
+              </div>
+            </div>
           )}
           {result.length > shown && (
             <div className="mt-8 text-center">
@@ -162,6 +174,7 @@ export function Browse({ cat = "", brand = "", search = false, children }: { cat
           )}
         </>
       )}
+      </div>
     </div>
   );
 }
@@ -173,7 +186,7 @@ function RowTile({ r, img }: { r: IndexRow; img: string | null }) {
   const short = r[5] && r[1].startsWith(r[5]) ? r[1].slice(r[5].length).trim() : r[1];
   return (
     <a href={`/product/${r[0]}`} data-qv={r[0]} data-qv-name={r[1]} data-qv-brand={r[5] || undefined} data-qv-img={img || undefined} className="card tile-hover group flex flex-col overflow-hidden">
-      <div className="relative aspect-square bg-gradient-to-b from-white to-subtle">
+      <div className="relative aspect-square plate">
         {img ? (
           <img src={img} alt={r[1]} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-contain p-4 text-transparent transition-transform duration-300 group-hover:scale-[1.03]" />
         ) : (

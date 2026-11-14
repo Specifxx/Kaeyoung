@@ -1403,3 +1403,44 @@ text button (`inline`) is drawn as a bordered button (`cart.css`). Neutral, neve
 filled action and the calm three-colour rule holds. Nothing else moved: which rows can be added (open store rows, eBay and
 Amazon with a live price; never a marketplace or a search row), the line's buy link and its affiliate tag, the row order, the
 buy button and every placement are unchanged. A caller can still ask for the bare icon (`label={false}`).
+
+## 2026-11-14: Every page brought up to the home page's look (owner: "make all the other pages more aesthetic as well")
+
+The home page's language is the spec: the pastel-wash page header, Fraunces headings on one scale, white cards with hairlines,
+40px round controls, the brand colour only for the one thing to press and green only for money. What changed, per page type
+(the same change on KaeYoung and ScentCompare, each in its own colours):
+
+- **Product pages.** On a phone the photo is smaller (200px plate) and Share sits on the brand line, so the price card starts
+  about 100px higher; the h1 is a little tighter. A store's name wraps to a second line instead of being cut ("Pasteur Pharm…").
+  The method note under the price table ("Prices are what each store's own site showed…", with its basket link) is folded into
+  a native `<details>` ("How these prices are checked"): still in the server HTML, one tap away.
+- **List, brand, category and search pages.** The filter bar is one control height (40px) and one shape, in an even two-column
+  grid on a phone instead of a ragged wrap. Search holds its results' room from the first paint (layout shift on a desktop
+  0.19 to 0.03), and a search with no result says so in words and offers a way on: clear the filters, the five biggest brands,
+  Popular.
+- **Guides, posts and static pages (about, terms, privacy, contact, disclosure…).** `Prose` is no longer a card: one article
+  measure (68 characters), one heading scale, styled lists and links (`.article-body` in `globals.css`, touching only
+  unclassed elements). The page header is tighter on a phone, its line held to 62 characters. Breadcrumbs stay on one line, the
+  last name cut with "…" (the whole name is still in the HTML and the BreadcrumbList).
+- **Blog post step cards (KaeYoung).** On a phone the price goes under the product's name instead of squeezing it to a
+  quarter of the width.
+- **404.** The same h1 and line, plus the site search and four ways back (home, Popular, Deals today, All brands).
+- **Shared.** Every product photo sits on one light plate (`.plate`): on the night theme the old white-to-grey gradient ended
+  in the page's dark grey and read as a smudge. The home hero's creators badge is the inline pill at every width (from `md` it
+  sat on the "Popular in the US" heading). Pager links and Share are 40px tap targets. Filled rose or blue controls with white
+  words on the night theme (region chips, the pager's current page, a creator's tip button) take the page's dark colour, as
+  `btn-buy` already did (white on the night accent read 2.5:1).
+- **KaeYoung's day accent** is a shade deeper, `208 56 114` (was `222 72 126`): white button words on it read 4.7:1, they read
+  3.9:1. Same hue; every button keeps its place, words and fill.
+- **ScentCompare only.** The search page's line spoke of "snail or centella" (KaeYoung's); it now names houses, perfume names
+  and barcodes. The footer's and the creators pill's lower-case starts are capitalised.
+
+Nothing paid moved: no paid link, pinned eBay / Amazon / partner row, ad block, affiliate tag or placement name was added,
+removed, reordered or reworded, and store rows stay in price order, so the 19 November clicks-per-placement recheck is
+unaffected. No URL, redirect, title, description, canonical, robots, Open Graph, JSON-LD or h1 changed: checked on ten sampled
+pages per site, server HTML of `main` against this branch with scripts off (same metadata, structured data, h1, internal links
+and paid rows in the same order with the same words and hrefs; the only text differences are the added summary line, the 404's
+links and, on ScentCompare, the capitalised words and the search page's line). No new font, library, client script, data read
+or revalidate. Left as they were: the home page's structure and the "How it works" tints, the price rows' "Add to cart" size
+(owner, today), the store thumbs' size (owner's call), and ScentCompare's guide-page shift on a phone while Fraunces loads
+(0.14 on `main`, a font-swap re-wrap of the h1, not from this change).

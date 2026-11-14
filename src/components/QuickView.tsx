@@ -113,7 +113,7 @@ export function QuickView() {
       <button type="button" aria-label="Close" tabIndex={-1} className="qv-backdrop absolute inset-0 bg-ink/40 backdrop-blur-[2px]" onClick={close} />
       <div className="qv-panel relative flex max-h-[92vh] w-full max-w-xl flex-col overflow-hidden rounded-t-3xl border border-line bg-card shadow-2xl sm:rounded-3xl">
         <div className="flex items-start gap-4 border-b border-line p-4 sm:p-5">
-          <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden rounded-2xl bg-gradient-to-b from-white to-subtle">
+          <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden rounded-2xl plate">
             <ProductImage src={head.img} alt={head.name} label={head.brand || "K-beauty"} eager className="h-full w-full object-contain p-2" />
           </div>
           <div className="min-w-0 flex-1">
