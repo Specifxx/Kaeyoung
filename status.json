@@ -1,0 +1,68 @@
+{
+ "v": 1,
+ "site": "kaeyoung.com",
+ "at": "2026-11-14T11:13:37.845Z",
+ "overall": "warn",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "HTTP 200"
+  },
+  {
+   "name": "Search index",
+   "status": "ok",
+   "detail": "4956 products live"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "20.4h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "warn",
+   "detail": "seoulbeautystore: https://seoulbeautystore.com/products.json?limit=250&page=1&country=GB: fetch failed; skinseoul: https://skinseoul.co.uk/products.json?limit=250&page=1&country=GB: fetch failed"
+  },
+  {
+   "name": "Catalogue",
+   "status": "ok",
+   "detail": "4956 products"
+  },
+  {
+   "name": "Data size",
+   "status": "ok",
+   "detail": "7.6 MB"
+  },
+  {
+   "name": "Ratings and reviews",
+   "status": "ok",
+   "detail": "0 products rated"
+  },
+  {
+   "name": "Delivery quotes",
+   "status": "ok",
+   "detail": "129 of 159 stores quoted"
+  },
+  {
+   "name": "Store deals",
+   "status": "ok",
+   "detail": "64 of 159 stores checked; 0 run multi-buys or gifts on 0 products"
+  },
+  {
+   "name": "Partner feeds",
+   "status": "ok",
+   "detail": "stylevana 1637/43206 prices kept"
+  },
+  {
+   "name": "Amazon ASINs",
+   "status": "ok",
+   "detail": "US 1006 ASINs (2304 waiting); UK waiting for Amazon API access; CA waiting for Amazon API access; EU waiting for Amazon API access; AU waiting for Amazon API access"
+  },
+  {
+   "name": "eBay listings",
+   "status": "ok",
+   "detail": "2500/2500 calls on 2026-11-13"
+  }
+ ]
+}
