@@ -196,7 +196,7 @@ export default function Home() {
               <li key={t} className={`rounded-2xl p-5 ${["tint-rose", "tint-lavender", "tint-mint"][i]}`}>
                 <span className="text-sm font-semibold tabular-nums text-accent-deep">0{i + 1}</span>
                 <h3 className="h-display mt-1 text-xl">{t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-soft">{d}</p>
+                <p className="mt-2 text-sm leading-relaxed text-ink/75">{d}</p>
               </li>
             ))}
           </ol>
