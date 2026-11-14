@@ -56,9 +56,10 @@ export function Crumbs({ items, className = "mt-5 text-sm text-soft" }: { items:
   return (
     <>
       <JsonLd data={breadcrumbLd(items)} />
-      <nav aria-label="Breadcrumb" className={className}>
+      {/* One line: the trail's last name is cut with "…" on a phone rather than wrapping under the others. */}
+      <nav aria-label="Breadcrumb" className={`flex min-w-0 items-center whitespace-nowrap ${className}`}>
         {trail.map((it, i) => (
-          <span key={it.path}>
+          <span key={it.path} className={i < trail.length - 1 ? "shrink-0" : "min-w-0 truncate"}>
             {i > 0 && <span className="mx-1.5">/</span>}
             {i < trail.length - 1 ? (
               <Link prefetch={false} href={it.path} className="hover:text-ink">{it.name}</Link>

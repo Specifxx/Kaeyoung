@@ -40,7 +40,7 @@ export function ShareButton({ title, path, texts, medium = "product", className 
   }
   return (
     <span className={`relative inline-flex shrink-0 ${className}`}>
-      <button type="button" onClick={share} className="chip inline-flex items-center gap-1.5 border border-line bg-card px-3 py-1.5 text-sm font-semibold text-ink hover:border-soft" aria-label={`Share ${title}`} title="Share">
+      <button type="button" onClick={share} className="chip inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line bg-card px-3.5 text-sm font-semibold text-ink transition-colors hover:border-soft" aria-label={`Share ${title}`} title="Share">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
           <path d="M16 6l-4-4-4 4" />

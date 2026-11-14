@@ -166,14 +166,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
       <section className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <div>
-          <div className="card relative mx-auto max-w-[240px] overflow-hidden bg-white sm:max-w-sm md:max-w-none">
-            <ProductImage src={f.img} alt={f.name} label={f.brand || "K-beauty"} eager className="relative aspect-square w-full object-contain p-8" />
+          <div className="card relative mx-auto max-w-[200px] overflow-hidden bg-white sm:max-w-sm md:max-w-none">
+            <ProductImage src={f.img} alt={f.name} label={f.brand || "K-beauty"} eager className="relative aspect-square w-full object-contain p-5 sm:p-8" />
           </div>
           <p className="mt-2 text-center text-xs text-soft">Photo from a store listing.</p>
         </div>
 
         <div>
-          {f.brand &&
+          {/* The brand and Share on one line, so the price card reaches the first phone screen. */}
+          <div className="flex min-h-9 items-center justify-between gap-3">
+          {f.brand ?
             (hasBrandPage ? (
               <Link prefetch={false} href={`/brands/${f.b}`} className="eyebrow hover:text-ink">
                 {f.brand}
@@ -184,9 +186,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 {f.brand}
                 {ko && <span lang="ko" className="ml-1.5 normal-case tracking-normal text-soft">{ko}</span>}
               </p>
-            ))}
-          <h1 className="h-display mt-1.5 text-3xl leading-tight sm:text-[2.4rem]">{f.name}</h1>
-          <ShareButton title={f.name} path={`/product/${f.slug}`} texts={shareTexts(f)} className="mt-3" />
+            )) : <span />}
+            <ShareButton title={f.name} path={`/product/${f.slug}`} texts={shareTexts(f)} className="shrink-0 [&>[role=status]]:left-auto [&>[role=status]]:right-0" />
+          </div>
+          <h1 className="h-display mt-1 text-[1.85rem] leading-[1.12] sm:text-[2.4rem]">{f.name}</h1>
           <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
             <span className="chip bg-subtle text-ink">{cat.name}</span>
             {f.size && <span className="chip bg-subtle text-ink">{f.size}</span>}
@@ -314,12 +317,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               <PriceTable f={f} region={r.code} ebay={ebay[r.code]} />
             </div>
           ))}
-          <p className="mt-3 text-xs leading-relaxed text-soft">
+          {/* The fine print, folded (still in the page's HTML): the table is the point, the method is one tap away. */}
+          <details className="fine mt-3 text-xs leading-relaxed text-soft">
+            <summary>How these prices are checked</summary>
+          <p className="mt-2">
             Prices are what each store&apos;s own site showed at our last daily check{meta ? ` (${niceDate(meta.updatedAt)})` : ""}, before delivery, and they can change at any time: the store&apos;s checkout is always the final price. Delivery
             costs are each store&apos;s own quote for a small order to one city in your region, checked weekly; they can differ for your address. Every store listing here carries this product&apos;s barcode ({f.ean}), so it is the same product and
             size, not a look-alike. Multi-buys and free gifts are what the store&apos;s own cart charged for 1, 2 and 3 of this product in the last two days; stores stay in single-item price order.{" "}
             <Link prefetch={false} href="/basket" className="font-medium text-accent-deep hover:underline">Buying several products? Compare a whole basket →</Link>
           </p>
+          </details>
           <ReportPrice
             product={`${f.name} (${f.ean})`}
             stores={REGIONS.flatMap((r) => (f.offers[r.code] ?? []).map((o) => ({ name: `${storeName(o.s)} (${r.code})`, price: money(o.p, r.code) })))}

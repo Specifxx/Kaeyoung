@@ -73,7 +73,7 @@ export function RegionChips({ className = "" }: { className?: string }) {
             aria-pressed={on}
             onClick={() => setRegion(r.code)}
             title={r.name}
-            className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-2.5 text-sm font-semibold transition ${on ? "border-accent bg-accent text-white" : "border-line bg-card text-ink hover:border-soft"}`}
+            className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-2.5 text-sm font-semibold transition ${on ? "border-accent bg-accent text-white dark:text-bg" : "border-line bg-card text-ink hover:border-soft"}`}
           >
             <Flag code={r.code} />
             {r.code}

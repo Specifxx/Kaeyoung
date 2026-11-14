@@ -50,7 +50,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         // eslint-disable-next-line @next/next/no-img-element
         <img src={p.image.src} alt={p.image.alt} width={1200} height={630} className="mb-8 aspect-[1200/630] w-full rounded-2xl border border-line object-cover" />
       ) : null}
-      <div className="prose-ky">{Body ? <Body asOf={asOf} /> : sections ? <Advice post={p} sections={sections} /> : null}</div>
+      <div className="article-body">{Body ? <Body asOf={asOf} /> : sections ? <Advice post={p} sections={sections} /> : null}</div>
       <aside className="mt-12 space-y-3 rounded-2xl bg-subtle p-5 text-sm text-soft">
         <h2 className="font-semibold text-ink">How this post was made</h2>
         <p>
@@ -81,7 +81,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   );
 }
 
-const P = ({ children }: { children: ReactNode }) => <p className="mb-4 text-[16px] leading-relaxed">{children}</p>;
+const P = ({ children }: { children: ReactNode }) => <p className="mb-4 max-w-[68ch] text-[16px] leading-[1.7]">{children}</p>;
 const H2 = ({ children }: { children: ReactNode }) => <h2 className="h-display mb-3 mt-10 text-2xl">{children}</h2>;
 const A = ({ href, children }: { href: string; children: ReactNode }) => (
   <Link prefetch={false} href={href} className="font-medium text-accent-deep underline underline-offset-4">
@@ -238,7 +238,8 @@ function Routine() {
                     <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-subtle">
                       <CatIcon cat={s.cat} size={36} />
                     </span>
-                    <div className="min-w-0 flex-1">
+                    {/* On a phone the price goes under the name (the name had a quarter of the width); beside it from sm. */}
+                    <div className="min-w-0 flex-1 basis-[calc(100%-4rem)] sm:basis-0">
                       <p className="eyebrow">
                         Step {i + 1} · {s.label}
                       </p>
@@ -252,7 +253,7 @@ function Routine() {
                       <p className="text-xs text-soft">It {s.why}.</p>
                     </div>
                     {b && (
-                      <div className="text-right">
+                      <div className="-mt-2 ml-16 flex items-baseline gap-2 sm:mt-0 sm:ml-0 sm:block sm:text-right">
                         <p className="text-lg font-semibold tabular-nums text-accent-deep">{money(b.offer.p, r)}</p>
                         <p className="text-xs text-soft">at {storeName(b.offer.s)}</p>
                       </div>
