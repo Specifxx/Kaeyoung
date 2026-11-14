@@ -3,7 +3,8 @@
 // after that a visit is a static file from Vercel's CDN, never a database read.
 import fs from "node:fs";
 import path from "node:path";
-import { CATEGORIES, REGIONS, type CatKey, type RegionCode } from "@/site";
+import { CATEGORIES, REGIONS, SITE, type CatKey, type RegionCode } from "@/site";
+import { productTitles, type PageTitle } from "./titles";
 import { STORE_BY_ID } from "@/content/stores";
 import { ebayRowShown } from "./ebay";
 import { lowestOrderable } from "./history";
@@ -64,6 +65,19 @@ export const getPromos = (): PromoData => load<PromoData>("promos.json", {});
 
 export function getProduct(slug: string): Product | undefined {
   return once("bySlug", () => new Map(getProducts().map((f) => [f.slug, f]))).get(slug);
+}
+
+/** The product page's <title>, fitted to 60 characters and unique across every product page (lib/titles.ts,
+ *  DECISIONS.md 2026-11-14 "Product titles fit 60"). Built once for the whole catalogue: uniqueness needs every title. */
+export function productTitle(f: Product): PageTitle {
+  return (
+    once("titles", () =>
+      productTitles(
+        getProducts().map((x) => ({ slug: x.slug, name: x.name, brand: x.brand, size: x.size, stores: storeCount(x), ean: x.ean, first: x.first })),
+        SITE.name,
+      ),
+    ).get(f.slug) ?? `${f.name} price`
+  );
 }
 
 /** A fresh array each call: callers sort it. */

@@ -1352,3 +1352,43 @@ links each); ratings in the Product block (already only from our own reviews fil
 KaeYoung's product titles (99% run past 60 characters with the site name, median 83) and descriptions (about 190)
 were also left as they are: the name, size and "price" already lead every title, the site ranks at positions 11 to 30
 and is rising, and a title change across 4,956 pages is not worth that risk for a display-only gain.
+
+
+## 2026-11-14: Product titles fit 60
+
+Why. Measured on the committed data (4,956 products), 99.0% of KaeYoung's product page titles ran past 60 characters as
+rendered (`<name> price: compare N stores | KaeYoung`, median 83, longest 123), so Google cut every one and the size,
+the hook and often the end of the name went. 83% of brand page titles (median 63) and 2 of 11 category hubs did too.
+The entry above left the titles alone; Bill asked for them to fit, keeping what searchers type. ScentCompare runs the
+same engine and gets the same function (its product titles: 51% past 60, median 61, 42 titles shared by two pages).
+
+What. `lib/titles.ts` (the same file on both sites), a pure function over the product data, read once for the whole
+catalogue through `productTitle` in `lib/data.ts`. The first that fits 60 as rendered wins, in this order:
+
+1. the full name with the site name: `<name> price: compare N stores`, `<name>: compare N stores`,
+   `<name> price comparison`, `<name> price`, each followed by " | KaeYoung";
+2. the same without the site name;
+3. the name shortened one step at a time (no site name from here): the brand said twice ("Gentleman by Givenchy"
+   under Givenchy), the same size in the other unit ("100ml/3.4oz" keeps the size the data reads), filler ("Eau de
+   Parfum Spray" keeps "Eau de Parfum", "in Manufacturer's bottle"), EDP / EDT / EDC, then "for Men" / "for Women";
+4. a cut at words: the brand, the last word that says what it is ("Toner", "Cushion"), the size and a shade in
+   brackets stay, the words before that last word go, and "…" marks the gap.
+
+Nothing is typed in: every word is the name's own, plus "price" and the store count. Titles are unique across the site
+(ignoring case): when two pages land on the same title the older page keeps it; one whose name differs takes its other
+cut, else steps back to its last richer title (past 60 if it must, 1 KaeYoung page and 6 ScentCompare pages); one whose
+name says the same as the other's (they are the same product under two barcodes) ends in its barcode's last four
+digits, " · …1234", as the size picker already labels it. A size is never cut, so two products that differ only by size
+keep different titles. Brand pages and category hubs use `fitTitle` (now in KaeYoung's `lib/seo.tsx` too, as on
+ScentCompare): the counts shorten, then drop.
+
+Result on the committed data:
+
+- KaeYoung products: past 60 99.0% to 0.02% (1 page), median 83 to 56, titles shared by two pages 2 to 0 (211 pages
+  carry a barcode tail, 1,213 a cut). Brands: 82.8% to 0, median 63 to 50. Category hubs: 2 of 11 to 0.
+- ScentCompare products: past 60 51.1% to 0.04% (6 pages), median 61 to 56, shared titles 42 to 0 (50 barcode tails,
+  1,503 cuts). Its brand and category titles already fit and are unchanged.
+
+Unchanged: h1, URL, canonical, description, robots, Open Graph image, the sitemap. `tests/titles.test.ts` pins the
+order on made-up names and, on the committed data, at most 2% past 60, a median within 60, no shared title, every
+title starting with its product's name and the size kept in 99%.
