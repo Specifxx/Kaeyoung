@@ -7,7 +7,7 @@ import { brandKo, getBrand, getBrands, getMeta, storeCount } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
 import { PageHead } from "@/components/Section";
 import { Browse } from "@/components/Browse";
-import { JsonLd, breadcrumbLd } from "@/lib/seo";
+import { JsonLd, breadcrumbLd, fitTitle } from "@/lib/seo";
 import { brandSentences } from "@/lib/brand-facts";
 
 export const dynamicParams = false;
@@ -20,7 +20,13 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!b) return {};
   const stores = new Set(b.products.flatMap((f) => Object.values(f.offers).flatMap((o) => (o ?? []).map((x) => x.s)))).size;
   return {
-    title: `${b.name} prices: compare ${b.products.length} products across ${stores} stores`,
+    // 83% of these ran past 60 with " | KaeYoung" (2026-11-14): the counts shorten, then drop, the brand always leads.
+    title: fitTitle(
+      `${b.name} prices: compare ${b.products.length} products across ${stores} stores`,
+      `${b.name} prices: ${b.products.length} products, ${stores} stores`,
+      `${b.name} prices compared`,
+      `${b.name} prices`,
+    ),
     description: `Compare ${b.name} prices across ${stores} K-beauty stores in the US, UK, Canada, Australia, New Zealand and Europe. ${b.products.length} products, matched by barcode, updated daily.`,
     alternates: { canonical: `/brands/${b.slug}` },
   };

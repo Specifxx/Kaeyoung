@@ -5,7 +5,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { needIndexable, needPath, needsOfName } from "@/lib/needs";
 import { culledTarget } from "@/lib/culled";
 import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
-import { bestIn, brandKo, cheapestDelivered, familyKey, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productsOfBrand, productsOfCat, productsForNeed, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
+import { bestIn, brandKo, cheapestDelivered, familyKey, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productTitle, productsOfBrand, productsOfCat, productsForNeed, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
 import { isIndexable, prebuiltProducts } from "@/lib/index-tiers";
@@ -54,7 +54,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     .filter((b) => b != null)
     .slice(0, 2)
     .map((b) => `${money(b!.offer.p, b!.region)} ${REGIONS.find((x) => x.code === b!.region)!.phrase}`);
-  const title = `${f.name} price: compare ${n} store${n === 1 ? "" : "s"}`;
+  const title = productTitle(f);
   const description = `${f.name} prices across ${n} K-beauty stores${lows.length ? `, from ${lows.join(" and ")}` : ""}. Same barcode (${f.ean}), every store side by side, updated daily.`;
   return {
     title,

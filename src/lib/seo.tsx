@@ -4,6 +4,18 @@
 import Link from "next/link";
 import { SITE } from "@/site";
 
+/** The title a results page can show in full (as on ScentCompare since 2026-11-06): the first candidate that fits 60
+ *  characters with the " | KaeYoung" the root template adds, else the first that fits alone (absolute, no suffix),
+ *  else the last candidate as is. Candidates go from richest to shortest; the keyword always leads. Product pages use
+ *  productTitle (lib/titles.ts), which also shortens the name. */
+export const TITLE_MAX = 60;
+export function fitTitle(...candidates: string[]): string | { absolute: string } {
+  const suffix = ` | ${SITE.name}`.length;
+  const withSuffix = candidates.find((t) => t.length + suffix <= TITLE_MAX);
+  if (withSuffix) return withSuffix;
+  return { absolute: candidates.find((t) => t.length <= TITLE_MAX) ?? candidates[candidates.length - 1] };
+}
+
 export const ldJson = (obj: unknown) => JSON.stringify(obj).replace(/</g, "\\u003c");
 
 export function siteLd() {
