@@ -8,7 +8,7 @@ import { CART_ADDED_EVENT, addLine, makeLine, onCartChange, readCart, setQty, wr
 
 export function CartAddButton({
   className = "",
-  label = false,
+  label = true,
   inline = false,
   ...input
 }: CartAddInput & { className?: string; label?: boolean; inline?: boolean }) {
@@ -77,7 +77,7 @@ export function CartAddButton({
           <use href="#i-cart-add" />
         </svg>
       )}
-      {label && <span>{inList ? "In cart" : "Add to cart"}</span>}
+      {label && <span className="ce-cart-label">{inList ? "In cart" : <>Add<span className="ce-cart-more"> to cart</span></>}</span>}
     </button>
   );
 }
