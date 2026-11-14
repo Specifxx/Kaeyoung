@@ -230,6 +230,25 @@ html:not([data-region]) .rn-US { display: none; }
   .article-body > :where(ul, ol) > li::marker {
     color: rgb(var(--soft));
   }
+  /* Shared page components inside an article (how we pick stores, list your store) style their own spacing inline;
+     they still get the article's markers and heading face, which the boxed Prose card used to give them. */
+  .article-body ul:not([class]) {
+    list-style: disc;
+  }
+  .article-body ol:not([class]) {
+    list-style: decimal;
+  }
+  .article-body ul:not([class]) > li + li,
+  .article-body ol:not([class]) > li + li {
+    margin-top: 0.375rem;
+  }
+  .article-body li::marker {
+    color: rgb(var(--soft));
+  }
+  .article-body h2:not([class]) {
+    /* !font-medium: those components set a bold weight inline, heavier than every other heading in the face */
+    @apply h-display !font-medium;
+  }
   .article-body a:not([class]) {
     @apply font-medium text-accent-deep underline decoration-accent-deep/30 underline-offset-4 transition-colors hover:decoration-accent-deep;
   }

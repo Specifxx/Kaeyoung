@@ -1444,3 +1444,24 @@ links and, on ScentCompare, the capitalised words and the search page's line). N
 or revalidate. Left as they were: the home page's structure and the "How it works" tints, the price rows' "Add to cart" size
 (owner, today), the store thumbs' size (owner's call), and ScentCompare's guide-page shift on a phone while Fraunces loads
 (0.14 on `main`, a font-swap re-wrap of the h1, not from this change).
+
+## 2026-11-14: Review of the day's design pass, and two small finishes
+
+An independent review of the "every page up to the home page's look" pass, `main` against the commit before it (fixture
+build, ten page types at 390×844 and 1440×900, day and night): no horizontal overflow, no new console or hydration error,
+no new text under 4.5:1, focus still drawn, no animation running under reduced motion, layout shift no worse than 0.04 on
+any sampled page. Server HTML of every prerendered page compared with scripts off: titles, descriptions, canonicals, robots,
+Open Graph, JSON-LD, h1 and h2 identical; no internal link or indexed word lost (ScentCompare's search page, `noindex`,
+lost only the copied "snail or centella" line); paid links in the same order with the same hrefs. Sitemaps list only
+indexable 200 pages, robots.txt blocks only `/api`, `/admin`, `/search` and query strings, and an unknown product 404s.
+
+Two finishes, both page styling only:
+
+- **Shared page components inside an article** (how we pick stores, list your store) style their spacing inline and relied
+  on the old Prose card for their list markers. With the card gone their bullets and the numbered "How it works" steps
+  disappeared. `.article-body` now gives any unclassed list its disc or number and any unclassed h2 the heading face.
+- **Home page "How it works" text** was soft grey on the pastel tints at 4.3–4.5:1; it is the ink colour at 75%, over 4.5:1
+  on every tint in both themes. Same words, same blocks.
+
+No paid link, placement, URL or metadata changed, so the 19 November clicks-per-placement recheck is unaffected. Left as it
+is (money, owner's call): KaeYoung's outlined "+ Add to cart" in the cheapest row reads 4.2:1 on its green tint.
