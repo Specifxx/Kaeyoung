@@ -110,6 +110,23 @@ html:not([data-region]) .rn-US { display: none; }
   .eyebrow {
     @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-soft;
   }
+  /* The price summary's tables (components/ProductFacts.tsx): one short class, drawn for up to six regions. */
+  .pf {
+    @apply w-full text-left text-sm;
+  }
+  .pf th,
+  .pf td {
+    @apply px-4 py-2.5;
+  }
+  .pf thead th {
+    @apply whitespace-nowrap text-xs font-medium text-soft;
+  }
+  .pf tbody th {
+    @apply whitespace-nowrap font-medium;
+  }
+  .pf tbody tr {
+    @apply border-t border-line;
+  }
   /* Price rows (components/PriceRows.tsx): short names for the same Tailwind values, drawn on every row of six regions. */
   .pr {
     @apply flex items-center gap-3 rounded-xl border px-3.5 py-3;
