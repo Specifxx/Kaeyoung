@@ -8,23 +8,31 @@
   "maxTested": 8700
  },
  "aiyabeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 990,
-  "freeFrom": 20265,
-  "paidAt": 20310,
-  "maxTested": 24990
+  "freeFrom": 24780,
+  "paidAt": 18105,
+  "maxTested": 24780
+ },
+ "atelierdeglow": {
+  "at": "2026-11-15",
+  "to": "London",
+  "fee": 600,
+  "freeFrom": 5000,
+  "paidAt": 4500,
+  "maxTested": 5000
  },
  "aubeautybazaar": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 1050,
-  "freeFrom": 6000,
-  "paidAt": 6550,
-  "maxTested": 9500
+  "freeFrom": 6092,
+  "paidAt": 6444,
+  "maxTested": 6444
  },
  "aurynskin": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 590,
   "freeFrom": 5120,
@@ -32,20 +40,20 @@
   "maxTested": 5760
  },
  "axisy": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
-  "fee": 2200,
+  "fee": 2400,
   "freeFrom": 7182,
-  "paidAt": 8983,
+  "paidAt": 9183,
   "maxTested": 12768
  },
  "baqueen": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Rome",
   "fee": 590,
-  "freeFrom": 5370,
-  "paidAt": 5370,
-  "maxTested": 5960
+  "freeFrom": 5510,
+  "paidAt": 5510,
+  "maxTested": 5510
  },
  "beautyaffairs": {
   "at": "2026-11-01",
@@ -56,12 +64,12 @@
   "maxTested": 24300
  },
  "beautyandseoul": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 499,
-  "freeFrom": 2800,
-  "paidAt": 2949,
-  "maxTested": 2949
+  "freeFrom": 2700,
+  "paidAt": 2899,
+  "maxTested": 4800
  },
  "beautydiary": {
   "at": "2026-11-08",
@@ -72,12 +80,12 @@
   "maxTested": 10875
  },
  "beautyofjoseon": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
   "freeFrom": 7200,
-  "paidAt": 6300,
-  "maxTested": 7200
+  "paidAt": 6480,
+  "maxTested": 11520
  },
  "beautywithin": {
   "at": "2026-11-08",
@@ -88,7 +96,7 @@
   "maxTested": 17950
  },
  "bellubeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 299,
   "freeFrom": 2792,
@@ -96,7 +104,7 @@
   "maxTested": 2792
  },
  "belvera": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 0,
   "freeFrom": 1325,
@@ -104,7 +112,7 @@
   "maxTested": 1325
  },
  "bemusedkorea": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 1495,
   "freeFrom": 8580,
@@ -112,12 +120,12 @@
   "maxTested": 10560
  },
  "bloomandshine": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 595,
-  "freeFrom": 4389,
-  "paidAt": 4585,
-  "maxTested": 6384
+  "freeFrom": 4368,
+  "paidAt": 4564,
+  "maxTested": 5166
  },
  "boozyshop": {
   "at": "2026-11-01",
@@ -128,7 +136,7 @@
   "maxTested": 5904
  },
  "celimax": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
   "freeFrom": 4983,
@@ -136,15 +144,15 @@
   "maxTested": 4983
  },
  "cloud10beauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 702,
-  "freeFrom": 7854,
-  "paidAt": 7842,
-  "maxTested": 11424
+  "freeFrom": 7752,
+  "paidAt": 7162,
+  "maxTested": 10336
  },
  "cosmadic": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 390,
   "freeFrom": 2793,
@@ -152,7 +160,7 @@
   "maxTested": 3192
  },
  "cosmehut": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 800,
   "freeFrom": 9900,
@@ -160,7 +168,7 @@
   "maxTested": 19200
  },
  "cosmeticsonline": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 0,
   "freeFrom": 1916,
@@ -168,15 +176,23 @@
   "maxTested": 1916
  },
  "cosmeticstore-nz": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Auckland",
   "fee": 500,
-  "freeFrom": 5040,
-  "paidAt": 5180,
-  "maxTested": 5760
+  "freeFrom": 5340,
+  "paidAt": 5480,
+  "maxTested": 5480
+ },
+ "cosrx": {
+  "at": "2026-11-15",
+  "to": "New York",
+  "fee": 800,
+  "freeFrom": 5280,
+  "paidAt": 4800,
+  "maxTested": 7680
  },
  "cupidrop": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 695,
   "freeFrom": 4900,
@@ -184,7 +200,7 @@
   "maxTested": 5300
  },
  "deiji": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Auckland",
   "fee": 600,
   "freeFrom": 3600,
@@ -192,7 +208,7 @@
   "maxTested": 6400
  },
  "dramabeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 500,
   "freeFrom": 4260,
@@ -200,23 +216,23 @@
   "maxTested": 4260
  },
  "elikoglow": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
-  "fee": 1093,
+  "fee": 1000,
   "freeFrom": 7500,
   "paidAt": 7200,
   "maxTested": 9600
  },
  "eyurs": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 599,
-  "freeFrom": 4200,
-  "paidAt": 4499,
-  "maxTested": 4800
+  "freeFrom": 5625,
+  "paidAt": 4199,
+  "maxTested": 5625
  },
  "fwee": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
   "freeFrom": 5000,
@@ -224,7 +240,7 @@
   "maxTested": 8000
  },
  "glamtouch": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 399,
   "freeFrom": 3300,
@@ -232,7 +248,7 @@
   "maxTested": 4000
  },
  "glassskinrituals": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 1500,
   "freeFrom": 17500,
@@ -240,7 +256,7 @@
   "maxTested": 25500
  },
  "glowiss": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 500,
   "freeFrom": 3600,
@@ -248,15 +264,15 @@
   "maxTested": 3600
  },
  "glowstation": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 500,
-  "freeFrom": 3540,
-  "paidAt": 3450,
-  "maxTested": 4720
+  "freeFrom": 3160,
+  "paidAt": 2870,
+  "maxTested": 3160
  },
  "happyandpretty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 399,
   "freeFrom": 4020,
@@ -264,7 +280,7 @@
   "maxTested": 4720
  },
  "haruharuusa": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
   "freeFrom": 3000,
@@ -272,7 +288,7 @@
   "maxTested": 4800
  },
  "heartdrops": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 695,
   "freeFrom": 6500,
@@ -280,20 +296,20 @@
   "maxTested": 6500
  },
  "heimish": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 695,
-  "freeFrom": 5000,
-  "paidAt": 5195,
-  "maxTested": 8000
+  "freeFrom": 5400,
+  "paidAt": 5495,
+  "maxTested": 9600
  },
  "helloseoul": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 670,
-  "freeFrom": 6820,
-  "paidAt": 6410,
-  "maxTested": 7230
+  "freeFrom": 6997,
+  "paidAt": 6664,
+  "maxTested": 11326
  },
  "hikoco": {
   "at": "2026-11-08",
@@ -304,7 +320,7 @@
   "maxTested": 6200
  },
  "irelkglow": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 399,
   "freeFrom": 3000,
@@ -312,7 +328,7 @@
   "maxTested": 4800
  },
  "itsglowy": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 395,
   "freeFrom": 5975,
@@ -320,7 +336,7 @@
   "maxTested": 9560
  },
  "jejuskin": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Paris",
   "fee": 490,
   "freeFrom": 8120,
@@ -336,7 +352,7 @@
   "maxTested": 19200
  },
  "joobeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Paris",
   "fee": 450,
   "freeFrom": 6690,
@@ -344,23 +360,23 @@
   "maxTested": 6690
  },
  "jumiso": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 795,
   "freeFrom": 5400,
-  "paidAt": 5295,
-  "maxTested": 7200
+  "paidAt": 5595,
+  "maxTested": 9600
  },
  "justmylook": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 299,
-  "freeFrom": 2653,
-  "paidAt": 2573,
-  "maxTested": 3032
+  "freeFrom": 2632,
+  "paidAt": 2602,
+  "maxTested": 2632
  },
  "k-beauty4you": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 490,
   "freeFrom": 5035,
@@ -368,7 +384,7 @@
   "maxTested": 5035
  },
  "kanvas": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 895,
   "freeFrom": 7795,
@@ -384,7 +400,7 @@
   "maxTested": 19140
  },
  "kbeautyoutlet": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 1399,
   "freeFrom": 8225,
@@ -392,7 +408,7 @@
   "maxTested": 10528
  },
  "kbeautyshop": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Auckland",
   "fee": 796,
   "freeFrom": 8389,
@@ -400,7 +416,7 @@
   "maxTested": 8389
  },
  "kbeautystore": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 699,
   "freeFrom": 6300,
@@ -408,7 +424,7 @@
   "maxTested": 11200
  },
  "kbeautyworld": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 390,
   "freeFrom": 4165,
@@ -416,7 +432,7 @@
   "maxTested": 5215
  },
  "keeobeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Paris",
   "fee": 399,
   "freeFrom": 7980,
@@ -424,23 +440,23 @@
   "maxTested": 7980
  },
  "kiokii": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 995,
   "freeFrom": 7650,
   "paidAt": 8195,
-  "maxTested": 11250
+  "maxTested": 8195
  },
  "kiyoko": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 600,
-  "freeFrom": 4780,
-  "paidAt": 4980,
-  "maxTested": 5180
+  "freeFrom": 4800,
+  "paidAt": 5100,
+  "maxTested": 5100
  },
  "klairs": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 895,
   "freeFrom": 3000,
@@ -448,7 +464,7 @@
   "maxTested": 4800
  },
  "korean-skincare-nl": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Amsterdam",
   "fee": 295,
   "freeFrom": 4200,
@@ -456,15 +472,15 @@
   "maxTested": 4800
  },
  "koreanbeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
-  "fee": 1479,
+  "fee": 1470,
   "freeFrom": 8100,
   "paidAt": 7800,
   "maxTested": 9300
  },
  "koreanskincare-ca": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 1500,
   "freeFrom": 8150,
@@ -472,15 +488,15 @@
   "maxTested": 8150
  },
  "koreanskincareuk": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 395,
-  "freeFrom": 3720,
-  "paidAt": 3805,
-  "maxTested": 4030
+  "freeFrom": 3560,
+  "paidAt": 3599,
+  "maxTested": 5696
  },
  "kosbeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 500,
   "freeFrom": 3596,
@@ -496,15 +512,15 @@
   "maxTested": 5000
  },
  "kskinaura": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 299,
-  "freeFrom": 2700,
-  "paidAt": 2699,
-  "maxTested": 3900
+  "freeFrom": 2849,
+  "paidAt": 2499,
+  "maxTested": 3199
  },
  "lacosmetique": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 799,
   "freeFrom": 10000,
@@ -512,7 +528,7 @@
   "maxTested": 16000
  },
  "ladybonita": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Auckland",
   "fee": 400,
   "freeFrom": 3000,
@@ -520,7 +536,7 @@
   "maxTested": 4800
  },
  "lakinza": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 999,
   "freeFrom": 8018,
@@ -528,7 +544,7 @@
   "maxTested": 12154
  },
  "laneige": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 895,
   "freeFrom": 5200,
@@ -536,15 +552,15 @@
   "maxTested": 6400
  },
  "likeskincare": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 600,
-  "freeFrom": 5100,
-  "paidAt": 4000,
-  "maxTested": 5100
+  "freeFrom": 4700,
+  "paidAt": 3500,
+  "maxTested": 4700
  },
  "lila": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 695,
   "freeFrom": 5100,
@@ -552,7 +568,7 @@
   "maxTested": 5455
  },
  "lovemycosmetic": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 595,
   "freeFrom": 5270,
@@ -568,15 +584,15 @@
   "maxTested": 25126
  },
  "manyo": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
-  "freeFrom": 3720,
-  "paidAt": 3179,
-  "maxTested": 4960
+  "freeFrom": 6200,
+  "paidAt": 5659,
+  "maxTested": 9920
  },
  "mcgorisks": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Dublin",
   "fee": 500,
   "freeFrom": 6060,
@@ -584,7 +600,7 @@
   "maxTested": 6060
  },
  "mikaelabeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 1500,
   "freeFrom": 8150,
@@ -592,7 +608,7 @@
   "maxTested": 8150
  },
  "mimomimo": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 495,
   "freeFrom": 3900,
@@ -600,15 +616,15 @@
   "maxTested": 4800
  },
  "minkibeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Madrid",
   "fee": 495,
   "freeFrom": 4940,
-  "paidAt": 4640,
-  "maxTested": 4940
+  "paidAt": 4990,
+  "maxTested": 4990
  },
  "misshaus": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 799,
   "freeFrom": 4200,
@@ -616,7 +632,7 @@
   "maxTested": 4800
  },
  "mixsoon": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 500,
   "freeFrom": 6000,
@@ -624,7 +640,7 @@
   "maxTested": 6400
  },
  "moida": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 499,
   "freeFrom": 3600,
@@ -632,15 +648,15 @@
   "maxTested": 5100
  },
  "moidauk": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 390,
-  "freeFrom": 3045,
-  "paidAt": 3120,
-  "maxTested": 3360
+  "freeFrom": 3150,
+  "paidAt": 3190,
+  "maxTested": 3500
  },
  "momokocosmetic": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 700,
   "freeFrom": 6900,
@@ -648,7 +664,7 @@
   "maxTested": 7300
  },
  "moona": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Auckland",
   "fee": 500,
   "freeFrom": 5100,
@@ -656,23 +672,23 @@
   "maxTested": 5250
  },
  "moonmoon": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 1990,
-  "freeFrom": 15574,
-  "paidAt": 16965,
-  "maxTested": 19168
+  "freeFrom": 15335,
+  "paidAt": 16846,
+  "maxTested": 16846
  },
  "mykare": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 899,
-  "freeFrom": 9100,
-  "paidAt": 9649,
-  "maxTested": 11200
+  "freeFrom": 9440,
+  "paidAt": 9749,
+  "maxTested": 9749
  },
  "myqt": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 995,
   "freeFrom": 11695,
@@ -680,23 +696,23 @@
   "maxTested": 13195
  },
  "neogenlab": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
-  "freeFrom": 5100,
-  "paidAt": 5499,
-  "maxTested": 9600
+  "freeFrom": 5024,
+  "paidAt": 5409,
+  "maxTested": 5409
  },
  "nudieglow": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 750,
-  "freeFrom": 5200,
+  "freeFrom": 5100,
   "paidAt": 5550,
-  "maxTested": 6400
+  "maxTested": 9600
  },
  "ohlolly": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 695,
   "freeFrom": 5200,
@@ -727,8 +743,16 @@
   "paidAt": 4886,
   "maxTested": 5584
  },
+ "pboo": {
+  "at": "2026-11-15",
+  "to": "Auckland",
+  "fee": 600,
+  "freeFrom": 5500,
+  "paidAt": 5500,
+  "maxTested": 5500
+ },
  "planetskin": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 1290,
   "freeFrom": 6300,
@@ -736,7 +760,7 @@
   "maxTested": 11200
  },
  "pureseoul": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 399,
   "freeFrom": 3000,
@@ -744,7 +768,7 @@
   "maxTested": 3099
  },
  "purida": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 500,
   "freeFrom": 3500,
@@ -752,15 +776,15 @@
   "maxTested": 4000
  },
  "refreshskincare": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 600,
-  "freeFrom": 4500,
-  "paidAt": 4600,
-  "maxTested": 8000
+  "freeFrom": 4000,
+  "paidAt": 4100,
+  "maxTested": 4100
  },
  "reiwatakiya": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 499,
   "freeFrom": 3891,
@@ -768,7 +792,7 @@
   "maxTested": 4390
  },
  "rossi": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Riga",
   "fee": 259,
   "freeFrom": 4277,
@@ -776,15 +800,15 @@
   "maxTested": 5264
  },
  "rovectin": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
-  "freeFrom": 4099,
-  "paidAt": 1000,
-  "maxTested": 4099
+  "freeFrom": 3699,
+  "paidAt": 2699,
+  "maxTested": 4699
  },
  "saranghae": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Madrid",
   "fee": 590,
   "freeFrom": 8091,
@@ -792,12 +816,12 @@
   "maxTested": 8352
  },
  "sentisenti": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
-  "fee": 716,
-  "freeFrom": 6600,
-  "paidAt": 6300,
-  "maxTested": 9600
+  "fee": 736,
+  "freeFrom": 6900,
+  "paidAt": 4800,
+  "maxTested": 6900
  },
  "seoulbeautystore": {
   "at": "2026-11-01",
@@ -808,7 +832,7 @@
   "maxTested": 6975
  },
  "shoppalacebeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 500,
   "freeFrom": 7000,
@@ -824,7 +848,7 @@
   "maxTested": 5331
  },
  "skin2seoul": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 600,
   "freeFrom": 5400,
@@ -832,15 +856,15 @@
   "maxTested": 5400
  },
  "skincation": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Berlin",
   "fee": 395,
-  "freeFrom": 5135,
-  "paidAt": 5135,
-  "maxTested": 5135
+  "freeFrom": 5240,
+  "paidAt": 4740,
+  "maxTested": 5240
  },
  "skincupid": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 395,
   "freeFrom": 3000,
@@ -848,12 +872,12 @@
   "maxTested": 4800
  },
  "skindays": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
-  "fee": 499,
-  "freeFrom": 4000,
-  "paidAt": 3699,
-  "maxTested": 6400
+  "fee": 495,
+  "freeFrom": 3600,
+  "paidAt": 3300,
+  "maxTested": 4800
  },
  "skinseoul": {
   "at": "2026-11-01",
@@ -864,7 +888,7 @@
   "maxTested": 7680
  },
  "skinshop": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Dublin",
   "fee": 595,
   "freeFrom": 7600,
@@ -872,23 +896,23 @@
   "maxTested": 8400
  },
  "sokoglam": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 795,
   "freeFrom": 5100,
   "paidAt": 5595,
-  "maxTested": 8100
+  "maxTested": 9600
  },
  "songofskin": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 600,
-  "freeFrom": 4800,
-  "paidAt": 4200,
-  "maxTested": 4800
+  "freeFrom": 5000,
+  "paidAt": 4600,
+  "maxTested": 5000
  },
  "stylekorean": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 499,
   "freeFrom": 3600,
@@ -904,7 +928,7 @@
   "maxTested": 5300
  },
  "sulwhasoo": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 495,
   "freeFrom": 3600,
@@ -912,7 +936,7 @@
   "maxTested": 4800
  },
  "thekbeautyedit": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 355,
   "freeFrom": 2238,
@@ -928,7 +952,7 @@
   "maxTested": 5400
  },
  "tirtir": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
   "freeFrom": 6300,
@@ -936,12 +960,12 @@
   "maxTested": 11200
  },
  "tocobo": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 695,
-  "freeFrom": 5200,
-  "paidAt": 4855,
-  "maxTested": 8320
+  "freeFrom": 6000,
+  "paidAt": 5495,
+  "maxTested": 9600
  },
  "toktokbeauty": {
   "at": "2026-11-01",
@@ -952,7 +976,7 @@
   "maxTested": 6600
  },
  "tonymoly": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 750,
   "freeFrom": 12600,
@@ -960,7 +984,7 @@
   "maxTested": 18000
  },
  "torriden": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 699,
   "freeFrom": 6000,
@@ -968,15 +992,15 @@
   "maxTested": 9600
  },
  "uniquebunny": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 1100,
-  "freeFrom": 6200,
+  "freeFrom": 10100,
   "paidAt": 5900,
-  "maxTested": 10700
+  "maxTested": 10100
  },
  "usinnisfree": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 895,
   "freeFrom": 4000,
@@ -992,7 +1016,7 @@
   "maxTested": 9138
  },
  "vglebeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Toronto",
   "fee": 800,
   "freeFrom": 5300,
@@ -1000,12 +1024,12 @@
   "maxTested": 5300
  },
  "wcosmetics": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "Sydney",
   "fee": 799,
-  "freeFrom": 9975,
-  "paidAt": 10375,
-  "maxTested": 11172
+  "freeFrom": 10000,
+  "paidAt": 10399,
+  "maxTested": 12800
  },
  "yeppo": {
   "at": "2026-11-01",
@@ -1016,7 +1040,7 @@
   "maxTested": 6384
  },
  "yok-beauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "London",
   "fee": 395,
   "freeFrom": 3120,
@@ -1024,7 +1048,7 @@
   "maxTested": 3125
  },
  "yukiobeauty": {
-  "at": "2026-11-08",
+  "at": "2026-11-15",
   "to": "New York",
   "fee": 600,
   "freeFrom": 5900,
