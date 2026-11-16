@@ -1,3 +1,4 @@
+import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -110,6 +111,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
         </section>
       )}
       <p className="text-xs text-soft">Prices exclude shipping, which differs by store and order size. Every price is the store&apos;s own, in {r.currency}, never converted.</p>
+      <InlineAds page="guide" />
     </div>
   );
 }
