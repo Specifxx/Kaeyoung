@@ -12,6 +12,7 @@ import { isIndexable, prebuiltProducts } from "@/lib/index-tiers";
 import { buyLink } from "@/lib/affiliate";
 import { ProductImage } from "@/components/ProductImage";
 import { PriceTable } from "@/components/PriceTable";
+import { AmazonAlso } from "@/components/AmazonAlso";
 import { PriceHistory } from "@/components/Sparkline";
 import { RegionTabs } from "@/components/RegionPicker";
 import { TileGrid } from "@/components/ProductTile";
@@ -315,6 +316,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           {REGIONS.map((r) => (
             <div key={r.code} className={`rp rp-${r.code}`}>
               <PriceTable f={f} region={r.code} ebay={ebay[r.code]} />
+              <AmazonAlso f={f} region={r.code} />
             </div>
           ))}
           {/* The fine print, folded (still in the page's HTML): the table is the point, the method is one tap away. */}

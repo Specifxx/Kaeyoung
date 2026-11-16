@@ -1465,3 +1465,10 @@ Two finishes, both page styling only:
 
 No paid link, placement, URL or metadata changed, so the 19 November clicks-per-placement recheck is unaffected. Left as it
 is (money, owner's call): KaeYoung's outlined "+ Add to cart" in the cheapest row reads 4.2:1 on its green tint.
+
+## 2026-11-16: A small unpriced "Also on Amazon" line under each region's price table
+
+The 2026-11-12/13 rule (Amazon row only with a real price) took Amazon buy clicks to zero on every site from 13 Nov (Amazon's own reports fell
+with them), because almost no row has a live API price. Not a row: `AmazonAlso`, one line under a region's table on the product page, only where
+Amazon's own listing was matched to this exact barcode (committed ASINs), unpriced, labelled paid, hidden when the priced row shows, never the
+quick view, never ranked, best, a deal or an alert. Placement `also_amazon`. Read Amazon clicks per day against 7-12 Nov.
