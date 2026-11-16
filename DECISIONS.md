@@ -1472,3 +1472,9 @@ The 2026-11-12/13 rule (Amazon row only with a real price) took Amazon buy click
 with them), because almost no row has a live API price. Not a row: `AmazonAlso`, one line under a region's table on the product page, only where
 Amazon's own listing was matched to this exact barcode (committed ASINs), unpriced, labelled paid, hidden when the priced row shows, never the
 quick view, never ranked, best, a deal or an alert. Placement `also_amazon`. Read Amazon clicks per day against 7-12 Nov.
+
+## 2026-11-16: The native ad block on guide pages
+
+Amazon clicks fell to zero on 13 Nov (the priced-only rule), and the guides were the one content page without the page's single native
+ad block (`InlineAds`: an eBay row and an Amazon row of tagged tiles, no price, browser only, height reserved). One block, after the guide's
+content, once a page; same rules as everywhere (rel sponsored, never in the dock, never counted as a store). `tests/guide-ad-block.test.ts`.
