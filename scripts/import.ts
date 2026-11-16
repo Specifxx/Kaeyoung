@@ -2,6 +2,7 @@
 // meta.json and history.json. Two stores at a time (Shopify 429s a runner that
 // pages many shops at once). A store that fails keeps nothing from this run and
 // shows in meta.json, where the ops monitor reads it.
+import { loadDenylist, withoutDenied } from "@/lib/denylist";
 import { execFileSync } from "node:child_process";
 import { demandSlugs, focusCatalog } from "@/lib/focus";
 import fs from "node:fs";
@@ -52,7 +53,7 @@ function readDemand(): Set<string> {
 
 async function main() {
   const only = process.env.STORES?.split(",").filter(Boolean);
-  const stores = only ? STORES.filter((s) => only.includes(s.id)) : STORES;
+  const stores = withoutDenied(only ? STORES.filter((s) => only.includes(s.id)) : STORES, await loadDenylist());
   const cache = read<BarcodeCache>("state/barcodes.json", {});
   const state: MergeState = { slugs: read("state/slugs.json", {}), first: read("state/first-seen.json", {}) };
   const prevMeta = read<Meta | null>("public/meta.json", null);
