@@ -35,14 +35,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { color: "#fff8fa" },
+    { color: "#18121a" },
   ],
 };
 
 // Runs before paint: the visitor's saved region (else one guessed from their
 // time zone) and theme, so the right prices show with no flash and no cookie.
 const zones = JSON.stringify(ACTIVE_REGIONS.map((r) => [r.code, r.zones]));
-const BOOT = `(function(){var d=document.documentElement;try{var r=localStorage.getItem("ky-region");if(!r){var z=Intl.DateTimeFormat().resolvedOptions().timeZone||"",b="US",l=0;${zones}.forEach(function(e){e[1].forEach(function(p){if(z.indexOf(p)===0&&p.length>l){b=e[0];l=p.length}})});r=b}d.dataset.region=r;var t=localStorage.getItem("ky-theme");d.dataset.theme=t||"day"}catch(e){d.dataset.region="US"}})();`;
+const BOOT = `(function(){var d=document.documentElement;try{var r=localStorage.getItem("ky-region");if(!r){var z=Intl.DateTimeFormat().resolvedOptions().timeZone||"",b="US",l=0;${zones}.forEach(function(e){e[1].forEach(function(p){if(z.indexOf(p)===0&&p.length>l){b=e[0];l=p.length}})});r=b}d.dataset.region=r;var t=localStorage.getItem("ky-theme");d.dataset.theme=t==="day"?"day":"night"}catch(e){d.dataset.region="US"}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const meta = getMeta();
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       .map((b) => ({ slug: b.slug, name: b.name })),
   );
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="night" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         {/* The holiday look (1 November to Boxing Day): data-season on <html> from the visitor's own date. lib/season.ts. */}
