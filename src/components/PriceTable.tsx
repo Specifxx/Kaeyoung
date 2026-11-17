@@ -17,6 +17,7 @@ import { readAsins, type AsinFile } from "@/lib/amazon-asins";
 import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import type { EbayPick, Product } from "@/lib/types";
+import { orderRows } from "@/lib/row-order";
 import { PriceRows, type RowData, type RowsData } from "./PriceRows";
 
 const AWIN_OFFERS: AwinPromotion[] = Array.isArray((awinPromos as { promotions?: unknown }).promotions) ? ((awinPromos as { promotions: AwinPromotion[] }).promotions) : [];
@@ -142,13 +143,13 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     };
   });
   // No Amazon price: the unpriced "Check on Amazon" row (owner, 2026-11-17: "even if there are no Amazon prices available, we should have
-  // an option to check on Amazon in our price rows"), an ordinary LAST row on the page and the quick view, the item's own page where the
+  // an option to check on Amazon in our price rows"), a pinned affiliate row at the TOP with eBay (owner, 2026-11-17), on the page and the quick view, the item's own page where the
   // daily ASIN pass matched this barcode, else the tagged search. Never pinned, ranked, the best price, a deal or an alert.
   if (!live && amazonUrl) {
     const asin = asinsFor(region)[f.ean]?.[0];
     const href = (asin && amazonItemUrl(asin, region, subId(region, "check_amazon", f.ean))) || amazonSearchUrl(q, region, subId(region, "check_amazon", f.ean));
     if (href)
-      stores.push({
+      pinned.splice(pinned[0]?.event?.source === "ebay" ? 1 : 0, 0, {
         name: "Amazon",
         sub: `${r.amazonHost?.replace("www.", "")} · check the seller`,
         check: true,
@@ -161,7 +162,8 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
         event: { source: "amazon", region, placement: "check_amazon", ean: f.ean },
       });
   }
-  return { pinned, overseas, overseasTo: r.name, stores };
+  // Owner, 2026-11-17: every affiliated row at the top by price, then the cheapest plain store, then the rest (lib/row-order.ts).
+  return { ...orderRows(pinned, stores), overseas, overseasTo: r.name };
 }
 
 export function PriceTable({ f, region, ebay, placement = "table" }: { f: Product; region: RegionCode; ebay?: EbayPick; placement?: string }) {
