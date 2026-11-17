@@ -17,6 +17,7 @@ import { readAsins, type AsinFile } from "@/lib/amazon-asins";
 import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import type { EbayPick, Product } from "@/lib/types";
+import { orderRows } from "@/lib/row-order";
 import { PriceRows, type RowData, type RowsData } from "./PriceRows";
 
 const AWIN_OFFERS: AwinPromotion[] = Array.isArray((awinPromos as { promotions?: unknown }).promotions) ? ((awinPromos as { promotions: AwinPromotion[] }).promotions) : [];
@@ -161,7 +162,8 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
         event: { source: "amazon", region, placement: "check_amazon", ean: f.ean },
       });
   }
-  return { pinned, overseas, overseasTo: r.name, stores };
+  // Owner, 2026-11-17: every affiliated row at the top by price, then the cheapest plain store, then the rest (lib/row-order.ts).
+  return { ...orderRows(pinned, stores), overseas, overseasTo: r.name };
 }
 
 export function PriceTable({ f, region, ebay, placement = "table" }: { f: Product; region: RegionCode; ebay?: EbayPick; placement?: string }) {
