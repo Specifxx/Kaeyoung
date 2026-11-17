@@ -13,6 +13,7 @@ import { awinOffers, bestPerItem, dealNote, liveDeal, offerNote, type AwinPromot
 import awinPromos from "@/lib/awin-promotions.json";
 import { partnerPriceIn } from "@/lib/partner-feed";
 import { AMAZON_CLOCK, amazonLive } from "@/lib/amazon-live";
+import { readAsins, type AsinFile } from "@/lib/amazon-asins";
 import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import type { EbayPick, Product } from "@/lib/types";
@@ -29,6 +30,12 @@ function offersNote(advertiserId: number | null, region: RegionCode): string | n
 export function searchQuery(f: Product): string {
   return f.name.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
 }
+
+const asinCache = new Map<string, AsinFile>();
+const asinsFor = (r: RegionCode) => {
+  if (!asinCache.has(r)) asinCache.set(r, readAsins(r));
+  return asinCache.get(r)!;
+};
 
 /** One region's rows, eBay first and Amazon second, then partners, then the
  *  stores in price order. Plain data, so the quick view (/q/<slug>) draws the
@@ -132,6 +139,25 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       ...(o.st !== "out" ? { cart: { title: cartTitle, image: f.img, priceCents: o.p, currency: r.currency } } : {}),
     };
   });
+  // No Amazon price: the unpriced "Check on Amazon" row (owner, 2026-11-17: "even if there are no Amazon prices available, we should have
+  // an option to check on Amazon in our price rows"), an ordinary LAST row on the page and the quick view, the item's own page where the
+  // daily ASIN pass matched this barcode, else the tagged search. Never pinned, ranked, the best price, a deal or an alert.
+  if (!live && amazonUrl) {
+    const asin = asinsFor(region)[f.ean]?.[0];
+    const href = (asin && amazonItemUrl(asin, region, subId(region, "check_amazon", f.ean))) || amazonSearchUrl(q, region, subId(region, "check_amazon", f.ean));
+    if (href)
+      stores.push({
+        name: "Amazon",
+        sub: `${r.amazonHost?.replace("www.", "")} · check the seller`,
+        check: true,
+        brand: "amazon",
+        price: null,
+        status: null,
+        href,
+        paid: true,
+        event: { source: "amazon", region, placement: "check_amazon", ean: f.ean },
+      });
+  }
   return { pinned, overseas, overseasTo: r.name, stores };
 }
 

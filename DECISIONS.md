@@ -1482,3 +1482,10 @@ content, once a page; same rules as everywhere (rel sponsored, never in the dock
 ## 2026-11-16: urgent release of the "Also on Amazon" line
 
 Amazon clicks were about 0 a day since 13 Nov. The owner approved one urgent production build (subject carries the urgent marker) so the unpriced matched line goes live now instead of waiting for the next daily release. One build, no previews.
+
+## 2026-11-17: "Check on Amazon" is a row again, an ordinary last one
+
+Owner: "even if there are no Amazon prices available, we should have an option to check on Amazon in our price rows." With no live
+Amazon price `priceRows` now adds an unpriced Amazon row (brand amazon, `check`: the item's own page where the daily ASIN pass matched
+this barcode, else the tagged search) at the END of the store rows, on the product page and in the quick view. Never pinned, ranked, the
+best price, a deal or an alert; a priced Amazon row still pins. It replaces the 2026-11-16 line under the table (`AmazonAlso`, removed).

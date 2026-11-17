@@ -2,7 +2,7 @@
 // search-link row. Source guard.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 test("the pinned Amazon row needs a real price: no price, no row", () => {
   const s = readFileSync(new URL("../src/components/PriceTable.tsx", import.meta.url), "utf8");
@@ -10,11 +10,10 @@ test("the pinned Amazon row needs a real price: no price, no row", () => {
   assert.doesNotMatch(s, /Also check on Amazon/);
 });
 
-test("Amazon also-line: unpriced, product page only, only for a barcode-matched ASIN, never the quick view", () => {
-  const c = readFileSync(new URL("../src/components/AmazonAlso.tsx", import.meta.url), "utf8");
-  assert.match(c, /if \(!asin \|\| amazonLive\(f\.ean, region\)\) return null;/);
+test("Check on Amazon (owner, 2026-11-17): an unpriced ORDINARY LAST row, page and quick view, never pinned", () => {
   const t = readFileSync(new URL("../src/components/PriceTable.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(t, /also_amazon/);
-  const q = readFileSync(new URL("../src/components/QuickView.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(q, /AmazonAlso/);
+  assert.match(t, /if \(!live && amazonUrl\) \{/);
+  assert.match(t, /stores\.push\(\{\s+name: "Amazon"/);
+  assert.match(t, /placement: "check_amazon"/);
+  assert.ok(!existsSync(new URL("../src/components/AmazonAlso.tsx", import.meta.url)), "the below-table line is replaced by the row");
 });

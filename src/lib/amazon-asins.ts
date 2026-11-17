@@ -1,7 +1,7 @@
 // Each product's Amazon ASIN per region, found by scripts/amazon-asins.ts in the daily import and committed to
 // data/amazon/asins-<REGION>.json (Amazon lets an ASIN be stored; its prices never are). A miss is kept too,
 // with the day it was checked, so it is retried only after RECHECK_MISS_DAYS. Read by the build's price fetch
-// (scripts/fetch-amazon-prices.ts) and, since 2026-11-16, by the product page's unpriced "Also on Amazon" line (components/AmazonAlso.tsx).
+// (scripts/fetch-amazon-prices.ts) and, since 2026-11-17, by the unpriced "Check on Amazon" row (components/PriceTable.tsx).
 import fs from "node:fs";
 import path from "node:path";
 import type { RegionCode } from "@/site";
