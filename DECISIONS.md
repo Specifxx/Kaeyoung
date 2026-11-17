@@ -1496,3 +1496,10 @@ best price, a deal or an alert; a priced Amazon row still pins. It replaces the 
 same `products.json?...&country=GB` request that every other UK store answers) in all eight daily imports from 9 to 16 November, listing nothing.
 They add no product, only 16 seconds of timeouts and a red line in the ops monitor, so they leave `src/content/stores.ts`. Not worked around:
 no other host, no retry loop. If either answers again, add the line back (the probe workflow reads a store's barcodes before it counts).
+
+## 2026-11-17: URL freeze, and no surprise navigation
+
+Owner, from the Grok growth report (item 5): URLs are frozen and nothing navigates a visitor unasked. A repo-wide check found no
+pop-under, no `window.open` on load, no cross-host redirect and no interstitial here. Rule added to CLAUDE.md: no mass path change
+without a redirect map that 301s every old URL, agents never flip hosts (the one change in force is DexCompare to dexcompare.io), and
+the only automatic navigation is a same-host market choice.

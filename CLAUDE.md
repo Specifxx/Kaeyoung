@@ -121,6 +121,15 @@ never repeats a step hub or a price guide.
 `ops-monitor.yml` runs `scripts/ops-monitor.ts` every three hours; a failing check fails the run and GitHub emails
 the owner. When you add a scheduled job, an external API or anything with a limit, add a check there.
 
+## URL freeze, and no surprise navigation (owner, 2026-11-17; Grok growth report, items 5 and 9)
+
+- **Public URLs are frozen.** No mass path change (renaming a path pattern, moving a folder of pages, a new slug scheme) ships
+  without a redirect map that 301s every old URL to its new one, and a test that pins it. An old URL never 404s.
+- **Hosts never change.** An agent never flips a site's host or domain. The one change in force is DexCompare's move to
+  dexcompare.io (owner); every other host stays as it is.
+- **No pop-unders, no `window.open` on load, no cross-host redirects, no interstitials, no ad-network pop scripts.** The only
+  automatic navigation is a same-host market choice, and a click never opens anything but what it names.
+
 ## Checks
 
 ```
