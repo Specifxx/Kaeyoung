@@ -72,7 +72,9 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       // A priced eBay row works like a store row (owner, 2026-11-06): in stock, thumbs and the cart list.
       status: ebay ? "in" : null,
       href: ebayUrl,
-      ...(ebay ? { vote: ebay.u, cart: { title: cartTitle, image: f.img, priceCents: ebay.p, currency: r.currency } } : {}),
+      // Every price row has an Add to cart (owner, 2026-11-17): the search row's line opens this tagged link and says "See today's price".
+      ...(ebay ? { vote: ebay.u } : {}),
+      cart: { title: cartTitle, image: f.img, priceCents: ebay ? ebay.p : 0, currency: r.currency },
       paid: true,
       event: { source: "ebay", region, placement: `${placement}_pinned`, ean: f.ean },
     });
@@ -105,10 +107,10 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     const productHref = fed && partnerProductUrl(p, fed.u, sub);
     const offer = paid ? offersNote(partnerAwinId(p), region) : null;
     if (fed && productHref) {
-      pinned.push({ name: p.name, sub: `${p.note}, this exact barcode`, price: money(fed.p, region), status: "in", href: productHref, paid: true, offer, event: { ...event, placement: `${placement}_pinned` } });
+      pinned.push({ name: p.name, sub: `${p.note}, this exact barcode`, price: money(fed.p, region), status: "in", href: productHref, paid: true, offer, cart: { title: cartTitle, image: f.img, priceCents: fed.p, currency: r.currency }, event: { ...event, placement: `${placement}_pinned` } });
       continue;
     }
-    overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, offer, event });
+    overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, offer, cart: { title: cartTitle, image: f.img, priceCents: 0, currency: r.currency }, event });
   }
   const ship = getShipping();
   const promos = getPromos();
@@ -155,6 +157,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
         status: null,
         href,
         paid: true,
+        cart: { title: cartTitle, image: f.img, priceCents: 0, currency: r.currency },
         event: { source: "amazon", region, placement: "check_amazon", ean: f.ean },
       });
   }
