@@ -143,8 +143,8 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
           {ship && <span>{ship}</span>}
           {paid && (brand ? <span className="chip bg-subtle text-soft">Ad · Paid link</span> : <span>Paid link</span>)}
           {/* Phones: the cart list's add button as a word on this line, where the row has no width to spare. */}
-          {cart && vote && (
-            <CartAddButton inline href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="text-xs sm:hidden" />
+          {cart && (
+            <CartAddButton inline href={href} productUrl={vote ?? href} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="text-xs sm:hidden" />
           )}
           <Deals deal={deal} dealLabel={dealLabel} offer={offer} />
         </p>
@@ -156,8 +156,8 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
           {price}
         </span>
       )}
-      {cart && vote && (
-        <CartAddButton href={href} productUrl={vote} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="hidden text-soft sm:inline-flex" />
+      {cart && (
+        <CartAddButton href={href} productUrl={vote ?? href} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="hidden text-soft sm:inline-flex" />
       )}
       {internal ? (
         <a href={href} className="btn-pop pr-b btn-buy">
