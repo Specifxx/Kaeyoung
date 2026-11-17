@@ -1503,3 +1503,13 @@ Owner, from the Grok growth report (item 5): URLs are frozen and nothing navigat
 pop-under, no `window.open` on load, no cross-host redirect and no interstitial here. Rule added to CLAUDE.md: no mass path change
 without a redirect map that 301s every old URL, agents never flip hosts (the one change in force is DexCompare to dexcompare.io), and
 the only automatic navigation is a same-host market choice.
+
+## 2026-11-17: Fiverr first-time-shopper review of DexCompare, applied here (owner)
+
+The owner bought a professional first-time-shopper QA review of DexCompare and asked for every finding that generalises to reach every site.
+Applied here (the full reasoning is in DexCompare's DECISIONS.md, same date):
+
+- **Cart hand-off:** the cart drawer opens with "You pay each store on its own site. We never take payment." (normal-size text, first thing in the
+  drawer); "Total before postage" became "Estimated total (before postage)"; the add button's tooltip says you pay at the store. The label stays
+  "Add to cart" (owner, 2026-11-14: a literal "Add to cart" on every row).
+- **The quick view sets the tab title and description while it is open** and restores them on close (the tab used to keep the list's title).
