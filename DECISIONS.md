@@ -1489,3 +1489,10 @@ Owner: "even if there are no Amazon prices available, we should have an option t
 Amazon price `priceRows` now adds an unpriced Amazon row (brand amazon, `check`: the item's own page where the daily ASIN pass matched
 this barcode, else the tagged search) at the END of the store rows, on the product page and in the quick view. Never pinned, ranked, the
 best price, a deal or an alert; a priced Amazon row still pins. It replaces the 2026-11-16 line under the table (`AmazonAlso`, removed).
+
+## 2026-11-17: Two UK stores that have failed every import since 9 November are dropped
+
+`seoulbeautystore` (Seoul Beauty) and `skinseoul` (SkinSeoul) returned "fetch failed" (no HTTP answer at all, from the Actions runner, on the
+same `products.json?...&country=GB` request that every other UK store answers) in all eight daily imports from 9 to 16 November, listing nothing.
+They add no product, only 16 seconds of timeouts and a red line in the ops monitor, so they leave `src/content/stores.ts`. Not worked around:
+no other host, no retry loop. If either answers again, add the line back (the probe workflow reads a store's barcodes before it counts).
