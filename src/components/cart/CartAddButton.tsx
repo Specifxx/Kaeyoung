@@ -5,7 +5,7 @@
 // else (an affiliate or partner link) stays a manual line with that link.
 import { useEffect, useState } from "react";
 import { track as vaTrack } from "@vercel/analytics";
-import { CART_ADDED_EVENT, addLine, makeLine, onCartChange, readCart, setQty, writeCart, type CartAddInput } from "@/lib/cart-list";
+import { cartArm, CART_ADDED_EVENT, addLine, makeLine, onCartChange, readCart, setQty, writeCart, type CartAddInput } from "@/lib/cart-list";
 
 export function CartAddButton({
   className = "",
@@ -16,6 +16,9 @@ export function CartAddButton({
   const line = makeLine(input);
   const id = line?.id ?? null;
   const [inList, setInList] = useState(false);
+  // The cart A/B (lib/cart-list.ts cartArm): the "off" arm never sees the button. Decided after mount, so nothing differs on the server.
+  const [armOn, setArmOn] = useState(false);
+  useEffect(() => setArmOn(cartArm() === "on"), []);
 
   useEffect(() => {
     if (!id) return;
@@ -24,7 +27,7 @@ export function CartAddButton({
     return onCartChange(sync);
   }, [id]);
 
-  if (!line) return null;
+  if (!line || !armOn) return null;
 
   const toggle = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -3,6 +3,7 @@
 // is a Vercel Analytics event (no function, no cookie).
 import { track } from "@vercel/analytics";
 import type { ReactNode } from "react";
+import { cartArmNow } from "@/lib/cart-list";
 
 export function OutLink({
   href,
@@ -29,7 +30,7 @@ export function OutLink({
       title={title}
       onClick={() => {
         try {
-          track("buy_click", event);
+          track("buy_click", { ...event, cart_arm: cartArmNow() });
         } catch {}
       }}
     >
