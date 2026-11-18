@@ -1715,3 +1715,14 @@ menus carry 8 brands, 8 concerns and 6 ingredients (was 14, 12, 10). A product p
 code and guides are written with AI tools from the day's store prices, and what the price guides cost to run (about A$790 a
 month, our own books, 30 days to 15 November 2026). Owner, 2026-11-19: "be very clear how we make money, how much the site
 costs us to run".
+## 2026-11-19: a failed store's prices are carried for 72 hours, not forever
+
+A store that failed to read kept its previous offers so one timeout would not drop a product under the two-store rule.
+That carry had no end: each run copied the last file's rows forward, so a store blocked for days kept showing its old
+prices "in stock" (ScentCompare, 18 Nov: 104 offers from two stores failing for up to 6 days, 13 of them the cheapest row)
+under a page that said "Checked today". Now every store records its last good read (`lastOkAt` in `meta.json`), and its
+offers are carried only while that read is under 72 hours old (`src/lib/import/carry.ts`, `tests/carry.test.ts`), the
+same limit the card sites use. A store with no known good read is never carried. The import also pushes a store's
+listings with a loop, not a spread: a store with 100k+ variants overflowed it ("Maximum call stack size exceeded",
+three MotorCompare stores unread since at least 14 Nov). The home page's "Checked … ago" is now corrected in the browser
+(`LiveAgo`): worked out at build, it froze for the whole release.
