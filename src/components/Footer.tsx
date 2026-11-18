@@ -3,10 +3,13 @@ import { CATEGORIES, SITE } from "@/site";
 import { POSTS, isLive } from "@/content/blog";
 import { LogoMark } from "./Logo";
 import { RateUsLink } from "./site-reviews/SiteReviews";
+import { FeedbackAsk } from "@/components/FeedbackAsk";
 
 export function Footer({ updated }: { updated?: string | null }) {
   return (
     <footer className="wash mt-16 border-t border-line pt-12 text-sm">
+      {/* "Was this page useful?" (owner, 2026-11-18: more feedback). One inline line, never a pop-up. */}
+      <div className="mx-auto max-w-6xl px-4"><FeedbackAsk email={SITE.email} /></div>
       <div className="mx-auto grid max-w-6xl gap-10 px-4 pb-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
@@ -58,6 +61,7 @@ export function Footer({ updated }: { updated?: string | null }) {
             <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">How we make money</Link></li>
             <li><Link prefetch={false} href="/privacy" className="text-soft hover:text-ink">Privacy</Link></li>
             <li><Link prefetch={false} href="/terms" className="text-soft hover:text-ink">Terms</Link></li>
+            <li><Link prefetch={false} href="/feedback" className="text-soft hover:text-ink">Send feedback</Link></li>
             <li><Link prefetch={false} href="/contact" className="text-soft hover:text-ink">Contact us</Link></li>
             <li><RateUsLink className="text-soft hover:text-ink">Rate KaeYoung</RateUsLink></li>
             <li><Link prefetch={false} href="/list-your-store" className="text-soft hover:text-ink">List your store</Link></li>
