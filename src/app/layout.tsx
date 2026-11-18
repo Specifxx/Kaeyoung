@@ -24,6 +24,8 @@ import { menuFacts } from "@/lib/menu-facts";
 import { CategoryStrip } from "@/components/CategoryStrip";
 import { catCounts, getBrands, getMeta } from "@/lib/data";
 import { niceDate } from "@/lib/format";
+import { BottomNav } from "@/components/BottomNav";
+import { BOTTOM_NAV } from "@/lib/bottom-nav";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -92,6 +94,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ShareArrival />
         {/* Scroll reveals: shows what is on screen, then lets the rest ease in as it scrolls into view. */}
         <script dangerouslySetInnerHTML={{ __html: MOTION_SCRIPT }} />
+        {/* The phone bottom nav (components/BottomNav.tsx, lib/bottom-nav.ts): browser only, phones only, BOTTOM_NAV is its switch. */}
+        {BOTTOM_NAV !== "off" && <BottomNav mode={BOTTOM_NAV} />}
       </body>
     </html>
   );
