@@ -17,6 +17,7 @@ import type { PartnerPricesFile } from "./partner-feed";
 import type { PromoData } from "./promos";
 import { NEEDS, inNeed, needOf, type Need, type NeedKind } from "./needs";
 import { popularity as needPopularity } from "./ratings";
+import { asksToBeIndexed, prebuiltProducts } from "./index-tiers";
 
 // KY_DATA_DIR points local development and tests at a fixture; production
 // always reads the committed files.
@@ -324,4 +325,20 @@ export function needHubs(kind?: NeedKind): { need: Need; count: number }[] {
   return NEEDS.filter((n) => !kind || n.kind === kind)
     .map((need) => ({ need, count: needIndex().get(need)?.length ?? 0 }))
     .filter((x) => x.count > 0);
+}
+
+// The product pages that ask to be indexed (lib/index-tiers.ts asksToBeIndexed): the prebuilt core plus the slugs
+// Search Console shows people finding, which the daily import writes to search-demand.json.
+let indexCore: { core: Set<string>; demand: Set<string> } | null = null;
+export function productIndexed(f: Product): boolean {
+  if (!indexCore) {
+    let demand: string[] = [];
+    try {
+      demand = JSON.parse(fs.readFileSync(path.join(DIR, "search-demand.json"), "utf8")) as string[];
+    } catch {
+      demand = [];
+    }
+    indexCore = { core: new Set(prebuiltProducts(getProducts()).map((p) => p.slug)), demand: new Set(demand) };
+  }
+  return asksToBeIndexed(f, indexCore.core, indexCore.demand);
 }

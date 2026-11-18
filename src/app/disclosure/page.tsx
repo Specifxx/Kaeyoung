@@ -18,6 +18,11 @@ export default function Disclosure() {
       <PageHead title="How we make money" sub="The short version: some links can earn us a commission. They are labelled, and they never change the order of the prices." />
       <Prose>
         <p>KaeYoung is free to use, with no sign-up, no pop-ups and no floating ads. Below the page&apos;s content a small block labelled &ldquo;Ad&rdquo; shows eBay and Amazon listings. It is paid for by affiliate links: if you buy after following one, the retailer may pay us a commission. You pay the same price.</p>
+        <h2>Who we are, and what it costs</h2>
+        <p>
+          KaeYoung is run by its co-founders, Bill and George, with no outside owner or sponsor. Hosting, the daily price checks, data and tools for KaeYoung and the other price guides we run cost us about A$790 a month (30 days to
+          15 November 2026); the commissions below are what pays for it. <Link prefetch={false} href="/about">More about us</Link>.
+        </p>
         <h2>Which links can earn us money</h2>
         <ul>
           <li><strong>eBay</strong> (eBay Partner Network): the eBay row above the stores on a product page.</li>

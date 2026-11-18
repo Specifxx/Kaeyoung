@@ -111,7 +111,8 @@ async function main() {
     process.exit(1);
   }
   // The low-traction cull (lib/focus.ts): only widely stocked products, or ones people find through search, are listed.
-  const { listed: products, culled } = focusCatalog(merged, readDemand());
+  const demand = readDemand();
+  const { listed: products, culled } = focusCatalog(merged, demand);
   console.log(`focus: ${products.length} of ${merged.length} products listed`);
   // History keeps every merged product, so a product that is listed again returns with its chart.
   const history = recordHistory(read<History>("public/history.json", {}), merged, today);
@@ -122,6 +123,8 @@ async function main() {
   const listedSlugs = new Set(products.map((f) => f.slug));
   const culledMap = stickyCulled(culled, listedSlugs, read<Record<string, string>>("public/culled.json", {}), prevProducts, Object.values(state.slugs), (s) => categoryOf(s.replace(/-/g, " ")));
   write("public/culled.json", culledMap);
+  // Which listed product pages Search Console shows people finding: they keep asking to be indexed (lib/index-tiers.ts).
+  write("public/search-demand.json", [...demand].filter((s) => listedSlugs.has(s)).sort(), true);
   write("public/history.json", history);
   write("public/meta.json", meta, true);
   write("state/barcodes.json", cache);

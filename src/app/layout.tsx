@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const groups = navGroups(
     catCounts(),
     getBrands()
-      .slice(0, 8)
+      .slice(0, 5)
       .map((b) => ({ slug: b.slug, name: b.name })),
   );
   return (

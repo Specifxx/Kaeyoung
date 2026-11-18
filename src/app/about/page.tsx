@@ -5,8 +5,8 @@ import { PageHead } from "@/components/Section";
 import { Prose } from "@/components/Prose";
 
 export const metadata: Metadata = {
-  title: "About KaeYoung and how matching works",
-  description: "How KaeYoung compares Korean skincare prices: barcode matching, real K-beauty stores only, daily price checks, and how the site is paid for.",
+  title: "About KaeYoung: who runs it and how matching works",
+  description: "Who runs KaeYoung, how it compares Korean skincare prices: barcode matching, real K-beauty stores only, daily price checks, and how the site is paid for.",
   alternates: { canonical: "/about" },
 };
 
@@ -17,6 +17,14 @@ export default function About() {
       <Prose>
         <p>
           KaeYoung checks {STORES.length} real K-beauty stores every day and shows every store&apos;s price for the same product, side by side, in your own currency: the US, UK, Canada, Australia, New Zealand and Europe.
+        </p>
+        <h2>Who runs KaeYoung</h2>
+        <p>
+          KaeYoung is run by its two co-founders, Bill and George. We started it because buying Korean skincare outside Korea meant opening a dozen store tabs to find out who was cheapest for the exact same bottle. We are a small, independent
+          team: no brand, store or distributor owns, funds or sponsors us, and none of them can pay to be listed higher.
+        </p>
+        <p>
+          We write the code and the guides with the help of AI tools, and every number on the site comes from the stores&apos; own prices on the day we read them. Nothing here is a paid review, and nothing is medical advice.
         </p>
         <h2>How a product is matched</h2>
         <p>
@@ -48,6 +56,11 @@ export default function About() {
         <p>
           KaeYoung is free and has no ads beside the prices. It is paid for by affiliate links: if you buy after clicking eBay or Amazon (and, once their programs accept us, the big beauty retailers), we may earn a commission at no cost to you.
           Today none of the stores in the comparison pays us anything. Commission never changes the order: stores are always sorted by price. The details are in <a href="/disclosure">how we make money</a>. No sign-up, no accounts, no pop-ups.
+        </p>
+        <h2>What it costs to run</h2>
+        <p>
+          Hosting, the daily price checks, data and the tools behind KaeYoung and the other price guides we run cost us about A$790 a month (our own books, the 30 days to 15 November 2026). Commissions from the labelled links are how that
+          gets paid; when they fall short, we pay the difference ourselves.
         </p>
         <h2>Spotted a mistake? Want a store added?</h2>
         <p>

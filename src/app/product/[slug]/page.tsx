@@ -5,10 +5,10 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { needIndexable, needPath, needsOfName } from "@/lib/needs";
 import { culledTarget } from "@/lib/culled";
 import { CAT_BY_KEY, REGIONS, SITE, type RegionCode } from "@/site";
-import { bestIn, brandKo, cheapestDelivered, familyKey, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productTitle, productsOfBrand, productsOfCat, productsForNeed, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
+import { productIndexed, bestIn, brandKo, cheapestDelivered, familyKey, getMeta, brandPages, getEbay, getHistory, getProduct, getProducts, productTitle, productsOfBrand, productsOfCat, productsForNeed, regionsOf, spreadIn, storeCount, storeName, variantLabel, variantLabels, variantsOf } from "@/lib/data";
 import { dayNumber, lowestOrderable } from "@/lib/history";
 import { decimal, money, niceDate, pct } from "@/lib/format";
-import { isIndexable, prebuiltProducts } from "@/lib/index-tiers";
+import { prebuiltProducts } from "@/lib/index-tiers";
 import { buyLink } from "@/lib/affiliate";
 import { ProductImage } from "@/components/ProductImage";
 import { PriceTable } from "@/components/PriceTable";
@@ -60,7 +60,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     title,
     description,
     alternates: { canonical: `/product/${f.slug}` },
-    robots: isIndexable(f) ? undefined : { index: false, follow: true },
+    robots: productIndexed(f) ? undefined : { index: false, follow: true },
     openGraph: { title, description, url: `/product/${f.slug}`, images: f.img ? [{ url: f.img }] : undefined },
   };
 }

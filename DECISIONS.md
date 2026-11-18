@@ -1698,6 +1698,23 @@ sitting on top of it.
 - **Measured** (local build, dock stacked): Pixel 7 412×915 nav + dock take 129px (14.1%); iPhone 15 393×852 with a 34px safe area
   143px (16.8%); iPhone SE 375×667 129px (19.3%); the old flush bar took about the same plus the full safe area.
 
+## 2026-11-19: Index only the core and what search already finds; fewer links on every page; who runs the site
+
+The November core update took KaeYoung from ~540 impressions a day to ~15 (12 Nov). 4,500 near-identical product pages
+asked Google to index them; in 56 days Google showed 1,020 and only 110 earned a click or 10+ impressions. Now a product page
+asks to be indexed only when it is in the prebuilt core (the 500 most widely stocked, `prebuiltProducts`) or Search Console
+shows people finding it (`data/public/search-demand.json`, written by the import from the `demand` branch's gsc-pages.json:
+a click or 10+ impressions in 56 days). Every other page stays live, linked and `noindex, follow` (`asksToBeIndexed`,
+`productIndexed`). A page that starts earning impressions returns on the next import.
+
+The footer listed 46 links on every page (every category, seasonal sale, blog post and side project); it now lists nine
+(who runs the site, how we make money, how we pick stores, stores, guides, blog, contact, privacy, terms). The header
+menus carry 8 brands, 8 concerns and 6 ingredients (was 14, 12, 10). A product page went from 169 links to 125.
+
+`/about` and `/disclosure` now say who runs KaeYoung (co-founders Bill and George, no outside owner or sponsor), that the
+code and guides are written with AI tools from the day's store prices, and what the price guides cost to run (about A$790 a
+month, our own books, 30 days to 15 November 2026). Owner, 2026-11-19: "be very clear how we make money, how much the site
+costs us to run".
 ## 2026-11-19: a failed store's prices are carried for 72 hours, not forever
 
 A store that failed to read kept its previous offers so one timeout would not drop a product under the two-store rule.
