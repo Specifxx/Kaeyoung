@@ -1628,3 +1628,10 @@ The "off" arm sees no Add to cart button, and no header or bottom-nav cart unles
 carries `cart_arm`. Verdict 2 Dec: buy clickers and paid buy clicks per arm (the arms are equal halves of visitors). Keep the cart
 only if the "on" arm is not lower; otherwise `cartArm()` returns "off" for everyone. Not on Dex or MTG Compare (their quick-view
 A/B runs to 3 Dec).
+
+## Deals page: share button and its own link preview (owner, 2026-11-18: "we need more shareable artefacts")
+
+`/deals` gets a share button (medium `deals`, `utm_source=share&utm_medium=deals`) and `src/app/deals/opengraph-image.tsx`:
+the guide card's look (`lib/og/guide-image.tsx`) titled with the page's own title, five rows of the biggest gaps between
+the cheapest and the dearest store for the same product in the default region, from `dealsIn` (or, on a thin day, the
+same `shareRows` rule over every product with two stores up). A static route drawn at the day's build, like every page.
