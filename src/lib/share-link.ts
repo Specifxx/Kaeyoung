@@ -3,7 +3,7 @@
 // function (this file is client-safe; the messages are in share-texts.ts). Every shared link carries utm_source=share&utm_medium=<what>; the button sends a Vercel "share" event,
 // ShareArrival one "share_visit" when a shared link brings someone, and RiftCompare's weekly growth report counts both.
 
-export type ShareMedium = "product" | "basket" | "page";
+export type ShareMedium = "product" | "basket" | "page" | "deals";
 
 /** `path` (its own query string kept) on `origin`, with the share tags. */
 export function shareUrl(origin: string, path: string, medium: ShareMedium): string {
