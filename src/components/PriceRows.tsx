@@ -160,7 +160,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
         <CartAddButton href={href} productUrl={vote ?? href} storeName={name} title={cart.title} priceCents={cart.priceCents} currency={cart.currency} image={cart.image} className="hidden text-soft sm:inline-flex" />
       )}
       {internal ? (
-        <a href={href} className="btn-pop pr-b btn-buy">
+        <a href={href} className={`btn-pop pr-b ${brand === "amazon" ? "btn-amazon" : "btn-buy"}`}>
           {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>
         </a>
       ) : (
@@ -170,7 +170,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
           event={event}
           title={checkout ? `Opens ${name}'s checkout with this item` : undefined}
           className={`btn-pop pr-b ${
-            brand || highlight ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
+            brand === "amazon" ? "btn-amazon" : brand || highlight ? "btn-buy" : "border border-line bg-card text-ink hover:border-soft"
           }`}
         >
           {check && brand ? `Check ${brand === "ebay" ? "eBay" : "Amazon"}` : brand ? "Shop" : status === "out" ? "View" : checkout ? "Buy" : price ? "Shop" : "Search"} <span aria-hidden>→</span>

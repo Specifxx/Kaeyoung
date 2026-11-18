@@ -75,7 +75,7 @@ test("eBay plan: coverage first, empty searches wait, the US first among equals 
 
 test("eBay and Amazon rows are drawn like store rows (owner, 2026-11-01)", () => {
   const rows = fs.readFileSync("src/components/PriceRows.tsx", "utf8");
-  assert.doesNotMatch(rows + fs.readFileSync("src/app/globals.css", "utf8"), /btn-ebay|btn-amazon/);
+  assert.doesNotMatch(rows + fs.readFileSync("src/app/globals.css", "utf8"), /btn-ebay/); // eBay stays a store-style button; Amazon alone is amber since 2026-11-18 (tests/amazon-button-quickview.test.ts)
 });
 
 test("eBay quota day is the Pacific date", () => {
