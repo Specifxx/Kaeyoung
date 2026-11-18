@@ -22,7 +22,7 @@ export default function Page() {
           what="Korean skincare"
           stores={STORES.map((s) => s.name)}
           priceRule="Every product is matched only by its Korean barcode, so a fake or a different size can't borrow a real product's page, and with three or more stores selling it, a price under 40% of their median is dropped automatically."
-          marketplaces="eBay, Amazon and the partner retailers pinned above the stores are labelled as paid links and never counted as a store or as the cheapest. We don't vet the individual eBay and Amazon sellers, so check a seller's feedback before you buy."
+          marketplaces="eBay, Amazon and the partner retailers pinned above the stores are labelled as paid links and never counted as a store; one is marked the lowest price only when its real price is genuinely lower than every store's. We don't vet the individual eBay and Amazon sellers, so check a seller's feedback before you buy."
           buttonClassName="btn-pop"
           suggestHref="/stores#suggest"
         />

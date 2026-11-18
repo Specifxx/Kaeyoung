@@ -15,7 +15,7 @@ export default function Disclosure() {
   const paying = STORES.filter((s) => s.affiliate && process.env[s.affiliate.envVar]).length;
   return (
     <div className="mx-auto max-w-3xl px-4">
-      <PageHead title="How we make money" sub="The short version: some links can earn us a commission. They are labelled, and they never change which store is shown as cheapest." />
+      <PageHead title="How we make money" sub="The short version: some links can earn us a commission. They are labelled, and they never change the order of the prices." />
       <Prose>
         <p>KaeYoung is free to use, with no sign-up, no pop-ups and no floating ads. Below the page&apos;s content a small block labelled &ldquo;Ad&rdquo; shows eBay and Amazon listings. It is paid for by affiliate links: if you buy after following one, the retailer may pay us a commission. You pay the same price.</p>
         <h2>Which links can earn us money</h2>
@@ -31,7 +31,7 @@ export default function Disclosure() {
         <h2>What commission never does</h2>
         <ul>
           <li>It never changes the order. Stores are sorted by their item price, cheapest first, by a program that does not know who pays.</li>
-          <li>It never makes a row &quot;the cheapest&quot;. eBay, Amazon and the big retailers sit in their own labelled rows, apart from the stores, and are never counted as a store.</li>
+          <li>It never makes a row &quot;the cheapest&quot;. eBay, Amazon and the big retailers sit in their own labelled rows, apart from the stores, and are never counted as a store. An eBay or Amazon row is marked &quot;Lowest price&quot; only when its real price is genuinely lower than every store&apos;s.</li>
           <li>It never decides which stores we list. We list every specialist K-beauty shop we can read reliably, paying or not; we leave out open marketplaces because counterfeits are common there.</li>
         </ul>
         <h2>The referral tag on store links</h2>

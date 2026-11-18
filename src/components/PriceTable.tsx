@@ -38,6 +38,9 @@ const asinsFor = (r: RegionCode) => {
   return asinCache.get(r)!;
 };
 
+/** An eBay or Amazon price more than 25% under the cheapest store is a wrong product, never the best price. */
+const BEST_MAX_UNDER_STORES = 0.75;
+
 /** One region's rows, eBay first and Amazon second, then partners, then the
  *  stores in price order. Plain data, so the quick view (/q/<slug>) draws the
  *  same rows as the product page. */
@@ -113,6 +116,19 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     }
     overseas.push({ name: p.name, sub: p.note, price: null, status: null, href, paid, offer, cart: { title: cartTitle, image: f.img, priceCents: 0, currency: r.currency }, event });
   }
+  // The cheapest row of the table carries the highlight, whichever row it is (owner, 2026-11-18, withdrawing "eBay and Amazon are never the
+  // best price"): a priced eBay or Amazon row strictly under the cheapest in-stock store, but never more than 25% under it (that is a
+  // wrong product, not a deal). Row order is unchanged: eBay, Amazon, then the stores.
+  const winner = best
+    ? pinned
+        .filter((p) => (p.brand === "ebay" || p.brand === "amazon") && p.status === "in" && (p.cart?.priceCents ?? 0) > 0)
+        .filter((p) => p.cart!.priceCents < best.p && p.cart!.priceCents >= best.p * BEST_MAX_UNDER_STORES)
+        .sort((a, b) => a.cart!.priceCents - b.cart!.priceCents)[0] ?? null
+    : null;
+  if (winner) {
+    winner.highlight = true;
+    winner.sub = `Lowest price · ${winner.sub ?? ""}`.replace(/ · $/, "");
+  }
   const ship = getShipping();
   const promos = getPromos();
   const fmt = (m: number) => money(m, region);
@@ -133,7 +149,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       vote: o.u,
       checkout: link.to === "checkout",
       paid: storePays(o.s),
-      highlight: o === best,
+      highlight: o === best && !winner,
       ship: deliveryNote(ship[o.s], o.p, fmt),
       deal: d ? `${dealNote(d, fmt)}${lowest ? ` · lowest per item if you buy ${per!.q}` : ""}` : null,
       dealLabel: d ? (d.l ?? (d.t.length ? "Multi-buy" : "Free gift")) : null,
