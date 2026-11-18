@@ -15,6 +15,7 @@ import { recordHistory } from "@/lib/history";
 import { readShopify, shopifyOwnCurrency, PRODUCT_LOOKUPS_PER_RUN, type BarcodeCache, type ReadResult } from "@/lib/import/shopify";
 import { packProducts, unpackProducts } from "@/lib/products-file";
 import type { History, Listing, Meta, StoreRun } from "@/lib/types";
+import { CARRY_HOURS, stampReads } from "@/lib/import/carry";
 
 const DATA = path.join(process.cwd(), "data");
 const read = <T>(p: string, fallback: T): T => {
@@ -68,7 +69,7 @@ async function main() {
       const t0 = Date.now();
       try {
         const r = await readStore(s, cache);
-        listings.push(...r.listings);
+        for (const l of r.listings) listings.push(l); // a loop: a store with 100k+ variants overflows a spread (Maximum call stack size exceeded, 2026-11-18)
         runs[s.id] = { ok: true, listings: r.seen, matched: r.listings.length, refused: r.refused, noEan: r.noEan, ms: Date.now() - t0 };
         console.log(`✓ ${s.id}: ${r.seen} products, ${r.listings.length} variants with a Korean barcode, ${r.noEan} without`);
       } catch (e) {
@@ -82,7 +83,9 @@ async function main() {
   // A store that failed today keeps yesterday's offers (marked as they were),
   // so one timeout does not drop a product under the two-store rule. Its
   // listings come back from the previous products file.
-  const failed = new Set(Object.entries(runs).filter(([, r]) => !r.ok).map(([id]) => id));
+  // Only while its last good read is under CARRY_HOURS old (lib/import/carry.ts): after that its old prices leave the site.
+  const { carry: failed, expired } = stampReads(runs, prevMeta, new Date());
+  for (const id of expired) console.log(`✗ ${id}: not read for over ${CARRY_HOURS} hours; its old offers are dropped`);
   if (failed.size) {
     for (const f of prevProducts) {
       for (const [region, offers] of Object.entries(f.offers)) {
@@ -124,7 +127,7 @@ async function main() {
   write("state/barcodes.json", cache);
   write("state/slugs.json", state.slugs, true);
   write("state/first-seen.json", state.first, true);
-  console.log(`\n${products.length} products from ${listings.length} listings (${failed.size} store(s) failed, ${PRODUCT_LOOKUPS_PER_RUN - budget.lookups} barcode lookups).`);
+  console.log(`\n${products.length} products from ${listings.length} listings (${Object.values(runs).filter((r) => !r.ok).length} store(s) failed, ${PRODUCT_LOOKUPS_PER_RUN - budget.lookups} barcode lookups).`);
 }
 
 main().catch((e) => {
