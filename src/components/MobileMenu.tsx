@@ -33,6 +33,7 @@ export function MobileMenu({ groups }: { groups: NavGroup[] }) {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls="site-menu"
+        data-bn-menu
         className="grid h-9 w-9 place-items-center rounded-full border border-line bg-card text-ink transition hover:border-soft"
       >
         <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
