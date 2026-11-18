@@ -9,6 +9,7 @@ import { OutLink } from "./OutLink";
 import { AMAZON_PRICE_DISCLAIMER, AmazonPrice } from "./AmazonPrice";
 import { StoreVote } from "./StoreVote";
 import { CartAddButton } from "./cart/CartAddButton";
+import { BestTag } from "./BestTag";
 
 const STOCK: Record<Offer["st"], { label: string; cls: string }> = {
   in: { label: "In stock", cls: "bg-save-pale text-save" },
@@ -23,6 +24,10 @@ export interface RowData {
   href: string;
   paid: boolean;
   highlight?: boolean;
+  /** The cheapest row is a plain store that pays us nothing (owner, 2026-11-18): a small neutral "Best price" tag instead of the highlight. */
+  plainBest?: boolean;
+  /** The tag's "i" hint (lib/best-tag.ts), only when the list has an eBay row. */
+  bestHint?: string | null;
   /** eBay and Amazon: pinned first (owner, 2026-10-30), drawn exactly like a store row (owner, 2026-11-01). */
   brand?: "ebay" | "amazon";
   /** eBay or Amazon with no price to show: an "Also check on …" search row, tinted to stand out (owner, 2026-11-06). */
@@ -122,7 +127,7 @@ function Deals({ deal, dealLabel, offer }: Pick<RowData, "deal" | "dealLabel" | 
   );
 }
 
-function Row({ name, sub, price, status, href, paid, highlight = false, brand, check = false, internal = false, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
+function Row({ name, sub, price, status, href, paid, highlight = false, plainBest = false, bestHint = null, brand, check = false, internal = false, from = false, ship, live, checkout = false, deal, dealLabel, offer, event, vote, cart }: RowData) {
   const s = status ? STOCK[status] : null;
   return (
     <div
@@ -139,6 +144,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, brand, c
         </p>
         <p className="pr-s">
           {s && <span className={`chip ${s.cls}`}>{s.label}</span>}
+          {plainBest && <BestTag hint={bestHint} />}
           {sub && <span className={highlight ? "font-semibold text-save" : ""}>{sub}</span>}
           {ship && <span>{ship}</span>}
           {paid && (brand ? <span className="chip bg-subtle text-soft">Ad · Paid link</span> : <span>Paid link</span>)}

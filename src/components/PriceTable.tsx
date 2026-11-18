@@ -18,6 +18,7 @@ import { deliveryNote } from "@/lib/shipping";
 import { money } from "@/lib/format";
 import type { EbayPick, Product } from "@/lib/types";
 import { orderRows } from "@/lib/row-order";
+import { bestPriceHint, isPlainBest } from "@/lib/best-tag";
 import { PriceRows, type RowData, type RowsData } from "./PriceRows";
 
 const AWIN_OFFERS: AwinPromotion[] = Array.isArray((awinPromos as { promotions?: unknown }).promotions) ? ((awinPromos as { promotions: AwinPromotion[] }).promotions) : [];
@@ -139,9 +140,11 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
     const per = d && bestPerItem(d);
     const lowest = !!(per && best && per.q > 1 && per.each < best.p);
     const store = STORE_BY_ID[o.s];
+    const plainBest = o === best && !winner && isPlainBest({ paid: storePays(o.s) });
     return {
       name: storeName(o.s),
-      sub: o === best ? "Lowest store price" : null,
+      // The cheapest plain store gets the small "Best price" tag (owner, 2026-11-18), not a sub line; one that pays us keeps "Lowest store price".
+      sub: o === best && !plainBest ? "Lowest store price" : null,
       // A sold-out row keeps its place at the bottom with no price (2026-11-06): a stale price there read as a deal.
       price: o.st === "out" ? null : money(o.p, region),
       status: o.st,
@@ -149,7 +152,8 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       vote: o.u,
       checkout: link.to === "checkout",
       paid: storePays(o.s),
-      highlight: o === best && !winner,
+      highlight: o === best && !winner && !plainBest,
+      ...(plainBest ? { plainBest: true, bestHint: bestPriceHint(pinned) } : {}),
       ship: deliveryNote(ship[o.s], o.p, fmt),
       deal: d ? `${dealNote(d, fmt)}${lowest ? ` · lowest per item if you buy ${per!.q}` : ""}` : null,
       dealLabel: d ? (d.l ?? (d.t.length ? "Multi-buy" : "Free gift")) : null,
