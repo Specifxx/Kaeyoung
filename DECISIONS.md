@@ -1562,3 +1562,13 @@ The opt-in build passed the phone tests (iPhone SE, Pixel 7, Z Fold cover: flush
 scroll up, hidden while typing, zoomed, over the cart or menu, never over Add to cart, CLS 0, no slower scrolling) and was checked
 live with `?bn=1`, so `BOTTOM_NAV` is "on" (the owner asked for the bar on every site). `?bn=0` still opts a visitor out, and "off"
 is the rollback. It ships with the next daily release, not its own build.
+## 2026-11-18: 161 stores (probe round 6, New Zealand chemists read in full)
+
+New Zealand had 8 stores, the thinnest region, so most NZ products miss the 2-store page rule. Round 5 (2026-11-04) left
+out Life Pharmacy and Health New Zealand as "under 50 K-beauty products", but the probe stopped at 2,000 products and a
+chemist lists far more. Round 6 reads up to 10,000 (`PROBE_PAGES`, the probe only). Added, as `mixed` stores (only known
+Korean brands get a barcode lookup; the 880 barcode still decides): Bargain Chemist (NZ, 177 K-beauty products of 10,000,
+40/40 sampled with Korean barcodes) and Life Pharmacy (NZ, 63, 40/40). Kanvas Beauty (AU, 329) was already listed. Left out:
+Unichem (the same Green Cross Health stock as Life Pharmacy: 36 of 40 sampled barcodes shared), Health New Zealand
+(30 K-beauty products), AmiGlow (no barcode readable), and the unreadable Oz Hair & Beauty NZ/AU, Cosmic, Skinlab,
+Beauty Boutique and Pharmacy Direct.
