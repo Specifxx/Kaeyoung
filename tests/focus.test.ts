@@ -29,3 +29,11 @@ test("the import applies it, the half-size guard reads the merged count, and a c
   assert.match(imp, /\}\), merged, today\);/);
   assert.match(fs.readFileSync("src/app/product/[slug]/page.tsx", "utf8"), /culledTarget\(params\.slug\)/);
 });
+
+test("the 301 map is sticky: a product that leaves the merge keeps a target, a relisted one leaves the map", async () => {
+  const { stickyCulled } = await import("../src/lib/focus");
+  const map = stickyCulled({ today: "men" }, new Set(["back"]), { old: "women", back: "women" }, [{ slug: "gone", cat: "unisex" as never }], ["ever-eau-de-parfum", "back"], () => "guess");
+  assert.deepEqual(map, { "ever-eau-de-parfum": "guess", gone: "unisex", old: "women", today: "men" });
+  const imp = fs.readFileSync("scripts/import.ts", "utf8");
+  assert.match(imp, /stickyCulled\(culled, listedSlugs, read<Record<string, string>>\("public\/culled\.json", \{\}\), prevProducts, Object\.values\(state\.slugs\)/);
+});
