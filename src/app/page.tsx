@@ -22,6 +22,7 @@ import { POST_BY_SLUG } from "@/content/blog";
 import { GUIDES } from "@/lib/guides";
 import { JsonLd, faqLd, siteLd } from "@/lib/seo";
 import { SiteReviews } from "@/components/site-reviews/SiteReviews";
+import { rankProducts } from "@/lib/home-demand";
 
 export const metadata: Metadata = {
   // 60 characters, keyword first, brand last (SEO audit, 2026-11-03).
@@ -141,8 +142,9 @@ export default function Home() {
         {REGIONS.map((r) => {
           // Only products of about US$20 or more are featured here (owner, 2026-11-06, lib/featured.ts).
           const feat = homeFeaturedIn(r.code, all);
-          const deals = dealsIn(r.code, 8, feat).map((d) => d.f);
-          const pop = popularNow(r.code, 8, feat);
+          // Most likely to earn first (owner, 2026-11-18; lib/home-rank.ts): three times as many ranked, eight shown. New stays newest first.
+          const deals = rankProducts(dealsIn(r.code, 24, feat).map((d) => d.f), r.code).slice(0, 8);
+          const pop = rankProducts(popularNow(r.code, 24, feat), r.code).slice(0, 8);
           const fresh = newestIn(r.code, 8, feat);
           return (
             <div key={r.code} className={`rp rp-${r.code}`}>
