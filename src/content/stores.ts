@@ -194,6 +194,9 @@ export const STORES: Store[] = [
   { id: "refreshskincare", name: "Refresh Skincare", region: "UK", base: "https://refreshskincare.co.uk", platform: "shopify" },
   { id: "atelierdeglow", name: "Atelier De Glow", region: "UK", base: "https://atelierdeglow.com", platform: "shopify" },
   { id: "likeskincare", name: "Likeskin", region: "UK", base: "https://likeskincare.com", platform: "shopify" },
+  // Probe round 6 (2026-11-18): New Zealand chemists read in full (Life Pharmacy and Unichem are one stock, so one).
+  { id: "bargainchemist", name: "Bargain Chemist", region: "NZ", base: "https://bargainchemist.co.nz", platform: "shopify", mixed: true },
+  { id: "lifepharmacy", name: "Life Pharmacy", region: "NZ", base: "https://lifepharmacy.co.nz", platform: "shopify", mixed: true },
 ];
 
 export const STORE_BY_ID: Record<string, Store> = Object.fromEntries(STORES.map((s) => [s.id, s]));
