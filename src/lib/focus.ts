@@ -40,3 +40,26 @@ export function focusCatalog(products: readonly Product[], demand: ReadonlySet<s
   }
   return { listed, culled };
 }
+
+/**
+ * The 301 map, made sticky (2026-11-18, URL freeze: "an old URL never 404s"). focusCatalog only knows today's merged products,
+ * so a product that fell out of the merge entirely (fewer than two stores anywhere) used to drop out of culled.json too, and its
+ * page became a 404: Search Console counted 806 such product URLs on 18 Nov. Every product URL we ever published keeps a target:
+ * today's culls, yesterday's map, yesterday's listed products that are gone today, and every slug the import ever gave
+ * (state/slugs.json) with its category read from the slug's own words. A slug listed today leaves the map and is a live page again.
+ */
+export function stickyCulled(
+  culled: Readonly<Record<string, string>>,
+  listedSlugs: ReadonlySet<string>,
+  prevCulled: Readonly<Record<string, string>>,
+  prevProducts: readonly Pick<Product, "slug" | "cat">[],
+  everSlugs: Iterable<string>,
+  guessCat: (slug: string) => string,
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const s of everSlugs) if (!listedSlugs.has(s)) out[s] = guessCat(s);
+  for (const [s, c] of Object.entries(prevCulled)) if (!listedSlugs.has(s)) out[s] = c;
+  for (const p of prevProducts) if (!listedSlugs.has(p.slug)) out[p.slug] = p.cat;
+  for (const [s, c] of Object.entries(culled)) out[s] = c;
+  return Object.fromEntries(Object.entries(out).sort(([a], [b]) => (a < b ? -1 : 1)));
+}
