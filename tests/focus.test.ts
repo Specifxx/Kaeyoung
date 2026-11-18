@@ -24,7 +24,8 @@ test("search demand keeps a page; the rest is culled to its category", () => {
 
 test("the import applies it, the half-size guard reads the merged count, and a culled page 301s", () => {
   const imp = fs.readFileSync("scripts/import.ts", "utf8");
-  assert.match(imp, /focusCatalog\(merged, readDemand\(\)\)/);
+  assert.match(imp, /const demand = readDemand\(\);/);
+  assert.match(imp, /focusCatalog\(merged, demand\)/);
   assert.match(imp, /prevMeta\?\.merged \?\? prevProducts\.length/);
   assert.match(imp, /\}\), merged, today\);/);
   assert.match(fs.readFileSync("src/app/product/[slug]/page.tsx", "utf8"), /culledTarget\(params\.slug\)/);

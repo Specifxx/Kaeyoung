@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { CATEGORIES, SITE } from "@/site";
-import { POSTS, isLive } from "@/content/blog";
+import { SITE } from "@/site";
 import { LogoMark } from "./Logo";
-import { RateUsLink } from "./site-reviews/SiteReviews";
 import { FeedbackAsk } from "@/components/FeedbackAsk";
 
 export function Footer({ updated }: { updated?: string | null }) {
@@ -25,66 +23,22 @@ export function Footer({ updated }: { updated?: string | null }) {
             <a className="underline hover:text-ink" href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </p>
         </div>
-        <div>
-          <h2 className="eyebrow mb-3">Shop</h2>
-          <ul className="space-y-1.5">
-            {CATEGORIES.filter((c) => c.key !== "other").map((c) => (
-              <li key={c.key}>
-                <Link prefetch={false} href={`/${c.key}`} className="text-soft hover:text-ink">
-                  {c.plural.replace(/^./, (x) => x.toUpperCase())} prices
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2 className="eyebrow mb-3">KaeYoung</h2>
-          <ul className="space-y-1.5">
-            <li><Link prefetch={false} href="/deals" className="text-soft hover:text-ink">K-beauty deals today</Link></li>
-            <li><Link prefetch={false} href="/black-friday" className="text-soft hover:text-ink">Black Friday K-beauty deals</Link></li>
-            <li><Link prefetch={false} href="/cyber-monday" className="text-soft hover:text-ink">Cyber Monday K-beauty deals</Link></li>
-            <li><Link prefetch={false} href="/boxing-day" className="text-soft hover:text-ink">Boxing Day K-beauty deals</Link></li>
-            <li><Link prefetch={false} href="/january-sales" className="text-soft hover:text-ink">January sales</Link></li>
-            <li><Link prefetch={false} href="/lunar-new-year" className="text-soft hover:text-ink">Lunar New Year deals</Link></li>
-            <li><Link prefetch={false} href="/valentines-day" className="text-soft hover:text-ink">Valentine&apos;s Day gifts</Link></li>
-            <li><Link prefetch={false} href="/brands" className="text-soft hover:text-ink">Korean skincare brands</Link></li>
+        <nav aria-label="About KaeYoung" className="lg:col-span-3">
+          {/* A short, fixed list (2026-11-19): the footer used to repeat 46 links on every page (every category, seasonal
+              sale, post and side project); the header already reaches the shop, so the footer keeps who we are and how
+              we work. DECISIONS.md, 2026-11-19 "Fewer links on every page". */}
+          <ul className="grid gap-x-8 gap-y-1.5 sm:grid-cols-2 lg:grid-cols-3">
+            <li><Link prefetch={false} href="/about" className="text-soft hover:text-ink">Who runs KaeYoung</Link></li>
+            <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">How we make money</Link></li>
+            <li><Link prefetch={false} href="/how-we-pick-stores" className="text-soft hover:text-ink">How we pick stores</Link></li>
+            <li><Link prefetch={false} href="/stores" className="text-soft hover:text-ink">Stores we compare</Link></li>
             <li><Link prefetch={false} href="/guides" className="text-soft hover:text-ink">Price guides</Link></li>
             <li><Link prefetch={false} href="/blog" className="text-soft hover:text-ink">Blog</Link></li>
-            <li><Link prefetch={false} href="/stores" className="text-soft hover:text-ink">Where to buy K-beauty online</Link></li>
-            <li><Link prefetch={false} href="/about" className="text-soft hover:text-ink">About &amp; how matching works</Link></li>
-            <li><Link prefetch={false} href="/forum" className="text-soft hover:text-ink">Community (beta)</Link></li>
-            <li><Link prefetch={false} href="/creators" className="text-soft hover:text-ink">Creators</Link></li>
-            <li><Link prefetch={false} href="/basket" className="text-soft hover:text-ink">Compare a basket</Link></li>
-            <li><Link prefetch={false} href="/price-report" className="text-soft hover:text-ink">Monthly K-beauty price report</Link></li>
-            <li><Link prefetch={false} href="/is-this-a-good-price" className="text-soft hover:text-ink">Is this a good price?</Link></li>
-            <li><Link prefetch={false} href="/widgets" className="text-soft hover:text-ink">Free price links for your site</Link></li>
-            <li><Link prefetch={false} href="/disclosure" className="text-soft hover:text-ink">How we make money</Link></li>
+            <li><Link prefetch={false} href="/contact" className="text-soft hover:text-ink">Contact us</Link></li>
             <li><Link prefetch={false} href="/privacy" className="text-soft hover:text-ink">Privacy</Link></li>
             <li><Link prefetch={false} href="/terms" className="text-soft hover:text-ink">Terms</Link></li>
-            <li><Link prefetch={false} href="/feedback" className="text-soft hover:text-ink">Send feedback</Link></li>
-            <li><Link prefetch={false} href="/contact" className="text-soft hover:text-ink">Contact us</Link></li>
-            <li><RateUsLink className="text-soft hover:text-ink">Rate KaeYoung</RateUsLink></li>
-            <li><Link prefetch={false} href="/list-your-store" className="text-soft hover:text-ink">List your store</Link></li>
-            <li><Link prefetch={false} href="/how-we-pick-stores" className="text-soft hover:text-ink">How we pick stores</Link></li>
           </ul>
-        </div>
-        <div>
-          <h2 className="eyebrow mb-3">Read</h2>
-          <ul className="space-y-1.5">
-            {POSTS.filter((p) => isLive(p)).map((p) => (
-              <li key={p.slug}>
-                <Link prefetch={false} href={`/blog/${p.slug}`} className="text-soft hover:text-ink">
-                  {p.short}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link prefetch={false} href="/blog" className="font-medium text-accent-deep hover:underline">
-                All posts →
-              </Link>
-            </li>
-          </ul>
-        </div>
+        </nav>
       </div>
       <div className="border-t border-line px-4 py-5 text-center text-xs text-soft">
         <p>

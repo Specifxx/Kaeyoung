@@ -25,9 +25,9 @@ export function menuFacts(): MenuFacts {
   return {
     catRegions: Object.fromEntries(CATEGORIES.map((c) => [c.key, marketsOf(productsOfCat(c.key as CatKey))])),
     brands: getBrands()
-      .slice(0, 14)
+      .slice(0, 8)
       .map((b) => ({ href: `/brands/${b.slug}`, label: b.name, regions: marketsOf(b.products) })),
-    concerns: need("concern", 12),
-    ingredients: need("ingredient", 10),
+    concerns: need("concern", 8),
+    ingredients: need("ingredient", 6),
   };
 }

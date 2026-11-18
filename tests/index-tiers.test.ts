@@ -23,3 +23,13 @@ test("the build prerenders only the most widely stocked sitemap products", () =>
   assert.ok(!picked.some((f) => f.slug === "thin"), "outside the sitemap tier: rendered on first visit");
   assert.ok(picked.every((f) => (f.offers.US?.length ?? 0) >= picked[picked.length - 1].offers.US!.length));
 });
+
+test("only the prebuilt core and pages search already finds ask to be indexed (2026-11-19)", async () => {
+  const { asksToBeIndexed } = await import("@/lib/index-tiers");
+  const f = (slug: string) => ({ slug, offers: { US: [o("a"), o("b"), o("c")] } }) as unknown as Product;
+  assert.equal(asksToBeIndexed(f("core"), new Set(["core"]), new Set()), true);
+  assert.equal(asksToBeIndexed(f("found"), new Set(), new Set(["found"])), true);
+  assert.equal(asksToBeIndexed(f("other"), new Set(["core"]), new Set(["found"])), false, "indexable but neither core nor found: noindex, follow");
+  const soldOut = { slug: "core", offers: { US: [o("a", "out"), o("b", "out")] } } as unknown as Product;
+  assert.equal(asksToBeIndexed(soldOut, new Set(["core"]), new Set()), false, "sold out everywhere stays noindex");
+});

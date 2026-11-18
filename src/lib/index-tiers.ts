@@ -17,6 +17,17 @@ export function isIndexable(f: Product): boolean {
   return orderable && compared;
 }
 
+/**
+ * Which indexable pages actually ask Google to index them (2026-11-19, after the November core update took the site to
+ * near-zero impressions): the PREBUILT_PRODUCTS most widely stocked products, plus every product page Search Console
+ * shows people finding (search-demand.json: a click or 10+ impressions in 56 days). 4,500 near-identical product pages
+ * asked to be indexed and Google showed 1,020 of them; the rest stay live for visitors and linked, `noindex, follow`.
+ * DECISIONS.md, 2026-11-19 "Index only the core and what search already finds".
+ */
+export function asksToBeIndexed(f: Product, core: ReadonlySet<string>, demand: ReadonlySet<string>): boolean {
+  return isIndexable(f) && (core.has(f.slug) || demand.has(f.slug));
+}
+
 /** The first sitemap tier: indexable and stocked widely (DECISIONS.md 2026-11-03). */
 export function inSitemap(f: Product): boolean {
   if (!isIndexable(f)) return false;
