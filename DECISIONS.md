@@ -1572,3 +1572,12 @@ Korean brands get a barcode lookup; the 880 barcode still decides): Bargain Chem
 Unichem (the same Green Cross Health stock as Life Pharmacy: 36 of 40 sampled barcodes shared), Health New Zealand
 (30 K-beauty products), AmiGlow (no barcode readable), and the unreadable Oz Hair & Beauty NZ/AU, Cosmic, Skinlab,
 Beauty Boutique and Pharmacy Direct.
+
+## 2026-11-18: an eBay or Amazon row may carry the lowest price (owner)
+
+The owner withdrew "eBay and Amazon are never the best price": a row that is genuinely the cheapest says so, whichever row it is. In
+`priceRows` (`components/PriceTable.tsx`) a priced eBay or Amazon row strictly under the cheapest in-stock store, and not more than 25% under it
+(`BEST_MAX_UNDER_STORES`: that is a wrong product, not a deal), takes the highlight and "Lowest price"; the cheapest store then loses its tint
+and keeps "Lowest store price". Row order is unchanged (eBay, Amazon, other affiliate rows, then the stores). The alert feed, deals, JSON-LD and
+list tiles still use the cheapest STORE price (alerts and structured data are not promises about an ad's price). Unpriced "Check" rows never win.
+`tests/best-price-paid-rows.test.ts`. Disclosure and "How we pick stores" copy updated.
