@@ -36,3 +36,14 @@ test("share buttons on the product page, quick view and basket; robots lets prev
   assert.match(read("src/app/layout.tsx"), /<ShareArrival \/>/);
   assert.match(read("src/app/robots.ts"), /"\/\*utm_source=share"/);
 });
+
+// Share-for-a-deal (owner, 2026-11-18).
+import { pickShareArm } from "../src/components/ShareThanks";
+test("the share-for-a-deal arm is drawn once, half and half, and kept; the thank-you points to the free deals page", async () => {
+  assert.equal(pickShareArm(null, 0.2), "reward");
+  assert.equal(pickShareArm(null, 0.8), "plain");
+  assert.equal(pickShareArm("plain", 0.2), "plain");
+  const src = (await import("node:fs")).readFileSync("src/components/ShareButton.tsx", "utf8");
+  assert.match(src, /<ShareThanks href="\/deals"/);
+  assert.match(src, /track\("share", \{ medium, arm \}\)/);
+});
