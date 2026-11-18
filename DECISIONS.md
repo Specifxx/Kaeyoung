@@ -1556,6 +1556,12 @@ The menu tab clicks the element marked `data-bn-menu`. `BOTTOM_NAV` is the switc
 localStorage) until this site passes the phone tests, then "on"; "off" is the rollback. `?bn=0` always opts a visitor out.
 `tests/bottom-nav.test.ts` pins all of it.
 
+## 2026-11-18: Phone bottom nav on for everyone (owner)
+
+The opt-in build passed the phone tests (iPhone SE, Pixel 7, Z Fold cover: flush to the bottom, hides on scroll down, returns on
+scroll up, hidden while typing, zoomed, over the cart or menu, never over Add to cart, CLS 0, no slower scrolling) and was checked
+live with `?bn=1`, so `BOTTOM_NAV` is "on" (the owner asked for the bar on every site). `?bn=0` still opts a visitor out, and "off"
+is the rollback. It ships with the next daily release, not its own build.
 ## 2026-11-18: 161 stores (probe round 6, New Zealand chemists read in full)
 
 New Zealand had 8 stores, the thinnest region, so most NZ products miss the 2-store page rule. Round 5 (2026-11-04) left
