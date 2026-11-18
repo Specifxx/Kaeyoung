@@ -163,8 +163,8 @@ export function QuickView() {
           )}
         </div>
         <div className="border-t border-line p-4 sm:px-5">
-          <Link prefetch={false} href={href} onClick={hide} className="btn-pop btn-buy flex w-full justify-center px-5 py-2.5 text-[15px]">
-            See price history and details <span aria-hidden>→</span>
+          <Link prefetch={false} href={href} onClick={hide} className="btn-pop btn-buy flex min-h-[44px] w-full justify-center px-5 py-2.5 text-[15px]" data-qv-full-page>
+            See full page: price history and details <span aria-hidden>→</span>
           </Link>
         </div>
       </div>
