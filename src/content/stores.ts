@@ -38,6 +38,8 @@ export const STORES: Store[] = [
   { id: "stylekorean", name: "Hola StyleKorean", region: "US", base: "https://holastylekorean.com", platform: "shopify" },
   { id: "moida", name: "MOIDA", region: "US", base: "https://bloomingkoco.com", platform: "shopify" },
   { id: "ohlolly", name: "Ohlolly", region: "US", base: "https://ohlolly.com", platform: "shopify" },
+  // Suggested through the store form; probed 2026-11-18: Shopify, USD, 37 of 40 sampled variants carry a barcode, 52 Korean (880) codes.
+  { id: "havencobeauty", name: "Haven Co. Beauty", region: "US", base: "https://havencobeauty.com", platform: "shopify", mixed: true },
   { id: "sentisenti", name: "Senti Senti", region: "US", base: "https://oo35mm.com", platform: "shopify" },
   { id: "sokoglam", name: "Soko Glam", region: "US", base: "https://sokoglam.com", platform: "shopify" },
   { id: "songofskin", name: "Song of Skin", region: "US", base: "https://songofskin.com", platform: "shopify" },
