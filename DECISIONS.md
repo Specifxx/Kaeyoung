@@ -1667,3 +1667,16 @@ the footer, dialogs and the keyboard, ✕ for the visit, labelled Ad, rel sponso
 `dock_arm`. Verdict 2 Dec: buy clickers and paid buy clicks per arm. EPN's Network Agreement (Exhibit A §1.4, §2.5) puts any
 promotional method it does not expressly permit under prior written approval; the dock has run since 2026-11-06, this changes only
 when it shows. Not on Dex or MTG Compare (their phone A/B runs to 3 Dec).
+
+## 2026-11-18: A plain store's best price gets a small "Best price" tag, not the green highlight
+
+Owner, 2026-11-18: when the cheapest row is just a store that pays us nothing, do not colour it green (green ground and edge, bold
+green sub line, accent price, buy-coloured button) because the loudest row on the page should not be the one that earns nothing.
+`priceRows` (`PriceTable.tsx`) now marks that row `plainBest`: a small neutral "Best price" chip (`BestTag.tsx`) and the price in
+the normal ink, with an "i" hint (title, aria-label, tap-to-show line on a phone) reading "Prices and stock change: also check
+eBay", shown ONLY when the list has an eBay row, and naming only rows it has; it never says eBay is cheaper. When the cheapest row
+is an affiliate or paid row (eBay or Amazon winning, or a store that pays us) it keeps the full highlight exactly as before.
+Same on the product page and the quick view (one `PriceRows`). Unchanged: row order, sorting, `rel="sponsored"`, tracking, labels,
+the hero price box (already neutral), deal and price-drop badges, JSON-LD, feeds, alerts. `lib/best-tag.ts`,
+`tests/best-price-tag.test.ts`. Verdict: paid clicks per 100 buy clicks before and after (`buy_click` events, `source` paid or
+not), because the green on a non-paying store was pulling clicks from our paid rows.
