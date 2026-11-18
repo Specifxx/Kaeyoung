@@ -1726,3 +1726,15 @@ same limit the card sites use. A store with no known good read is never carried.
 listings with a loop, not a spread: a store with 100k+ variants overflowed it ("Maximum call stack size exceeded",
 three MotorCompare stores unread since at least 14 Nov). The home page's "Checked … ago" is now corrected in the browser
 (`LiveAgo`): worked out at build, it froze for the whole release.
+
+## 2026-11-19: fonts through next/font with display "optional", and a hero that slides instead of fading
+
+Speed pass before Google's core update ends (owner, 2026-11-18: "speed and mobile"). Lighthouse mobile on the live pages
+measured layout shift 0.07 to 0.13: the text was laid out in the fallback face, @fontsource's `font-display: swap` then
+dropped the web font in, the lines re-wrapped and everything below moved. The fonts are now the same latin variable files
+bundled in `src/app/fonts` (OFL) and loaded through `next/font/local`: preloaded, drawn first in a fallback sized to
+match, and `display: "optional"`, so a face that is not there in time is never swapped in under a reader. The card
+sites made the same choice for the same reason. Only the latin subset ships: other scripts use the fallback face.
+The home hero's entrance (`.mo-enter`, where the site has one) also no longer fades from opacity 0: a browser does not
+count an element as painted while it is invisible, so the fade held the largest paint back ~1.1 s
+(`tests/hero-lcp.test.ts`).

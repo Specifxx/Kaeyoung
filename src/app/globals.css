@@ -440,7 +440,7 @@ html[data-festive] [data-holiday-strip] b {
   --fm-on-accent: rgb(var(--card));
   --fm-accent-soft: rgb(var(--accent-pale));
   --fm-radius: 16px;
-  --fm-head: "Fraunces Variable", Georgia, serif;
+  --fm-head: var(--font-fraunces), Georgia, serif;
 }
 
 /* Rate us card and "What people say" (components/site-reviews): drawn in the site's own theme, light and night. */
