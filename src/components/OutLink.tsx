@@ -4,6 +4,7 @@
 import { track } from "@vercel/analytics";
 import type { ReactNode } from "react";
 import { cartArmNow } from "@/lib/cart-list";
+import { dockArmNow } from "@/lib/dock-arm";
 
 export function OutLink({
   href,
@@ -30,7 +31,7 @@ export function OutLink({
       title={title}
       onClick={() => {
         try {
-          track("buy_click", { ...event, cart_arm: cartArmNow() });
+          track("buy_click", { dock_arm: dockArmNow(), ...event, cart_arm: cartArmNow() });
         } catch {}
       }}
     >
