@@ -33,7 +33,7 @@ test("eBay calls go only to featured products", () => {
 test("the homepage rows read the featured list", () => {
   const src = fs.readFileSync("src/app/page.tsx", "utf8");
   assert.match(src, /homeFeaturedIn\(r\.code/);
-  assert.match(src, /popularNow\(r\.code, 8, feat\)/);
+  assert.match(src, /rankProducts\(popularNow\(r\.code, 24, feat\), r\.code\)\.slice\(0, 8\)/);
 });
 
 test("the homepage floor is higher than the featured floor in every region", () => {

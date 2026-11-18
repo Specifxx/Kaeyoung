@@ -77,6 +77,13 @@ jobs:
           # The reviews branch of this public repo, read with the job's own token (no secret).
           REVIEWS_GITHUB_TOKEN: ${{ github.token }}
         run: npx tsx scripts/reviews-export.ts
+      # The home pages' ranking input (src/lib/home-rank.ts, DECISIONS.md 2026-11-18): product page views and buy clicks per
+      # item, last 28 and 7 days, from RiftCompare's /api/demand/ky, written into the data commit below.
+      #  Never fatal: a failed fetch keeps yesterday's file and the home page keeps its order.
+      - name: Home page demand
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: DEMAND_WRITE_ONLY=1 bash scripts/pull-demand.sh ky data/demand.json
       - name: Commit data (this commit is the daily release)
         run: |
           set -euo pipefail
