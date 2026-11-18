@@ -7,7 +7,7 @@ import { bestIn } from "./data";
 import { rankItems, type DemandFile } from "./home-rank";
 import type { Product } from "./types";
 
-export const HOME_DEMAND = raw as DemandFile;
+export const HOME_DEMAND = raw as unknown as DemandFile; // via unknown: JSON arrays read as number[], never the [28d, 7d] tuple
 
 /** Products, most likely to earn first in a region: their page's views, stores in stock there, price, how new. */
 export function rankProducts(list: readonly Product[], region: RegionCode): Product[] {
