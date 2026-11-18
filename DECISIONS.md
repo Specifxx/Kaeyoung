@@ -1646,3 +1646,11 @@ the region today, a rise of 1% to under 50% (a bigger jump is a store selling ou
 
 **Why.** Owner, 2026-11-18: one stable URL per site to post on Reddit once a week as a link and title (tagged
 `utm_source=reddit&utm_medium=social&utm_campaign=hot100-<site>-<date>`). Rides the daily release. `tests/hot100.test.ts`.
+
+## 2026-11-18: The product 301 map is sticky, so a product that leaves the catalogue never 404s
+
+Search Console listed 35 KaeYoung product URLs (806 on ScentCompare) as "Not found (404)": products that fell out of the merge
+entirely were neither listed nor in `culled.json`, which the import rebuilt from today's merge only. `stickyCulled`
+(`lib/focus.ts`) now keeps a 301 target for every product URL ever published (today's culls, yesterday's map, yesterday's listed
+products that are gone, every slug in `state/slugs.json` with its category read from the slug's words). A product listed again is
+a live page at the same URL. Map ~7,150 entries. `tests/focus.test.ts`. Same change in ScentCompare.

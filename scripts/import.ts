@@ -4,7 +4,8 @@
 // shows in meta.json, where the ops monitor reads it.
 import { loadDenylist, withoutDenied } from "@/lib/denylist";
 import { execFileSync } from "node:child_process";
-import { demandSlugs, focusCatalog } from "@/lib/focus";
+import { demandSlugs, focusCatalog, stickyCulled } from "@/lib/focus";
+import { categoryOf } from "@/lib/title";
 import fs from "node:fs";
 import path from "node:path";
 import { STORES, type Store } from "@/content/stores";
@@ -114,7 +115,10 @@ async function main() {
 
   const meta: Meta = { updatedAt: new Date().toISOString(), products: products.length, merged: merged.length, stores: runs, ebay: prevMeta?.ebay };
   write("public/products.json", packProducts(products));
-  write("public/culled.json", Object.fromEntries(Object.entries(culled).sort(([a], [b]) => (a < b ? -1 : 1))));
+  // Sticky (lib/focus.ts stickyCulled): every product URL ever published keeps a 301 target, never a 404.
+  const listedSlugs = new Set(products.map((f) => f.slug));
+  const culledMap = stickyCulled(culled, listedSlugs, read<Record<string, string>>("public/culled.json", {}), prevProducts, Object.values(state.slugs), (s) => categoryOf(s.replace(/-/g, " ")));
+  write("public/culled.json", culledMap);
   write("public/history.json", history);
   write("public/meta.json", meta, true);
   write("state/barcodes.json", cache);
