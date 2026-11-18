@@ -1635,3 +1635,14 @@ A/B runs to 3 Dec).
 the guide card's look (`lib/og/guide-image.tsx`) titled with the page's own title, five rows of the biggest gaps between
 the cheapest and the dearest store for the same product in the default region, from `dealsIn` (or, on a thin day, the
 same `shareRows` rule over every product with two stores up). A static route drawn at the day's build, like every page.
+
+## The weekly Hot 100 at /hot-100 — 2026-11-18
+
+**What.** `/hot-100`, prerendered like every page, one chart per region (CSS shows the visitor's, `.rp-XX`): the products whose
+cheapest orderable price rose most over the last seven days, biggest first, up to 100, each with its place on the chart seven days
+earlier (▲ / ▼ / New). Pure `lib/hot100.ts` over the committed `history.json` and today's products. Two or more stores sell it in
+the region today, a rise of 1% to under 50% (a bigger jump is a store selling out). A short week is the Hot 37, never padded
+(RiftCompare's Hot 40 rule). Link preview: the site default for now.
+
+**Why.** Owner, 2026-11-18: one stable URL per site to post on Reddit once a week as a link and title (tagged
+`utm_source=reddit&utm_medium=social&utm_campaign=hot100-<site>-<date>`). Rides the daily release. `tests/hot100.test.ts`.
