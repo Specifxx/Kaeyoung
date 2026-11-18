@@ -28,8 +28,8 @@ export default {
         star: v("star"),
       },
       fontFamily: {
-        sans: ['"Inter Variable"', "system-ui", "Segoe UI", "Arial", "sans-serif"],
-        display: ['"Fraunces Variable"', "Georgia", "Times New Roman", "serif"],
+        sans: ["var(--font-inter)", "system-ui", "Segoe UI", "Arial", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "Times New Roman", "serif"],
       },
       borderRadius: { blob: "14px" },
       boxShadow: {

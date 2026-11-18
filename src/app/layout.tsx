@@ -1,10 +1,9 @@
 import { SEASON_BOOT_SCRIPT } from "@/lib/season";
+import localFont from "next/font/local";
 import { MOTION_BOOT, MOTION_SCRIPT } from "@/lib/motion";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { ShareArrival } from "@/components/ShareArrival";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/fraunces";
 import "./globals.css";
 // The cart list's styles (components/cart): imported here, never from a component, so node tests can load them.
 import "@/components/cart/cart.css";
@@ -26,6 +25,15 @@ import { catCounts, getBrands, getMeta } from "@/lib/data";
 import { niceDate } from "@/lib/format";
 import { BottomNav } from "@/components/BottomNav";
 import { BOTTOM_NAV } from "@/lib/bottom-nav";
+
+
+// Fonts (2026-11-18, "Speed up sites on mobile"): the latin files of the same variable fonts, bundled through next/font
+// (OFL, src/app/fonts) instead of @fontsource's CSS. next/font preloads them and draws the first paint in a fallback
+// sized to match, and display "optional" never swaps a face in after the text is laid out: with @fontsource's swap,
+// the text re-wrapped when the font landed and moved everything below it (Lighthouse mobile layout shift 0.07 to 0.13,
+// live). The card sites made the same choice for the same reason (0.209 measured there with swap).
+const inter = localFont({ src: "./fonts/Inter-latin.woff2", weight: "100 900", style: "normal", display: "optional", variable: "--font-inter", adjustFontFallback: "Arial" });
+const fraunces = localFont({ src: [{ path: "./fonts/Fraunces-latin.woff2", weight: "100 900", style: "normal" }, { path: "./fonts/Fraunces-latin-italic.woff2", weight: "100 900", style: "italic" }], display: "optional", variable: "--font-fraunces", adjustFontFallback: "Times New Roman" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -56,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       .map((b) => ({ slug: b.slug, name: b.name })),
   );
   return (
-    <html lang="en" data-theme="night" suppressHydrationWarning>
+    <html className={`${inter.variable} ${fraunces.variable}`} lang="en" data-theme="night" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         {/* The holiday look (1 November to Boxing Day): data-season on <html> from the visitor's own date. lib/season.ts. */}
