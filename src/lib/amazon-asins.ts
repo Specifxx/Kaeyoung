@@ -45,3 +45,39 @@ export function searchWords(p: { brand?: string; name: string; size?: string | n
   const name = !p.brand || p.name.toLowerCase().startsWith(p.brand.toLowerCase()) ? p.name : `${p.brand} ${p.name}`;
   return `${name}${p.size && !name.toLowerCase().includes(p.size.toLowerCase()) ? ` ${p.size}` : ""}`.replace(/\s+/g, " ").trim();
 }
+
+/**
+ * Amazon Creators API calls this site may spend a day, per region (owner, 2026-11-19: "be very frugal", ScentCompare
+ * gets half or more of the network's Amazon allowance and KaeYoung the next share; the network table is in DECISIONS.md). Amazon's limit is per
+ * Associates account (one per country, 8,640 a day and 1 a second for its first 30 days, then revenue-based), shared by
+ * every site on that account. `search` is the daily import's searchItems calls, `build` the build's getItems calls
+ * (ten ASINs each). AMAZON_SEARCH_BUDGET / AMAZON_BUILD_CALLS can only lower these.
+ */
+export const AMAZON_BUDGET = {
+  search: { US: 600, other: 300 },
+  build: { US: 100, other: 60 },
+} as const;
+
+export function amazonBudget(kind: keyof typeof AMAZON_BUDGET, code: RegionCode, env: Record<string, string | undefined> = process.env): number {
+  const b = AMAZON_BUDGET[kind];
+  const ceiling = code === "US" ? b.US : b.other;
+  const raw = env[kind === "search" ? "AMAZON_SEARCH_BUDGET" : "AMAZON_BUILD_CALLS"]?.trim();
+  const asked = raw && /^\d+$/.test(raw) ? Number(raw) : ceiling;
+  return Math.min(ceiling, asked);
+}
+
+/**
+ * Runs `fn` for every region, the regions that share one Amazon account (one credential: a region without its own
+ * falls back to AU's) one after another, separate accounts side by side: each account still sees one call a second,
+ * and a day's budget fits the import's time.
+ */
+export async function byAccount<T extends string>(codes: T[], account: (code: T) => string | null, fn: (code: T) => Promise<void>): Promise<void> {
+  const groups = new Map<string, T[]>();
+  for (const c of codes) {
+    const k = account(c) ?? `none:${c}`;
+    groups.set(k, [...(groups.get(k) ?? []), c]);
+  }
+  await Promise.all([...groups.values()].map(async (g) => {
+    for (const c of g) await fn(c);
+  }));
+}
