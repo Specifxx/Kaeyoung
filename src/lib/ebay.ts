@@ -94,8 +94,9 @@ export const EBAY_REFRESH_DAYS = [1, 3, 7] as const;
 /** Days before a pair whose last search found nothing is searched again, by
  *  tier. A barcode with no local listing rarely gains one within days, so those
  *  calls wait longer and go to products never searched (owner, 2026-11-01:
- *  coverage, so every product has an eBay price where eBay sells it). */
-export const EBAY_EMPTY_RECHECK_DAYS = [2, 7, 21] as const;
+ *  coverage, so every product has an eBay price where eBay sells it). Homepage products (tier 0) are searched again
+ *  every day even when empty (owner, 2026-11-19: they must have eBay prices first). */
+export const EBAY_EMPTY_RECHECK_DAYS = [1, 7, 21] as const;
 
 /**
  * Most calls a region may take in one eBay quota day; a region not listed has no ceiling of its own (owner, 2026-11-10:

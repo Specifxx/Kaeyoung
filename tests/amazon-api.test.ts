@@ -93,6 +93,10 @@ test("a found ASIN is kept; a miss is searched again after 30 days", () => {
   assert.ok(!dueForSearch(["B000000001", "2026-01-01"], "2026-11-06"));
   assert.ok(!dueForSearch([null, "2026-10-20"], "2026-11-06"));
   assert.ok(dueForSearch([null, "2026-10-01"], "2026-11-06"));
+  // A homepage product's miss is searched again after a week (owner, 2026-11-19).
+  assert.ok(dueForSearch([null, "2026-10-30"], "2026-11-06", true));
+  assert.ok(!dueForSearch([null, "2026-11-01"], "2026-11-06", true));
+  assert.ok(!dueForSearch(["B000000001", "2026-01-01"], "2026-11-06", true));
 });
 
 test("the name search says the brand once and the size", () => {

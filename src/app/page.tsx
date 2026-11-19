@@ -2,9 +2,7 @@ import { InlineAds } from "@/components/InlineAds";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CAT_BY_KEY, REGIONS, SITE, type CatKey } from "@/site";
-import { activeStores, catCounts, dealsIn, getBrands, getMeta, getProducts, newestIn, productsOfCat } from "@/lib/data";
-import { popularNow } from "@/lib/ratings";
-import { homeFeaturedIn } from "@/lib/featured";
+import { activeStores, catCounts, getBrands, getMeta, getProducts, productsOfCat } from "@/lib/data";
 import { ago } from "@/lib/format";
 import { LiveAgo } from "@/components/LiveAgo";
 import { CHRISTMAS_FESTIVE_LAYER } from "@/lib/season";
@@ -23,7 +21,7 @@ import { POST_BY_SLUG } from "@/content/blog";
 import { GUIDES } from "@/lib/guides";
 import { JsonLd, faqLd, siteLd } from "@/lib/seo";
 import { SiteReviews } from "@/components/site-reviews/SiteReviews";
-import { rankProducts } from "@/lib/home-demand";
+import { homeShelves } from "@/lib/home-shelves";
 
 export const metadata: Metadata = {
   // 60 characters, keyword first, brand last (SEO audit, 2026-11-03).
@@ -145,12 +143,8 @@ export default function Home() {
         <RecentlyViewed prefix="ky" />
 
         {REGIONS.map((r) => {
-          // Only products of about US$20 or more are featured here (owner, 2026-11-06, lib/featured.ts).
-          const feat = homeFeaturedIn(r.code, all);
-          // Most likely to earn first (owner, 2026-11-18; lib/home-rank.ts): three times as many ranked, eight shown. New stays newest first.
-          const deals = rankProducts(dealsIn(r.code, 24, feat).map((d) => d.f), r.code).slice(0, 8);
-          const pop = rankProducts(popularNow(r.code, 24, feat), r.code).slice(0, 8);
-          const fresh = newestIn(r.code, 8, feat);
+          // The same shelves the eBay and Amazon searches put first (lib/home-shelves.ts, owner 2026-11-19).
+          const { pop, deals, fresh } = homeShelves(r.code, all);
           return (
             <div key={r.code} className={`rp rp-${r.code}`}>
               {pop.length > 0 && (

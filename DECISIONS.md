@@ -1774,3 +1774,21 @@ content "spread across a large network of sites" and re-dating pages to look fre
   latest import: their words do not change with prices.
 
 Black Friday and Cyber Monday pages are unchanged (in season). Judge the effect on 1 to 8 Dec against 3 to 9 Nov.
+
+## 2026-11-19: Homepage products get eBay and Amazon first; Amazon waits out a rate limit
+
+Owner, 2026-11-19: "all the items on the homepage … they're the priority items and they must get eBay quota and they must
+have eBay prices and Amazon prices first." `lib/home-shelves.ts` is now the one list of what the homepage shows in a region
+(the hero's pair and the Popular, Biggest savings and New arrivals shelves); the page, the eBay plan, the Amazon ASIN search
+and the build's Amazon price fetch all read it. Before, the eBay plan's tier 0 rebuilt the shelves its own way (unranked
+popular, deals and new), so it could differ from what visitors saw.
+
+- **eBay.** Tier 0 is the homepage's own list, searched every day found or not (`EBAY_EMPTY_RECHECK_DAYS[0]` 2 → 1), about
+  120 pairs a day of 2,500. Ported from ScentCompare the same day (every Scent and KaeYoung change goes to both).
+- **Amazon ASINs.** Homepage products are searched first in each region, and a homepage miss is retried after 7 days
+  (`RECHECK_HOME_MISS_DAYS`), others after 30.
+- **Amazon prices at build.** Homepage products first, and `AMAZON_BUILD_CALLS` 30 → 60 (600 products a region, about 35
+  seconds more build a region with ASINs).
+- **Rate limit.** A 429 used to end the region for the run: on 18 Nov ScentCompare's US search stopped at its first call (the US
+  credential is one request a second for every site's runs together). It now waits 3, 10 and 30 seconds and tries again
+  before giving up (`RATE_LIMIT_WAITS`, `lib/amazon-creators.ts`).

@@ -11,6 +11,8 @@ export type AsinFile = Record<string, [string | null, string]>;
 export interface AsinStatus { at: string; state: "off" | "refused" | "ok"; searched?: number; found?: number; known?: number; waiting?: number; note?: string }
 
 export const RECHECK_MISS_DAYS = 30;
+/** A homepage product's miss is retried sooner (owner, 2026-11-19: homepage products must have Amazon prices first). */
+export const RECHECK_HOME_MISS_DAYS = 7;
 export const AMAZON_DIR = path.resolve(process.cwd(), process.env.KY_AMAZON_DIR || "data/amazon");
 export const asinFile = (r: RegionCode, dir = AMAZON_DIR) => path.join(dir, `asins-${r}.json`);
 export const statusFile = (r: RegionCode, dir = AMAZON_DIR) => path.join(dir, `status-${r}.json`);
@@ -31,11 +33,11 @@ export function readAsinStatus(r: RegionCode, dir = AMAZON_DIR): AsinStatus | nu
   }
 }
 
-/** Whether a barcode is due a search today: never searched, or a miss older than RECHECK_MISS_DAYS. */
-export function dueForSearch(entry: AsinFile[string] | undefined, today: string): boolean {
+/** Whether a barcode is due a search today: never searched, or a miss older than RECHECK_MISS_DAYS (a homepage product's: RECHECK_HOME_MISS_DAYS). */
+export function dueForSearch(entry: AsinFile[string] | undefined, today: string, home = false): boolean {
   if (!entry) return true;
   if (entry[0]) return false;
-  return (Date.parse(today) - Date.parse(entry[1])) / 864e5 >= RECHECK_MISS_DAYS;
+  return (Date.parse(today) - Date.parse(entry[1])) / 864e5 >= (home ? RECHECK_HOME_MISS_DAYS : RECHECK_MISS_DAYS);
 }
 
 /** The words a name search uses: house, name and size, without the house twice. */
