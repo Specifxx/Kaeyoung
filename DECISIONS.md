@@ -1738,3 +1738,10 @@ sites made the same choice for the same reason. Only the latin subset ships: oth
 The home hero's entrance (`.mo-enter`, where the site has one) also no longer fades from opacity 0: a browser does not
 count an element as painted while it is invisible, so the fade held the largest paint back ~1.1 s
 (`tests/hero-lcp.test.ts`).
+
+## 2026-11-19: The dock A/B ends: the phone ad strip sits above the bottom nav for everyone (owner)
+
+The owner, 2026-11-19: "I want it for all the sites, so people have like an ad on their phone right there." The dock A/B of
+2026-11-18 (`lib/dock-arm.ts`) ends early with its "on" arm for every visitor: the eBay (and, where the site has it, TCGplayer) dock is
+stacked just above the phone bottom nav whenever it shows, instead of taking turns with the nav. Its own rules are unchanged: after a
+scroll, labelled "Ad", ✕ for the visit, never Amazon. `dock_arm` on buy_click now always reads "on".
