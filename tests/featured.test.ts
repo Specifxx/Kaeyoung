@@ -27,13 +27,16 @@ test("eBay calls go only to featured products", () => {
   const plan = planEbay(list, {}, ["US"], 10, undefined, "2026-11-06", undefined, isFeatured);
   assert.deepEqual(plan.map((p) => p.f.ean), ["dear"]);
   const src = fs.readFileSync("scripts/ebay-import.ts", "utf8");
-  assert.match(src, /isFeatured[,)]/);
+  assert.match(src, /isFeatured\(f, r\)/);
 });
 
 test("the homepage rows read the featured list", () => {
-  const src = fs.readFileSync("src/app/page.tsx", "utf8");
-  assert.match(src, /homeFeaturedIn\(r\.code/);
-  assert.match(src, /rankProducts\(popularNow\(r\.code, 24, feat\), r\.code\)\.slice\(0, 8\)/);
+  const src = fs.readFileSync("src/lib/home-shelves.ts", "utf8");
+  assert.match(src, /homeFeaturedIn\(region/);
+  assert.match(src, /rankProducts\(popularNow\(region, 24, feat\), region\)\.slice\(0, 8\)/);
+  // The page, the eBay plan and the Amazon search and fetch all read the same shelves (owner, 2026-11-19).
+  assert.match(fs.readFileSync("src/app/page.tsx", "utf8"), /homeShelves\(r\.code, all\)/);
+  for (const f of ["scripts/ebay-import.ts", "scripts/amazon-asins.ts", "scripts/fetch-amazon-prices.ts"]) assert.match(fs.readFileSync(f, "utf8"), /homeEans\(/, f);
 });
 
 test("the homepage floor is higher than the featured floor in every region", () => {

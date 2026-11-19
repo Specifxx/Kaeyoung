@@ -3,8 +3,9 @@
 // matched to our barcodes (scripts/amazon-asins.ts, data/amazon/asins-<REGION>.json; getItems takes no barcode),
 // written to data/amazon-live/<REGION>.json (git-ignored). Amazon's licence lets a price be kept
 // for 24 hours and shown with its time, so prices are fetched by each build and never committed; the
-// product page shows one only while under 24 hours old (lib/amazon-live.ts). Products with the most stores
-// first, AMAZON_BUILD_CALLS calls a region (30 by default: 300 products, about 35 seconds of build each).
+// product page shows one only while under 24 hours old (lib/amazon-live.ts). Every product the homepage shows first
+// (lib/home-shelves.ts; owner, 2026-11-19), then the most stores, AMAZON_BUILD_CALLS calls a region (60 by default
+// since 2026-11-19, was 30: 600 products, about 70 seconds of build each; every known ASIN outside the US).
 // A price far from the region's store median (under 60% or over 160%) is dropped: a different pack size or
 // a marketplace seller's fantasy. Without credentials, or on any error, it writes nothing and never fails
 // the build; a store whose account has no API access yet (403) is skipped and the next region still runs.
@@ -15,6 +16,7 @@ import { amazonTag } from "../src/lib/affiliate";
 import { readAsins } from "../src/lib/amazon-asins";
 import { AmazonRefused, barcodeMatches, credentialsFor, creatorsClient, MARKETS, pickListing, PRICE_RESOURCES } from "../src/lib/amazon-creators";
 import { AMAZON_LIVE_DIR, type AmazonLiveFile } from "../src/lib/amazon-live";
+import { homeEans } from "../src/lib/home-shelves";
 import type { Product } from "../src/lib/types";
 import { REGIONS, type RegionCode } from "../src/site";
 
@@ -34,12 +36,13 @@ async function region(code: RegionCode, products: Product[]) {
   const creds = credentialsFor(code);
   if (!creds) return console.log(`Amazon prices ${code}: no AMAZON_CREATORS_* credentials, skipped.`);
   const asins = readAsins(code);
+  const home = homeEans(code, products);
   const inRegion = products
-    .map((p) => ({ p, asin: asins[p.ean]?.[0], offers: (p.offers[code] ?? []).filter((o) => o.st !== "out") }))
+    .map((p) => ({ p, h: home.has(p.ean), asin: asins[p.ean]?.[0], offers: (p.offers[code] ?? []).filter((o) => o.st !== "out") }))
     .filter((x): x is typeof x & { asin: string } => !!x.asin && x.offers.length > 0)
-    .sort((a, b) => b.offers.length - a.offers.length || b.offers[0].p - a.offers[0].p);
+    .sort((a, b) => Number(b.h) - Number(a.h) || b.offers.length - a.offers.length || b.offers[0].p - a.offers[0].p);
   if (!inRegion.length) return console.log(`Amazon prices ${code}: no ASINs found yet (scripts/amazon-asins.ts), skipped.`);
-  const cap = Number(process.env.AMAZON_BUILD_CALLS || 30) * 10;
+  const cap = Number(process.env.AMAZON_BUILD_CALLS || 60) * 10;
   const todo = inRegion.slice(0, cap);
   const api = await creatorsClient(code, tag, creds);
   const fetchedAt = new Date().toISOString();

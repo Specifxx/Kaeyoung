@@ -7,10 +7,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { REGIONS, type RegionCode } from "@/site";
-import { dealsIn, getProducts, newestIn } from "@/lib/data";
+import { getProducts } from "@/lib/data";
 import { ebayPick, ebayQuotaDay, planEbay, regionAllowance, type EbayItem, type EbayPrio } from "@/lib/ebay";
 import { popularity, popularNow } from "@/lib/ratings";
-import { featuredIn, homeFeaturedIn, isFeatured } from "@/lib/featured";
+import { featuredIn, isFeatured } from "@/lib/featured";
+import { homeEans } from "@/lib/home-shelves";
 import type { EbayData, Meta } from "@/lib/types";
 
 const DATA = path.join(process.cwd(), "data");
@@ -70,15 +71,15 @@ async function main() {
   const products = getProducts();
   const today = new Date().toISOString().slice(0, 10);
   const regions = Object.keys(MARKET) as RegionCode[];
-  // Tier 0: what the home page shows in each region; tier 1: the top of /popular
-  // and anything first seen in the last 30 days (after the launch-day catalogue,
-  // which was all "first seen" on one day); tier 2: the rest.
+  // Tier 0: every product the home page shows in each region (owner, 2026-11-19: "the priority items … must get eBay
+  // quota … first"): the hero's pair and the three shelves, from lib/home-shelves.ts, the page's own lists. They are
+  // searched before anything else, every day, found or not, at any price. Tier 1: the top of /popular and anything
+  // first seen in the last 30 days (after the launch-day catalogue, which was all "first seen" on one day); tier 2: the rest.
   const home = new Set<string>();
   const hot = new Set<string>();
   for (const r of regions) {
     const feat = featuredIn(r, products);
-    const homeFeat = homeFeaturedIn(r, products);
-    for (const f of [...popularNow(r, 8, homeFeat), ...dealsIn(r, 8, homeFeat).map((d) => d.f), ...newestIn(r, 8, homeFeat)]) home.add(`${f.ean}:${r}`);
+    for (const ean of homeEans(r, products)) home.add(`${ean}:${r}`);
     for (const f of popularNow(r, 300, feat)) hot.add(`${f.ean}:${r}`);
   }
   const launch = products.reduce((m, f) => (f.first < m ? f.first : m), "9999");
@@ -90,7 +91,7 @@ async function main() {
   });
   // A pair whose last search found nothing waits longer (EBAY_EMPTY_RECHECK_DAYS), so the calls reach every product.
   // Calls go only to products of about US$20 or more in the region (owner, 2026-11-06, lib/featured.ts).
-  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r], isFeatured, regionAllowance(byRegion));
+  const plan = planEbay(products, checked, regions, budget, prio, today, (ean, r) => !!data[ean]?.[r], (f, r) => home.has(`${f.ean}:${r}`) || isFeatured(f, r), regionAllowance(byRegion));
   if (!plan.length) {
     console.log(`eBay: nothing to search (${spent} of ${cap} calls already spent on quota day ${qday}).`);
     return;

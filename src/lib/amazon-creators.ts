@@ -106,6 +106,9 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class AmazonRefused extends Error {}
 
+/** Waits (ms) after a 429 before trying the same call again; after the last, the store is given up for the run. */
+export const RATE_LIMIT_WAITS = [3_000, 10_000, 30_000];
+
 /** Amazon's answer when the credential is not linked to this store's tag (another country's account). */
 export const isWrongAccount = (body: string) => /InvalidAssociate|not linked to the partner tag/i.test(body);
 
@@ -116,7 +119,7 @@ export function barcodeMatches(item: Item, ean: string): boolean {
   return theirs.some((b) => ours.has(b.trim()));
 }
 
-/** A signed-in caller for one store: one request a second, stops on 401/403/429 (access closed or limit hit). */
+/** A signed-in caller for one store: one request a second, waits and retries on 429, stops on 401/403 or a 429 that outlasts RATE_LIMIT_WAITS. */
 export async function creatorsClient(region: RegionCode, tag: string, creds: Credentials) {
   const market = MARKETS[region];
   if (!market) throw new Error(`no Amazon store for ${region}`);
@@ -129,13 +132,23 @@ export async function creatorsClient(region: RegionCode, tag: string, creds: Cre
   const bearer = ((await tok.json()) as { access_token: string }).access_token;
   let calls = 0;
   async function call(op: "searchItems" | "getItems", body: object): Promise<Item[]> {
-    calls++;
-    const res = await fetch(`${CREATORS_API}/${op}`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${bearer}`, "Content-Type": "application/json", "x-marketplace": market!.marketplace },
-      body: JSON.stringify({ partnerTag: tag, marketplace: market!.marketplace, ...body }),
-    });
-    await sleep(1100);
+    let res: Response;
+    // A 429 is the rate limit, not a closed door: the US credential is shared by every site's import and build
+    // (one request a second in all), so another site's run can take the second. Wait and try again, up to
+    // RATE_LIMIT_WAITS times, before giving up on this store for the run (2026-11-19: one early 429 stopped
+    // ScentCompare's whole US search on 18 Nov).
+    for (let attempt = 0; ; attempt++) {
+      calls++;
+      res = await fetch(`${CREATORS_API}/${op}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${bearer}`, "Content-Type": "application/json", "x-marketplace": market!.marketplace },
+        body: JSON.stringify({ partnerTag: tag, marketplace: market!.marketplace, ...body }),
+      });
+      await sleep(1100);
+      if (res.status !== 429 || attempt >= RATE_LIMIT_WAITS.length) break;
+      await res.text();
+      await sleep(RATE_LIMIT_WAITS[attempt]);
+    }
     if (res.status === 401 || res.status === 403 || res.status === 429) throw new AmazonRefused(`${op} ${res.status} ${(await res.text()).slice(0, 160)}`);
     if (!res.ok) {
       const text = (await res.text()).slice(0, 160);

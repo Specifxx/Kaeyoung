@@ -4,7 +4,8 @@
  * needs them first. One searchItems by the barcode itself; if that finds nothing, one by brand + name + size.
  * A result counts ONLY when Amazon's own externalIds carry our barcode (lib/amazon-creators.ts barcodeMatches):
  * the barcode-or-nothing rule, so a 30 ml is never a 100 ml, nor a refill the full jar. Products with the most
- * stores in the region go first. Found ASINs and misses go in data/amazon/asins-<REGION>.json; a miss is
+ * stores in the region go first, after every product the homepage shows (lib/home-shelves.ts; owner, 2026-11-19), whose
+ * misses are retried weekly. Found ASINs and misses go in data/amazon/asins-<REGION>.json; a miss is
  * retried after 30 days. Without credentials it does nothing; a refusal (that store's account has no API
  * access yet: 10 qualifying sales in 30 days) ends that region quietly and the next one still runs.
  *   npx tsx scripts/amazon-asins.ts            AMAZON_SEARCH_BUDGET=300 searches a region by default
@@ -14,6 +15,7 @@ import path from "node:path";
 import { amazonTag } from "../src/lib/affiliate";
 import { AmazonRefused, barcodeMatches, credentialsFor, creatorsClient, MARKETS } from "../src/lib/amazon-creators";
 import { AMAZON_DIR, asinFile, dueForSearch, readAsins, searchWords, statusFile, type AsinFile, type AsinStatus } from "../src/lib/amazon-asins";
+import { homeEans } from "../src/lib/home-shelves";
 import type { Product } from "../src/lib/types";
 import { REGIONS, type RegionCode } from "../src/site";
 
@@ -31,12 +33,13 @@ async function region(code: RegionCode, products: Product[]) {
   }
   const today = new Date().toISOString().slice(0, 10);
   const known: AsinFile = readAsins(code);
+  const home = homeEans(code, products);
   const inRegion = products
-    .map((p) => ({ p, n: (p.offers[code] ?? []).length }))
+    .map((p) => ({ p, n: (p.offers[code] ?? []).length, h: home.has(p.ean) }))
     .filter((x) => x.n)
-    .sort((a, b) => b.n - a.n || a.p.ean.localeCompare(b.p.ean));
+    .sort((a, b) => Number(b.h) - Number(a.h) || b.n - a.n || a.p.ean.localeCompare(b.p.ean));
   const live = new Set(inRegion.map((x) => x.p.ean));
-  const todo = inRegion.filter((x) => dueForSearch(known[x.p.ean], today));
+  const todo = inRegion.filter((x) => dueForSearch(known[x.p.ean], today, x.h));
   const api = await creatorsClient(code, tag, creds).catch((e) => {
     status({ state: "refused", note: (e as Error).message.slice(0, 160) });
     console.log(`Amazon ASINs ${code}: ${(e as Error).message}, skipped.`);
