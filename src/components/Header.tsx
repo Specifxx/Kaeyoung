@@ -14,7 +14,7 @@ export function Header({ groups, menus }: { groups: NavGroup[]; menus: HeaderMen
     <header className="sticky top-0 z-40 border-b border-line bg-card/90 backdrop-blur">
       <div className="flex h-[4.25rem] items-center gap-2 px-4 sm:gap-4 lg:px-5">
         <Link href="/" prefetch={false} className="shrink-0" aria-label="KaeYoung home">
-          <Logo wordmark="hidden min-[360px]:flex" />
+          <Logo wordmark="hidden min-[430px]:flex" />
         </Link>
         <HeaderMenus menus={menus} />
         <div className="hidden min-w-0 max-w-xl flex-1 md:block">
@@ -26,8 +26,8 @@ export function Header({ groups, menus }: { groups: NavGroup[]; menus: HeaderMen
           <span className="hidden sm:contents">
             <ThemeToggle />
           </span>
-          {/* Sign in and Premium (owner, 2026-11-19: accounts on every site, visible on phones too). Premium from lg; phones get it in the menu. */}
-          <PremiumHeaderLink className="hidden lg:inline-flex" />
+          {/* Sign in and Premium (owner, 2026-11-19: accounts on every site, visible on phones too). Premium from xl; phones get it in the menu. */}
+          <PremiumHeaderLink className="hidden xl:inline-flex" />
           <AccountHeaderLink />
           {/* The cart list (components/cart, owner 2026-11-06), with its count: here from md, beside the search on phones. */}
         <CartHeaderLink className="hidden md:inline-flex" />
