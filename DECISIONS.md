@@ -1750,3 +1750,10 @@ categories and the region, and the menu and footer reach the rest. Measured on a
 before, about 4,200–4,500 after. Layout only: the server HTML, URLs, titles, headings and structured data are the same at
 every width (Google's core update was still rolling out), and the desktop page is unchanged. Before adding a block to
 the phone home page, say what it replaces.
+
+## 2026-11-19: The dock A/B ends: the phone ad strip sits above the bottom nav for everyone (owner)
+
+The owner, 2026-11-19: "I want it for all the sites, so people have like an ad on their phone right there." The dock A/B of
+2026-11-18 (`lib/dock-arm.ts`) ends early with its "on" arm for every visitor: the eBay (and, where the site has it, TCGplayer) dock is
+stacked just above the phone bottom nav whenever it shows, instead of taking turns with the nav. Its own rules are unchanged: after a
+scroll, labelled "Ad", ✕ for the visit, never Amazon. `dock_arm` on buy_click now always reads "on".
