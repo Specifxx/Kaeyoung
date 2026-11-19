@@ -8,13 +8,15 @@
  * misses are retried weekly. Found ASINs and misses go in data/amazon/asins-<REGION>.json; a miss is
  * retried after 30 days. Without credentials it does nothing; a refusal (that store's account has no API
  * access yet: 10 qualifying sales in 30 days) ends that region quietly and the next one still runs.
- *   npx tsx scripts/amazon-asins.ts            AMAZON_SEARCH_BUDGET=300 searches a region by default
+ * Calls a region a day: amazonBudget("search", region) (owner, 2026-11-19: US 600, others 300; AMAZON_SEARCH_BUDGET can
+ * only lower it). Regions on separate Amazon accounts run side by side, one call a second each (byAccount).
+ *   npx tsx scripts/amazon-asins.ts
  */
 import fs from "node:fs";
 import path from "node:path";
 import { amazonTag } from "../src/lib/affiliate";
 import { AmazonRefused, barcodeMatches, credentialsFor, creatorsClient, MARKETS } from "../src/lib/amazon-creators";
-import { AMAZON_DIR, asinFile, dueForSearch, readAsins, searchWords, statusFile, type AsinFile, type AsinStatus } from "../src/lib/amazon-asins";
+import { AMAZON_DIR, amazonBudget, asinFile, byAccount, dueForSearch, readAsins, searchWords, statusFile, type AsinFile, type AsinStatus } from "../src/lib/amazon-asins";
 import { homeEans } from "../src/lib/home-shelves";
 import type { Product } from "../src/lib/types";
 import { REGIONS, type RegionCode } from "../src/site";
@@ -45,7 +47,7 @@ async function region(code: RegionCode, products: Product[]) {
     console.log(`Amazon ASINs ${code}: ${(e as Error).message}, skipped.`);
     return null;
   });
-  const budget = Number(process.env.AMAZON_SEARCH_BUDGET || 300);
+  const budget = amazonBudget("search", code);
   let found = 0, searched = 0, refused = "";
   if (api)
     for (const { p } of todo) {
@@ -79,7 +81,9 @@ async function main() {
   if (!fs.existsSync(PRODUCTS)) return console.log("Amazon ASINs: no products.json, skipped.");
   fs.mkdirSync(AMAZON_DIR, { recursive: true });
   const products = (JSON.parse(fs.readFileSync(PRODUCTS, "utf8")) as { products: Product[] }).products;
-  for (const r of REGIONS) await region(r.code, products).catch((e) => console.log(`Amazon ASINs ${r.code} skipped: ${(e as Error).message}`));
+  await byAccount(REGIONS.map((r) => r.code), (c) => credentialsFor(c)?.id ?? null, (c) =>
+    region(c, products).catch((e) => console.log(`Amazon ASINs ${c} skipped: ${(e as Error).message}`)),
+  );
 }
 
 main().catch((e) => console.log(`Amazon ASINs skipped: ${(e as Error).message}`));

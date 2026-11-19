@@ -4,8 +4,9 @@
 // written to data/amazon-live/<REGION>.json (git-ignored). Amazon's licence lets a price be kept
 // for 24 hours and shown with its time, so prices are fetched by each build and never committed; the
 // product page shows one only while under 24 hours old (lib/amazon-live.ts). Every product the homepage shows first
-// (lib/home-shelves.ts; owner, 2026-11-19), then the most stores, AMAZON_BUILD_CALLS calls a region (60 by default
-// since 2026-11-19, was 30: 600 products, about 70 seconds of build each; every known ASIN outside the US).
+// (lib/home-shelves.ts; owner, 2026-11-19), then the most stores, amazonBudget("build", region) calls a region (owner,
+// 2026-11-19: US 100 = 1,000 products, others 60; AMAZON_BUILD_CALLS can only lower it). Regions on separate Amazon
+// accounts run side by side (byAccount).
 // A price far from the region's store median (under 60% or over 160%) is dropped: a different pack size or
 // a marketplace seller's fantasy. Without credentials, or on any error, it writes nothing and never fails
 // the build; a store whose account has no API access yet (403) is skipped and the next region still runs.
@@ -13,7 +14,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { amazonTag } from "../src/lib/affiliate";
-import { readAsins } from "../src/lib/amazon-asins";
+import { amazonBudget, byAccount, readAsins } from "../src/lib/amazon-asins";
 import { AmazonRefused, barcodeMatches, credentialsFor, creatorsClient, MARKETS, pickListing, PRICE_RESOURCES } from "../src/lib/amazon-creators";
 import { AMAZON_LIVE_DIR, type AmazonLiveFile } from "../src/lib/amazon-live";
 import { homeEans } from "../src/lib/home-shelves";
@@ -42,7 +43,7 @@ async function region(code: RegionCode, products: Product[]) {
     .filter((x): x is typeof x & { asin: string } => !!x.asin && x.offers.length > 0)
     .sort((a, b) => Number(b.h) - Number(a.h) || b.offers.length - a.offers.length || b.offers[0].p - a.offers[0].p);
   if (!inRegion.length) return console.log(`Amazon prices ${code}: no ASINs found yet (scripts/amazon-asins.ts), skipped.`);
-  const cap = Number(process.env.AMAZON_BUILD_CALLS || 60) * 10;
+  const cap = amazonBudget("build", code) * 10;
   const todo = inRegion.slice(0, cap);
   const api = await creatorsClient(code, tag, creds);
   const fetchedAt = new Date().toISOString();
@@ -79,7 +80,9 @@ async function main() {
   fs.rmSync(AMAZON_LIVE_DIR, { recursive: true, force: true });
   if (!fs.existsSync(PRODUCTS)) return console.log("Amazon prices: no products.json, skipped.");
   const products = (JSON.parse(fs.readFileSync(PRODUCTS, "utf8")) as { products: Product[] }).products;
-  for (const r of REGIONS) await region(r.code, products).catch((e) => console.log(`Amazon prices ${r.code} skipped: ${(e as Error).message}`));
+  await byAccount(REGIONS.map((r) => r.code), (c) => credentialsFor(c)?.id ?? null, (c) =>
+    region(c, products).catch((e) => console.log(`Amazon prices ${c} skipped: ${(e as Error).message}`)),
+  );
 }
 
 main().catch((e) => console.log(`Amazon prices skipped: ${(e as Error).message}`));
