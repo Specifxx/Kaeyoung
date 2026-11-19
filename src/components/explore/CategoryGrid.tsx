@@ -18,9 +18,10 @@ export interface CategoryCard {
   tint?: string;
 }
 
-export function CategoryGrid({ cards }: { cards: CategoryCard[] }) {
+/** `rail`: one sideways row on a phone (the home page, 2026-11-19), the usual grid from md up. */
+export function CategoryGrid({ cards, rail }: { cards: CategoryCard[]; rail?: boolean }) {
   return (
-    <ul data-reveal="stagger" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    <ul data-reveal="stagger" className={`grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5${rail ? " phone-rail phone-rail-sm scroller" : ""}`}>
       {cards.map((c) => (
         <li key={c.href}>
           <Link prefetch={false} href={c.href} className="card tile-hover group flex h-full flex-col overflow-hidden">
