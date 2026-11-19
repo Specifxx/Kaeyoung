@@ -35,10 +35,11 @@ export function ProductTile({ f, region }: { f: Product; region?: RegionCode }) 
   return <Tiles rows={[tileRow(f, codes)]} codes={codes} one={!!region} />;
 }
 
-export function TileGrid({ products, region }: { products: Product[]; region?: RegionCode }) {
+/** `rail`: one sideways row on a phone (the home page's shelves, 2026-11-19), the usual grid from md up. */
+export function TileGrid({ products, region, rail }: { products: Product[]; region?: RegionCode; rail?: boolean }) {
   const codes = region ? [region] : REGIONS.map((r) => r.code);
   return (
-    <div data-reveal="stagger" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+    <div data-reveal="stagger" className={`grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5${rail ? " phone-rail scroller" : ""}`}>
       <Tiles rows={products.map((f) => tileRow(f, codes))} codes={codes} one={!!region} />
     </div>
   );

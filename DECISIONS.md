@@ -1738,3 +1738,15 @@ sites made the same choice for the same reason. Only the latin subset ships: oth
 The home hero's entrance (`.mo-enter`, where the site has one) also no longer fades from opacity 0: a browser does not
 count an element as painted while it is invisible, so the fade held the largest paint back ~1.1 s
 (`tests/hero-lcp.test.ts`).
+
+## 2026-11-19 — A calmer home page on a phone
+
+Owner, 2026-11-19: "way too much going on in the mobile version of the home page". Below md the home page is now the
+headline, one line and the gift link; then the categories, the popular shelf and the savings shelf of the visitor's region,
+each ONE sideways row (`rail` on `TileGrid` / `CategoryGrid`, `.phone-rail` in globals.css); the ad block, brands (one
+sideways row) and the questions. The creators pill, region chips, second search box, count chips, the two hero products,
+"New arrivals", "How it works" and the guide list show from md up only: the header already carries the search, the
+categories and the region, and the menu and footer reach the rest. Measured on a 390px phone: about 10,500 px tall
+before, about 4,200–4,500 after. Layout only: the server HTML, URLs, titles, headings and structured data are the same at
+every width (Google's core update was still rolling out), and the desktop page is unchanged. Before adding a block to
+the phone home page, say what it replaces.

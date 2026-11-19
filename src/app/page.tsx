@@ -72,11 +72,14 @@ export default function Home() {
       <section className="ky-hero wash relative overflow-hidden border-b border-line">
         {/* The motion layer (owner, 2026-11-06): a slowly drifting wash. Decoration only; globals.css "motion" block. */}
         <span className="mo-bg mo-aurora" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-8 pt-7 md:grid-cols-[1.15fr_1fr] md:pb-10 md:pt-10">
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 pb-6 pt-5 md:grid-cols-[1.15fr_1fr] md:pb-10 md:pt-10">
           <div className="min-w-0">
             {/* The creators hub, above the fold (owner, 2026-11-03): top-right corner of the hero from sm, a pill above the holiday line on a phone. */}
-            <CreatorsCornerBadge />
-            <p className="ky-holiday mb-4">
+            {/* Phone hero, 2026-11-19 (owner: too much going on on a phone): the headline, one line and the gift link. The
+                header above it already has the search, the steps and the region, so the creators pill, region chips, second
+                search, counts and the two hero products show from md up only. Same HTML at every width. */}
+            <div className="hidden md:block"><CreatorsCornerBadge /></div>
+            <p className="ky-holiday mb-3 sm:mb-4">
               {CHRISTMAS_FESTIVE_LAYER ? (
                 <Link prefetch={false} href={giftHref} className="ky-holiday-pill ky-gift-banner">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M5 12v8h14v-8M12 8v12M12 8c-2.5 0-4-1-4-2.5S9 3 10.5 4 12 8 12 8zm0 0c2.5 0 4-1 4-2.5S15 3 13.5 4 12 8 12 8z" /></svg>
@@ -94,14 +97,14 @@ export default function Home() {
             <h1 className="mo-enter h-display max-w-3xl [--mo-d:1] text-[2.4rem] leading-[1.05] sm:text-6xl">
               Stay young. <span className="mo-shine italic text-accent">Pay less.</span>
             </h1>
-            <p className="mo-enter mt-5 max-w-xl text-lg leading-relaxed text-soft" style={{ ["--mo-d" as string]: 2 }}>
+            <p className="mo-enter mt-3 max-w-xl text-base leading-relaxed text-soft sm:mt-5 sm:text-lg" style={{ ["--mo-d" as string]: 2 }}>
               Every K-beauty store&apos;s price for the same product, side by side. {stores ? `${stores} stores` : "Real stores"}, matched by the barcode on the box and checked every day.
             </p>
-            <RegionChips className="mo-enter mt-6 [--mo-d:2]" />
-            <div className="mo-enter mt-4 max-w-xl" style={{ ["--mo-d" as string]: 3 }}>
+            <RegionChips className="mo-enter mt-6 hidden [--mo-d:2] md:flex" />
+            <div className="mo-enter mt-4 hidden max-w-xl md:block" style={{ ["--mo-d" as string]: 3 }}>
               <SearchBox big />
             </div>
-            <div className="mo-enter mt-6 flex flex-wrap items-center gap-2 text-sm text-soft" style={{ ["--mo-d" as string]: 4 }}>
+            <div className="mo-enter mt-6 hidden flex-wrap items-center gap-2 text-sm text-soft md:flex" style={{ ["--mo-d" as string]: 4 }}>
               <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line"><b className="font-semibold text-ink">{total.toLocaleString("en-US")}</b> products</span>
               <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line"><b className="font-semibold text-ink">{stores}</b> stores</span>
               <span className="rounded-full bg-card/80 px-3 py-1 ring-1 ring-line"><b className="font-semibold text-ink">{ACTIVE_REGIONS.length}</b> countries</span>
@@ -110,7 +113,7 @@ export default function Home() {
           </div>
           {/* Two popular products with price and stores, right of the copy from md, under the search on a phone
               (owner, 2026-11-05): the site's job shown, not described. The hero art it replaces stays in Art.tsx. */}
-          <div className="mo-enter relative mx-auto w-full max-w-md md:max-w-none" style={{ ["--mo-d" as string]: 3 }}>
+          <div className="mo-enter relative mx-auto hidden w-full max-w-md md:block md:max-w-none" style={{ ["--mo-d" as string]: 3 }}>
             <HeroPicks />
           </div>
         </div>
@@ -118,12 +121,13 @@ export default function Home() {
 
       <div className="mx-auto max-w-6xl px-4">
         {/* Category first (2026-11-10, PriceRunner-style): every step as a photo tile of its own most popular products. */}
-        <section className="mt-8">
+        <section className="mt-6 md:mt-8">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
             <h2 data-reveal className="h-display text-2xl">Shop by step</h2>
             <Link prefetch={false} href="/skin-concerns" className="text-sm font-semibold text-accent-deep underline-offset-4 hover:underline">Shop by skin concern →</Link>
           </div>
           <CategoryGrid
+            rail
             cards={HOME_STEPS.map((k) => CAT_BY_KEY[k])
               .filter((c) => counts[c.key] > 0)
               .map((c) => ({
@@ -151,18 +155,21 @@ export default function Home() {
             <div key={r.code} className={`rp rp-${r.code}`}>
               {pop.length > 0 && (
                 <Section title={`Popular ${r.phrase}`} sub="The K-beauty staples: stocked by the most stores and rated by shoppers." href="/popular" more="All popular">
-                  <TileGrid products={pop} region={r.code} />
+                  <TileGrid products={pop} region={r.code} rail />
                 </Section>
               )}
               {deals.length > 0 && (
                 <Section title={`Biggest savings ${r.phrase}`} sub="Same barcode, same size, at least 10% cheaper at one store." href="/deals" more="All deals">
-                  <TileGrid products={deals} region={r.code} />
+                  <TileGrid products={deals} region={r.code} rail />
                 </Section>
               )}
+              {/* New arrivals from md up: a phone gets two shelves, popular and savings (2026-11-19). */}
               {fresh.length > 0 && (
-                <Section title="New arrivals" href="/new" more="Everything new">
-                  <TileGrid products={fresh} region={r.code} />
-                </Section>
+                <div className="hidden md:block">
+                  <Section title="New arrivals" href="/new" more="Everything new">
+                    <TileGrid products={fresh} region={r.code} />
+                  </Section>
+                </div>
               )}
               {!deals.length && !pop.length && (
                 <p className="card mt-10 p-6 text-center text-soft">No store {r.phrase} has products in stock right now. Try another region.</p>
@@ -176,10 +183,10 @@ export default function Home() {
 
         {brands.length > 0 && (
           <Section title="Popular brands" href="/brands" more="All brands">
-            <ul data-reveal="stagger" className="flex flex-wrap gap-2">
+            <ul data-reveal="stagger" className="scroller -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0">
               {brands.map((b) => (
                 <li key={b.slug}>
-                  <Link prefetch={false} href={`/brands/${b.slug}`} className="tile-hover inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-sm font-medium transition hover:border-soft">
+                  <Link prefetch={false} href={`/brands/${b.slug}`} className="tile-hover inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-card px-4 py-2 text-sm font-medium transition hover:border-soft">
                     {b.name} <span className="text-xs text-soft">{b.products.length}</span>
                   </Link>
                 </li>
@@ -188,7 +195,9 @@ export default function Home() {
           </Section>
         )}
 
-        <section className="mt-16">
+        {/* "How it works" and the guide list from md up (2026-11-19): on a phone the menu and footer reach the same
+            pages without two more screens of text. */}
+        <section className="mt-16 hidden md:block">
           <h2 data-reveal className="h-display mb-6 text-2xl sm:text-3xl">How KaeYoung works</h2>
           <ol data-reveal="stagger" className="grid gap-4 sm:grid-cols-3">
             {[
@@ -205,7 +214,7 @@ export default function Home() {
           </ol>
         </section>
 
-        <section className="mt-16">
+        <section className="mt-16 hidden md:block">
           <h2 data-reveal className="h-display mb-4 text-2xl sm:text-3xl">Price guides</h2>
           <ul data-reveal className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
             {GUIDES.map((g) => (
@@ -221,7 +230,7 @@ export default function Home() {
         {/* The site's own star score and approved reviews (owner, 2026-11-03), loaded in the browser; nothing until there is a rating. */}
         <SiteReviews className="mt-16" />
 
-        <section className="mt-16 max-w-3xl">
+        <section className="mt-12 max-w-3xl md:mt-16">
           <h2 data-reveal className="h-display mb-4 text-2xl sm:text-3xl">Questions</h2>
           <div data-reveal="stagger" className="space-y-5">
             {FAQ.map(([q, a]) => (
