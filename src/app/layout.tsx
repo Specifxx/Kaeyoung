@@ -25,6 +25,8 @@ import { catCounts, getBrands, getMeta } from "@/lib/data";
 import { niceDate } from "@/lib/format";
 import { BottomNav } from "@/components/BottomNav";
 import { BOTTOM_NAV } from "@/lib/bottom-nav";
+import { ADFREE_BOOT_SCRIPT } from "@/lib/premium-member";
+import { AdFreeSync } from "@/components/premium/AdFreeSync";
 
 
 // Fonts (2026-11-18, "Speed up sites on mobile"): the latin files of the same variable fonts, bundled through next/font
@@ -69,6 +71,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         {/* The holiday look (1 November to Boxing Day): data-season on <html> from the visitor's own date. lib/season.ts. */}
         <script dangerouslySetInnerHTML={{ __html: SEASON_BOOT_SCRIPT }} />
+        {/* Premium members see no banner ads (lib/premium-member.ts): data-adfree from the cached membership, before paint. */}
+        <script dangerouslySetInnerHTML={{ __html: ADFREE_BOOT_SCRIPT }} />
         {/* The motion layer (lib/motion.ts): data-motion before paint, unless the visitor prefers reduced motion. */}
         <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT }} />
         {/* Impact (affiliate network) site check, in the exact form Impact gives: a `value` attribute. */}
@@ -100,6 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RailDock />
         <Analytics />
         <ShareArrival />
+        <AdFreeSync />
         {/* Scroll reveals: shows what is on screen, then lets the rest ease in as it scrolls into view. */}
         <script dangerouslySetInnerHTML={{ __html: MOTION_SCRIPT }} />
         {/* The phone bottom nav (components/BottomNav.tsx, lib/bottom-nav.ts): browser only, phones only, BOTTOM_NAV is its switch. */}

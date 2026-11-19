@@ -1,4 +1,5 @@
 import { InlineAds } from "@/components/InlineAds";
+import { WatchPrice } from "@/components/premium/WatchPrice";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -292,6 +293,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                     <div>
                       <AddToBasket slug={f.slug} />
                     </div>
+                    <WatchPrice productId={f.ean} region={r.code} priceCents={b.offer.p} />
                   </div>
                 ) : (
                   <div className="card p-5 text-sm">
@@ -301,6 +303,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                         It is sold {regions.filter((x) => x !== r.code).map((x) => REGIONS.find((y) => y.code === x)!.phrase).join(", ")}: pick a region above, or see the retailers below.
                       </p>
                     )}
+                    {f.offers[r.code]?.length ? <WatchPrice productId={f.ean} region={r.code} priceCents={null} /> : null}
                   </div>
                 )}
               </div>
