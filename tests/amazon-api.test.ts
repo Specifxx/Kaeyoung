@@ -129,3 +129,33 @@ test("a 429 waits Amazon's Retry-After when given, else the backoff table, with 
   assert.equal(rateLimitWait(0, "600", 0), 60000, "capped at a minute");
   assert.equal(rateLimitWait(1, "soon", 0.5), RATE_LIMIT_WAITS[1] + 500);
 });
+
+test("the daily Amazon budget is the owner's share and env can only lower it (2026-11-19)", async () => {
+  const { amazonBudget, AMAZON_BUDGET, byAccount } = await import("../src/lib/amazon-asins");
+  assert.equal(amazonBudget("search", "US", {}), AMAZON_BUDGET.search.US);
+  assert.equal(amazonBudget("search", "UK", {}), AMAZON_BUDGET.search.other);
+  assert.equal(amazonBudget("build", "US", { AMAZON_BUILD_CALLS: "50" }), 50);
+  assert.equal(amazonBudget("build", "US", { AMAZON_BUILD_CALLS: "99999" }), AMAZON_BUDGET.build.US, "never above the share");
+  assert.equal(amazonBudget("search", "CA", { AMAZON_SEARCH_BUDGET: "0" }), 0);
+  // A US day stays inside Amazon's 8,640 with room for the other sites on the account.
+  assert.ok(AMAZON_BUDGET.search.US + AMAZON_BUDGET.build.US <= 2500);
+  // Regions on one account run one after another; separate accounts overlap.
+  const log: string[] = [];
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  await byAccount(["US", "CA", "AU"], (c) => (c === "US" ? "us" : "au"), async (c) => {
+    log.push(`${c}+`);
+    await sleep(5);
+    log.push(`${c}-`);
+  });
+  assert.ok(log.indexOf("CA-") < log.indexOf("AU+"), "CA and AU share AU's account, so never overlap");
+  assert.ok(log.indexOf("AU+") < log.indexOf("US-") || log.indexOf("CA+") < log.indexOf("US-"), "US runs beside them");
+});
+
+test("both Amazon scripts spend only amazonBudget and run accounts with byAccount", () => {
+  for (const f of ["scripts/amazon-asins.ts", "scripts/fetch-amazon-prices.ts"]) {
+    const src = fs.readFileSync(path.join(process.cwd(), f), "utf8");
+    assert.match(src, /amazonBudget\("(search|build)", code\)/, f);
+    assert.match(src, /byAccount\(/, f);
+    assert.doesNotMatch(src, /process\.env\.AMAZON_(SEARCH_BUDGET|BUILD_CALLS)/, f);
+  }
+});
