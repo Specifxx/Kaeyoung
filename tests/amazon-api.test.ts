@@ -120,3 +120,12 @@ test("pages never read the ASIN files; the import finds ASINs with the credentia
   assert.match(wf, /npx tsx scripts\/amazon-asins\.ts/);
   for (const r of ["US", "UK", "CA", "EU", "AU"]) assert.match(wf, new RegExp(`AMAZON_CREATORS_${r}_CLIENT_SECRET: \\$\\{\\{ secrets\\.AMAZON_CREATORS_${r}_CLIENT_SECRET \\}\\}`));
 });
+
+test("a 429 waits Amazon's Retry-After when given, else the backoff table, with jitter (2026-11-19)", async () => {
+  const { rateLimitWait, RATE_LIMIT_WAITS } = await import("../src/lib/amazon-creators");
+  assert.equal(rateLimitWait(0, null, 0), RATE_LIMIT_WAITS[0]);
+  assert.equal(rateLimitWait(2, null, 0), RATE_LIMIT_WAITS[2]);
+  assert.equal(rateLimitWait(0, "7", 0), 7000);
+  assert.equal(rateLimitWait(0, "600", 0), 60000, "capped at a minute");
+  assert.equal(rateLimitWait(1, "soon", 0.5), RATE_LIMIT_WAITS[1] + 500);
+});

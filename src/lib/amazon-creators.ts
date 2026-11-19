@@ -106,8 +106,21 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class AmazonRefused extends Error {}
 
-/** Waits (ms) after a 429 before trying the same call again; after the last, the store is given up for the run. */
+/**
+ * Amazon's limits (Creators API "API rates", read 2026-11-19): 1 request a second and 8,640 a day per Associates account
+ * to start, then 1 a day per US$0.05 and 1 a second per US$4,320 (at most 10) of shipped revenue through the API in the
+ * last 30 days; over it, a 429. Every Compare site shares each country's credential, so the client keeps one request
+ * a second (the sleep after each call) and, on a 429, backs off: Amazon's Retry-After when it sends one, else these waits
+ * (ms) plus up to a second of jitter so two sites' runs do not retry in step. After the last, the store is given up for
+ * the run. Retries count against the run's call budget. Budgets per site: /mnt/project-files/ops/amazon-rate-limits.md.
+ */
 export const RATE_LIMIT_WAITS = [3_000, 10_000, 30_000];
+
+/** How long to wait before retry number `attempt` (0-based) after a 429: Retry-After (seconds, capped at 60) or the table. */
+export function rateLimitWait(attempt: number, retryAfter: string | null, jitter = Math.random()): number {
+  const told = retryAfter != null && /^\d+$/.test(retryAfter.trim()) ? Math.min(60, Number(retryAfter)) * 1000 : null;
+  return (told ?? RATE_LIMIT_WAITS[attempt] ?? RATE_LIMIT_WAITS[RATE_LIMIT_WAITS.length - 1]) + Math.round(jitter * 1000);
+}
 
 /** Amazon's answer when the credential is not linked to this store's tag (another country's account). */
 export const isWrongAccount = (body: string) => /InvalidAssociate|not linked to the partner tag/i.test(body);
@@ -147,7 +160,7 @@ export async function creatorsClient(region: RegionCode, tag: string, creds: Cre
       await sleep(1100);
       if (res.status !== 429 || attempt >= RATE_LIMIT_WAITS.length) break;
       await res.text();
-      await sleep(RATE_LIMIT_WAITS[attempt]);
+      await sleep(rateLimitWait(attempt, res.headers.get("retry-after")));
     }
     if (res.status === 401 || res.status === 403 || res.status === 429) throw new AmazonRefused(`${op} ${res.status} ${(await res.text()).slice(0, 160)}`);
     if (!res.ok) {
