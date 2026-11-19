@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { OutLink } from "./OutLink";
 import { useRegion } from "./RegionPicker";
 import { AdDock, DockGate, DockTile, DOCK_LINK } from "./AdDock";
+import { usePremium } from "./premium/usePremium";
 import type { RailTile, Rails } from "@/lib/side-rails";
 
 // The ONE in-content ad block (owner, 2026-11-13: the side rails are replaced by "one bigger, subtler horizontal ad block inside
@@ -139,6 +140,9 @@ function Row({ brand, heading, label, tiles, more, region, page }: RowProps & { 
 
 /** Phones: the eBay tiles in the phone dock (AdDock.tsx). Never Amazon. */
 export function RailDock() {
+  // Premium members get no dock at all (owner, 2026-11-19): not drawn, so it never lifts the bottom nav either.
+  const member = usePremium().status === "member";
+  if (member) return null;
   return (
     <DockGate minWidth={DOCK_MIN_WIDTH}>
       <DockItems />

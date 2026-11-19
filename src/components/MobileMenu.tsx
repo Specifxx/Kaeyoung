@@ -10,6 +10,8 @@ import { isActive, type NavGroup } from "@/lib/nav";
 import { ACTIVE_REGIONS } from "@/lib/regions";
 import { setRegion, useRegion } from "./RegionPicker";
 import { Flag } from "./Flag";
+import { MenuAccount } from "./premium/MenuAccount";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function MobileMenu({ groups }: { groups: NavGroup[] }) {
   const [open, setOpen] = useState(false);
@@ -59,6 +61,10 @@ export function MobileMenu({ groups }: { groups: NavGroup[] }) {
                 <p className="font-display text-lg font-semibold text-ink">
                   Menu
                 </p>
+                <div className="flex items-center gap-2">
+                <span className="sm:hidden">
+                  <ThemeToggle />
+                </span>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
@@ -67,6 +73,10 @@ export function MobileMenu({ groups }: { groups: NavGroup[] }) {
                 >
                   ✕
                 </button>
+                </div>
+              </div>
+              <div className="mb-3 -mt-1">
+                <MenuAccount onNavigate={() => setOpen(false)} />
               </div>
               <Link
                 href="/"

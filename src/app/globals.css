@@ -716,3 +716,10 @@ html[data-bottomnav] [data-dock-stack] { translate: 0 calc(-1 * var(--bn-space) 
   .phone-rail > * { flex: 0 0 44%; min-width: 0; scroll-snap-align: start; }
   .phone-rail-sm > * { flex-basis: 38%; }
 }
+
+/* Premium members see no banner ads (owner, 2026-11-19; lib/premium-member.ts ADFREE_BOOT_SCRIPT): the one in-content ad block and the
+   phone ad dock. Price tables, the stores in them, their order and the paid rows inside them are untouched. */
+html[data-adfree] [data-ad="inline"],
+html[data-adfree] [data-dock] {
+  display: none !important;
+}

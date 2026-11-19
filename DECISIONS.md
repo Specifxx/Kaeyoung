@@ -1792,3 +1792,19 @@ popular, deals and new), so it could differ from what visitors saw.
 - **Rate limit.** A 429 used to end the region for the run: on 18 Nov ScentCompare's US search stopped at its first call (the US
   credential is one request a second for every site's runs together). It now waits 3, 10 and 30 seconds and tries again
   before giving up (`RATE_LIMIT_WAITS`, `lib/amazon-creators.ts`).
+
+## 2026-11-19 — Accounts, Premium and alerts (the same as ScentCompare's)
+
+**Owner (2026-11-19):** "we want accounts for every single one of our compare sites now", with a Premium "like Rift Compare … with
+the deals and everything". KaeYoung follows ScentCompare the same day; the code is the same, the words and colours are KaeYoung's.
+
+- **One shared account service**: sign in on `/account` with Google, Discord or an emailed link (no password); the browser keeps one
+  signed token in localStorage (`kaeyoung_premium_v1`, `lib/premium-member.ts`), never a cookie, so every page stays one static file.
+- **Alerts for everyone, free**: price drop, or back in stock where a region is sold out, under each region's price (`WatchPrice.tsx`);
+  the service reads the static `/alert-feed.json` (`lib/alert-feed.ts`: the barcode, name, path and lowest IN-STOCK store price per
+  region; never eBay, Amazon, a partner row or a conversion) once a day. A KaeYoung email never ends with another site's deal.
+- **Premium** (`/premium`, US$4.99 a month or US$39.99 a year, 14 days free, Stripe): no banner ads (the in-content block, and the phone
+  dock is not drawn), 200 alerts instead of 25, the watch list at `/watches`. The cheapest price, every row, their order and `/deals`
+  stay free and unchanged.
+- **No sister links, no Compare branding**: the pages, the privacy note and the emails say "our shared alert service" and name no site.
+- Header: Sign in on phones too; day/night moved into the phone menu below `sm`. Premium from `lg`.

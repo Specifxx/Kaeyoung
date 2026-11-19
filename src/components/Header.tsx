@@ -7,6 +7,7 @@ import { MobileMenu } from "./MobileMenu";
 import { HeaderMenus } from "./HeaderMenus";
 import type { HeaderMenu, NavGroup } from "@/lib/nav";
 import { CartHeaderLink } from "@/components/cart/CartHeaderLink";
+import { AccountHeaderLink, PremiumHeaderLink } from "@/components/premium/AccountHeaderLink";
 
 export function Header({ groups, menus }: { groups: NavGroup[]; menus: HeaderMenu[] }) {
   return (
@@ -21,7 +22,13 @@ export function Header({ groups, menus }: { groups: NavGroup[]; menus: HeaderMen
         </div>
         <div className="ml-auto flex items-center gap-2">
           <RegionPicker compact />
-          <ThemeToggle />
+          {/* Day/night sits in the phone menu below sm, so Sign in fits beside the wordmark (2026-11-19). */}
+          <span className="hidden sm:contents">
+            <ThemeToggle />
+          </span>
+          {/* Sign in and Premium (owner, 2026-11-19: accounts on every site, visible on phones too). Premium from lg; phones get it in the menu. */}
+          <PremiumHeaderLink className="hidden lg:inline-flex" />
+          <AccountHeaderLink />
           {/* The cart list (components/cart, owner 2026-11-06), with its count: here from md, beside the search on phones. */}
         <CartHeaderLink className="hidden md:inline-flex" />
         <MobileMenu groups={groups} />
