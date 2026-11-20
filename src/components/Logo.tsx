@@ -21,7 +21,7 @@ export function LogoMark({ size = 32 }: { size?: number }) {
 export function Logo({ wordmark = "flex" }: { wordmark?: string }) {
   return (
     <span className="flex items-center gap-2.5">
-      <LogoMark />
+      <span className="relative inline-flex shrink-0 xmas-cap"><LogoMark /></span>
       <span className={`${wordmark} flex-col leading-none`}>
         <span className="font-display text-[22px] font-semibold tracking-tight text-ink">KaeYoung</span>
         <span className="mt-0.5 hidden text-[10px] font-medium uppercase tracking-[0.2em] text-soft sm:block">Stay young</span>

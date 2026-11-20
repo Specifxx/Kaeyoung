@@ -1,4 +1,4 @@
-import { SEASON_BOOT_SCRIPT } from "@/lib/season";
+import { CHRISTMAS_FESTIVE_LAYER, SEASON_BOOT_SCRIPT } from "@/lib/season";
 import localFont from "next/font/local";
 import { MOTION_BOOT, MOTION_SCRIPT } from "@/lib/motion";
 import type { Metadata, Viewport } from "next";
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       .map((b) => ({ slug: b.slug, name: b.name })),
   );
   return (
-    <html className={`${inter.variable} ${fraunces.variable}`} lang="en" data-theme="night" suppressHydrationWarning>
+    <html data-festive={CHRISTMAS_FESTIVE_LAYER ? "" : undefined} className={`${inter.variable} ${fraunces.variable}`} lang="en" data-theme="night" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         {/* The holiday look (1 November to Boxing Day): data-season on <html> from the visitor's own date. lib/season.ts. */}
