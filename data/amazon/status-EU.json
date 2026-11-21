@@ -1,1 +1,1 @@
-{"at":"2026-11-20T16:07:46.258Z","state":"refused","searched":0,"found":0,"known":0,"waiting":4071,"note":"searchItems 400 {\"message\":\"Your credential is not linked to the partner tag in the request for the given Marketplace.\",\"reason\":\"InvalidAssociate\",\"type\":\"Vali"}
+{"at":"2026-11-21T15:15:36.270Z","state":"refused","searched":0,"found":0,"known":0,"waiting":4059,"note":"searchItems 400 {\"message\":\"Your credential is not linked to the partner tag in the request for the given Marketplace.\",\"reason\":\"InvalidAssociate\",\"type\":\"Vali"}
