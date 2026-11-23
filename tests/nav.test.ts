@@ -63,6 +63,7 @@ test("header mega menus: built from the nav groups, every link a place the group
   const comp = read("src/components/HeaderMenus.tsx");
   assert.match(comp, /Escape/);
   assert.match(comp, /aria-expanded/);
+  assert.match(comp, /href=\{m\.all\.href\}[\s\S]{0,700}\{m\.label\}\s*<\/Link>/, "a menu label is a link to its section page (owner, 2026-11-23)");
   assert.match(comp, /rp-\$\{r\}/);
   assert.ok(!read("src/app/layout.tsx").includes("SideNav"), "the side panel is gone");
 });
