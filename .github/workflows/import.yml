@@ -46,6 +46,11 @@ jobs:
         env:
           AWIN_FEED_STYLEVANA: ${{ secrets.AWIN_FEED_STYLEVANA }}
         run: npx tsx scripts/partner-feeds.ts
+      - name: InRewards links (Sephora, iHerb in the US; a no-op until its secret exists)
+        if: github.event_name != 'workflow_dispatch' || inputs.stores
+        env:
+          INREWARDS_API_KEY: ${{ secrets.INREWARDS_API_KEY }}
+        run: npx tsx scripts/inrewards-links.ts
       - name: eBay
         if: github.event_name != 'workflow_dispatch' || inputs.ebay
         env:
