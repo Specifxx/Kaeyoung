@@ -7,7 +7,8 @@
 import { REGION_BY_CODE, SITE, type RegionCode } from "@/site";
 import { awinProgrammeFor, awinUrl, clickref } from "./awin";
 import { STORE_BY_ID } from "@/content/stores";
-import type { Offer } from "./types";
+import type { Offer, Product } from "./types";
+import { inrewardsHref, type InrewardsFile } from "./inrewards";
 
 /** One EPN campaign for every site in the family, hard-coded (owner,
  *  2026-10-30); no variable overrides it. The customid tag (`ky-…`) tells the
@@ -192,16 +193,29 @@ export interface Partner {
    *  (scripts/partner-feeds.ts): with it the row shows the retailer's own
    *  price for the exact barcode and links to the product, not a search. */
   feedEnv?: string;
+  /** Regions where its InRewards short link pays (lib/inrewards.ts). There the row shows only once the
+   *  import made that link, and it wins over any template. */
+  inrewards?: RegionCode[];
 }
 
 export const PARTNERS: Partner[] = [
   { key: "yesstyle", name: "YesStyle", envVar: "AFF_YESSTYLE", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.yesstyle.com/en/list.html?q=${q}`, note: "ships from Hong Kong", always: true },
   { key: "stylevana", name: "Stylevana", envVar: "AFF_STYLEVANA", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.stylevana.com/en_US/catalogsearch/result/?q=${q}`, note: "ships worldwide", always: true, template: awinTemplate("90791"), feedEnv: "AWIN_FEED_STYLEVANA" },
   { key: "oliveyoung", name: "Olive Young Global", envVar: "AFF_OLIVEYOUNG", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://global.oliveyoung.com/display/search?query=${q}`, note: "ships from Korea" },
-  { key: "iherb", name: "iHerb", envVar: "AFF_IHERB", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.iherb.com/search?kw=${q}`, note: "ships worldwide" },
+  { key: "iherb", name: "iHerb", envVar: "AFF_IHERB", regions: ["US", "UK", "CA", "AU", "NZ", "EU"], search: (q) => `https://www.iherb.com/search?kw=${q}`, note: "ships worldwide", inrewards: ["US"] },
+  // Through InRewards only (2026-11-24): no row until the import made its tracked link.
+  { key: "sephora", name: "Sephora", envVar: "AFF_SEPHORA", regions: ["US"], search: (q) => `https://www.sephora.com/search?keyword=${q}`, note: "US retailer", inrewards: ["US"] },
   { key: "lookfantastic", name: "LOOKFANTASTIC", envVar: "AFF_LOOKFANTASTIC", regions: ["UK"], search: (q) => `https://www.lookfantastic.com/search?q=${q}`, note: "UK retailer" },
   { key: "cultbeauty", name: "Cult Beauty", envVar: "AFF_CULTBEAUTY", regions: ["UK"], search: (q) => `https://www.cultbeauty.co.uk/search?q=${q}`, note: "UK retailer" },
 ];
+
+/** The search words a product's partner, eBay and Amazon search links use. */
+export function searchQuery(f: Pick<Product, "name">): string {
+  return f.name.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
+}
+
+/** The exact retailer URL InRewards converts for a partner and query (the import and the page must agree). */
+export const inrewardsUrl = (p: Partner, query: string): string => p.search(encodeURIComponent(query));
 
 /** A retailer in the family's joined Awin list (src/lib/awin.ts) earns with no template of its own. */
 const awinJoinedTemplate = (p: Partner) => {
@@ -237,8 +251,10 @@ export function partnerAwinId(p: Partner, env: Record<string, string | undefined
 
 /** The retailer rows a region shows today: those whose tracking template is
  *  set (paid), plus the `always` ones as plain search links (unpaid). */
-export function partnersFor(region: RegionCode, query: string, sub: string, env: Record<string, string | undefined> = process.env): { p: Partner; href: string; paid: boolean }[] {
+export function partnersFor(region: RegionCode, query: string, sub: string, env: Record<string, string | undefined> = process.env, inrewards: InrewardsFile | null = null): { p: Partner; href: string; paid: boolean }[] {
   return PARTNERS.filter((p) => p.regions.includes(region)).flatMap((p): { p: Partner; href: string; paid: boolean }[] => {
+    const ir = inrewardsHref(inrewards, p.inrewards, region, inrewardsUrl(p, query));
+    if (ir) return [{ p, href: ir, paid: true }];
     const href = partnerUrl(p, query, sub, env);
     if (href) return [{ p, href, paid: true }];
     return p.always ? [{ p, href: p.search(encodeURIComponent(query)), paid: false }] : [];

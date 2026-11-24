@@ -24,6 +24,7 @@ jobs:
       - env:
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
           EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+          INREWARDS_API_KEY: ${{ secrets.INREWARDS_API_KEY }}
           EBAY_DAILY_CAP: ${{ vars.EBAY_DAILY_CAP }}
           # The reviews branch of this public repo, read with the job's own token (no secret).
           REVIEWS_GITHUB_TOKEN: ${{ github.token }}

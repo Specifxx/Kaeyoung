@@ -1877,3 +1877,18 @@ Owner, 2026-11-23: "every time I click on the drop downs, I expect it to be a li
 one of the drop downs, it doesn't do anything. It just drops it down." Each label of `HeaderMenus.tsx` is now a `<Link>` to the menu's own "all" page (`m.all.href`, the link at the foot of its panel). Hover still opens the panel after the same
 intent delay; the chevron beside the label is now the button that toggles it (click, tap, Enter, Space, ArrowDown), with
 `aria-expanded` and its own label. The panels stay in the server HTML. `tests/nav.test.ts` pins it.
+
+## 2026-11-24: Sephora and iHerb through InRewards, US only
+
+InRewards (Dealmoon group's network) accepted us on 2026-11-20 and turned on Stylevana, iHerb, Sephora, Ulta, Sobelia and
+Escentual with Open API access (owner's exception to "Impact + Awin only", for KaeYoung and ScentCompare). Its links are
+one `inrwd.me` short link per retailer URL, made by `POST …/advertiser/conversion/link` (header `x-ir-authorization: Bearer`,
+body `originalUrl`, answer `data.shortLinks`), 60 requests a minute.
+- `scripts/inrewards-links.ts` (import.yml, after the partner feeds) converts each InRewards partner's search URL once and
+  keeps it in `data/public/inrewards.json`; best-stocked products first, at most `INREWARDS_MAX_CALLS` (600) a run, ~27 a
+  minute so ScentCompare can share the key. A refused URL waits a week; five refusals with nothing made stops the run as a
+  request-format problem. A no-op until `INREWARDS_API_KEY` exists. Pages only read the file (`partnersFor`, `lib/inrewards.ts`).
+- Regions: US only (`Partner.inrewards`) until InRewards confirms which merchants pay outside it. iHerb's US row and a new
+  Sephora US row show only once their short link exists; elsewhere nothing changes. Stylevana stays on Awin (already tracking).
+- Order is unchanged: partner rows stay in their own labelled group after eBay and Amazon, never ranked, never the best price.
+  Ops monitor "InRewards links" is amber on a stopped run or a stale one; `tests/inrewards.test.ts`.

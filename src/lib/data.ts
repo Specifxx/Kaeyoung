@@ -11,6 +11,7 @@ import { lowestOrderable } from "./history";
 import { canonicalKey } from "./brand";
 import { BRAND_KO } from "@/content/brands-ko";
 import type { EbayData, History, Meta, Offer, Product } from "./types";
+import type { InrewardsFile } from "./inrewards";
 import { unpackProducts } from "./products-file";
 import { deliveryFor, MAX_SMALL_ORDER_FEE, type ShippingData } from "./shipping";
 import type { PartnerPricesFile } from "./partner-feed";
@@ -44,6 +45,8 @@ function once<T>(key: string, build: () => T): T {
 export const getProducts = (): Product[] =>
   once("products", () => unpackProducts(load<Parameters<typeof unpackProducts>[0]>("products.json", null)).filter((f) => f.offers && Object.values(f.offers).some((o) => o?.length)));
 export const getPartnerPrices = (): PartnerPricesFile | null => load<PartnerPricesFile | null>("partners.json", null);
+/** InRewards short links made by scripts/inrewards-links.ts (lib/inrewards.ts). */
+export const getInrewards = (): InrewardsFile | null => load<InrewardsFile | null>("inrewards.json", null);
 export const getMeta = (): Meta | null => load<Meta | null>("meta.json", null);
 export const getHistory = (): History => load<History>("history.json", {});
 // Rows from before 2026-10-31 carry no postage (the search took any seller anywhere): not shown (lib/ebay.ts ebayRowShown).

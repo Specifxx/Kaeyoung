@@ -5,8 +5,8 @@
 // beauty partners; all sit above the stores, labelled "Paid link", never counted
 // as a store and never the "best price" (family rule: commission never re-ranks).
 import { REGION_BY_CODE, type RegionCode } from "@/site";
-import { amazonItemUrl, buyLink, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerAwinId, partnerProductUrl, partnersFor, storePays, subId } from "@/lib/affiliate";
-import { getPartnerPrices, getPromos, getShipping, storeName } from "@/lib/data";
+import { amazonItemUrl, buyLink, amazonSearchUrl, ebayAffiliateUrl, ebaySearchUrl, ebayShopHost, partnerAwinId, partnerProductUrl, partnersFor, searchQuery, storePays, subId } from "@/lib/affiliate";
+import { getInrewards, getPartnerPrices, getPromos, getShipping, storeName } from "@/lib/data";
 import { STORE_BY_ID } from "@/content/stores";
 import { awinProgrammeFor } from "@/lib/awin";
 import { awinOffers, bestPerItem, dealNote, liveDeal, offerNote, type AwinPromotion } from "@/lib/promos";
@@ -29,9 +29,7 @@ function offersNote(advertiserId: number | null, region: RegionCode): string | n
   return live.length ? live.map(offerNote).join(" · ") : null;
 }
 
-export function searchQuery(f: Product): string {
-  return f.name.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
-}
+export { searchQuery };
 
 const asinCache = new Map<string, AsinFile>();
 const asinsFor = (r: RegionCode) => {
@@ -106,7 +104,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
   // are a search link each, in their own labelled group, never ranked.
   const overseas: RowData[] = [];
   const feeds = getPartnerPrices();
-  for (const { p, href, paid } of partnersFor(region, q, sub)) {
+  for (const { p, href, paid } of partnersFor(region, q, sub, process.env, getInrewards())) {
     const event = { source: p.key, region, placement: `${placement}_overseas`, ean: f.ean };
     const fed = paid ? partnerPriceIn(feeds, p.key, region, f.ean) : null;
     const productHref = fed && partnerProductUrl(p, fed.u, sub);
