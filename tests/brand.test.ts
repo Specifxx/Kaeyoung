@@ -41,3 +41,11 @@ test("a category-named brand page redirects to its category, never a 404 (2026-1
     assert.ok(listingBrand(r.source.replace("/brands/", "").replace(/-/g, " "), "", "Shop") === null, r.source);
   }
 });
+
+test("I'M SORRY FOR MY SKIN (asked to be listed, 2026-11-24): one brand, and looked up in mixed shops", async () => {
+  const { K_BRANDS } = await import("@/lib/import/shopify");
+  assert.equal(brandName(canonicalKey("I'm Sorry For My Skin"), ["I'm Sorry For My Skin"]), "I'M SORRY FOR MY SKIN");
+  assert.equal(brandFromTitle("I'M SORRY FOR MY SKIN Relaxing Jelly Mask 33ml"), "I'M SORRY FOR MY SKIN");
+  assert.ok(K_BRANDS.test("I’m Sorry For My Skin Hydrogel Eye Patch"));
+  assert.ok(K_BRANDS.test("Im Sorry For My Skin Jelly Mask"));
+});

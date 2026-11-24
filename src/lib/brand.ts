@@ -19,7 +19,7 @@ const KNOWN: string[] = [
   "Ongredients", "Dr. Different", "Benton", "Pure Bio", "Frudia", "Secret Key", "It's Skin", "Nature Republic", "The Face Shop",
   "Banila Co", "Hyggee", "Unleashia", "Wakemake", "Glow Recipe", "Peach & Lily", "Then I Met You", "Kaine", "Dalba",
   "Commonlabs", "Skin Atelier", "Arencia", "House of Hur", "Haruharu", "Barulab", "Ma:nyo", "Lador", "Masil", "Holika",
-  "Bioderma",
+  "Bioderma", "I'M SORRY FOR MY SKIN",
 ];
 
 /** "Dr.Jart+" / "dr jart" → "drjart". */
