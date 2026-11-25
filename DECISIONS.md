@@ -1898,3 +1898,24 @@ body `originalUrl`, answer `data.shortLinks`), 60 requests a minute.
 Owner, 2026-11-26: "I don't really like the Christmas lights on the very top." The string of lights hanging under the header
 (2026-11-20) is removed on every Compare site: the `.xmas-garland::after` rule is gone from the `xmas-logo` block in `globals.css`
 and the class is off the header. The Santa hat on the logo stays, and nothing else of the Christmas layer changes.
+
+## 2026-11-26: the phone's home page, tidied (what the 19 November cut left)
+
+**Owner, 2026-11-26:** "we should still tidy up the landing page for our sites a little bit, because I think there's just too
+much going on, especially for mobile phone."
+
+**Measured at 390px before:** 4,104px tall. The page was already cut hard on 19 November, and the first shelf began just under the
+first screen. What still repeated: the Christmas gift pill directly under the Black Friday strip (two promos), a three-line
+sub-paragraph under the headline (the header's search and steps are on the same screen), and a note under each shelf title.
+
+**Now, below 640px only:** the headline, the steps row, then the popular shelf, with the first products on the first screen;
+then savings, the ad block where it was in the order, the brands and the questions. 3,725px. Hidden on a phone: the gift pill
+while the sale strip is showing (one promo a page; it comes back by itself when the strip ends), the hero's sub-line and the
+shelves' notes. The sections sit 2rem apart instead of 3rem. Nothing else needed doing.
+
+**Unchanged:** the HTML is the same at every width, so a crawler, find-in-page and a desktop see every block; no URL, title,
+heading or JSON-LD changes; the one ad block is not moved, restyled or reordered. CSS only, in one block at the end of
+`globals.css` ("The phone's home page, tidied"); the hooks are `home-gift`, `home-sub`, `home-flow` and `sec-sub` (`Section.tsx`).
+The questions stay open: collapsing them would change the HTML at every width.
+
+**Read:** phone bounce and buy clickers per 100 on the home page, the week after release against the week before.

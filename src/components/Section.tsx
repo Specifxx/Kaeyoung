@@ -7,7 +7,7 @@ export function Section({ title, href, more, sub, children }: { title: string; h
       <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2 className="h-display text-2xl">{title}</h2>
-          {sub && <p className="mt-1 text-sm text-soft">{sub}</p>}
+          {sub && <p className="sec-sub mt-1 text-sm text-soft">{sub}</p>}
         </div>
         {href && (
           <Link prefetch={false} href={href} className="text-sm font-semibold text-accent-deep underline-offset-4 hover:underline">
