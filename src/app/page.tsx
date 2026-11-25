@@ -77,7 +77,7 @@ export default function Home() {
                 header above it already has the search, the steps and the region, so the creators pill, region chips, second
                 search, counts and the two hero products show from md up only. Same HTML at every width. */}
             <div className="hidden md:block"><CreatorsCornerBadge /></div>
-            <p className="ky-holiday mb-3 sm:mb-4">
+            <p className="ky-holiday home-gift mb-3 sm:mb-4">
               {CHRISTMAS_FESTIVE_LAYER ? (
                 <Link prefetch={false} href={giftHref} className="ky-holiday-pill ky-gift-banner">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M5 12v8h14v-8M12 8v12M12 8c-2.5 0-4-1-4-2.5S9 3 10.5 4 12 8 12 8zm0 0c2.5 0 4-1 4-2.5S15 3 13.5 4 12 8 12 8z" /></svg>
@@ -95,7 +95,7 @@ export default function Home() {
             <h1 className="mo-enter h-display max-w-3xl [--mo-d:1] text-[2.4rem] leading-[1.05] sm:text-6xl">
               Stay young. <span className="mo-shine italic text-accent">Pay less.</span>
             </h1>
-            <p className="mo-enter mt-3 max-w-xl text-base leading-relaxed text-soft sm:mt-5 sm:text-lg" style={{ ["--mo-d" as string]: 2 }}>
+            <p className="home-sub mo-enter mt-3 max-w-xl text-base leading-relaxed text-soft sm:mt-5 sm:text-lg" style={{ ["--mo-d" as string]: 2 }}>
               Every K-beauty store&apos;s price for the same product, side by side. {stores ? `${stores} stores` : "Real stores"}, matched by the barcode on the box and checked every day.
             </p>
             <RegionChips className="mo-enter mt-6 hidden [--mo-d:2] md:flex" />
@@ -117,7 +117,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-6xl px-4 home-flow">
         {/* Category first (2026-11-10, PriceRunner-style): every step as a photo tile of its own most popular products. */}
         <section className="mt-6 md:mt-8">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-2">

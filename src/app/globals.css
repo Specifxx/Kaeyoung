@@ -753,3 +753,19 @@ html[data-adfree] [data-dock] {
   transform: rotate(-18deg);
 }
 /* xmas-logo:end */
+
+/* ── The phone's home page, tidied (owner, 2026-11-26: "there's just too much going on, especially for mobile phone"). The page
+   was already cut on 19 November; this takes what still repeated. Below 640px: the gift pill goes while the sale strip under the
+   header is showing (one promo a page), the hero keeps its headline and loses the sub-line (the header's search and sections are
+   on the same screen), and the shelves lose their notes and sit closer. The same HTML at every width: nothing leaves the page for a
+   crawler or a desktop, no URL, heading or JSON-LD changes, and the ad block is not touched. DECISIONS.md, 2026-11-26. ── */
+@media (max-width: 639px) {
+  body:has([data-holiday-strip]) .home-gift,
+  .home-sub,
+  .home-flow .sec-sub {
+    display: none;
+  }
+  .home-flow section.mt-12:not(.inline-ad) {
+    margin-top: 2rem;
+  }
+}
