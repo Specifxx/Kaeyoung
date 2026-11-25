@@ -11,7 +11,7 @@ import { AccountHeaderLink, PremiumHeaderLink } from "@/components/premium/Accou
 
 export function Header({ groups, menus }: { groups: NavGroup[]; menus: HeaderMenu[] }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-card/90 backdrop-blur xmas-garland">
+    <header className="sticky top-0 z-40 border-b border-line bg-card/90 backdrop-blur">
       <div className="flex h-[4.25rem] items-center gap-2 px-4 sm:gap-4 lg:px-5">
         <Link href="/" prefetch={false} className="shrink-0" aria-label="KaeYoung home">
           <Logo wordmark="hidden min-[430px]:flex" />
