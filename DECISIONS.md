@@ -1957,3 +1957,11 @@ step of the daily import, reads Compare Empire's `data/awin/promotions.json` and
 
 **Read:** buy clicks from `/codes/*` (placement `codes-store`, `codes-deal`), code_copy and code_vote events, and Search
 Console impressions for "<store> discount code", three weeks after release.
+
+## 2026-11-26: Amazon's US allowance for KaeYoung goes from 700 to 300 a day
+
+The owner chose this split of the network's shared US Amazon Creators API allowance: ScentCompare stays at 2,200 a day,
+DexCompare at 900, and KaeYoung drops from 700 to 300 (searchItems 600 to 200, getItems at build unchanged at 100). KaeYoung's
+last import spent about 20 searches with nothing waiting, so nothing it shows changes. The network's US total falls from about
+4,200 to about 3,800 of 8,640, leaving room for Amazon's revenue-based limit from about 8 Dec. Other regions are unchanged.
+`tests/amazon-api.test.ts` pins the 300. The network table is /mnt/project-files/ops/amazon-rate-limits.md.

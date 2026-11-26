@@ -52,9 +52,11 @@ export function searchWords(p: { brand?: string; name: string; size?: string | n
  * Associates account (one per country, 8,640 a day and 1 a second for its first 30 days, then revenue-based), shared by
  * every site on that account. `search` is the daily import's searchItems calls, `build` the build's getItems calls
  * (ten ASINs each). AMAZON_SEARCH_BUDGET / AMAZON_BUILD_CALLS can only lower these.
+ * 2026-11-26 (owner): the US search goes from 600 to 200 a day (it used about 20); the network keeps the room for Amazon's
+ * revenue-based limit after about 8 Dec.
  */
 export const AMAZON_BUDGET = {
-  search: { US: 600, other: 300 },
+  search: { US: 200, other: 300 },
   build: { US: 100, other: 60 },
 } as const;
 

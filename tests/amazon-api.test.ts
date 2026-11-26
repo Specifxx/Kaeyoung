@@ -137,6 +137,7 @@ test("the daily Amazon budget is the owner's share and env can only lower it (20
   assert.equal(amazonBudget("build", "US", { AMAZON_BUILD_CALLS: "50" }), 50);
   assert.equal(amazonBudget("build", "US", { AMAZON_BUILD_CALLS: "99999" }), AMAZON_BUDGET.build.US, "never above the share");
   assert.equal(amazonBudget("search", "CA", { AMAZON_SEARCH_BUDGET: "0" }), 0);
+  assert.equal(AMAZON_BUDGET.search.US + AMAZON_BUDGET.build.US, 300, "owner, 2026-11-26: KaeYoung's US share is 300 a day");
   // A US day stays inside Amazon's 8,640 with room for the other sites on the account.
   assert.ok(AMAZON_BUDGET.search.US + AMAZON_BUDGET.build.US <= 2500);
   // Regions on one account run one after another; separate accounts overlap.
