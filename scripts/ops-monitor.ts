@@ -115,6 +115,13 @@ export function judgeShipping(file: Record<string, { at: string }> | null, store
 
 /** The daily store-deals check (scripts/promos.ts, promos.yml). Deals older than two days are hidden by the pages,
  *  so a stopped check only means no deal notes: amber, never red. */
+/** The /codes pages (lib/codes.ts): refreshed by every import; a stale file means codes that ended still show. */
+export function judgeCodes(updatedAt: string, live: number, now = Date.now()): Omit<Result, "name"> {
+  const h = (now - Date.parse(updatedAt)) / 3_600_000;
+  if (!(h < 54)) return { status: "warn", detail: `codes are ${h.toFixed(0)}h old: check the "Discount codes" step of Import prices` };
+  return live > 0 ? { status: "ok", detail: `${live} live codes and deals, ${h.toFixed(1)}h old` } : { status: "warn", detail: "no live codes at any store: is Compare Empire's Awin offers read running?" };
+}
+
 export function judgePromos(file: Record<string, { at: string; deals: Record<string, unknown> }> | null, stores: number, now = Date.now()): Omit<Result, "name"> {
   if (!file || !Object.keys(file).length) return { status: "warn", detail: "no store deals checked yet (data/public/promos.json empty): run the Store deals workflow" };
   const ats = Object.values(file).map((s) => Date.parse(s.at));
@@ -184,6 +191,13 @@ async function main() {
     check("Delivery quotes", () => {
       const f = path.join(DATA, "shipping.json");
       return judgeShipping(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null, STORES.length);
+    }),
+    check("Discount codes", () => {
+      const file = path.join(DATA, "codes.json");
+      const f = fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, "utf8")) as { updatedAt?: string; stores?: Record<string, { live: unknown[] }> }) : null;
+      if (!f?.updatedAt) return { status: "warn", detail: "no data/public/codes.json yet: the next import writes it" };
+      const live = Object.values(f.stores ?? {}).reduce((a, s) => a + s.live.length, 0);
+      return judgeCodes(f.updatedAt, live);
     }),
     check("Store deals", () => {
       const f = path.join(DATA, "promos.json");

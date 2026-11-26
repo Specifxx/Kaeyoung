@@ -1,3 +1,4 @@
+import { codeStoreIndexable, codeStorePages } from "./codes-page";
 import { CATEGORIES, SITE } from "@/site";
 import { getBrands, getMeta, getProducts, needHubs } from "@/lib/data";
 import { sitemapProducts } from "@/lib/index-tiers";
@@ -81,6 +82,8 @@ function pageUrls(): SitemapUrl[] {
     u("/blog", 0.6),
     ...LIVE_POSTS.map((p) => u(`/blog/${p.slug}`, 0.7)),
     u("/stores", 0.6),
+    u("/codes", 0.7),
+    ...codeStorePages().filter(codeStoreIndexable).map((p) => u(`/codes/${p.s.slug}`, 0.7)),
     u("/widgets", 0.4),
     u("/price-report", 0.6),
     u("/is-this-a-good-price", 0.6),

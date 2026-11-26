@@ -1,0 +1,108 @@
+{
+ "updatedAt": "2026-11-26T08:01:44.242Z",
+ "stores": {
+  "stylevana": {
+   "live": [
+    {
+     "id": "aw-4179209",
+     "code": "AFFHIN12",
+     "title": "Hince Perks: Up to 22% off",
+     "terms": "Members Exclusive: Get 22% off hince on $69+ and 18% off sitewide on $69+",
+     "start": "2026-11-18T10:00:00.000Z",
+     "end": "2026-12-31T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4156344",
+     "code": "AFFRLA21",
+     "title": "Round Lab Perks: Up to 21% off + FREE Gift",
+     "terms": "Claim 21% off Round Lab + a FREE full-sized gift on $79+, or 18% off sitewide on $79+",
+     "start": "2026-11-01T06:35:00.000Z",
+     "end": "2026-11-30T06:35:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4156343",
+     "code": "AFFMEC21",
+     "title": "Medicube Perks: Up to 21% off + FREE Gift",
+     "terms": "Get 21% off Medicube with a FREE full-sized gift on $79+, plus 18% off sitewide on $79+",
+     "start": "2026-11-01T06:34:00.000Z",
+     "end": "2026-11-30T06:34:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4156340",
+     "code": "AFFBOJ21",
+     "title": "Beauty of Joseon Perks: Up to 21% off + FREE Gift",
+     "terms": "Unlock 21% off Beauty of Joseon and a FREE full-sized gift at $99+, or take 18% off sitewide on $99+",
+     "start": "2026-11-01T06:32:00.000Z",
+     "end": "2026-11-30T06:32:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4156335",
+     "code": "AFFANU21",
+     "title": "ANUA Perks: Up to 21% off + FREE Gift",
+     "terms": "Enjoy 21% off ANUA orders over $99 plus a FREE full-sized gift, or get 18% off sitewide on $99+",
+     "start": "2026-10-31T16:00:00.000Z",
+     "end": "2026-11-30T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4119284",
+     "code": "AFFADV26",
+     "title": "Advent Calendar Sale",
+     "terms": "Member Exclusive: 16% off on advent calendar (24 Sep onwards)",
+     "start": "2026-09-23T16:00:00.000Z",
+     "end": "2026-11-30T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4018901",
+     "code": "AFFWELCOME",
+     "title": "New Customer Offer!",
+     "terms": "New Customer Only - 23% off with no min spend",
+     "start": "2026-07-22T10:35:00.000Z",
+     "end": "2027-01-01T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-3877927",
+     "code": "AFFMEMBER",
+     "title": "New users only",
+     "terms": "Get an extra 20% off your first order. Get an extra 20% off your first order on US$39",
+     "start": "2026-05-08T08:31:00.000Z",
+     "end": "2026-12-31T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-3656580",
+     "code": "AFF24BDMIX",
+     "title": "Extra 24% off on Best Selling K-Beauty Brands",
+     "terms": "Member exclusive: 24% off on on Beauty of Joseon, COSRX, Haruharu Wonder, Round Lab and Numbuz:n items. 18% off on rest items on $59+",
+     "start": "2026-01-02T09:02:00.000Z",
+     "end": "2026-12-31T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    },
+    {
+     "id": "aw-4164016",
+     "title": "Shop Now and Get Free US Shipping on Orders Over $35+",
+     "start": "2026-11-06T08:54:00.000Z",
+     "end": "2026-12-31T16:00:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-26"
+    }
+   ],
+   "ended": []
+  }
+ }
+}
