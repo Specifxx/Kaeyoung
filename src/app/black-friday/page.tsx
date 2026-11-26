@@ -5,6 +5,7 @@ import { REGIONS } from "@/site";
 import { dealsIn } from "@/lib/data";
 import { TileGrid } from "@/components/ProductTile";
 import { PageHead } from "@/components/Section";
+import { PriceToBeat } from "@/components/PriceToBeat";
 import { blackFriday, cyberMonday, holidayFaq, longDate, seasonYear } from "@/lib/black-friday";
 
 // The Black Friday page (DECISIONS.md, "Black Friday page", 2026-11-02): today's deals at one URL kept every year,
@@ -52,6 +53,7 @@ export default function BlackFriday() {
         <Link prefetch={false} href="/stores" className="underline">Stores we compare</Link>
         {guide ? <> · <Link prefetch={false} href={`/blog/${guide.slug}`} className="underline">{guide.short}: how to tell a real deal</Link></> : null}
       </p>
+      <PriceToBeat event="Black Friday" />
       <section className="mt-10 max-w-3xl">
         <h2 className="font-display text-xl font-semibold">Black Friday {y}: questions</h2>
         {holidayFaq("black-friday", y, "K-beauty").map((f) => (

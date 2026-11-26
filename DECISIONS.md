@@ -1919,3 +1919,13 @@ heading or JSON-LD changes; the one ad block is not moved, restyled or reordered
 The questions stay open: collapsing them would change the HTML at every width.
 
 **Read:** phone bounce and buy clickers per 100 on the home page, the week after release against the week before.
+
+## 2026-11-26: "The price to beat" on the Black Friday and Cyber Monday pages
+
+Owner (26 Nov): a big Black Friday push. Google had crawled `/black-friday` on 24 Nov and left it "Crawled - currently not
+indexed": the page was the `/deals` tiles plus generic FAQ, nothing of its own. It now carries a table built from the day's
+data (`lib/price-to-beat.ts`, `PriceToBeat.tsx`): for each region, how far the cheapest in-stock store typically sits under
+the median store across every product four or more stores sell (US K-beauty on 25 Nov: 1,084 products, median 20%, 49% of
+them 20% or more), and the 15 products the most stores sell with the cheapest and the typical price. Same barcode, in stock,
+item price before shipping, the region's own currency; never eBay, Amazon, a partner row, a "was" price or a conversion.
+Server HTML, one region shown by CSS like every price; links stay internal. Same code in KaeYoung and ScentCompare.
