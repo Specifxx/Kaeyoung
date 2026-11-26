@@ -1965,3 +1965,13 @@ DexCompare at 900, and KaeYoung drops from 700 to 300 (searchItems 600 to 200, g
 last import spent about 20 searches with nothing waiting, so nothing it shows changes. The network's US total falls from about
 4,200 to about 3,800 of 8,640, leaving room for Amazon's revenue-based limit from about 8 Dec. Other regions are unchanged.
 `tests/amazon-api.test.ts` pins the 300. The network table is /mnt/project-files/ops/amazon-rate-limits.md.
+
+## 2026-11-26 — Member rewards on the account page
+
+Owner (26 Nov): "we really, really need a loyalty system ... on all of our Empire websites", one that never runs at a loss. The
+shared account service keeps one points balance (RiftCompare `lib/loyalty.ts`, `/api/loyalty`, DECISIONS there, "Compounding daily
+streaks, and member rewards"); this site draws it in its own name on the account page (`components/account/MemberRewards.tsx`),
+posting the member's token as every other account call does. A daily check-in is 1 point on day 1 of a streak, one more each day in
+a row, up to 10 a day; points buy 7 days of Premium (300 points, once a month, never for paying subscribers). It loads after render,
+opens nothing by itself and shows on no other page (one prompt a visit at most). Points have no cash value and never change giveaway
+entries.
