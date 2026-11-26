@@ -8,7 +8,7 @@
  * misses are retried weekly. Found ASINs and misses go in data/amazon/asins-<REGION>.json; a miss is
  * retried after 30 days. Without credentials it does nothing; a refusal (that store's account has no API
  * access yet: 10 qualifying sales in 30 days) ends that region quietly and the next one still runs.
- * Calls a region a day: amazonBudget("search", region) (owner, 2026-11-19: US 600, others 300; AMAZON_SEARCH_BUDGET can
+ * Calls a region a day: amazonBudget("search", region) (owner, 2026-11-19: US 600, others 300; US 200 since owner 2026-11-26; AMAZON_SEARCH_BUDGET can
  * only lower it). Regions on separate Amazon accounts run side by side, one call a second each (byAccount).
  *   npx tsx scripts/amazon-asins.ts
  */
