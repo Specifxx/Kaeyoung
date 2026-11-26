@@ -1929,3 +1929,31 @@ the median store across every product four or more stores sell (US K-beauty on 2
 them 20% or more), and the 15 products the most stores sell with the cheapest and the typical price. Same barcode, in stock,
 item price before shipping, the region's own currency; never eBay, Amazon, a partner row, a "was" price or a conversion.
 Server HTML, one region shown by CSS like every price; links stay internal. Same code in KaeYoung and ScentCompare.
+
+## 2026-11-26: discount-code pages for the stores that pay us, with "worked / didn't" votes
+
+**Asked:** the OzBargain study's move 3, approved by the owner ("implemented ASAP … designed in a very, very nice way …
+tested"): a page of discount codes per store that pays us commission, where shoppers say whether each code worked.
+
+**Now:** `/codes` and `/codes/<store>` for the Awin partners in `src/content/code-stores.ts` (Stylevana today; the same
+engine as ScentCompare's, which lists seven perfume stores). `scripts/codes.ts`, a never-fatal
+step of the daily import, reads Compare Empire's `data/awin/promotions.json` and writes `data/public/codes.json` through
+`mergeCodes` (`lib/codes.ts`):
+
+- **Real codes only.** A code is the advertiser's own `code` field on an Awin voucher; a deal is an Awin promotion with
+  no code. Nothing typed by us or copied from coupon sites. Feed wording is decoded and trimmed of the store's name and
+  the repeated code; a tester, sample, short-dated or damaged deal is refused (the site never lists them either).
+- **Honest history.** A code keeps the day we first saw it; one that leaves the feed or passes its end date moves to
+  "Recently ended" (45 days, struck through). A code ending within 12 hours of the build is left out, since the page
+  lives until the next release; an end date over three years out is shown as no end date.
+- **Order is never votes or commission:** codes first, then deals, newest published first.
+- **Votes** (`components/codes/CodeList.tsx`): "Worked", "Didn't" and "Expired?" under each code, kept by RiftCompare's
+  `/api/code-votes` in one tally for every site, read once per view in the browser; nothing at build or on the server.
+  The code is shown in full (no reveal gate); Copy only copies and the store link only opens the store. After a copy,
+  that one card asks inline whether it worked, once per visit: no modal.
+- Pages are prerendered (`dynamicParams = false`); a slug is kept forever. A store with nothing live renders, noindex,
+  out of the sitemap. Links in the "Save" menu and on `/deals`. The ops monitor's "Discount codes" check warns when the
+  file is over 54 hours old or empty.
+
+**Read:** buy clicks from `/codes/*` (placement `codes-store`, `codes-deal`), code_copy and code_vote events, and Search
+Console impressions for "<store> discount code", three weeks after release.

@@ -345,3 +345,8 @@ export function productIndexed(f: Product): boolean {
   }
   return asksToBeIndexed(f, indexCore.core, indexCore.demand);
 }
+
+/** Today's discount codes per store (scripts/codes.ts, lib/codes.ts); empty before the first run. */
+export function getCodes(): import("./codes").CodesFile {
+  return load<import("./codes").CodesFile>("codes.json", { updatedAt: "", stores: {} });
+}
