@@ -15,7 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { amazonTag } from "../src/lib/affiliate";
 import { amazonBudget, byAccount, readAsins } from "../src/lib/amazon-asins";
-import { AmazonRefused, barcodeMatches, credentialsFor, creatorsClient, MARKETS, pickListing, PRICE_RESOURCES } from "../src/lib/amazon-creators";
+import { AmazonRefused, barcodeMatches, credentialsFor, creatorsClient, DEAL_RESOURCE, MARKETS, pickListing, PRICE_RESOURCES } from "../src/lib/amazon-creators";
 import { AMAZON_LIVE_DIR, type AmazonLiveFile } from "../src/lib/amazon-live";
 import { homeEans } from "../src/lib/home-shelves";
 import type { Product } from "../src/lib/types";
@@ -48,14 +48,21 @@ async function region(code: RegionCode, products: Product[]) {
   const api = await creatorsClient(code, tag, creds);
   const fetchedAt = new Date().toISOString();
   const prices: AmazonLiveFile["prices"] = {};
+  // Amazon's deal badge is asked for too (Black Friday, 2026-11-27); if Amazon refuses that resource, the run goes on without it.
+  let deals = true;
   for (let i = 0; i < todo.length; i += 10) {
     const batch = todo.slice(i, i + 10);
     let items;
     try {
-      items = await api.call("getItems", { itemIds: batch.map((x) => x.asin), itemIdType: "ASIN", resources: PRICE_RESOURCES });
+      items = await api.call("getItems", { itemIds: batch.map((x) => x.asin), itemIdType: "ASIN", resources: deals ? [...PRICE_RESOURCES, DEAL_RESOURCE] : PRICE_RESOURCES });
     } catch (e) {
       console.log(`Amazon prices ${code}: ${(e as Error).message}`);
       if (e instanceof AmazonRefused) break;
+      if (deals && i === 0) {
+        deals = false;
+        i -= 10;
+        console.log(`Amazon prices ${code}: retrying without ${DEAL_RESOURCE}.`);
+      }
       continue;
     }
     for (const x of batch) {
@@ -67,13 +74,14 @@ async function region(code: RegionCode, products: Product[]) {
       const cents = Math.round(pick.amount * 100);
       const ref = median(x.offers.map((o) => o.p));
       if (ref && (cents < ref * 0.6 || cents > ref * 1.6)) continue;
-      prices[x.p.ean] = { asin: it.asin, p: cents };
+      prices[x.p.ean] = { asin: it.asin, p: cents, ...(pick.off ? { off: pick.off } : {}), ...(pick.deal ? { deal: pick.deal } : {}) };
     }
   }
   if (!Object.keys(prices).length) return console.log(`Amazon prices ${code}: none (${api.calls()} calls).`);
   fs.mkdirSync(AMAZON_LIVE_DIR, { recursive: true });
   fs.writeFileSync(path.join(AMAZON_LIVE_DIR, `${code}.json`), JSON.stringify({ fetchedAt, prices } satisfies AmazonLiveFile) + "\n");
-  console.log(`Amazon prices ${code}: ${Object.keys(prices).length} of ${todo.length} products priced in ${api.calls()} calls.`);
+  const onSale = Object.values(prices).filter((x) => x.off || x.deal).length;
+  console.log(`Amazon prices ${code}: ${Object.keys(prices).length} of ${todo.length} products priced in ${api.calls()} calls; ${onSale} on sale at Amazon.`);
 }
 
 async function main() {

@@ -8,13 +8,19 @@ const MAX_AGE_MS = 24 * 3600_000;
 export const AMAZON_PRICE_DISCLAIMER =
   "Product prices and availability are accurate as of the date/time indicated and are subject to change. Any price and availability information displayed on Amazon at the time of purchase will apply to the purchase of this product.";
 
-export function AmazonPrice({ price, at, timeZone, zoneLabel }: { price: string; at: string; timeZone: string; zoneLabel: string }) {
+export function AmazonPrice({ price, at, timeZone, zoneLabel, off, deal }: { price: string; at: string; timeZone: string; zoneLabel: string; off?: number; deal?: string }) {
   const [fresh, setFresh] = useState(true);
   useEffect(() => setFresh(Date.now() - Date.parse(at) < MAX_AGE_MS), [at]);
   if (!fresh) return null;
   const when = new Date(at).toLocaleString("en-GB", { timeZone, day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
   return (
     <span className="shrink-0 text-right" title={AMAZON_PRICE_DISCLAIMER}>
+      {/* Amazon's own saving or deal badge on this listing (Black Friday, 2026-11-27), Amazon's claim, gone with the price after 24 hours. */}
+      {(deal || off) && (
+        <span className="block text-[11px] font-semibold text-save">
+          {deal ? `${deal}${off ? ` · ${off}% off` : ""}` : `${off}% off at Amazon`}
+        </span>
+      )}
       <span className="block text-lg font-semibold tabular-nums">{price}</span>
       <span className="block text-[10px] text-soft">as of {when} {zoneLabel}*</span>
     </span>

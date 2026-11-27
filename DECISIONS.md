@@ -1991,3 +1991,19 @@ opportunity with TCG Player", so the bar (`lib/bf-mode.ts`, `BfModeBar`) no long
 until 04:00 UTC on 1 Dec, when TCGplayer's sale ends (11PM 30 Nov New York). Its label follows the weekend (Black Friday,
 Cyber Weekend from 28 Nov 10:00 UTC, Cyber Monday from 30 Nov 05:00 UTC), and on Cyber Monday it links the Cyber Monday page.
 Same place, same ✕, no pop-up; it still switches itself off with no build. Delete the files after the sale.
+
+## 2026-11-27 — Amazon's own Black Friday saving on the Amazon row
+
+Owner (Black Friday): "is there any special Black Friday thing that Amazon does … we can get a shit ton of sales there."
+Amazon runs Black Friday Week through Cyber Monday, and an Associates click pays on the whole basket bought within 24
+hours, so a reason to click the Amazon row is worth more this week. Amazon's deals page and category searches stay out
+(the 2026-11-02 Operating Agreement rule: every Amazon link goes to one specific product).
+
+- The build's getItems call also asks for `offersV2.listings.dealDetails`; if Amazon refuses that resource on the first
+  batch, the run retries without it, so prices never depend on it. `price.savings` already came with the price resource.
+- `amazonSaving` (`lib/amazon-creators.ts`) keeps Amazon's stated percentage when it is 5 to 80 and in the store's
+  currency, and a deal badge only for a deal open to everyone (`accessType` ALL: a Prime-only price is not the one we
+  show), not ended, plain words of 40 characters or fewer.
+- Shown only on the product page's Amazon row, above Amazon's price, inside `AmazonPrice`, so it disappears with the price
+  after 24 hours. Amazon's claim in Amazon's words ("Black Friday Deal · 20% off", else "20% off at Amazon"): never a
+  deal list, a sort, the cheapest badge, an alert, history or the quick view, like the price itself.
