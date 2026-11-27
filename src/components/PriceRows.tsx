@@ -45,7 +45,7 @@ export interface RowData {
   /** The retailer's live Awin offers and vouchers (lib/promos.ts offerNote), with their end dates. */
   offer?: string | null;
   /** Amazon's own price from the Creators API (lib/amazon-live.ts): shown with its time, hidden after 24 hours. */
-  live?: { at: string; timeZone: string; zoneLabel: string };
+  live?: { at: string; timeZone: string; zoneLabel: string; off?: number; deal?: string; until?: string };
   /** the link opens the store's checkout with the item in it (lib/affiliate.ts buyLink) */
   checkout?: boolean;
   event: { source: string; region: string; placement: string; ean?: string; to?: string };
@@ -155,7 +155,7 @@ function Row({ name, sub, price, status, href, paid, highlight = false, plainBes
           <Deals deal={deal} dealLabel={dealLabel} offer={offer} />
         </p>
       </div>
-      {price && live && <AmazonPrice price={price} at={live.at} timeZone={live.timeZone} zoneLabel={live.zoneLabel} />}
+      {price && live && <AmazonPrice price={price} at={live.at} timeZone={live.timeZone} zoneLabel={live.zoneLabel} off={live.off} deal={live.deal} until={live.until} />}
       {price && !live && (
         <span className={highlight ? "pr-p text-accent-deep" : "pr-p"}>
           {from && <span className="mr-1 text-xs font-normal text-soft">from</span>}

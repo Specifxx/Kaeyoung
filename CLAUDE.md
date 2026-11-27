@@ -92,7 +92,8 @@ Previews build only with `[preview]`, when the owner asks. `claude/*` and `ccr-*
   `data/amazon/` (prices never). `scripts/fetch-amazon-prices.ts` runs first in every build and asks getItems for those
   ASINs into the git-ignored `data/amazon-live/`; the row shows the price with its time for 24 hours only
   (`lib/amazon-live.ts`, `AmazonPrice.tsx`), else its tagged search link. Never committed, never a sort, badge, deal,
-  feed or quick view. Credentials `AMAZON_CREATORS_<US|UK|CA|EU|AU>_*` (GitHub secrets + Vercel Production): each
+  feed or quick view; the one exception is Amazon's own live deal badge or saving beside its price on that row
+  (`amazonSaving`, Black Friday 2026-11-27, DECISIONS.md). Credentials `AMAZON_CREATORS_<US|UK|CA|EU|AU>_*` (GitHub secrets + Vercel Production): each
   country's own (a credential works only for its own account's tags; AU is the fallback). Amazon refuses a store
   until its account has 10 qualifying sales in 30 days; the ops check "Amazon ASINs" shows that.
   `tests/amazon-api.test.ts` pins it.

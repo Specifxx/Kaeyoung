@@ -15,8 +15,14 @@ export interface AmazonLive {
   p: number;
   /** ISO time the price was fetched */
   at: string;
+  /** Amazon's own stated saving on that listing, whole percent (amazonSaving, in the Creators API client) */
+  off?: number;
+  /** Amazon's deal badge on it ("Black Friday Deal"), only for a deal everyone can buy */
+  deal?: string;
+  /** when Amazon's deal ends: the browser hides the saving and badge after it */
+  until?: string;
 }
-export interface AmazonLiveFile { fetchedAt: string; prices: Record<string, { asin: string; p: number }> }
+export interface AmazonLiveFile { fetchedAt: string; prices: Record<string, { asin: string; p: number; off?: number; deal?: string; until?: string }> }
 
 /** The clock an Amazon price's "as of" time is shown in: the region's own. */
 export const AMAZON_CLOCK: Partial<Record<RegionCode, { timeZone: string; label: string }>> = {
@@ -53,5 +59,5 @@ function fileFor(region: RegionCode): AmazonLiveFile | null {
 export function amazonLive(ean: string, region: RegionCode): AmazonLive | null {
   const f = fileFor(region);
   const e = f?.prices[ean];
-  return e ? { asin: e.asin, p: e.p, at: f!.fetchedAt } : null;
+  return e ? { asin: e.asin, p: e.p, at: f!.fetchedAt, ...(e.off ? { off: e.off } : {}), ...(e.deal ? { deal: e.deal } : {}), ...(e.until ? { until: e.until } : {}) } : null;
 }
