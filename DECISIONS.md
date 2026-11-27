@@ -2001,9 +2001,11 @@ hours, so a reason to click the Amazon row is worth more this week. Amazon's dea
 
 - The build's getItems call also asks for `offersV2.listings.dealDetails`; if Amazon refuses that resource on the first
   batch, the run retries without it, so prices never depend on it. `price.savings` already came with the price resource.
-- `amazonSaving` (`lib/amazon-creators.ts`) keeps Amazon's stated percentage when it is 5 to 80 and in the store's
-  currency, and a deal badge only for a deal open to everyone (`accessType` ALL: a Prime-only price is not the one we
-  show), not ended, plain words of 40 characters or fewer.
+- `amazonSaving` (`lib/amazon-creators.ts`) keeps Amazon's stated percentage when it is 5 to 80, in the store's currency
+  and measured against a price Amazon recently charged (was-price or typical price, never a list price) or part of a live
+  deal; and a deal badge only for a deal open to everyone (`accessType` ALL; a Prime-only deal drops the percentage too),
+  started and not ended, plain words of 40 characters or fewer. The deal's end time rides along and the browser hides both
+  when it passes. The build drops the deal resource only when Amazon's error names it.
 - Shown only on the product page's Amazon row, above Amazon's price, inside `AmazonPrice`, so it disappears with the price
   after 24 hours. Amazon's claim in Amazon's words ("Black Friday Deal · 20% off", else "20% off at Amazon"): never a
   deal list, a sort, the cheapest badge, an alert, history or the quick view, like the price itself.

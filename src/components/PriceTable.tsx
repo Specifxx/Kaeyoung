@@ -93,7 +93,7 @@ export function priceRows(f: Product, region: RegionCode, ebay?: EbayPick, place
       status: liveUrl && live ? "in" : null,
       href: amazonUrl,
       ...(liveUrl && live ? { vote: liveUrl, cart: { title: cartTitle, image: f.img, priceCents: live.p, currency: r.currency } } : {}),
-      live: liveUrl && live && clock ? { at: live.at, timeZone: clock.timeZone, zoneLabel: clock.label, off: live.off, deal: live.deal } : undefined,
+      live: liveUrl && live && clock ? { at: live.at, timeZone: clock.timeZone, zoneLabel: clock.label, off: live.off, deal: live.deal, until: live.until } : undefined,
       paid: true,
       event: { source: "amazon", region, placement: `${placement}_pinned`, ean: f.ean },
     });

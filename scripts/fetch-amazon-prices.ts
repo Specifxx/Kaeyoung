@@ -58,7 +58,7 @@ async function region(code: RegionCode, products: Product[]) {
     } catch (e) {
       console.log(`Amazon prices ${code}: ${(e as Error).message}`);
       if (e instanceof AmazonRefused) break;
-      if (deals && i === 0) {
+      if (deals && i === 0 && /dealDetails|resource|InvalidParameter/i.test((e as Error).message)) {
         deals = false;
         i -= 10;
         console.log(`Amazon prices ${code}: retrying without ${DEAL_RESOURCE}.`);
@@ -74,7 +74,7 @@ async function region(code: RegionCode, products: Product[]) {
       const cents = Math.round(pick.amount * 100);
       const ref = median(x.offers.map((o) => o.p));
       if (ref && (cents < ref * 0.6 || cents > ref * 1.6)) continue;
-      prices[x.p.ean] = { asin: it.asin, p: cents, ...(pick.off ? { off: pick.off } : {}), ...(pick.deal ? { deal: pick.deal } : {}) };
+      prices[x.p.ean] = { asin: it.asin, p: cents, ...(pick.off ? { off: pick.off } : {}), ...(pick.deal ? { deal: pick.deal } : {}), ...(pick.until ? { until: pick.until } : {}) };
     }
   }
   if (!Object.keys(prices).length) return console.log(`Amazon prices ${code}: none (${api.calls()} calls).`);
