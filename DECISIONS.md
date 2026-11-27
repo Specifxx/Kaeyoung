@@ -2009,3 +2009,4 @@ hours, so a reason to click the Amazon row is worth more this week. Amazon's dea
 - Shown only on the product page's Amazon row, above Amazon's price, inside `AmazonPrice`, so it disappears with the price
   after 24 hours. Amazon's claim in Amazon's words ("Black Friday Deal · 20% off", else "20% off at Amazon"): never a
   deal list, a sort, the cheapest badge, an alert, history or the quick view, like the price itself.
+Released at 14:13 UTC on 27 Nov once the 8-hour gate opened: the bar through Cyber Monday.
