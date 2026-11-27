@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BfModeBar } from "@/components/BfModeBar";
-import { bfModeOn } from "@/lib/bf-mode";
+import { bfModeOn, bfPhase } from "@/lib/bf-mode";
 import { saleStrip } from "@/lib/black-friday";
 
 // One line under the header on every page from 1 November to the day after Cyber Monday, linking the Black Friday page,
@@ -21,7 +21,7 @@ export function HolidayStrip({ today = new Date().toISOString().slice(0, 10) }: 
   const on = bfModeOn(Date.now());
   if (!on) return strip;
   return (
-    <BfModeBar on={on} href="/black-friday" title="K-beauty deals" line="today's cheapest stores, same barcode">
+    <BfModeBar on={on} phase={bfPhase(Date.now())} href="/black-friday" title="K-beauty deals" line="today's cheapest stores, same barcode">
       {strip}
     </BfModeBar>
   );
