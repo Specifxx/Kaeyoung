@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-11-26T17:09:13.027Z",
- "products": 4899,
- "merged": 11627,
+ "updatedAt": "2026-11-27T16:52:45.003Z",
+ "products": 4890,
+ "merged": 11637,
  "stores": {
   "bemusedkorea": {
    "ok": true,
@@ -11,8 +11,8 @@
     "not-beauty": 4
    },
    "noEan": 20,
-   "ms": 373,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 334,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "beautywithin": {
    "ok": true,
@@ -22,8 +22,8 @@
     "not-beauty": 7
    },
    "noEan": 153,
-   "ms": 602,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 409,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "althea": {
    "ok": true,
@@ -36,8 +36,8 @@
     "bundle": 6
    },
    "noEan": 115,
-   "ms": 2424,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2355,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "cupidrop": {
    "ok": true,
@@ -48,37 +48,35 @@
     "no-price": 4
    },
    "noEan": 74,
-   "ms": 2138,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1698,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "stylekorean": {
+   "ok": true,
+   "listings": 2372,
+   "matched": 3205,
+   "refused": {
+    "no-price": 25,
+    "bundle": 24,
+    "damaged": 17
+   },
+   "noEan": 210,
+   "ms": 13974,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "dodoskin": {
    "ok": true,
    "listings": 4249,
-   "matched": 1739,
+   "matched": 1735,
    "refused": {
     "short-dated": 63,
-    "bundle": 66,
+    "bundle": 65,
     "mystery": 3,
-    "damaged": 14,
-    "pre-owned": 6
+    "damaged": 14
    },
-   "noEan": 3248,
-   "ms": 41742,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "moida": {
-   "ok": true,
-   "listings": 2311,
-   "matched": 3331,
-   "refused": {
-    "no-price": 8,
-    "bundle": 28,
-    "damaged": 18,
-    "tester": 7
-   },
-   "noEan": 209,
-   "ms": 15598,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 3237,
+   "ms": 33460,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "ohlolly": {
    "ok": true,
@@ -89,8 +87,8 @@
     "not-beauty": 3
    },
    "noEan": 29,
-   "ms": 5556,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1769,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "havencobeauty": {
    "ok": true,
@@ -101,8 +99,63 @@
     "bundle": 7
    },
    "noEan": 101,
-   "ms": 1993,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 621,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "moida": {
+   "ok": true,
+   "listings": 2326,
+   "matched": 3344,
+   "refused": {
+    "mystery": 2,
+    "no-price": 6,
+    "bundle": 27,
+    "damaged": 18,
+    "tester": 7
+   },
+   "noEan": 217,
+   "ms": 22200,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "sokoglam": {
+   "ok": true,
+   "listings": 506,
+   "matched": 441,
+   "refused": {
+    "bundle": 3,
+    "no-price": 1,
+    "not-beauty": 10
+   },
+   "noEan": 140,
+   "ms": 2471,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "songofskin": {
+   "ok": true,
+   "listings": 979,
+   "matched": 766,
+   "refused": {
+    "tester": 6,
+    "mystery": 2,
+    "bundle": 16,
+    "not-beauty": 8,
+    "damaged": 1
+   },
+   "noEan": 314,
+   "ms": 5201,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "wishtrend": {
+   "ok": true,
+   "listings": 32,
+   "matched": 12,
+   "refused": {
+    "no-price": 8,
+    "bundle": 2
+   },
+   "noEan": 15,
+   "ms": 227,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "sentisenti": {
    "ok": true,
@@ -118,66 +171,13 @@
     "tester": 2
    },
    "noEan": 1057,
-   "ms": 9782,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "stylekorean": {
-   "ok": true,
-   "listings": 2373,
-   "matched": 3206,
-   "refused": {
-    "no-price": 25,
-    "bundle": 24,
-    "damaged": 17
-   },
-   "noEan": 210,
-   "ms": 74937,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "sokoglam": {
-   "ok": true,
-   "listings": 506,
-   "matched": 441,
-   "refused": {
-    "bundle": 3,
-    "no-price": 1,
-    "not-beauty": 10
-   },
-   "noEan": 140,
-   "ms": 3047,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "wishtrend": {
-   "ok": true,
-   "listings": 32,
-   "matched": 12,
-   "refused": {
-    "no-price": 8,
-    "bundle": 2
-   },
-   "noEan": 15,
-   "ms": 312,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "songofskin": {
-   "ok": true,
-   "listings": 983,
-   "matched": 768,
-   "refused": {
-    "tester": 6,
-    "mystery": 2,
-    "bundle": 16,
-    "not-beauty": 8,
-    "damaged": 1
-   },
-   "noEan": 316,
-   "ms": 8651,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 9308,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "glamtouch": {
    "ok": true,
-   "listings": 819,
-   "matched": 1228,
+   "listings": 820,
+   "matched": 1229,
    "refused": {
     "not-beauty": 13,
     "bundle": 7,
@@ -185,36 +185,36 @@
     "damaged": 2
    },
    "noEan": 299,
-   "ms": 6409,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 6059,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "pureseoul": {
    "ok": true,
-   "listings": 1267,
-   "matched": 1755,
+   "listings": 1266,
+   "matched": 1754,
    "refused": {
     "bundle": 39,
-    "no-price": 15,
+    "no-price": 14,
     "mystery": 1,
     "damaged": 1,
     "not-beauty": 31
    },
-   "noEan": 431,
-   "ms": 17429,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 432,
+   "ms": 9577,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skincupid": {
    "ok": true,
    "listings": 243,
-   "matched": 265,
+   "matched": 264,
    "refused": {
     "bundle": 5,
     "tester": 4,
     "no-price": 2
    },
-   "noEan": 77,
-   "ms": 748,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 78,
+   "ms": 1619,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skin2seoul": {
    "ok": true,
@@ -227,19 +227,19 @@
     "not-beauty": 5
    },
    "noEan": 25,
-   "ms": 5049,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4589,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "innerbeauty": {
    "ok": true,
-   "listings": 295,
-   "matched": 273,
+   "listings": 305,
+   "matched": 282,
    "refused": {
     "bundle": 4
    },
-   "noEan": 18,
-   "ms": 2260,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 19,
+   "ms": 10104,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautyoutlet": {
    "ok": true,
@@ -251,22 +251,22 @@
     "not-beauty": 5
    },
    "noEan": 115,
-   "ms": 9131,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 9039,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kiokii": {
    "ok": true,
-   "listings": 2592,
-   "matched": 2613,
+   "listings": 2594,
+   "matched": 2614,
    "refused": {
     "bundle": 18,
     "damaged": 13,
     "mystery": 10,
     "not-beauty": 21
    },
-   "noEan": 1691,
-   "ms": 12878,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1693,
+   "ms": 17738,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kiyoko": {
    "ok": true,
@@ -276,8 +276,8 @@
     "bundle": 19
    },
    "noEan": 78,
-   "ms": 5001,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4817,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "koreanskincare-ca": {
    "ok": true,
@@ -289,21 +289,24 @@
     "mystery": 2
    },
    "noEan": 193,
-   "ms": 13282,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 13272,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
-  "lakinza": {
+  "justmylook": {
    "ok": true,
-   "listings": 2076,
-   "matched": 2931,
+   "listings": 18031,
+   "matched": 1035,
    "refused": {
-    "bundle": 46,
-    "damaged": 16,
-    "not-beauty": 4
+    "no-price": 132,
+    "bundle": 123,
+    "not-beauty": 10,
+    "mystery": 9,
+    "damaged": 65,
+    "tester": 105
    },
-   "noEan": 125,
-   "ms": 12339,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 19099,
+   "ms": 89657,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "lamour": {
    "ok": true,
@@ -317,8 +320,21 @@
     "no-price": 1
    },
    "noEan": 1452,
-   "ms": 11916,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 12837,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "lakinza": {
+   "ok": true,
+   "listings": 2095,
+   "matched": 2955,
+   "refused": {
+    "bundle": 46,
+    "damaged": 16,
+    "not-beauty": 4
+   },
+   "noEan": 138,
+   "ms": 32619,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "moonmoon": {
    "ok": true,
@@ -333,28 +349,12 @@
     "short-dated": 3
    },
    "noEan": 671,
-   "ms": 8009,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "justmylook": {
-   "ok": true,
-   "listings": 18010,
-   "matched": 1035,
-   "refused": {
-    "bundle": 123,
-    "not-beauty": 10,
-    "mystery": 9,
-    "no-price": 131,
-    "damaged": 65,
-    "tester": 105
-   },
-   "noEan": 19079,
-   "ms": 99641,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 7106,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "onesplus": {
    "ok": true,
-   "listings": 1474,
+   "listings": 1475,
    "matched": 320,
    "refused": {
     "no-price": 1,
@@ -364,30 +364,30 @@
     "damaged": 9,
     "short-dated": 4
    },
-   "noEan": 1379,
-   "ms": 8727,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1383,
+   "ms": 9556,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "sukoshi": {
    "ok": true,
-   "listings": 2249,
-   "matched": 1432,
+   "listings": 2499,
+   "matched": 1490,
    "refused": {
+    "no-price": 21,
     "bundle": 5,
-    "no-price": 19,
     "damaged": 9,
     "tester": 19,
-    "not-beauty": 12,
-    "mystery": 7
+    "not-beauty": 13,
+    "mystery": 10
    },
-   "noEan": 1998,
-   "ms": 15115,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 2395,
+   "ms": 16233,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "oomomo": {
    "ok": true,
-   "listings": 4713,
-   "matched": 315,
+   "listings": 4717,
+   "matched": 316,
    "refused": {
     "bundle": 36,
     "no-price": 1,
@@ -397,51 +397,38 @@
     "tester": 8,
     "pre-owned": 2
    },
-   "noEan": 5857,
-   "ms": 24247,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 5863,
+   "ms": 25387,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "uniquebunny": {
    "ok": true,
-   "listings": 1154,
-   "matched": 575,
+   "listings": 1162,
+   "matched": 581,
    "refused": {
     "bundle": 5,
     "not-beauty": 5,
     "damaged": 1
    },
-   "noEan": 1905,
-   "ms": 8503,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1910,
+   "ms": 9028,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "thekshop": {
    "ok": true,
-   "listings": 2533,
+   "listings": 2538,
    "matched": 1450,
    "refused": {
+    "no-price": 1,
     "bundle": 16,
     "damaged": 18,
     "not-beauty": 6,
     "mystery": 22,
     "tester": 3
    },
-   "noEan": 1971,
-   "ms": 14661,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "heartdrops": {
-   "ok": true,
-   "listings": 541,
-   "matched": 109,
-   "refused": {
-    "no-price": 1,
-    "damaged": 3,
-    "not-beauty": 2,
-    "bundle": 2
-   },
-   "noEan": 466,
-   "ms": 3555,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1976,
+   "ms": 17197,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "boniik": {
    "ok": true,
@@ -454,8 +441,22 @@
     "not-beauty": 12
    },
    "noEan": 7,
-   "ms": 10709,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 9860,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "heartdrops": {
+   "ok": true,
+   "listings": 541,
+   "matched": 109,
+   "refused": {
+    "no-price": 1,
+    "damaged": 3,
+    "not-beauty": 2,
+    "bundle": 2
+   },
+   "noEan": 466,
+   "ms": 2994,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kanvas": {
    "ok": true,
@@ -468,8 +469,8 @@
     "not-beauty": 3
    },
    "noEan": 536,
-   "ms": 5028,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4338,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "makeup2beauty": {
    "ok": true,
@@ -479,13 +480,13 @@
     "bundle": 26
    },
    "noEan": 24,
-   "ms": 5323,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4787,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "nudieglow": {
    "ok": true,
-   "listings": 3997,
-   "matched": 5712,
+   "listings": 4003,
+   "matched": 5718,
    "refused": {
     "bundle": 21,
     "damaged": 16,
@@ -493,52 +494,9 @@
     "not-beauty": 25,
     "short-dated": 72
    },
-   "noEan": 284,
-   "ms": 26246,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "wcosmetics": {
-   "ok": true,
-   "listings": 999,
-   "matched": 791,
-   "refused": {
-    "bundle": 20,
-    "damaged": 5,
-    "tester": 4
-   },
-   "noEan": 710,
-   "ms": 5631,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "hikoco": {
-   "ok": true,
-   "listings": 2480,
-   "matched": 2633,
-   "refused": {
-    "mystery": 1,
-    "bundle": 15,
-    "damaged": 6,
-    "not-beauty": 12
-   },
-   "noEan": 920,
-   "ms": 13899,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "cosmeticstore-nz": {
-   "ok": true,
-   "listings": 1317,
-   "matched": 629,
-   "refused": {
-    "bundle": 25,
-    "damaged": 5,
-    "not-beauty": 20,
-    "tester": 30,
-    "mystery": 3,
-    "no-price": 1
-   },
-   "noEan": 2086,
-   "ms": 10061,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 285,
+   "ms": 27194,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "lila": {
    "ok": true,
@@ -554,8 +512,51 @@
     "tester": 5
    },
    "noEan": 2259,
-   "ms": 83039,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 41173,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "wcosmetics": {
+   "ok": true,
+   "listings": 999,
+   "matched": 777,
+   "refused": {
+    "bundle": 20,
+    "damaged": 5,
+    "tester": 4
+   },
+   "noEan": 697,
+   "ms": 5689,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "cosmeticstore-nz": {
+   "ok": true,
+   "listings": 1318,
+   "matched": 629,
+   "refused": {
+    "bundle": 25,
+    "damaged": 5,
+    "not-beauty": 20,
+    "tester": 30,
+    "mystery": 3,
+    "no-price": 1
+   },
+   "noEan": 2087,
+   "ms": 11468,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "hikoco": {
+   "ok": true,
+   "listings": 2480,
+   "matched": 2633,
+   "refused": {
+    "mystery": 1,
+    "bundle": 15,
+    "damaged": 6,
+    "not-beauty": 12
+   },
+   "noEan": 920,
+   "ms": 13248,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "glowstation": {
    "ok": true,
@@ -567,24 +568,24 @@
     "damaged": 9
    },
    "noEan": 564,
-   "ms": 15910,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 15563,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "korean-skincare-nl": {
    "ok": true,
-   "listings": 3946,
+   "listings": 3953,
    "matched": 4896,
    "refused": {
-    "no-price": 38,
+    "no-price": 44,
     "not-beauty": 11,
     "damaged": 11,
     "bundle": 26,
     "short-dated": 22,
     "mystery": 3
    },
-   "noEan": 194,
-   "ms": 22866,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 195,
+   "ms": 21284,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "lovemycosmetic": {
    "ok": true,
@@ -596,8 +597,8 @@
     "bundle": 9
    },
    "noEan": 72,
-   "ms": 6308,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 5471,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "mimomimo": {
    "ok": true,
@@ -608,22 +609,22 @@
     "not-beauty": 30
    },
    "noEan": 47,
-   "ms": 4358,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3973,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "yeppo": {
    "ok": true,
-   "listings": 2618,
-   "matched": 4194,
+   "listings": 2617,
+   "matched": 4195,
    "refused": {
-    "short-dated": 212,
+    "short-dated": 210,
     "damaged": 15,
     "bundle": 53,
     "not-beauty": 27
    },
    "noEan": 264,
-   "ms": 16065,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 14778,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "anua": {
    "ok": true,
@@ -633,8 +634,8 @@
     "bundle": 14
    },
    "noEan": 80,
-   "ms": 31428,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 28651,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "axisy": {
    "ok": true,
@@ -644,23 +645,23 @@
     "bundle": 2
    },
    "noEan": 6,
-   "ms": 550,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 406,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "boozyshop": {
    "ok": true,
-   "listings": 15620,
-   "matched": 1624,
+   "listings": 15627,
+   "matched": 1622,
    "refused": {
     "mystery": 251,
     "not-beauty": 45,
     "bundle": 117,
     "damaged": 28,
-    "tester": 5
+    "tester": 4
    },
-   "noEan": 13856,
-   "ms": 131636,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 13862,
+   "ms": 121467,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "celimax": {
    "ok": true,
@@ -671,8 +672,8 @@
     "no-price": 2
    },
    "noEan": 23,
-   "ms": 268,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 235,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "cosrx": {
    "ok": true,
@@ -684,8 +685,8 @@
     "bundle": 6
    },
    "noEan": 130,
-   "ms": 18564,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 16743,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "fwee": {
    "ok": true,
@@ -695,8 +696,8 @@
     "bundle": 24
    },
    "noEan": 51,
-   "ms": 466,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 441,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "heimish": {
    "ok": true,
@@ -707,8 +708,8 @@
     "bundle": 1
    },
    "noEan": 24,
-   "ms": 316,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 254,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "jumiso": {
    "ok": true,
@@ -719,8 +720,8 @@
     "bundle": 7
    },
    "noEan": 20,
-   "ms": 451,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 484,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "klairs": {
    "ok": true,
@@ -732,8 +733,8 @@
     "short-dated": 1
    },
    "noEan": 175,
-   "ms": 886,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 583,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "koreanbeauty": {
    "ok": true,
@@ -743,24 +744,24 @@
     "bundle": 3
    },
    "noEan": 50,
-   "ms": 4085,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3852,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "koreanskincareuk": {
    "ok": true,
-   "listings": 3947,
+   "listings": 3954,
    "matched": 3840,
    "refused": {
-    "no-price": 39,
+    "no-price": 45,
     "not-beauty": 10,
     "damaged": 11,
     "bundle": 26,
     "short-dated": 22,
     "mystery": 3
    },
-   "noEan": 1250,
-   "ms": 22209,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1251,
+   "ms": 20489,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "manyo": {
    "ok": true,
@@ -771,8 +772,8 @@
     "bundle": 3
    },
    "noEan": 39,
-   "ms": 402,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 221,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "mixsoon": {
    "ok": true,
@@ -786,19 +787,31 @@
     "short-dated": 2
    },
    "noEan": 118,
-   "ms": 1669,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1540,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "neogenlab": {
+   "ok": true,
+   "listings": 248,
+   "matched": 54,
+   "refused": {
+    "no-price": 25,
+    "not-beauty": 4
+   },
+   "noEan": 173,
+   "ms": 587,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "beautyofjoseon": {
    "ok": true,
-   "listings": 133,
+   "listings": 134,
    "matched": 25,
    "refused": {
     "bundle": 3
    },
-   "noEan": 175,
-   "ms": 76010,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 176,
+   "ms": 75367,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "rovectin": {
    "ok": true,
@@ -809,8 +822,8 @@
     "not-beauty": 7
    },
    "noEan": 9,
-   "ms": 582,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 447,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skin1004": {
    "ok": true,
@@ -820,23 +833,8 @@
     "bundle": 3
    },
    "noEan": 31,
-   "ms": 815,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "tirtir": {
-   "ok": true,
-   "listings": 140,
-   "matched": 323,
-   "refused": {
-    "no-price": 12,
-    "mystery": 1,
-    "bundle": 3,
-    "tester": 5,
-    "not-beauty": 6
-   },
-   "noEan": 586,
-   "ms": 7208,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 453,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "tocobo": {
    "ok": true,
@@ -846,8 +844,8 @@
     "no-price": 14
    },
    "noEan": 11,
-   "ms": 496,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 493,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "tonymoly": {
    "ok": true,
@@ -860,8 +858,8 @@
     "not-beauty": 3
    },
    "noEan": 139,
-   "ms": 412,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 382,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "torriden": {
    "ok": true,
@@ -872,8 +870,8 @@
     "bundle": 5
    },
    "noEan": 1,
-   "ms": 514,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 458,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "aurak": {
    "ok": true,
@@ -883,32 +881,35 @@
     "damaged": 3
    },
    "noEan": 164,
-   "ms": 2985,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2561,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
-  "neogenlab": {
+  "tirtir": {
    "ok": true,
-   "listings": 247,
-   "matched": 56,
+   "listings": 141,
+   "matched": 323,
    "refused": {
-    "no-price": 20,
-    "not-beauty": 4
+    "no-price": 12,
+    "mystery": 1,
+    "bundle": 3,
+    "tester": 5,
+    "not-beauty": 6
    },
-   "noEan": 175,
-   "ms": 29677,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 594,
+   "ms": 7909,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "cosmadic": {
    "ok": true,
-   "listings": 989,
-   "matched": 964,
+   "listings": 990,
+   "matched": 965,
    "refused": {
     "bundle": 3,
     "damaged": 2
    },
    "noEan": 86,
-   "ms": 4645,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 7030,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "beyondrx": {
    "ok": true,
@@ -919,8 +920,8 @@
     "not-beauty": 2
    },
    "noEan": 2362,
-   "ms": 15576,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 14587,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "dramabeauty": {
    "ok": true,
@@ -930,21 +931,8 @@
     "not-beauty": 5
    },
    "noEan": 17,
-   "ms": 422,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "deiji": {
-   "ok": true,
-   "listings": 1498,
-   "matched": 791,
-   "refused": {
-    "bundle": 11,
-    "not-beauty": 12,
-    "damaged": 3
-   },
-   "noEan": 805,
-   "ms": 8639,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 345,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "glowiss": {
    "ok": true,
@@ -956,19 +944,32 @@
     "no-price": 1
    },
    "noEan": 3,
-   "ms": 3384,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3424,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "deiji": {
+   "ok": true,
+   "listings": 1498,
+   "matched": 791,
+   "refused": {
+    "bundle": 11,
+    "not-beauty": 12,
+    "damaged": 3
+   },
+   "noEan": 805,
+   "ms": 8528,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "helloseoul": {
    "ok": true,
    "listings": 247,
-   "matched": 86,
+   "matched": 85,
    "refused": {
     "bundle": 2
    },
-   "noEan": 168,
-   "ms": 2033,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 167,
+   "ms": 2172,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "itsglowy": {
    "ok": true,
@@ -978,21 +979,21 @@
     "bundle": 1
    },
    "noEan": 2,
-   "ms": 562,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 330,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "holyskin": {
    "ok": true,
-   "listings": 623,
-   "matched": 767,
+   "listings": 627,
+   "matched": 770,
    "refused": {
     "no-price": 27,
     "not-beauty": 1,
     "bundle": 6
    },
-   "noEan": 63,
-   "ms": 10099,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 68,
+   "ms": 7014,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautyave": {
    "ok": true,
@@ -1004,8 +1005,8 @@
     "tester": 1
    },
    "noEan": 43,
-   "ms": 10636,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 10230,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautyshop": {
    "ok": true,
@@ -1017,8 +1018,8 @@
     "bundle": 2
    },
    "noEan": 119,
-   "ms": 2649,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2366,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "korean": {
    "ok": true,
@@ -1029,8 +1030,20 @@
     "bundle": 1
    },
    "noEan": 257,
-   "ms": 4618,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1928,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "koreancare": {
+   "ok": true,
+   "listings": 932,
+   "matched": 389,
+   "refused": {
+    "damaged": 3,
+    "bundle": 1
+   },
+   "noEan": 607,
+   "ms": 5753,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "jessicanailsupply": {
    "ok": true,
@@ -1043,21 +1056,9 @@
     "damaged": 6,
     "mystery": 1
    },
-   "noEan": 8281,
-   "ms": 30874,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "koreancare": {
-   "ok": true,
-   "listings": 932,
-   "matched": 389,
-   "refused": {
-    "damaged": 3,
-    "bundle": 1
-   },
-   "noEan": 607,
-   "ms": 5601,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 8285,
+   "ms": 29002,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kosbeauty": {
    "ok": true,
@@ -1070,19 +1071,19 @@
     "mystery": 14
    },
    "noEan": 105,
-   "ms": 3551,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3418,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kskinaura": {
    "ok": true,
-   "listings": 209,
+   "listings": 210,
    "matched": 187,
    "refused": {
     "bundle": 1
    },
-   "noEan": 27,
-   "ms": 988,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 29,
+   "ms": 1708,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kosmosbeauty": {
    "ok": true,
@@ -1095,8 +1096,8 @@
     "not-beauty": 11
    },
    "noEan": 31,
-   "ms": 4784,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4271,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "mcgorisks": {
    "ok": true,
@@ -1110,20 +1111,20 @@
     "tester": 21
    },
    "noEan": 7911,
-   "ms": 30892,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 25715,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "purida": {
    "ok": true,
-   "listings": 685,
-   "matched": 664,
+   "listings": 687,
+   "matched": 666,
    "refused": {
     "damaged": 1,
     "bundle": 4
    },
    "noEan": 21,
-   "ms": 6566,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 5682,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "sk1ntro": {
    "ok": true,
@@ -1136,8 +1137,8 @@
     "not-beauty": 10
    },
    "noEan": 171,
-   "ms": 3598,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1802,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skinorea": {
    "ok": true,
@@ -1149,22 +1150,22 @@
     "not-beauty": 1
    },
    "noEan": 125,
-   "ms": 6829,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 5445,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skinshop": {
    "ok": true,
    "listings": 1491,
    "matched": 224,
    "refused": {
+    "bundle": 88,
     "no-price": 20,
-    "bundle": 89,
     "not-beauty": 9,
     "damaged": 2
    },
-   "noEan": 1243,
-   "ms": 11720,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1244,
+   "ms": 10885,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "usinnisfree": {
    "ok": true,
@@ -1174,8 +1175,8 @@
     "no-price": 3
    },
    "noEan": 31,
-   "ms": 334,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 224,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "aiyabeauty": {
    "ok": true,
@@ -1188,8 +1189,8 @@
     "not-beauty": 7
    },
    "noEan": 1109,
-   "ms": 6837,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 6784,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "aurynskin": {
    "ok": true,
@@ -1200,8 +1201,8 @@
     "bundle": 3
    },
    "noEan": 527,
-   "ms": 6467,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4199,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "baqueen": {
    "ok": true,
@@ -1211,23 +1212,23 @@
     "not-beauty": 6
    },
    "noEan": 114,
-   "ms": 2644,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2514,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "beautyaffairs": {
    "ok": true,
-   "listings": 2297,
+   "listings": 2277,
    "matched": 92,
    "refused": {
-    "no-price": 90,
-    "bundle": 61,
+    "no-price": 89,
+    "bundle": 60,
     "tester": 87,
     "not-beauty": 15,
     "damaged": 7
    },
-   "noEan": 3668,
-   "ms": 12807,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 3644,
+   "ms": 12688,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "beautyandseoul": {
    "ok": true,
@@ -1237,13 +1238,13 @@
     "bundle": 2
    },
    "noEan": 7,
-   "ms": 1984,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1532,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "beautydiary": {
    "ok": true,
-   "listings": 2559,
-   "matched": 1088,
+   "listings": 2558,
+   "matched": 1087,
    "refused": {
     "bundle": 30,
     "no-price": 30,
@@ -1254,8 +1255,8 @@
     "not-beauty": 4
    },
    "noEan": 2367,
-   "ms": 16484,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 17216,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "bellubeauty": {
    "ok": true,
@@ -1268,15 +1269,15 @@
     "bundle": 3
    },
    "noEan": 8,
-   "ms": 6485,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 6291,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "pasteurpharmacy": {
    "ok": true,
    "listings": 20000,
-   "matched": 123,
+   "matched": 124,
    "refused": {
-    "bundle": 2142,
+    "bundle": 2143,
     "tester": 32,
     "not-beauty": 83,
     "damaged": 20,
@@ -1285,9 +1286,9 @@
     "mystery": 17,
     "pre-owned": 1
    },
-   "noEan": 27405,
-   "ms": 147796,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 27407,
+   "ms": 141625,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "cloud10beauty": {
    "ok": true,
@@ -1299,9 +1300,9 @@
     "not-beauty": 17,
     "damaged": 37
    },
-   "noEan": 5614,
-   "ms": 23938,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 5615,
+   "ms": 21801,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "cosmehut": {
    "ok": true,
@@ -1315,8 +1316,8 @@
     "not-beauty": 20
    },
    "noEan": 678,
-   "ms": 4443,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4416,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "belvera": {
    "ok": true,
@@ -1330,21 +1331,21 @@
     "mystery": 5
    },
    "noEan": 18711,
-   "ms": 120419,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 104658,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "elikoglow": {
    "ok": true,
-   "listings": 1494,
-   "matched": 1476,
+   "listings": 1495,
+   "matched": 1477,
    "refused": {
     "no-price": 49,
     "bundle": 3,
     "not-beauty": 7
    },
    "noEan": 126,
-   "ms": 7716,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 9015,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "eyurs": {
    "ok": true,
@@ -1355,8 +1356,8 @@
     "bundle": 5
    },
    "noEan": 17,
-   "ms": 2528,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2283,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "glassskinrituals": {
    "ok": true,
@@ -1366,8 +1367,8 @@
     "bundle": 3
    },
    "noEan": 8,
-   "ms": 766,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 568,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "happyandpretty": {
    "ok": true,
@@ -1378,8 +1379,8 @@
     "damaged": 1
    },
    "noEan": 6,
-   "ms": 5785,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 7079,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "haruharuusa": {
    "ok": true,
@@ -1387,8 +1388,8 @@
    "matched": 41,
    "refused": {},
    "noEan": 16,
-   "ms": 413,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 302,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "inishpharmacy": {
    "ok": true,
@@ -1399,8 +1400,8 @@
     "bundle": 2
    },
    "noEan": 531,
-   "ms": 2626,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2402,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "irelkglow": {
    "ok": true,
@@ -1412,13 +1413,13 @@
     "damaged": 4
    },
    "noEan": 22,
-   "ms": 1753,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1598,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "jejuskin": {
    "ok": true,
-   "listings": 490,
-   "matched": 489,
+   "listings": 489,
+   "matched": 481,
    "refused": {
     "damaged": 16,
     "no-price": 1,
@@ -1426,8 +1427,8 @@
     "not-beauty": 1
    },
    "noEan": 71,
-   "ms": 2611,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2308,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "k-beauty4you": {
    "ok": true,
@@ -1437,8 +1438,8 @@
     "bundle": 1
    },
    "noEan": 53,
-   "ms": 667,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 774,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeauty-cosmetics": {
    "ok": true,
@@ -1449,8 +1450,8 @@
     "damaged": 1
    },
    "noEan": 234,
-   "ms": 2197,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1713,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeauty": {
    "ok": true,
@@ -1463,8 +1464,8 @@
     "not-beauty": 205
    },
    "noEan": 128,
-   "ms": 5915,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 6661,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeauty-us": {
    "ok": true,
@@ -1474,8 +1475,8 @@
     "bundle": 2
    },
    "noEan": 175,
-   "ms": 1183,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 539,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "cosmeticsonline": {
    "ok": true,
@@ -1489,8 +1490,8 @@
     "not-beauty": 15
    },
    "noEan": 18561,
-   "ms": 99692,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 96898,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautystore": {
    "ok": true,
@@ -1502,8 +1503,8 @@
     "bundle": 9
    },
    "noEan": 55,
-   "ms": 5698,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 5326,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautyworld": {
    "ok": true,
@@ -1515,12 +1516,12 @@
     "not-beauty": 7
    },
    "noEan": 61,
-   "ms": 5025,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4754,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kiyobeauty": {
    "ok": true,
-   "listings": 9941,
+   "listings": 9943,
    "matched": 510,
    "refused": {
     "bundle": 792,
@@ -1529,9 +1530,9 @@
     "tester": 47,
     "not-beauty": 72
    },
-   "noEan": 18929,
-   "ms": 62797,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 18931,
+   "ms": 55615,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kosmobox": {
    "ok": true,
@@ -1539,26 +1540,26 @@
    "matched": 398,
    "refused": {
     "bundle": 3,
-    "not-beauty": 5
+    "not-beauty": 9
    },
    "noEan": 9,
-   "ms": 2466,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2272,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "lacosmetique": {
    "ok": true,
-   "listings": 3412,
+   "listings": 3409,
    "matched": 5157,
    "refused": {
     "damaged": 16,
     "no-price": 8,
     "not-beauty": 3,
-    "bundle": 17,
+    "bundle": 16,
     "tester": 1
    },
-   "noEan": 528,
-   "ms": 19853,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 526,
+   "ms": 18090,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "misshaus": {
    "ok": true,
@@ -1569,8 +1570,8 @@
     "bundle": 15
    },
    "noEan": 34,
-   "ms": 432,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 202,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "momokocosmetic": {
    "ok": true,
@@ -1583,48 +1584,21 @@
     "not-beauty": 1
    },
    "noEan": 1289,
-   "ms": 7815,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 8924,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "moona": {
    "ok": true,
-   "listings": 866,
-   "matched": 1146,
+   "listings": 865,
+   "matched": 1145,
    "refused": {
     "bundle": 4,
     "damaged": 8,
     "not-beauty": 15
    },
    "noEan": 2363,
-   "ms": 5893,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "myqt": {
-   "ok": true,
-   "listings": 2405,
-   "matched": 47,
-   "refused": {
-    "bundle": 21,
-    "not-beauty": 12,
-    "damaged": 3,
-    "mystery": 1
-   },
-   "noEan": 3295,
-   "ms": 12770,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "reiwatakiya": {
-   "ok": true,
-   "listings": 740,
-   "matched": 42,
-   "refused": {
-    "bundle": 6,
-    "not-beauty": 1,
-    "damaged": 3
-   },
-   "noEan": 689,
-   "ms": 4105,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 6237,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautyoutletusa": {
    "ok": true,
@@ -1637,8 +1611,35 @@
     "bundle": 9
    },
    "noEan": 445,
-   "ms": 138059,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 135207,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "reiwatakiya": {
+   "ok": true,
+   "listings": 730,
+   "matched": 42,
+   "refused": {
+    "bundle": 6,
+    "not-beauty": 1,
+    "damaged": 3
+   },
+   "noEan": 679,
+   "ms": 3790,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "myqt": {
+   "ok": true,
+   "listings": 2407,
+   "matched": 47,
+   "refused": {
+    "bundle": 21,
+    "not-beauty": 12,
+    "damaged": 3,
+    "mystery": 1
+   },
+   "noEan": 3297,
+   "ms": 12893,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "rossi": {
    "ok": true,
@@ -1650,8 +1651,8 @@
     "not-beauty": 13
    },
    "noEan": 100,
-   "ms": 26763,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 25565,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "saranghae": {
    "ok": true,
@@ -1662,8 +1663,8 @@
     "not-beauty": 5
    },
    "noEan": 92,
-   "ms": 5533,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4575,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "shoppalacebeauty": {
    "ok": true,
@@ -1676,23 +1677,23 @@
     "not-beauty": 99
    },
    "noEan": 3360,
-   "ms": 15886,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 13391,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "ry": {
    "ok": true,
-   "listings": 8055,
-   "matched": 175,
+   "listings": 8049,
+   "matched": 174,
    "refused": {
-    "no-price": 134,
+    "no-price": 138,
     "damaged": 25,
     "bundle": 116,
     "not-beauty": 15,
     "tester": 5
    },
-   "noEan": 9160,
-   "ms": 46892,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 9151,
+   "ms": 42701,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "thekbeautyedit": {
    "ok": true,
@@ -1702,12 +1703,12 @@
     "bundle": 13
    },
    "noEan": 5,
-   "ms": 2407,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1843,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skindays": {
    "ok": true,
-   "listings": 976,
+   "listings": 1033,
    "matched": 64,
    "refused": {
     "bundle": 18,
@@ -1716,9 +1717,9 @@
     "not-beauty": 1,
     "damaged": 1
    },
-   "noEan": 1014,
-   "ms": 5210,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 1071,
+   "ms": 6219,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "toktokbeauty": {
    "ok": true,
@@ -1731,8 +1732,8 @@
     "not-beauty": 16
    },
    "noEan": 2003,
-   "ms": 11162,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 12154,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "laneige": {
    "ok": true,
@@ -1743,20 +1744,19 @@
     "no-price": 4
    },
    "noEan": 41,
-   "ms": 321,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 204,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "sulwhasoo": {
    "ok": true,
-   "listings": 125,
-   "matched": 84,
+   "listings": 123,
+   "matched": 83,
    "refused": {
-    "no-price": 56,
-    "bundle": 1
+    "no-price": 56
    },
    "noEan": 0,
-   "ms": 351,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 219,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "velvetvanity": {
    "ok": true,
@@ -1770,8 +1770,8 @@
     "not-beauty": 6
    },
    "noEan": 48,
-   "ms": 4071,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3798,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "yok-beauty": {
    "ok": true,
@@ -1779,8 +1779,8 @@
    "matched": 87,
    "refused": {},
    "noEan": 101,
-   "ms": 989,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 872,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "yukiobeauty": {
    "ok": true,
@@ -1792,8 +1792,8 @@
     "bundle": 1
    },
    "noEan": 220,
-   "ms": 1819,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 1821,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "mikaelabeauty": {
    "ok": true,
@@ -1805,8 +1805,8 @@
     "mystery": 2
    },
    "noEan": 193,
-   "ms": 12604,
-   "lastOkAt": "2026-11-26T17:09:08.827Z",
+   "ms": 12537,
+   "lastOkAt": "2026-11-27T16:52:42.067Z",
    "mirrorOf": "koreanskincare-ca"
   },
   "vglebeauty": {
@@ -1818,8 +1818,8 @@
     "bundle": 26
    },
    "noEan": 190,
-   "ms": 11624,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 10676,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "esmea": {
    "ok": true,
@@ -1832,8 +1832,8 @@
     "not-beauty": 4
    },
    "noEan": 185,
-   "ms": 2281,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2225,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "ladybonita": {
    "ok": true,
@@ -1845,35 +1845,35 @@
     "bundle": 8
    },
    "noEan": 2028,
-   "ms": 10469,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 9864,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "7hada": {
    "ok": true,
-   "listings": 554,
+   "listings": 553,
    "matched": 1245,
    "refused": {
-    "short-dated": 31,
+    "short-dated": 27,
     "bundle": 2,
     "damaged": 2,
     "not-beauty": 6
    },
    "noEan": 272,
-   "ms": 4316,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4170,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "pboo": {
    "ok": true,
-   "listings": 576,
-   "matched": 195,
+   "listings": 577,
+   "matched": 196,
    "refused": {
     "not-beauty": 9,
     "bundle": 4,
     "damaged": 1
    },
    "noEan": 375,
-   "ms": 4170,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 4882,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "aubeautybazaar": {
    "ok": true,
@@ -1886,8 +1886,8 @@
     "damaged": 7
    },
    "noEan": 648,
-   "ms": 13126,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 12606,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "sulskin": {
    "ok": true,
@@ -1902,24 +1902,9 @@
     "not-beauty": 6
    },
    "noEan": 433,
-   "ms": 8456,
-   "lastOkAt": "2026-11-26T17:09:08.827Z",
+   "ms": 9652,
+   "lastOkAt": "2026-11-27T16:52:42.067Z",
    "mirrorOf": "beautydiary"
-  },
-  "umall": {
-   "ok": true,
-   "listings": 20000,
-   "matched": 261,
-   "refused": {
-    "bundle": 750,
-    "tester": 23,
-    "damaged": 5,
-    "not-beauty": 24,
-    "mystery": 41
-   },
-   "noEan": 19236,
-   "ms": 102677,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
   },
   "bloomandshine": {
    "ok": true,
@@ -1931,34 +1916,62 @@
     "bundle": 6
    },
    "noEan": 283,
-   "ms": 25467,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 6394,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "joobeauty": {
    "ok": true,
-   "listings": 1268,
-   "matched": 1386,
+   "listings": 1244,
+   "matched": 1362,
    "refused": {
     "bundle": 9,
     "damaged": 11,
     "mystery": 1
    },
    "noEan": 96,
-   "ms": 8363,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 7103,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "umall": {
+   "ok": true,
+   "listings": 19991,
+   "matched": 261,
+   "refused": {
+    "bundle": 749,
+    "mystery": 43,
+    "tester": 23,
+    "damaged": 5,
+    "not-beauty": 24
+   },
+   "noEan": 19226,
+   "ms": 102225,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "mykare": {
    "ok": true,
-   "listings": 405,
-   "matched": 467,
+   "listings": 408,
+   "matched": 470,
    "refused": {
     "bundle": 1,
     "no-price": 4,
     "damaged": 1
    },
    "noEan": 8,
-   "ms": 4730,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 5539,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "planetskin": {
+   "ok": true,
+   "listings": 1941,
+   "matched": 1942,
+   "refused": {
+    "bundle": 7,
+    "damaged": 4,
+    "not-beauty": 3
+   },
+   "noEan": 29,
+   "ms": 13084,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "keeobeauty": {
    "ok": true,
@@ -1968,20 +1981,8 @@
     "bundle": 1
    },
    "noEan": 39,
-   "ms": 980,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "minkibeauty": {
-   "ok": true,
-   "listings": 178,
-   "matched": 145,
-   "refused": {
-    "bundle": 8,
-    "no-price": 1
-   },
-   "noEan": 24,
-   "ms": 1273,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 858,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "skincation": {
    "ok": true,
@@ -1992,8 +1993,20 @@
     "bundle": 1
    },
    "noEan": 48,
-   "ms": 762,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 703,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "minkibeauty": {
+   "ok": true,
+   "listings": 178,
+   "matched": 145,
+   "refused": {
+    "bundle": 8,
+    "no-price": 1
+   },
+   "noEan": 24,
+   "ms": 922,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "kbeautystudio": {
    "ok": true,
@@ -2005,21 +2018,8 @@
     "not-beauty": 4
    },
    "noEan": 17,
-   "ms": 801,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "planetskin": {
-   "ok": true,
-   "listings": 1939,
-   "matched": 1940,
-   "refused": {
-    "bundle": 7,
-    "damaged": 4,
-    "not-beauty": 3
-   },
-   "noEan": 29,
-   "ms": 13284,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 614,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "ciamane": {
    "ok": true,
@@ -2027,8 +2027,8 @@
    "matched": 278,
    "refused": {},
    "noEan": 32,
-   "ms": 5829,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2207,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "moidauk": {
    "ok": true,
@@ -2039,21 +2039,8 @@
     "damaged": 5
    },
    "noEan": 5,
-   "ms": 3633,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
-  },
-  "atelierdeglow": {
-   "ok": true,
-   "listings": 588,
-   "matched": 622,
-   "refused": {
-    "bundle": 7,
-    "damaged": 4,
-    "not-beauty": 4
-   },
-   "noEan": 18,
-   "ms": 3435,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3797,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "refreshskincare": {
    "ok": true,
@@ -2065,8 +2052,21 @@
     "not-beauty": 3
    },
    "noEan": 122,
-   "ms": 4070,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 3677,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
+  },
+  "atelierdeglow": {
+   "ok": true,
+   "listings": 590,
+   "matched": 624,
+   "refused": {
+    "bundle": 7,
+    "damaged": 4,
+    "not-beauty": 4
+   },
+   "noEan": 18,
+   "ms": 3337,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "likeskincare": {
    "ok": true,
@@ -2080,12 +2080,12 @@
     "mystery": 1
    },
    "noEan": 315,
-   "ms": 2740,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 2271,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "bargainchemist": {
    "ok": true,
-   "listings": 16222,
+   "listings": 16211,
    "matched": 185,
    "refused": {
     "bundle": 107,
@@ -2094,9 +2094,9 @@
     "damaged": 19,
     "tester": 13
    },
-   "noEan": 15865,
-   "ms": 107370,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "noEan": 15854,
+   "ms": 100291,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   },
   "lifepharmacy": {
    "ok": true,
@@ -2111,24 +2111,24 @@
     "mystery": 3
    },
    "noEan": 19029,
-   "ms": 114913,
-   "lastOkAt": "2026-11-26T17:09:08.827Z"
+   "ms": 112378,
+   "lastOkAt": "2026-11-27T16:52:42.067Z"
   }
  },
  "ebay": {
-  "at": "2026-11-26T17:52:45.765Z",
-  "day": "2026-11-26",
+  "at": "2026-11-27T17:36:52.006Z",
+  "day": "2026-11-27",
   "calls": 2500,
   "budget": 2500,
-  "listings": 1169,
-  "qday": "2026-11-26",
+  "listings": 1170,
+  "qday": "2026-11-27",
   "qcalls": 2500,
   "qregions": {
-   "US": 763,
-   "CA": 321,
-   "AU": 484,
+   "US": 762,
+   "CA": 320,
+   "EU": 459,
    "UK": 480,
-   "EU": 452
+   "AU": 479
   }
  }
 }

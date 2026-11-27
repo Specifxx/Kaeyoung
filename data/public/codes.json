@@ -1,8 +1,18 @@
 {
- "updatedAt": "2026-11-26T18:00:41.984Z",
+ "updatedAt": "2026-11-27T17:44:41.305Z",
  "stores": {
   "stylevana": {
    "live": [
+    {
+     "id": "aw-4179194",
+     "code": "AFF26BF",
+     "title": "2026 Black Friday: Up to 27% off",
+     "terms": "Member Exclusive: 27% off on $149+. 25% off on $79+. 18% off with no minimum spend. Guest Checkout: 10% off no minimum spend",
+     "start": "2026-11-26T16:00:00.000Z",
+     "end": "2026-12-01T15:59:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-27"
+    },
     {
      "id": "aw-4179209",
      "code": "AFFHIN12",
