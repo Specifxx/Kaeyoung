@@ -2,6 +2,8 @@ import Link from "next/link";
 import { BfModeBar } from "@/components/BfModeBar";
 import { bfModeOn, bfPhase } from "@/lib/bf-mode";
 import { saleStrip } from "@/lib/black-friday";
+import { ebayAffiliateUrl, ebayShopHost, subId } from "@/lib/affiliate";
+import { REGIONS } from "@/site";
 
 // One line under the header on every page from 1 November to the day after Cyber Monday, linking the Black Friday page,
 // then the Cyber Monday page (lib/black-friday.ts saleStrip; DECISIONS.md, "Black Friday strip and Cyber Monday page",
@@ -21,11 +23,27 @@ export function HolidayStrip({ today = new Date().toISOString().slice(0, 10) }: 
   const now = Date.now();
   const on = bfModeOn(now);
   // After the sale the bar keeps running with the offer calendar (lib/offer-calendar.ts, owner 2026-11-28): the season and our
-  // own deals pages, no paid claim (this site has no partner offer we can state as standing).
+  // own deals pages. Its one paid link (owner, 2026-11-28: "for the other websites … something with eBay and Amazon") is eBay's
+  // own Daily Deals page in the visitor's region (CSS picks the region, as every price does), tagged and labelled Ad, naming no
+  // price, discount or date: eBay runs that page every day, so it is always true. Inside this one bar only: no strip, no box,
+  // no pop-up. Never Amazon here (its 2 Nov Associates rule: no deals or category links); Amazon keeps its row's deal badge.
+  const ebayAd = (
+    <>
+      {REGIONS.map((r) => {
+        const h = ebayShopHost(r.code);
+        if (!h) return null;
+        return (
+          <a key={r.code} href={ebayAffiliateUrl(`https://${h}/deals`, subId(r.code, "offer-bar"))} rel="sponsored nofollow noopener" target="_blank" className={`rp rp-inline rp-${r.code} underline-offset-2 hover:underline`} style={{ color: "#d4d4d8" }}>
+            eBay Daily Deals · Ad
+          </a>
+        );
+      })}
+    </>
+  );
   return (
     <BfModeBar
       on={on} phase={bfPhase(now)} now={now} href="/black-friday" title="K-beauty deals" line="today's cheapest stores, same barcode"
-      evergreen={{ title: "K-beauty deals", line: "today's cheapest stores, same barcode", href: "/deals", hrefs: { afterChristmas: "/boxing-day", newYear: "/january-sales" } }}
+      evergreen={{ title: "K-beauty deals", line: "today's cheapest stores, same barcode", href: "/deals", hrefs: { afterChristmas: "/boxing-day", newYear: "/january-sales" }, ad: ebayAd }}
     >
       {strip}
     </BfModeBar>
