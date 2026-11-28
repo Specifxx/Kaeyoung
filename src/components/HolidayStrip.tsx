@@ -18,10 +18,15 @@ export function HolidayStrip({ today = new Date().toISOString().slice(0, 10) }: 
     </div>
   ) : null;
   // For Black Friday itself (lib/bf-mode.ts, owner 2026-11-27) the line becomes the bold Black Friday bar, which falls back to it.
-  const on = bfModeOn(Date.now());
-  if (!on) return strip;
+  const now = Date.now();
+  const on = bfModeOn(now);
+  // After the sale the bar keeps running with the offer calendar (lib/offer-calendar.ts, owner 2026-11-28): the season and our
+  // own deals pages, no paid claim (this site has no partner offer we can state as standing).
   return (
-    <BfModeBar on={on} phase={bfPhase(Date.now())} href="/black-friday" title="K-beauty deals" line="today's cheapest stores, same barcode">
+    <BfModeBar
+      on={on} phase={bfPhase(now)} now={now} href="/black-friday" title="K-beauty deals" line="today's cheapest stores, same barcode"
+      evergreen={{ title: "K-beauty deals", line: "today's cheapest stores, same barcode", href: "/deals", hrefs: { afterChristmas: "/boxing-day", newYear: "/january-sales" } }}
+    >
       {strip}
     </BfModeBar>
   );
