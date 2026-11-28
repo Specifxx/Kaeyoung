@@ -1,8 +1,18 @@
 {
- "updatedAt": "2026-11-27T17:44:41.305Z",
+ "updatedAt": "2026-11-28T16:40:03.103Z",
  "stores": {
   "stylevana": {
    "live": [
+    {
+     "id": "aw-4178828",
+     "code": "SVBFS",
+     "title": "K-Beauty First - Black Friday Sale",
+     "terms": "Member Exclusive: -20% on $99+. -16% on $59+",
+     "start": "2026-11-27T06:38:00.000Z",
+     "end": "2026-11-29T06:38:00.000Z",
+     "regions": "all",
+     "seen": "2026-11-28"
+    },
     {
      "id": "aw-4179194",
      "code": "AFF26BF",
