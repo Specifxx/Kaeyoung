@@ -1,0 +1,78 @@
+{
+ "v": 1,
+ "site": "kaeyoung.com",
+ "at": "2026-11-28T12:35:49.629Z",
+ "overall": "ok",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "HTTP 200"
+  },
+  {
+   "name": "Search index",
+   "status": "ok",
+   "detail": "4890 products live"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "19.7h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "ok",
+   "detail": "160 stores read"
+  },
+  {
+   "name": "Catalogue",
+   "status": "ok",
+   "detail": "4890 products"
+  },
+  {
+   "name": "Data size",
+   "status": "ok",
+   "detail": "7.5 MB"
+  },
+  {
+   "name": "Ratings and reviews",
+   "status": "ok",
+   "detail": "0 products rated"
+  },
+  {
+   "name": "Delivery quotes",
+   "status": "ok",
+   "detail": "132 of 160 stores quoted"
+  },
+  {
+   "name": "Discount codes",
+   "status": "ok",
+   "detail": "11 live codes and deals, 18.9h old"
+  },
+  {
+   "name": "Store deals",
+   "status": "ok",
+   "detail": "63 of 160 stores checked; 2 run multi-buys or gifts on 2 products"
+  },
+  {
+   "name": "Partner feeds",
+   "status": "ok",
+   "detail": "stylevana 1581/43183 prices kept"
+  },
+  {
+   "name": "InRewards links",
+   "status": "ok",
+   "detail": "1800 links, 600 made last run, 4968 waiting"
+  },
+  {
+   "name": "Amazon ASINs",
+   "status": "ok",
+   "detail": "US 2315 ASINs (0 waiting); UK 1869 ASINs (432 waiting); CA 850 ASINs (1667 waiting); EU waiting for Amazon API access; AU 1537 ASINs (2078 waiting)"
+  },
+  {
+   "name": "eBay listings",
+   "status": "ok",
+   "detail": "2500/2500 calls on 2026-11-27"
+  }
+ ]
+}
